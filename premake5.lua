@@ -15,6 +15,7 @@ project "GameEngine"
 	kind "SharedLib"
 	language "C++"
 
+
 	targetdir("bin/" ..outputdir.. "/%{prj.name}")
 	objdir("bin-int/" ..outputdir.. "/%{prj.name}")
 
@@ -42,7 +43,7 @@ project "GameEngine"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildcfg.relpath} .../bin/" ..outputdir.. "/Game")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" ..outputdir.. "/Game")
 		}
 	filter "configurations:Debug"
 		defines	"EGINE_DEBUG"
@@ -73,7 +74,7 @@ project "Game"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include",
+		"GameEngine/vendor/spdlog/include",
 		"GameEngine/src"
 	}
 
