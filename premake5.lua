@@ -15,9 +15,11 @@ project "GameEngine"
 	kind "SharedLib"
 	language "C++"
 
-
 	targetdir("bin/" ..outputdir.. "/%{prj.name}")
 	objdir("bin-int/" ..outputdir.. "/%{prj.name}")
+
+	pchheader "pch.h"
+	pchsource "GameEngine/src/pch.cpp"
 
 	files
 	{
@@ -27,7 +29,8 @@ project "GameEngine"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"GameEngine/src"
 	}
 
 	filter "system:windows"
