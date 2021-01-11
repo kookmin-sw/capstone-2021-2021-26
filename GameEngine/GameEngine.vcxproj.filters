@@ -26,6 +26,7 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -35,5 +36,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
 </Project>

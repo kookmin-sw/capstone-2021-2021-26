@@ -30,6 +30,7 @@ project "GameEngine"
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/GLFW/include",
 		"GameEngine/src"
 	}
 
@@ -78,6 +79,7 @@ project "Game"
 	includedirs
 	{
 		"GameEngine/vendor/spdlog/include",
+		"GameEngine/vendor/GLFW/include",
 		"GameEngine/src"
 	}
 
