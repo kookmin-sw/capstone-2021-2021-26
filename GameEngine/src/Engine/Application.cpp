@@ -2,6 +2,8 @@
 #include "Application.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Events/MouseEvent.h"
+
 namespace Engine {
 	Application::Application()
 	{
@@ -14,6 +16,7 @@ namespace Engine {
 	void Application::Run()
 	{
 		GLFWwindow* window;
+		MouseEvent* mouse = new MouseEvent();
 		if (!glfwInit())
 			return;
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -40,6 +43,7 @@ namespace Engine {
 
 		while (!glfwWindowShouldClose(window))
 		{
+			glfwSetCursorPosCallback(window, mouse->mouse_cursor_callback);
 			glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
@@ -49,6 +53,7 @@ namespace Engine {
 			
 		}
 
+		delete(mouse);
 		glfwTerminate();
 		return;
 	}
