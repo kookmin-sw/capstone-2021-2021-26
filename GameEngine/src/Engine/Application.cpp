@@ -2,11 +2,19 @@
 #include "Application.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Events/MouseEvent.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 namespace Engine {
+	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 	Application::Application()
 	{
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	}
 
 	Application::~Application()
@@ -15,46 +23,73 @@ namespace Engine {
 
 	void Application::Run()
 	{
-		GLFWwindow* window;
-		MouseEvent* mouse = new MouseEvent();
-		if (!glfwInit())
-			return;
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		Engine::Log::Init();
 
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-
-		window = glfwCreateWindow(1200, 600, "Popeyr Engine", NULL, NULL);
+		window = glfwCreateWindow(1200, 600, "Popeye Engine", NULL, NULL);
 		if (!window)
 		{
-			glfwTerminate();
+			ENGINE_CORE_ERROR("Failed to create GLFW window.");
 			return;
 		}
-
 		glfwMakeContextCurrent(window);
+
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			std::cout << "Failed to initialize GLAD" << std::endl;
-			return ;
+			ENGINE_CORE_ERROR("Failed to initialize GLAD.");
+			return;
 		}
-		glfwSwapInterval(1);
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		ImGui::StyleColorsDark();
+
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init();
+
+		bool show_imgui = true;
+
+
+		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		//glfwSetCursorPosCallback(window, )
 
 		while (!glfwWindowShouldClose(window))
 		{
-			glfwSetCursorPosCallback(window, mouse->mouse_cursor_callback);
-			glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
+			glfwPollEvents();
+
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			if (show_imgui)
+			{
+				ImGui::Begin("Another Window", &show_imgui);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+				ImGui::Text("Hello from another window!");
+				if (ImGui::Button("Close Me"))
+					show_imgui = false;
+				ImGui::End();
+			}
+
+			ImGui::Render();
+			int display_w, display_h;
+			glfwGetFramebufferSize(window, &display_w, &display_h);
+			glViewport(0, 0, display_w, display_h);
+			glClearColor(0.45f, 0.55f, 0.60f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 			glfwSwapBuffers(window);
-
-			glfwPollEvents();
-			
 		}
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 
-		delete(mouse);
 		glfwTerminate();
 		return;
 	}
+
+	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}
+
 }
