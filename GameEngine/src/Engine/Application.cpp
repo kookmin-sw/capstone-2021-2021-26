@@ -52,6 +52,7 @@ namespace Engine {
         ImGui_ImplOpenGL3_Init();
 
         static bool show_window = true;
+        static bool show = true;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
         // Main loop
@@ -67,8 +68,6 @@ namespace Engine {
             // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
             if (show_window)
                 Engine::GUI(&show_window);
-
-            
 
             // Rendering
             ImGui::Render();
