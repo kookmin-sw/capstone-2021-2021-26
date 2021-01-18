@@ -4,4 +4,5 @@
 
 namespace Engine {
 	void GUI(bool* p_open);
+	void tab(char* _name);
 }

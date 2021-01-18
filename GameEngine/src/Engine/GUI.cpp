@@ -20,9 +20,26 @@ namespace Engine
 		ImGui::Begin("DockSpace Demo", 0, flags);
 		ImGui::PopStyleVar();
 
+		static bool new_project = false;
+		static bool save_project = false;
+		static bool load_project = false;
+
+		static bool create_entity = false;
+
 		if (ImGui::BeginMenuBar())
 		{
-			
+			if (ImGui::BeginMenu("file"))
+			{
+				ImGui::MenuItem("new project", NULL, &new_project);
+				ImGui::MenuItem("save project", NULL, &save_project);
+				ImGui::MenuItem("load project", NULL, &load_project);
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("gameobject"))
+			{
+				ImGui::MenuItem("create entity", NULL, &create_entity);
+				ImGui::EndMenu();
+			}
 			ImGui::EndMenuBar();
 		}
 
@@ -44,6 +61,7 @@ namespace Engine
 			//ImGui::DockBuilderDockWindow(dock_main_id, "S");
 
 			ImGui::DockBuilderDockWindow("Log", dock_id_bottom);
+			ImGui::DockBuilderDockWindow("Project viewer", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Properties", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
 			ImGui::DockBuilderDockWindow("Scene", dock_main_id);
@@ -53,18 +71,15 @@ namespace Engine
 		ImGui::DockSpace(dockspace_id);
 		if (initialized == 1)
 		{
+			tab("Log");
+			
+			tab("Properties");
 
-			ImGui::Begin("Log");
-			ImGui::End();
+			tab("Inspector");
 
-			ImGui::Begin("Properties");
-			ImGui::End();
+			tab("Scene");
 
-			ImGui::Begin("Inspector");
-			ImGui::End();
-
-			ImGui::Begin("Scene");
-			ImGui::End();
+			tab("Project viewer");
 		}
 
 		if (new_window == 1)
@@ -78,4 +93,12 @@ namespace Engine
 		ImGui::End();
 		ImGui::PopStyleVar();
     }
+
+
+	void tab(char* name)
+	{
+		ImGui::Begin(name);
+		ImGui::End();
+	}
+	
 }
