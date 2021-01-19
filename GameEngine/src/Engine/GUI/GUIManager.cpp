@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "GUI.h"
+#include "GUIManager.h"
 
 namespace Engine
 {
@@ -71,7 +71,7 @@ namespace Engine
 		ImGui::DockSpace(dockspace_id);
 		if (initialized == 1)
 		{
-			tab("Log");
+			/*tab("Log");
 			
 			tab("Properties");
 
@@ -79,7 +79,7 @@ namespace Engine
 
 			tab("Scene");
 
-			tab("Project viewer");
+			tab("Project viewer");*/
 		}
 
 		if (new_window == 1)
@@ -93,12 +93,69 @@ namespace Engine
 		ImGui::End();
 		ImGui::PopStyleVar();
     }
-
+	
 
 	void tab(char* name)
 	{
 		ImGui::Begin(name);
 		ImGui::End();
 	}
-	
+
+	GUIManager::GUIManager() {}
+	GUIManager::~GUIManager() {}
+	void GUIManager::onSet(GLFWwindow *window)
+	{
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+
+		io = ImGui::GetIO(); (void)io;
+
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+		ImGui::StyleColorsClassic();
+
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init();
+	}
+
+	void GUIManager::onRun()
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		this->show();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void GUIManager::show()
+	{
+		for (int i = 0; i < tabs.size(); i++)
+		{
+			tabs[i].showTab();
+		}
+	}
+
+	void GUIManager::onClosed()
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
+
+	Tab::Tab() {}
+	Tab::~Tab() {}
+	void Tab::setTab(char* _name)
+	{
+		this->name = _name;
+	}
+	void Tab::showTab()
+	{
+		ImGui::Begin(this->name);
+
+		ImGui::End();
+	}
 }

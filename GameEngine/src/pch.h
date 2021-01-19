@@ -7,7 +7,7 @@
 #include <algorithm>
 
 #include "Engine/Log.h"
-#include "Engine/GUI.h"
+#include "Engine/GUI/GUIManager.h"
 
 #ifdef ENGINE_PLATFORM_WINDOWS
 #include <windows.h>

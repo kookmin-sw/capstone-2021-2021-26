@@ -19,14 +19,15 @@
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\imgui_impl_glfw.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\imgui_impl_opengl3.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Engine\GUI.h">
+    <ClInclude Include="src\Engine\Renderer.h" />
+    <ClInclude Include="src\Engine\GUI\GUIManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GUI\imgui_impl_glfw.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GUI\imgui_impl_opengl3.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,14 +38,15 @@
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\imgui_impl_glfw.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\imgui_impl_opengl3.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Engine\GUI.cpp">
+    <ClCompile Include="src\Engine\Renderer.cpp" />
+    <ClCompile Include="src\Engine\GUI\GUIManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\imgui_impl_glfw.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\imgui_impl_opengl3.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>

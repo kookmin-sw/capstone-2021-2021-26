@@ -2,8 +2,6 @@
 #include "Application.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 
 namespace Engine {
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -37,22 +35,13 @@ namespace Engine {
 			ENGINE_CORE_ERROR("Failed to initialize GLAD.");
 			return;
 		}
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
-        // Setup Dear ImGui style
-        ImGui::StyleColorsClassic();
-
-        // Setup Platform/Renderer backends
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init();
-
+        
+		Engine::GUIManager* guiManager = new GUIManager();
+		guiManager->onSet(window);
+		
         static bool show_window = true;
         static bool show = true;
-        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
         // Main loop
         while (!glfwWindowShouldClose(window))
@@ -60,32 +49,20 @@ namespace Engine {
             glfwPollEvents();
 
             // Start the Dear ImGui frame
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
+			guiManager->onRun();
 
-            if (show_window)
-                Engine::GUI(&show_window);
-            if (show)
-                ImGui::ShowDemoWindow();
-
-            // Rendering
-            ImGui::Render();
             int display_w, display_h;
             glfwGetFramebufferSize(window, &display_w, &display_h);
             glViewport(0, 0, display_w, display_h);
-            glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+            glClearColor(0.5f, 0.5f, 0.5f, 0.25f);
             glClear(GL_COLOR_BUFFER_BIT);
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+            
             glfwSwapBuffers(window);
         }
 
         // Cleanup
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-
+		guiManager->onClosed();
+		delete guiManager;
 
 		glfwTerminate();
 		return;
