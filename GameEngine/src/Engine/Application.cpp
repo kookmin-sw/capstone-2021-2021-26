@@ -4,14 +4,8 @@
 #include <GLFW/glfw3.h>
 
 namespace Engine {
-	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
 	Application::Application()
 	{
-		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	}
 
 	Application::~Application()
@@ -21,50 +15,40 @@ namespace Engine {
 	void Application::Run()
 	{
 		Engine::Log::Init();
+		bool window_should_close = false;
+		bool initialize = false;
+		Engine::Renderer* renderer = new Renderer();
 
-		window = glfwCreateWindow(1200, 600, "Popeye Engine", NULL, NULL);
-		if (!window)
+		initialize = renderer->init_renderer();
+		if (!initialize)
 		{
-			ENGINE_CORE_ERROR("Failed to create GLFW window.");
+			delete(renderer);
+			ENGINE_CORE_ERROR("Renderer Initialize fail.");
 			return;
 		}
-		glfwMakeContextCurrent(window);
 
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		{
-			ENGINE_CORE_ERROR("Failed to initialize GLAD.");
-			return;
-		}
-        
 		Engine::GUIManager* guiManager = new GUIManager();
-		guiManager->onSet(window);
+		guiManager->onSet(renderer->get_window());
 		
-        static bool show_window = true;
-        static bool show = true;
         //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
         // Main loop
-        while (!glfwWindowShouldClose(window))
+        while (!window_should_close)
         {
-            glfwPollEvents();
 
             // Start the Dear ImGui frame
 			guiManager->onRun();
 
-            int display_w, display_h;
-            glfwGetFramebufferSize(window, &display_w, &display_h);
-            glViewport(0, 0, display_w, display_h);
-            glClearColor(0.5f, 0.5f, 0.5f, 0.25f);
-            glClear(GL_COLOR_BUFFER_BIT);
+			window_should_close = renderer->run_renderer();
             
-            glfwSwapBuffers(window);
         }
 
         // Cleanup
 		guiManager->onClosed();
 		delete guiManager;
 
-		glfwTerminate();
+		renderer->close_renderer();
+		delete renderer;
 		return;
 	}
 

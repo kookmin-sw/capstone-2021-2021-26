@@ -2,18 +2,21 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class Renderer
-{
-	GLFWwindow* Window;
-public:
-	Renderer();
-	virtual ~Renderer();
+namespace Engine {
+	class Renderer
+	{
+		GLFWwindow* Window;
+		static bool exit;
+	public:
+		Renderer();
+		virtual ~Renderer();
 
-	GLFWwindow* get_window();
-	
-	void set_render();
-	bool is_window_should_close();
+		GLFWwindow* get_window();
 
+		bool init_renderer();
+		bool run_renderer();
+		void close_renderer();
 
-};
+	};
+}
 
