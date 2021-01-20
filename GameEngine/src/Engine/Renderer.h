@@ -14,7 +14,10 @@ namespace Engine {
 		GLFWwindow* get_window();
 
 		bool init_renderer();
-		bool run_renderer();
+		bool window_should_close();
+		bool poll_events();
+		void run_renderer();
+		void swap_buffer();
 		void close_renderer();
 
 	};

@@ -25,27 +25,40 @@ namespace Engine {
 		return true;
 	}
 
+	bool Renderer::window_should_close()
+	{
+		if (glfwWindowShouldClose(Window))
+		{
+			return true;
+		}
+		return false;
+	}
+
 	GLFWwindow* Renderer::get_window()
 	{
 		return this->Window;
 	}
 
-
-	bool Renderer::run_renderer()
+	bool Renderer::poll_events()
 	{
 		glfwPollEvents();
-		if (glfwWindowShouldClose(this->Window))
-		{
-			return true;
-		}
 
-		glViewport(0, 0, 1200, 600);
+		return glfwWindowShouldClose(Window);
+	}
+
+	void Renderer::run_renderer()
+	{
+		int display_w, display_h;
+		glfwGetFramebufferSize(Window, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
 		glClearColor(0.5f, 0.5f, 0.5f, 0.25f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glfwSwapBuffers(Window);
-		return false;
 	}
+	void Renderer::swap_buffer()
+	{
+		glfwSwapBuffers(Window);
+	}
+
 
 	void Renderer::close_renderer()
 	{

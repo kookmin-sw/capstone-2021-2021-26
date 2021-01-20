@@ -5,8 +5,6 @@
 #include "imgui_impl_opengl3.h"
 
 namespace Engine {
-	void GUI(bool* p_open);
-	void tab(char* _name);
 	class Tab
 	{
 	private:
@@ -26,6 +24,7 @@ namespace Engine {
 	class GUIManager
 	{
 	private:
+		ImGuiWindowFlags flags;
 		ImGuiID dockspace_id;
 		//ImGuiIO&
 		std::vector<Tab> tabs;
@@ -36,6 +35,8 @@ namespace Engine {
 		void setTabs();
 		void set_default_layout();
 		void onRun();
+		void onRunDraw();
+		void init_view();
 		void show();
 		void onClosed();
 	};

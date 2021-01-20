@@ -149,27 +149,29 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Renderer.h" />
-    <ClInclude Include="src\Engine\GUI\GUIManager.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\Engine\Core.h" />
     <ClInclude Include="src\Engine\EntryPoint.h" />
-    <ClInclude Include="src\Engine\Log.h" />
+    <ClInclude Include="src\Engine\Events\MouseEvent.h" />
+    <ClInclude Include="src\Engine\GUI\GUIManager.h" />
     <ClInclude Include="src\Engine\GUI\imgui_impl_glfw.h" />
     <ClInclude Include="src\Engine\GUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\Engine\Log.h" />
+    <ClInclude Include="src\Engine\Renderer.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Renderer.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
-    <ClCompile Include="src\Engine\Log.cpp" />
+    <ClCompile Include="src\Engine\Events\MouseEvent.cpp" />
+    <ClCompile Include="src\Engine\GUI\GUIManager.cpp" />
     <ClCompile Include="src\Engine\GUI\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\Engine\GUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\Engine\Log.cpp" />
+    <ClCompile Include="src\Engine\Renderer.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Engine\GUI\GUIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

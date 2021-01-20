@@ -3,21 +3,69 @@
 
 namespace Engine
 {
-    void GUI(bool* p_open)
-    {
+	
+
+	void tab(char* name)
+	{
+		ImGui::Begin(name);
+		ImGui::End();
+	}
+
+	GUIManager::GUIManager() {}
+	GUIManager::~GUIManager() {}
+	void GUIManager::onSet(GLFWwindow *window)
+	{
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+
+		io = ImGui::GetIO(); (void)io;
+
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+		ImGui::StyleColorsClassic();
+
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init();
+
+		flags = ImGuiWindowFlags_MenuBar;
+		flags |= ImGuiWindowFlags_NoDocking;
+		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	}
+
+	void GUIManager::onRun()
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		this->show();
+
+		ImGui::Render();
+		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void GUIManager::onRunDraw()
+	{
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void GUIManager::init_view()
+	{
+	}
+
+	void GUIManager::show()
+	{
 		static int initialized = 0;
 		static int new_window = 0;
-		ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
-		flags |= ImGuiWindowFlags_NoDocking;
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);
 		ImGui::SetNextWindowViewport(viewport->ID);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-		ImGui::Begin("DockSpace Demo", 0, flags);
+		ImGui::Begin("DockSpace", 0, flags);
 		ImGui::PopStyleVar();
 
 		static bool new_project = false;
@@ -72,7 +120,7 @@ namespace Engine
 		if (initialized == 1)
 		{
 			/*tab("Log");
-			
+
 			tab("Properties");
 
 			tab("Inspector");
@@ -92,51 +140,7 @@ namespace Engine
 
 		ImGui::End();
 		ImGui::PopStyleVar();
-    }
-	
 
-	void tab(char* name)
-	{
-		ImGui::Begin(name);
-		ImGui::End();
-	}
-
-	GUIManager::GUIManager() {}
-	GUIManager::~GUIManager() {}
-	void GUIManager::onSet(GLFWwindow *window)
-	{
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-
-		io = ImGui::GetIO(); (void)io;
-
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
-		ImGui::StyleColorsClassic();
-
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init();
-	}
-
-	void GUIManager::onRun()
-	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		this->show();
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-
-	void GUIManager::show()
-	{
-		for (int i = 0; i < tabs.size(); i++)
-		{
-			tabs[i].showTab();
-		}
 	}
 
 	void GUIManager::onClosed()

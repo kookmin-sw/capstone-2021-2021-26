@@ -4,6 +4,12 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{5FAFB439-CB6F-3070-94AA-79ED002A754C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GUI">
+      <UniqueIdentifier>{6F3CF502-5BF4-3650-C4FB-0FACB0D2D140}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine.h" />
@@ -16,38 +22,48 @@
     <ClInclude Include="src\Engine\EntryPoint.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Events\MouseEvent.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GUI\GUIManager.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GUI\imgui_impl_glfw.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GUI\imgui_impl_opengl3.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Renderer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Engine\Renderer.h" />
-    <ClInclude Include="src\Engine\GUI\GUIManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GUI\imgui_impl_glfw.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GUI\imgui_impl_opengl3.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Events\MouseEvent.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\GUIManager.cpp">
+      <Filter>Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\imgui_impl_glfw.cpp">
+      <Filter>Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\imgui_impl_opengl3.cpp">
+      <Filter>Engine\GUI</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Renderer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Engine\Renderer.cpp" />
-    <ClCompile Include="src\Engine\GUI\GUIManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GUI\imgui_impl_glfw.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GUI\imgui_impl_opengl3.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "Application.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace Engine {
 	Application::Application()
@@ -15,7 +13,6 @@ namespace Engine {
 	void Application::Run()
 	{
 		Engine::Log::Init();
-		bool window_should_close = false;
 		bool initialize = false;
 		Engine::Renderer* renderer = new Renderer();
 
@@ -33,14 +30,14 @@ namespace Engine {
         //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
         // Main loop
-        while (!window_should_close)
+        while (!renderer->poll_events())
         {
-
             // Start the Dear ImGui frame
 			guiManager->onRun();
 
-			window_should_close = renderer->run_renderer();
-            
+			renderer->run_renderer();
+			guiManager->onRunDraw();
+			renderer->swap_buffer();
         }
 
         // Cleanup
