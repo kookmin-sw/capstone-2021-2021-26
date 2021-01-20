@@ -155,6 +155,7 @@
     <ClInclude Include="src\Engine\EntryPoint.h" />
     <ClInclude Include="src\Engine\Events\MouseEvent.h" />
     <ClInclude Include="src\Engine\GUI\GUIManager.h" />
+    <ClInclude Include="src\Engine\GUI\IconsForkAwesome.h" />
     <ClInclude Include="src\Engine\GUI\imgui_impl_glfw.h" />
     <ClInclude Include="src\Engine\GUI\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Engine\Log.h" />

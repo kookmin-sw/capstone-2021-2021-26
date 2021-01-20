@@ -19,7 +19,14 @@ namespace Engine
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
 
-		io = ImGui::GetIO(); (void)io;
+		io.Fonts->AddFontDefault();
+
+		ImFontConfig config;
+		config.MergeMode = true;
+		config.GlyphMaxAdvanceX = 13.0f;
+		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
+		io.Fonts->AddFontFromFileTTF("Font\fontawesome-webfont.ttf", 13.0f, &config, icon_ranges);
+		//io = ImGui::GetIO(); (void)io;
 
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -41,6 +48,7 @@ namespace Engine
 		ImGui::NewFrame();
 
 		this->show();
+		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
 		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -162,4 +170,5 @@ namespace Engine
 
 		ImGui::End();
 	}
+
 }
