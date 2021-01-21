@@ -15,6 +15,7 @@ namespace Engine
 	GUIManager::~GUIManager() {}
 	void GUIManager::onSet(GLFWwindow *window)
 	{
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
@@ -25,7 +26,8 @@ namespace Engine
 		config.MergeMode = true;
 		config.GlyphMaxAdvanceX = 13.0f;
 		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
-		io.Fonts->AddFontFromFileTTF("Font\fontawesome-webfont.ttf", 13.0f, &config, icon_ranges);
+		//GetCurrentDirectory()
+		io.Fonts->AddFontFromFileTTF("C:\\Users\\aston\\Documents\\GameEngine\\GameEngine\\src\\Engine\\GUI\\forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
 		//io = ImGui::GetIO(); (void)io;
 
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -86,6 +88,7 @@ namespace Engine
 		{
 			if (ImGui::BeginMenu("file"))
 			{
+				ImGui::Button(ICON_FK_TIMES  " Search");
 				ImGui::MenuItem("new project", NULL, &new_project);
 				ImGui::MenuItem("save project", NULL, &save_project);
 				ImGui::MenuItem("load project", NULL, &load_project);
