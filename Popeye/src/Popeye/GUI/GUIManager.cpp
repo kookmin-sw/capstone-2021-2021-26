@@ -9,7 +9,6 @@ namespace Popeye
 
 	void GUIManager::onSet(GLFWwindow* window)
 	{
-
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
@@ -55,6 +54,7 @@ namespace Popeye
 		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
+		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
 	void GUIManager::onRunDraw()
