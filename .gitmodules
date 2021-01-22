@@ -1,9 +1,9 @@
 [submodule "GameEngine/vendor/spdlog"]
-	path = GameEngine/vendor/spdlog
+	path = Popeye/vendor/spdlog
 	url = https://github.com/gabime/spdlog
 [submodule "GameEngine/vendor/GLFW"]
-	path = GameEngine/vendor/GLFW
+	path = Popeye/vendor/GLFW
 	url = https://github.com/TheCherno/glfw.git
 [submodule "GameEngine/vendor/imgui"]
-	path = GameEngine/vendor/imgui
+	path = Popeye/vendor/imgui
 	url = https://github.com/TheCherno/imgui.git
