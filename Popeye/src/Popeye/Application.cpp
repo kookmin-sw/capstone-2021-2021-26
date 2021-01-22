@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 
-namespace Engine {
+namespace Popeye {
 	Application::Application()
 	{
 	}
@@ -12,19 +12,19 @@ namespace Engine {
 
 	void Application::Run()
 	{
-		Engine::Log::Init();
+		Popeye::Log::Init();
 		bool initialize = false;
-		Engine::Renderer* renderer = new Renderer();
+		Popeye::Renderer* renderer = new Renderer();
 
 		initialize = renderer->init_renderer();
 		if (!initialize)
 		{
 			delete(renderer);
-			ENGINE_CORE_ERROR("Renderer Initialize fail.");
+			POPEYE_CORE_ERROR("Renderer Initialize fail.");
 			return;
 		}
 
-		Engine::GUIManager* guiManager = new GUIManager();
+		Popeye::GUIManager* guiManager = new GUIManager();
 		guiManager->onSet(renderer->get_window());
 		
         //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);

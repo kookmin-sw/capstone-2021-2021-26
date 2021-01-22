@@ -2,8 +2,8 @@
 
 #include "Core.h"
 struct GLFWwindow {};
-namespace Engine {
-	class ENGINE_API Application
+namespace Popeye {
+	class POPEYE_API Application
 	{
 		GLFWwindow* window;
 	public:

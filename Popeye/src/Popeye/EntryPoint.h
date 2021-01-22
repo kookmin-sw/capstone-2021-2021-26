@@ -1,13 +1,13 @@
 #pragma once
 
-#ifdef ENGINE_PLATFORM_WINDOWS
+#ifdef POPEYE_PLATFORM_WINDOWS
 
-extern Engine::Application* Engine::CreateApplication();
+extern Popeye::Application* Popeye::CreateApplication();
 
 int main(int argc, char** argv)
 {
 	//Engine::Log::Init();
-	auto app = Engine::CreateApplication();
+	auto app = Popeye::CreateApplication();
 	app->Run();
 	delete app;
 }

@@ -4,9 +4,9 @@
 #include "Core.h"
 #include "spdlog/spdlog.h"
 
-namespace Engine {
+namespace Popeye {
 
-	class ENGINE_API Log
+	class POPEYE_API Log
 	{
 	public:
 		static void Init();
@@ -21,16 +21,16 @@ namespace Engine {
 }
 
 //core log macro
-#define ENGINE_CORE_TRACE(...)		::Engine::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define ENGINE_CORE_INFO(...)		::Engine::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define ENGINE_CORE_WARN(...)		::Engine::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define ENGINE_CORE_ERROR(...)		::Engine::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define ENGINE_CORE_FATAL(...)		::Engine::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define POPEYE_CORE_TRACE(...)		::Popeye::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define POPEYE_CORE_INFO(...)		::Popeye::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define POPEYE_CORE_WARN(...)		::Popeye::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define POPEYE_CORE_ERROR(...)		::Popeye::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define POPEYE_CORE_FATAL(...)		::Popeye::Log::GetCoreLogger()->fatal(__VA_ARGS__)
 
 //client log macro
-#define ENGINE_TRACE(...)			::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define ENGINE_INFO(...)			::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
-#define ENGINE_WARN(...)			::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define ENGINE_ERROR(...)			::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
-#define ENGINE_FATAL(...)			::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define POPEYE_TRACE(...)			::Popeye::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define POPEYE_INFO(...)			::Popeye::Log::GetClientLogger()->info(__VA_ARGS__)
+#define POPEYE_WARN(...)			::Popeye::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define POPEYE_ERROR(...)			::Popeye::Log::GetClientLogger()->error(__VA_ARGS__)
+#define POPEYE_FATAL(...)			::Popeye::Log::GetClientLogger()->fatal(__VA_ARGS__)
 

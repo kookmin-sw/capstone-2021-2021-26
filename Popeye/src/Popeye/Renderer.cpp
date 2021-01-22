@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Renderer.h"
 
-namespace Engine {
+namespace Popeye {
 	Renderer::Renderer(){}
 	Renderer::~Renderer(){}
 	

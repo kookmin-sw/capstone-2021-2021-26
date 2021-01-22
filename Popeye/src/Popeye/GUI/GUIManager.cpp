@@ -1,22 +1,15 @@
 #include "pch.h"
 #include "GUIManager.h"
 
-namespace Engine
+namespace Popeye
 {
-	
-
-	void tab(char* name)
-	{
-		ImGui::Begin(name);
-		ImGui::End();
-	}
 
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() {}
-	
-	void GUIManager::onSet(GLFWwindow *window)
+
+	void GUIManager::onSet(GLFWwindow* window)
 	{
-		
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
@@ -27,9 +20,8 @@ namespace Engine
 		config.MergeMode = true;
 		config.GlyphMaxAdvanceX = 13.0f;
 		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
-		//GetCurrentDirectory()
-		io.Fonts->AddFontFromFileTTF("src\\fonts\\forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
-		//io = ImGui::GetIO(); (void)io;
+
+		io.Fonts->AddFontFromFileTTF("fonts\\forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
 
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -42,6 +34,15 @@ namespace Engine
 		flags |= ImGuiWindowFlags_NoDocking;
 		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+		Tab tab_0 = Tab();
+		tab_0.setTab("Properties");
+		this->tabs.push_back(tab_0);
+
+		Tab tab_1 = Tab();
+		tab_1.setTab("Inspector");
+		this->tabs.push_back(tab_1);
+
 	}
 
 	void GUIManager::onRun()
@@ -54,7 +55,6 @@ namespace Engine
 		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
-		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
 	void GUIManager::onRunDraw()
@@ -100,11 +100,26 @@ namespace Engine
 				ImGui::EndMenu();
 			}
 
-			ImGui::Button(ICON_FK_PLAY);
-			ImGui::Button(ICON_FK_STOP);
-			//ImGui::Button(icon_fk_sp);
 			ImGui::EndMenuBar();
 		}
+
+		float width = ImGui::GetWindowWidth();
+
+		ImGui::Columns(3, "menu2", false);
+		ImGui::Separator();
+		ImGui::Button(ICON_FK_HAND_POINTER_O, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
+		ImGui::Button(ICON_FK_ARROWS, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
+		ImGui::Button(ICON_FK_SQUARE, ImVec2(25.0f, 25.0f));
+		ImGui::NextColumn();
+		ImGui::SameLine((ImGui::GetColumnWidth() / 2) - 26.0f);
+		ImGui::Button(ICON_FK_PLAY, ImVec2(25.0f, 25.0f)); ImGui::SameLine(ImGui::GetColumnWidth() / 2);
+		ImGui::Button(ICON_FK_STOP, ImVec2(25.0f, 25.0f)); ImGui::SameLine((ImGui::GetColumnWidth() / 2) + 26.0f);
+		ImGui::Button(ICON_FK_FORWARD, ImVec2(25.0f, 25.0f));
+		ImGui::NextColumn();
+		/*TODO*/
+		ImGui::NextColumn();
+		ImGui::Columns(1);
+		ImGui::Spacing();
 
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
@@ -134,15 +149,10 @@ namespace Engine
 		ImGui::DockSpace(dockspace_id);
 		if (initialized == 1)
 		{
-			/*tab("Log");
-
-			tab("Properties");
-
-			tab("Inspector");
-
-			tab("Scene");
-
-			tab("Project viewer");*/
+			for (int i = 0; i < tabs.size(); i++)
+			{
+				tabs[i].showTab();
+			}
 		}
 
 		if (new_window == 1)
@@ -174,6 +184,7 @@ namespace Engine
 	void Tab::showTab()
 	{
 		ImGui::Begin(this->name);
+		//this->contents();
 
 		ImGui::End();
 	}

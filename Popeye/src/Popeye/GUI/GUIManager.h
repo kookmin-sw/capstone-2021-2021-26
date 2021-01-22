@@ -5,7 +5,7 @@
 #include "imgui_impl_opengl3.h"
 #include "IconsForkAwesome.h"
 
-namespace Engine {
+namespace Popeye {
 	class Tab
 	{
 	private:
@@ -15,6 +15,7 @@ namespace Engine {
 		virtual ~Tab();
 		void setTab(char* _name);
 		void showTab();
+		void contents();
 	};
 
 	class Property : Tab

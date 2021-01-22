@@ -6,11 +6,11 @@
 #include <vector>
 #include <algorithm>
 
-#include "Engine/Log.h"
-#include "Engine/Renderer.h"
-#include "Engine/GUI/GUIManager.h"
+#include "Popeye/Log.h"
+#include "Popeye/Renderer.h"
+#include "Popeye/GUI/GUIManager.h"
 
-#ifdef ENGINE_PLATFORM_WINDOWS
+#ifdef POPEYE_PLATFORM_WINDOWS
 #include <windows.h>
 #endif // ENGINE_PLATFORM_WINDOWS
 

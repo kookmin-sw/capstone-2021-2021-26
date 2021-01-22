@@ -1,9 +1,9 @@
 #pragma once
-#include "Engine/Core.h"
+#include "Popeye/Core.h"
 
-namespace Engine
+namespace Popeye
 {
-	class ENGINE_API MouseEvent
+	class POPEYE_API MouseEvent
 	{
 	public:
 		void mouse_sensor();

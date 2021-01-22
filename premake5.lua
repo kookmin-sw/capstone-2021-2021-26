@@ -1,4 +1,4 @@
-workspace "GameEngine"
+workspace "Popeye"
 	architecture "x64"
 
 	configurations
@@ -10,16 +10,16 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
-IncludeDir["GLFW"] = "GameEngine/vendor/GLFW/include"
-IncludeDir["glad"] = "GameEngine/vendor/glad/include"
-IncludeDir["ImGUI"] = "GameEngine/vendor/imgui"
+IncludeDir["GLFW"] = "Popeye/vendor/GLFW/include"
+IncludeDir["glad"] = "Popeye/vendor/glad/include"
+IncludeDir["ImGUI"] = "Popeye/vendor/imgui"
 
-include "GameEngine/vendor/GLFW"
-include "GameEngine/vendor/glad"
-include "GameEngine/vendor/imgui"
+include "Popeye/vendor/GLFW"
+include "Popeye/vendor/glad"
+include "Popeye/vendor/imgui"
 
-project "GameEngine"
-	location "GameEngine"
+project "Popeye"
+	location "Popeye"
 	kind "SharedLib"
 	language "C++"
 
@@ -27,7 +27,7 @@ project "GameEngine"
 	objdir("bin-int/" ..outputdir.. "/%{prj.name}")
 
 	pchheader "pch.h"
-	pchsource "GameEngine/src/pch.cpp"
+	pchsource "Popeye/src/pch.cpp"
 
 	files
 	{
@@ -41,7 +41,7 @@ project "GameEngine"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.ImGUI}",
-		"GameEngine/src"
+		"Popeye/src"
 	}
 
 	links
@@ -59,28 +59,28 @@ project "GameEngine"
 
 		defines
 		{
-			"ENGINE_PLATFORM_WINDOWS",
-			"ENGINE_BUILD_DLL"
+			"POPEYE_PLATFORM_WINDOWS",
+			"POPEYE_BUILD_DLL"
 		}
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" ..outputdir.. "/Game")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" ..outputdir.. "/Eyeball")
 		}
 	filter "configurations:Debug"
-		defines	"EGINE_DEBUG"
+		defines	"POPEYE_DEBUG"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "ENGINE_RELEASE"
+		defines "POPEYE_RELEASE"
 		optimize "On"
 
 	filter "configurations:Dist"
-		defines "ENGINE_DIST"
+		defines "POPEYE_DIST"
 		optimize "On"
 
-project "Game"
-	location "Game"
+project "Eyeball"
+	location "Eyeball"
 	kind "ConsoleApp"
 
 	language "C++"
@@ -96,13 +96,13 @@ project "Game"
 
 	includedirs
 	{
-		"GameEngine/vendor/spdlog/include",
-		"GameEngine/src"
+		"Popeye/vendor/spdlog/include",
+		"Popeye/src"
 	}
 
 	links
 	{
-		"GameEngine"
+		"Popeye"
 	}
 
 	filter "system:windows"
@@ -112,17 +112,17 @@ project "Game"
 
 		defines
 		{
-			"ENGINE_PLATFORM_WINDOWS"
+			"POPEYE_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
-		defines	"EGINE_DEBUG"
+		defines	"POPEYE_DEBUG"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "ENGINE_RELEASE"
+		defines "POPEYE_RELEASE"
 		optimize "On"
 
 	filter "configurations:Dist"
-		defines "ENGINE_DIST"
+		defines "POPEYE_DIST"
 		optimize "On"

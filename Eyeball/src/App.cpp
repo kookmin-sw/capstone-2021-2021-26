@@ -1,6 +1,6 @@
-#include <Engine.h>
+#include <Popeye.h>
 
-class Game : public Engine::Application
+class Game : public Popeye::Application
 {
 public:
 	Game()
@@ -11,7 +11,7 @@ public:
 	}
 };
 
-Engine::Application* Engine::CreateApplication()
+Popeye::Application* Popeye::CreateApplication()
 {
 	return new Game();
 }

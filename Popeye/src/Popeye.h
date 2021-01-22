@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine/Application.h"
-#include "Engine/Log.h"
+#include "Popeye/Application.h"
+#include "Popeye/Log.h"
 
-#include "Engine/EntryPoint.h"
+#include "Popeye/EntryPoint.h"
