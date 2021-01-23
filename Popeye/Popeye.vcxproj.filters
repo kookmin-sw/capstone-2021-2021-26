@@ -44,6 +44,7 @@
       <Filter>Popeye</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Popeye\mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -68,5 +69,6 @@
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Popeye\mesh.cpp" />
   </ItemGroup>
 </Project>

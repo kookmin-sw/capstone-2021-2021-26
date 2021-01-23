@@ -1,10 +1,7 @@
 #pragma once
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "IconsForkAwesome.h"
-
+typedef struct GLFWwindow;
+typedef int ImGuiWindowFlags;
+typedef unsigned int ImGuiID;
 namespace Popeye {
 	class Tab
 	{
@@ -13,7 +10,7 @@ namespace Popeye {
 	public:
 		Tab();
 		virtual ~Tab();
-		void setTab(char* _name);
+		void setTab(char* );
 		void showTab();
 		void contents();
 	};
@@ -33,12 +30,11 @@ namespace Popeye {
 	public:
 		GUIManager();
 		virtual ~GUIManager();
-		void onSet(GLFWwindow* window);
+		void onSet(GLFWwindow*);
 		void setTabs();
 		void set_default_layout();
 		void onRun();
 		void onRunDraw();
-		void init_view();
 		void show();
 		void onClosed();
 	};

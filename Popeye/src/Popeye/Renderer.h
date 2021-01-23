@@ -1,7 +1,6 @@
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
+typedef struct GLFWwindow{};
 namespace Popeye {
 	class Renderer
 	{
@@ -11,12 +10,11 @@ namespace Popeye {
 		Renderer();
 		virtual ~Renderer();
 
-		GLFWwindow* get_window();
+		GLFWwindow* get_window(void);
 
-		bool init_renderer();
-		void run_renderer();
-		void close_renderer();
-
+		bool init_renderer(void);
+		void run_renderer(void);
+		void close_renderer(void);
 	};
 }
 

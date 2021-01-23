@@ -62,10 +62,6 @@ namespace Popeye
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void GUIManager::init_view()
-	{
-	}
-
 	void GUIManager::show()
 	{
 		static int initialized = 0;

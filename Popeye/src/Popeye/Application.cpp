@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Application.h"
+#include "Renderer.h"
 
 namespace Popeye {
 	Application::Application()
