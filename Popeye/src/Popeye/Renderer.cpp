@@ -74,17 +74,22 @@ namespace Popeye {
 		guimanager->onSet(this->get_window());
 
 		float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f
+		0.5f,  0.5f, 0.0f,  // 우측 상단
+		0.5f, -0.5f, 0.0f,  // 우측 하단
+		-0.5f, -0.5f, 0.0f,  // 좌측 하단
+		-0.5f,  0.5f, 0.0f   // 좌측 상단
+		};
+		unsigned int indices[] = {  // 0부터 시작한다는 것을 명심하세요!
+			0, 1, 3,   // 첫 번째 삼각형
+			1, 2, 3    // 두 번째 삼각형
 		};
 
 		Popeye::mesh* object = new mesh();
-		object->init_buffer(vertices, sizeof(vertices));
+		object->init_buffer(vertices, sizeof(vertices), indices, sizeof(indices));
 
 		while (!glfwWindowShouldClose(Window))
 		{
-			guimanager->onRun();
+			//guimanager->onRun();
 			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
 			glViewport(0, 0, display_w, display_h);
@@ -94,7 +99,7 @@ namespace Popeye {
 			glUseProgram(shaderProgram);
 			object->draw_mesh();
 
-			guimanager->onRunDraw();
+			//guimanager->onRunDraw();
 			glfwSwapBuffers(Window);
 			glfwPollEvents();
 		}
