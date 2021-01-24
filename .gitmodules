@@ -7,3 +7,6 @@
 [submodule "GameEngine/vendor/imgui"]
 	path = Popeye/vendor/imgui
 	url = https://github.com/TheCherno/imgui.git
+[submodule "Popeye/vendor/glm"]
+	path = Popeye/vendor/glm
+	url = https://github.com/g-truc/glm.git
