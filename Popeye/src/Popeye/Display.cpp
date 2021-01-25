@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Renderer.h"
+#include "Display.h"
 #include "GUI/GUIManager.h"
 #include "mesh.h"
 
@@ -18,10 +18,10 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 
 namespace Popeye {
-	Renderer::Renderer(){}
-	Renderer::~Renderer(){}
+	Display::Display(){}
+	Display::~Display(){}
 	
-	bool Renderer::init_renderer()
+	bool Display::init_Display()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -41,12 +41,12 @@ namespace Popeye {
 		return true;
 	}
 
-	GLFWwindow* Renderer::get_window()
+	GLFWwindow* Display::get_window()
 	{
 		return this->Window;
 	}
 
-	void Renderer::run_renderer()
+	void Display::run_Display()
 	{
 		//shader
 		unsigned int vertexShader, fragmentShader, shaderProgram;
@@ -74,14 +74,14 @@ namespace Popeye {
 		guimanager->onSet(this->get_window());
 
 		float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // 우측 상단
-		0.5f, -0.5f, 0.0f,  // 우측 하단
-		-0.5f, -0.5f, 0.0f,  // 좌측 하단
-		-0.5f,  0.5f, 0.0f   // 좌측 상단
+		0.5f,  0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f
 		};
-		unsigned int indices[] = {  // 0부터 시작한다는 것을 명심하세요!
-			0, 1, 3,   // 첫 번째 삼각형
-			1, 2, 3    // 두 번째 삼각형
+		unsigned int indices[] = {
+			0, 1, 3,
+			1, 2, 3
 		};
 
 		Popeye::mesh* object = new mesh();
@@ -107,7 +107,7 @@ namespace Popeye {
 		delete(guimanager);
 	}
 
-	void Renderer::close_renderer()
+	void Display::close_Display()
 	{
 		glfwTerminate();
 	}

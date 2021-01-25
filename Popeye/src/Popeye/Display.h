@@ -2,19 +2,19 @@
 
 typedef struct GLFWwindow{};
 namespace Popeye {
-	class Renderer
+	class Display
 	{
 		GLFWwindow* Window;
 		static bool exit;
 	public:
-		Renderer();
-		virtual ~Renderer();
+		Display();
+		virtual ~Display();
 
 		GLFWwindow* get_window(void);
 
-		bool init_renderer(void);
-		void run_renderer(void);
-		void close_renderer(void);
+		bool init_Display(void);
+		void run_Display(void);
+		void close_Display(void);
 	};
 }
 

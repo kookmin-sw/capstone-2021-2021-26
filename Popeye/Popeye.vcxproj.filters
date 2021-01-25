@@ -47,6 +47,9 @@
       <Filter>Popeye</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Popeye\Display.h" />
+    <ClInclude Include="src\Popeye\Gameobject\GameObject.h" />
+    <ClInclude Include="src\Popeye\Gameobject\Component.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -74,5 +77,8 @@
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Popeye\Display.cpp" />
+    <ClCompile Include="src\Popeye\Gameobject\GameObject.cpp" />
+    <ClCompile Include="src\Popeye\Gameobject\Component.cpp" />
   </ItemGroup>
 </Project>
