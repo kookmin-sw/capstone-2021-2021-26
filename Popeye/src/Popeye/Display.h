@@ -1,6 +1,5 @@
 #pragma once
 
-typedef struct GLFWwindow{};
 namespace Popeye {
 	class Display
 	{

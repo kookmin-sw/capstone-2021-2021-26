@@ -40,9 +40,6 @@
     <ClInclude Include="src\Popeye\Log.h">
       <Filter>Popeye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Renderer.h">
-      <Filter>Popeye</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\mesh.h">
       <Filter>Popeye</Filter>
     </ClInclude>
@@ -68,9 +65,6 @@
       <Filter>Popeye\GUI</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Log.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Renderer.cpp">
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\mesh.cpp">
