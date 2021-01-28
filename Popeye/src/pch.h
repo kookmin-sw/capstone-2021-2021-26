@@ -19,6 +19,8 @@
 #include "Popeye/GUI/imgui_impl_opengl3.h"
 #include "Popeye/GUI/IconsForkAwesome.h"
 
+#include <glm/glm.hpp>
+
 #ifdef POPEYE_PLATFORM_WINDOWS
 #include <windows.h>
 #endif // ENGINE_PLATFORM_WINDOWS

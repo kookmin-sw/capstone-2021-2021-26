@@ -45,8 +45,9 @@
     </ClInclude>
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Popeye\Display.h" />
-    <ClInclude Include="src\Popeye\Gameobject\GameObject.h" />
-    <ClInclude Include="src\Popeye\Gameobject\Component.h" />
+    <ClInclude Include="src\Popeye\Component\Component.h" />
+    <ClInclude Include="src\Popeye\Scene\Scene.h" />
+    <ClInclude Include="src\Popeye\Scene\GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -72,7 +73,8 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Popeye\Display.cpp" />
-    <ClCompile Include="src\Popeye\Gameobject\GameObject.cpp" />
-    <ClCompile Include="src\Popeye\Gameobject\Component.cpp" />
+    <ClCompile Include="src\Popeye\Component\Component.cpp" />
+    <ClCompile Include="src\Popeye\Scene\Scene.cpp" />
+    <ClCompile Include="src\Popeye\Scene\GameObject.cpp" />
   </ItemGroup>
 </Project>

@@ -1,15 +1,14 @@
 #pragma once
 namespace Popeye {
-	//class Component {};
 	class GameObject
 	{
 	private:
+		int ID;
 		char* name;
 		GameObject* parent;
 		std::vector<GameObject*> childs;
-		//std::unordered_map<size_t, Component*> components;
 	public:
-		GameObject();
+		GameObject(int);
 		virtual ~GameObject();
 
 		char* getName();
@@ -24,25 +23,13 @@ namespace Popeye {
 		template<class component>
 		void addComponent()
 		{
-			/*size_t id = component::getID();
-			if (this->components.find(id) == this->components.end())
-			{
-				component* comp = new component();
-				this->components[id] = comp;
-			}
-			else
-			{
-				std::cout << "test, already exist component!" << std::endl;
-			}*/
+			component::componentAdded(this->ID);
 		}
 
 		template<class component>
 		component* getComponent()
 		{
-			size_t id = component::getID();
-			if (this->components.find(id) == this->components.end())
-				return nullptr;
-			return reinterpret_cast<component*>(this->components[id]);
+			return new component(); //todo :: think about how to access
 		}
 
 		template<class component>

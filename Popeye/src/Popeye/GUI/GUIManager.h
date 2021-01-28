@@ -1,7 +1,4 @@
 #pragma once
-typedef struct GLFWwindow;
-typedef int ImGuiWindowFlags;
-typedef unsigned int ImGuiID;
 namespace Popeye {
 	class Tab
 	{

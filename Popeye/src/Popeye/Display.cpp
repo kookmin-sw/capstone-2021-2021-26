@@ -2,8 +2,8 @@
 #include "Display.h"
 #include "GUI/GUIManager.h"
 #include "mesh.h"
-#include "Gameobject/GameObject.h"
-#include "Gameobject/Component.h"
+#include "Scene/GameObject.h"
+#include "Component/Component.h"
 
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -89,11 +89,14 @@ namespace Popeye {
 		Popeye::mesh* object = new mesh();
 		object->init_buffer(vertices, sizeof(vertices), indices, sizeof(indices));
 
-		Popeye::GameObject* gameobject = new GameObject();
-		gameobject->addComponent<Component>();
-		gameobject->addComponent<MeshRenderer>();
-		gameobject->addComponent<MeshRenderer>();
+		Popeye::GameObject* gameObject = new GameObject(1);
+		gameObject->addComponent<Transform>();
+		gameObject->getComponent<Transform>()->get_info(1);
 
+		//Popeye::GameObject* gameObject2 = new GameObject(2);
+		//gameObject2->addComponent<Transform>();
+
+		
 		while (!glfwWindowShouldClose(Window))
 		{
 			//guimanager->onRun();
