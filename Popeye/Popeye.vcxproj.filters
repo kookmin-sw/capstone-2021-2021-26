@@ -4,11 +4,20 @@
     <Filter Include="Popeye">
       <UniqueIdentifier>{177F93CA-0321-BEA0-ECDB-D1F4D81C45F1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Popeye\Component">
+      <UniqueIdentifier>{396084D6-2559-A328-4E8B-88AD3AE38234}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Popeye\Events">
       <UniqueIdentifier>{1B6B2E75-872B-AAAB-5066-F328BCE5EE87}</UniqueIdentifier>
     </Filter>
     <Filter Include="Popeye\GUI">
       <UniqueIdentifier>{AB31F6D7-97E9-3725-00F1-1081ECC7D215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Popeye\Scene">
+      <UniqueIdentifier>{74A12AAF-6004-BA53-098A-F209F5CB85D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Popeye\System">
+      <UniqueIdentifier>{4BB21496-B772-90CC-80AD-D949EC2CD5A8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -16,7 +25,25 @@
     <ClInclude Include="src\Popeye\Application.h">
       <Filter>Popeye</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\Component\Camera.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Component\Light.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Component\Material.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Component\MeshRenderer.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Component\Transform.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
     <ClInclude Include="src\Popeye\Core.h">
+      <Filter>Popeye</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Display.h">
       <Filter>Popeye</Filter>
     </ClInclude>
     <ClInclude Include="src\Popeye\EntryPoint.h">
@@ -40,17 +67,40 @@
     <ClInclude Include="src\Popeye\Log.h">
       <Filter>Popeye</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\Scene\GameObject.h">
+      <Filter>Popeye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Scene\Scene.h">
+      <Filter>Popeye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\System\RenderingSystem.h">
+      <Filter>Popeye\System</Filter>
+    </ClInclude>
     <ClInclude Include="src\Popeye\mesh.h">
       <Filter>Popeye</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Popeye\Display.h" />
-    <ClInclude Include="src\Popeye\Component\Component.h" />
-    <ClInclude Include="src\Popeye\Scene\Scene.h" />
-    <ClInclude Include="src\Popeye\Scene\GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
+      <Filter>Popeye</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Component\Camera.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Component\Light.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Component\Material.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Component\MeshRenderer.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Component\Transform.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Display.cpp">
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Events\MouseEvent.cpp">
@@ -68,13 +118,18 @@
     <ClCompile Include="src\Popeye\Log.cpp">
       <Filter>Popeye</Filter>
     </ClCompile>
+    <ClCompile Include="src\Popeye\Scene\GameObject.cpp">
+      <Filter>Popeye\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Scene\Scene.cpp">
+      <Filter>Popeye\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\System\RenderingSystem.cpp">
+      <Filter>Popeye\System</Filter>
+    </ClCompile>
     <ClCompile Include="src\Popeye\mesh.cpp">
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Popeye\Display.cpp" />
-    <ClCompile Include="src\Popeye\Component\Component.cpp" />
-    <ClCompile Include="src\Popeye\Scene\Scene.cpp" />
-    <ClCompile Include="src\Popeye\Scene\GameObject.cpp" />
   </ItemGroup>
 </Project>

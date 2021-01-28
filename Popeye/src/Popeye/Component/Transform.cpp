@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Component.h"
+#include "Transform.h"
 namespace Popeye {
 	std::unordered_map<int, glm::vec3> Transform::position;
 	std::unordered_map<int, glm::vec3> Transform::rotation;

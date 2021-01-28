@@ -27,13 +27,10 @@ namespace Popeye {
 		}
 
 		template<class component>
-		component* getComponent()
+		component getComponent()
 		{
-			return new component(); //todo :: think about how to access
+			return component(); //todo :: think about how to access
 		}
-
-		template<class component>
-		std::vector<component*> getComponents();
 	};
 }
 

@@ -1,10 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <memory>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <utility>
 
 #include "Popeye/Log.h"
 
@@ -19,7 +22,10 @@
 #include "Popeye/GUI/imgui_impl_opengl3.h"
 #include "Popeye/GUI/IconsForkAwesome.h"
 
+//glm
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #ifdef POPEYE_PLATFORM_WINDOWS
 #include <windows.h>
