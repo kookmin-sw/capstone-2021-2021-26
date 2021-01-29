@@ -130,6 +130,9 @@
     <ClCompile Include="src\Popeye\mesh.cpp">
       <Filter>Popeye</Filter>
     </ClCompile>
+    <ClCompile Include="src\Popeye\stb_img.cpp">
+      <Filter>Popeye</Filter>
+    </ClCompile>
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
 </Project>

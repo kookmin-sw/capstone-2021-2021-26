@@ -38,6 +38,7 @@ project "Popeye"
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/stb_image",
 		"%{prj.name}/vendor/glm",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glad}",
