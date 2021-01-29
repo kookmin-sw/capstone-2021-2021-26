@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Display.h"
 #include "GUI/GUIManager.h"
-#include "mesh.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
 #include "Component/MeshRenderer.h"
@@ -54,13 +53,16 @@ namespace Popeye {
 		};
 
 		Popeye::mesh object;
+
+		object.shader;
+		object.texture.InitTexture("texture/test.jpg");
+
 		object.init_buffer(vertices, sizeof(vertices), indices, sizeof(indices));
+		//Popeye::Shader shader;
+		//Popeye::Texture texture;
 
-		Popeye::Shader shader;
-		Popeye::Texture texture;
 
-
-		texture.InitTexture("texture/test.jpg");
+		//texture.InitTexture("texture/test.jpg");
 		//Popeye::GameObject* gameObject = new GameObject(1);
 		//gameObject->addComponent<Transform>();
 		//gameObject->getComponent<Transform>().get_info(1);
@@ -78,8 +80,8 @@ namespace Popeye {
 			glClearColor(1.0f, 0.5f, 0.5f, 0.25f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			texture.drawTexture();
-			shader.use();
+			//texture.drawTexture();
+			//shader.use();
 			object.draw_mesh();
 
 			//guimanager->onRunDraw();

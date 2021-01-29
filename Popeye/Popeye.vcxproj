@@ -168,7 +168,6 @@
     <ClInclude Include="src\Popeye\Scene\GameObject.h" />
     <ClInclude Include="src\Popeye\Scene\Scene.h" />
     <ClInclude Include="src\Popeye\System\RenderingSystem.h" />
-    <ClInclude Include="src\Popeye\mesh.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -187,7 +186,6 @@
     <ClCompile Include="src\Popeye\Scene\GameObject.cpp" />
     <ClCompile Include="src\Popeye\Scene\Scene.cpp" />
     <ClCompile Include="src\Popeye\System\RenderingSystem.cpp" />
-    <ClCompile Include="src\Popeye\mesh.cpp" />
     <ClCompile Include="src\Popeye\stb_img.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

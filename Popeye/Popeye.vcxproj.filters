@@ -76,9 +76,6 @@
     <ClInclude Include="src\Popeye\System\RenderingSystem.h">
       <Filter>Popeye\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\mesh.h">
-      <Filter>Popeye</Filter>
-    </ClInclude>
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -126,9 +123,6 @@
     </ClCompile>
     <ClCompile Include="src\Popeye\System\RenderingSystem.cpp">
       <Filter>Popeye\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\mesh.cpp">
-      <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\stb_img.cpp">
       <Filter>Popeye</Filter>
