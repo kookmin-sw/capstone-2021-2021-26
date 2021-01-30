@@ -1,5 +1,6 @@
 #pragma once
 namespace Popeye {
+
 	struct MeshRenderer
 	{
 		MeshRenderer();
@@ -13,6 +14,15 @@ namespace Popeye {
 		void setInt(const std::string& name, int value) const;
 		void setFloat(const std::string& name, float value) const;
 		void setMat4(const std::string& name, const glm::mat4& mat) const;
+	};
+
+	struct Material
+	{
+		Shader shader;
+		Texture texture;
+		glm::vec3 albedo;
+		float metalic;
+		float smoothness;
 	};
 
 	struct Texture
@@ -36,6 +46,20 @@ namespace Popeye {
 		unsigned int VBO;
 		unsigned int VAO;
 		unsigned int EBO;
+	};
+
+	struct Renderer
+	{
+		static std::vector<Material> materials;
+		static std::vector<mesh> meshes;
+		static std::unordered_map<int, std::pair<int, int>> renderables;
+
+		static void componentAdded(int);
+		static void setMesh(int, mesh);
+		static mesh& getMesh(int);
+		static void setMaterial(int);
+		static Material& getMaterial(int);
+		Renderer();
 	};
 }
 

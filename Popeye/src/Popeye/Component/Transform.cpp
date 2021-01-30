@@ -13,7 +13,7 @@ namespace Popeye {
 		{
 			position[id] = { 0.0f, 0.0f, 0.0f };
 			rotation[id] = { 0.0f, 0.0f, 0.0f };
-			scale[id] = { 0.0f, 0.0f, 0.0f };
+			scale[id] = { 1.0f, 1.0f, 1.0f };
 		}
 		else
 		{

@@ -75,13 +75,15 @@ namespace Popeye {
 		{
 			//guimanager->onRun();
 			int display_w, display_h;
-			glfwGetFramebufferSize(Window, &display_w, &display_h);
-			glViewport(0, 0, display_w, display_h);
+			glfwGetFramebufferSize(Window, &display_w, &display_h); //temp :: camera
+			
 			glClearColor(1.0f, 0.5f, 0.5f, 0.25f);
 			glClear(GL_COLOR_BUFFER_BIT);
+			
+			glViewport(0, 0, display_w / 2, display_h / 2);
+			object.draw_mesh();
 
-			//texture.drawTexture();
-			//shader.use();
+			glViewport(display_w / 2, 0, display_w/2, display_h/2); // temp :: scene view
 			object.draw_mesh();
 
 			//guimanager->onRunDraw();

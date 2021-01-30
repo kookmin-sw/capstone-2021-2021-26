@@ -6,6 +6,7 @@ namespace Popeye {
 		unsigned int VAO;
 		unsigned int EBO;
 	public:
+		void OnEdit();
 		void Init();
 		void OnUpdate();
 		void OnExit();
