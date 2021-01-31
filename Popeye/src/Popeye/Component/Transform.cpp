@@ -25,11 +25,25 @@ namespace Popeye {
 		std::cout << scale[id].x << " " << scale[id].y << " " << scale[id].z << std::endl;
 	}
 
-	void Transform::Set_pos(int id, glm::vec3 posit)
+	void Transform::Set_pos(int id, glm::vec3 _position)
 	{
 		if (position.find(id) != position.end())
 		{
-			position[id] = posit;
+			position[id] = _position;
+		}
+	}
+	void Transform::Set_rotation(int id, glm::vec3 _rotation)
+	{
+		if (position.find(id) != position.end())
+		{
+			rotation[id] = _rotation;
+		}
+	}
+	void Transform::Set_scale(int id, glm::vec3 _scale)
+	{
+		if (position.find(id) != position.end())
+		{
+			scale[id] = _scale;
 		}
 	}
 }

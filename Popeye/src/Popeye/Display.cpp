@@ -4,7 +4,7 @@
 #include "System/RenderingSystem.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
-#include "Component/MeshRenderer.h"
+#include "Component/RenderingComponents.h"
 
 namespace Popeye {
 	Display::Display(){}
@@ -43,11 +43,49 @@ namespace Popeye {
 		guimanager->onSet(this->get_window());
 
 		float vertices[] = {
-			0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,
-		   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,
-		   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 		};
+
 		unsigned int indices[] = {
 			0, 1, 3,
 			1, 2, 3
@@ -69,13 +107,20 @@ namespace Popeye {
 		gameObject->AddComponent<Transform>();
 		gameObject->AddComponent<MeshRenderer>();
 		gameObject->GetComponent<MeshRenderer>().SetMesh(1, object);
-		gameObject->GetComponent<Transform>().Set_pos(1, { 0.0f, 0.0f, -3.0f });
+		gameObject->GetComponent<Transform>().Set_pos(1, { -1.0f, 0.0f, -3.0f });
 
 		Popeye::GameObject* gameObject2 = new GameObject(2);
 		gameObject2->AddComponent<Transform>();
 		gameObject2->AddComponent<MeshRenderer>();
 		gameObject2->GetComponent<MeshRenderer>().SetMesh(2, object);
 		gameObject2->GetComponent<Transform>().Set_pos(2, { 1.0f, 0.0f, -3.0f });
+
+		Popeye::GameObject* gameObject3 = new GameObject(3);
+		gameObject3->AddComponent<Transform>();
+		gameObject3->AddComponent<MeshRenderer>();
+		gameObject3->GetComponent<MeshRenderer>().SetMesh(3, object);
+		gameObject3->GetComponent<Transform>().Set_pos(3, { 1.0f, 1.0f, -3.0f });
+		gameObject3->GetComponent<Transform>().Set_scale(3, { 1.0f, 1.0f, 2.0f });
 
 		while (!glfwWindowShouldClose(Window))
 		{

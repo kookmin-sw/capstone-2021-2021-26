@@ -126,7 +126,7 @@ namespace Popeye {
 
 	void Texture::drawTexture()
 	{
-		//glActiveTexture()
+		glActiveTexture(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, this->texture_ID);
 	}
 
