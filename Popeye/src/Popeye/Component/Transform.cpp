@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Transform.h"
+
 namespace Popeye {
 	std::unordered_map<int, glm::vec3> Transform::position;
 	std::unordered_map<int, glm::vec3> Transform::rotation;
@@ -7,7 +8,7 @@ namespace Popeye {
 	
 	Transform::Transform() {}
 
-	void Transform::componentAdded(int id)
+	void Transform::ComponentAdded(int id)
 	{
 		if (position.find(id) == position.end())
 		{
@@ -15,16 +16,20 @@ namespace Popeye {
 			rotation[id] = { 0.0f, 0.0f, 0.0f };
 			scale[id] = { 1.0f, 1.0f, 1.0f };
 		}
-		else
-		{
-			printf("already exist !!");
-		}
 	}
 
-	void Transform::get_info(int id)
+	void Transform::Get_info(int id)
 	{
 		std::cout << position[id].x << " " << position[id].y << " " << position[id].z << std::endl;
 		std::cout << rotation[id].x << " " << rotation[id].y << " " << rotation[id].z << std::endl;
 		std::cout << scale[id].x << " " << scale[id].y << " " << scale[id].z << std::endl;
+	}
+
+	void Transform::Set_pos(int id, glm::vec3 posit)
+	{
+		if (position.find(id) != position.end())
+		{
+			position[id] = posit;
+		}
 	}
 }

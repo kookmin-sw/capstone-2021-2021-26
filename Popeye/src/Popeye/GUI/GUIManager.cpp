@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GUIManager.h"
+#include "../System/RenderingSystem.h"
 
 namespace Popeye
 {
@@ -34,13 +35,17 @@ namespace Popeye
 		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-		Tab tab_0 = Tab();
+	/*	Tab tab_0 = Tab();
 		tab_0.setTab("Properties");
 		this->tabs.push_back(tab_0);
 
 		Tab tab_1 = Tab();
 		tab_1.setTab("Inspector");
-		this->tabs.push_back(tab_1);
+		this->tabs.push_back(tab_1);*/
+
+		Scene tab_2 = Scene();
+		tab_2.setTab("Scene");
+		this->tabs.push_back(tab_2);
 
 	}
 
@@ -181,8 +186,21 @@ namespace Popeye
 	{
 		ImGui::Begin(this->name);
 		//this->contents();
-
+		this->contents();
 		ImGui::End();
+	}
+	void Tab::contents() {}
+	
+	void Scene::contents()
+	{
+		ImGui::BeginChild("GameRender");
+		// Get the size of the child (i.e. the whole draw size of the windows).
+		ImVec2 wsize = ImGui::GetWindowSize();
+		RenderingSystem* renderingsystem = new RenderingSystem(); //temporal initial iaze TODO :: must change
+		// Because I use the texture from OpenGL, I need to invert the V from the UV.
+		ImGui::Image((ImTextureID)renderingsystem->FBO, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::EndChild();
+
 	}
 
 }

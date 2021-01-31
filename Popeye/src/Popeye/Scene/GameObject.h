@@ -11,23 +11,23 @@ namespace Popeye {
 		GameObject(int);
 		virtual ~GameObject();
 
-		char* getName();
-		char* setName(char*);
+		char* GetName();
+		char* SetName(char*);
 
-		GameObject* getParent();
-		void setParent(GameObject*);
+		GameObject* GetParent();
+		void SetParent(GameObject*);
 
-		GameObject* getchild();
-		std::vector<GameObject*> getchildren();
+		GameObject* Getchild();
+		std::vector<GameObject*> Getchildren();
 		
 		template<class component>
-		void addComponent()
+		void AddComponent()
 		{
-			component::componentAdded(this->ID);
+			component::ComponentAdded(this->ID);
 		}
 
 		template<class component>
-		component getComponent()
+		component GetComponent()
 		{
 			return component(); //todo :: think about how to access
 		}

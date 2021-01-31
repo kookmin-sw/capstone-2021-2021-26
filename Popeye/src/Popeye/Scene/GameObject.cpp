@@ -13,7 +13,7 @@ namespace Popeye {
 
 	}
 
-	char* GameObject::getName()
+	char* GameObject::GetName()
 	{
 		return this->name;
 	}

@@ -9,12 +9,18 @@ namespace Popeye {
 		virtual ~Tab();
 		void setTab(char* );
 		void showTab();
-		void contents();
+		virtual void contents();
 	};
 
-	class Property : Tab
+	class Property : public Tab
 	{
 
+	};
+
+	class Scene : public Tab
+	{
+	public:
+		virtual void contents();
 	};
 
 	class GUIManager

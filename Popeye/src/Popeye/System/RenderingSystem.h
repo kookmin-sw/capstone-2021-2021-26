@@ -2,11 +2,17 @@
 namespace Popeye {
 	class RenderingSystem
 	{
-		unsigned int VBO;
-		unsigned int VAO;
-		unsigned int EBO;
+	private:
+		std::vector<unsigned int> VAOs;
+	
 	public:
-		void OnEdit();
+		unsigned int FBO;
+	
+	private :
+		void InitBufer();
+	
+	public:
+		void SystemRunning();
 		void Init();
 		void OnUpdate();
 		void OnExit();
