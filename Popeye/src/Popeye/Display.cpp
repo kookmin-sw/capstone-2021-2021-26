@@ -2,6 +2,7 @@
 #include "Display.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
+#include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
 #include "Component/RenderingComponents.h"
@@ -37,6 +38,7 @@ namespace Popeye {
 
 	void Display::run_Display()
 	{
+		Scene* scene = new Scene();
 
 		static GUIManager* guimanager = new GUIManager();
 
@@ -103,24 +105,24 @@ namespace Popeye {
 		//m.texture.InitTexture("texture/test.jpg");
 		//m.init_buffer(vertices, sizeof(vertices), indices, sizeof(indices));
 		
-		Popeye::GameObject* gameObject = new GameObject(1);
+		Popeye::GameObject* gameObject = new GameObject();
 		gameObject->AddComponent<Transform>();
 		gameObject->AddComponent<MeshRenderer>();
-		gameObject->GetComponent<MeshRenderer>().SetMesh(1, object);
-		gameObject->GetComponent<Transform>().Set_pos(1, { -1.0f, 0.0f, -3.0f });
+		gameObject->GetComponent<MeshRenderer>().SetMesh(gameObject->GetID(), object);
+		gameObject->GetComponent<Transform>().Set_pos(gameObject->GetID(), { -1.0f, 0.0f, -3.0f });
 
-		Popeye::GameObject* gameObject2 = new GameObject(2);
+		Popeye::GameObject* gameObject2 = new GameObject();
 		gameObject2->AddComponent<Transform>();
 		gameObject2->AddComponent<MeshRenderer>();
-		gameObject2->GetComponent<MeshRenderer>().SetMesh(2, object);
-		gameObject2->GetComponent<Transform>().Set_pos(2, { 1.0f, 0.0f, -3.0f });
+		gameObject2->GetComponent<MeshRenderer>().SetMesh(gameObject2->GetID(), object);
+		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 1.0f, 0.0f, -3.0f });
 
-		Popeye::GameObject* gameObject3 = new GameObject(3);
+		Popeye::GameObject* gameObject3 = new GameObject();
 		gameObject3->AddComponent<Transform>();
 		gameObject3->AddComponent<MeshRenderer>();
-		gameObject3->GetComponent<MeshRenderer>().SetMesh(3, object);
-		gameObject3->GetComponent<Transform>().Set_pos(3, { 1.0f, 1.0f, -3.0f });
-		gameObject3->GetComponent<Transform>().Set_scale(3, { 1.0f, 1.0f, 2.0f });
+		gameObject3->GetComponent<MeshRenderer>().SetMesh(gameObject3->GetID(), object);
+		gameObject3->GetComponent<Transform>().Set_pos(gameObject3->GetID(), { 1.0f, 1.0f, -3.0f });
+		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 1.0f, 1.0f, 2.0f });
 
 		while (!glfwWindowShouldClose(Window))
 		{

@@ -4,9 +4,10 @@
 
 namespace Popeye {
 	
-	GameObject::GameObject(int id) 
+	GameObject::GameObject() 
 	{
-		this->ID = id;
+		this->ID = (int)&*this;
+		std::cout << ID << std::endl;
 	}
 	GameObject::~GameObject() 
 	{
@@ -16,5 +17,10 @@ namespace Popeye {
 	char* GameObject::GetName()
 	{
 		return this->name;
+	}
+
+	int GameObject::GetID()
+	{
+		return this->ID;
 	}
 }

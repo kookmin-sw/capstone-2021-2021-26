@@ -42,8 +42,6 @@ namespace Popeye {
 				VAOs.push_back(tVAO);
 			}
 			state = 1;
-			std::cout << VAOs.size() << std::endl;
-
 			texture.InitTexture("texture/test.jpg");
 		}
 		else if (state == 1)
@@ -77,11 +75,10 @@ namespace Popeye {
 					glDrawArrays(GL_TRIANGLES, 0, 36);
 					//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 				}
-
 			}
 		}
 
-		/***************************************************/ //game framework
+		/***********************game framework***********************/
 		//init -> initializing
 
 		// onUpdate -> main loop

@@ -17,7 +17,7 @@ namespace Popeye {
 
 	};
 
-	class Scene : public Tab
+	class SceneView : public Tab
 	{
 	public:
 		virtual void contents();

@@ -46,4 +46,5 @@ namespace Popeye {
 			scale[id] = _scale;
 		}
 	}
+
 }

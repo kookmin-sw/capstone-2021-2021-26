@@ -43,7 +43,7 @@ namespace Popeye
 		tab_1.setTab("Inspector");
 		this->tabs.push_back(tab_1);*/
 
-		Scene tab_2 = Scene();
+		SceneView tab_2 = SceneView();
 		tab_2.setTab("Scene");
 		this->tabs.push_back(tab_2);
 
@@ -191,7 +191,7 @@ namespace Popeye
 	}
 	void Tab::contents() {}
 	
-	void Scene::contents()
+	void SceneView::contents()
 	{
 		ImGui::BeginChild("GameRender");
 		// Get the size of the child (i.e. the whole draw size of the windows).

@@ -1,5 +1,7 @@
 #pragma once
 namespace Popeye {
+	class Scene;
+
 	class GameObject
 	{
 	private:
@@ -8,7 +10,7 @@ namespace Popeye {
 		GameObject* parent;
 		std::vector<GameObject*> childs;
 	public:
-		GameObject(int);
+		GameObject();
 		virtual ~GameObject();
 
 		char* GetName();
@@ -19,6 +21,8 @@ namespace Popeye {
 
 		GameObject* Getchild();
 		std::vector<GameObject*> Getchildren();
+
+		int GetID();
 		
 		template<class component>
 		void AddComponent()
@@ -31,6 +35,7 @@ namespace Popeye {
 		{
 			return component(); //todo :: think about how to access
 		}
+
 	};
 }
 
