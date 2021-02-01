@@ -3,9 +3,10 @@
 #include "stb_image.h"
 
 namespace Popeye {
+
+	/**************Shader define**************/
 	Shader::Shader(const GLchar* vertexPath , const GLchar* fragmentPath)
 	{
-		POPEYE_CORE_INFO("shader init");
 		std::string vertexCode;
 		std::string fragmentCode;
 		std::ifstream vShaderFile;
@@ -57,7 +58,7 @@ namespace Popeye {
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
 		if (!success)
 		{
-			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 		}
 
@@ -69,6 +70,7 @@ namespace Popeye {
 		glGetProgramiv(shader_ID, GL_LINK_STATUS, &success);
 		if (!success)
 		{
+			glGetProgramInfoLog(shader_ID, 512, NULL, infoLog);
 			POPEYE_CORE_ERROR("program link fail");
 		}
 
@@ -98,7 +100,9 @@ namespace Popeye {
 		glUniformMatrix4fv(glGetUniformLocation(shader_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 
-	Texture::Texture() { POPEYE_CORE_INFO("texture init"); };
+
+	/**************Texture define**************/
+	Texture::Texture() {};
 
 	void Texture::InitTexture(const char* imgPath)
 	{
@@ -130,6 +134,8 @@ namespace Popeye {
 		glBindTexture(GL_TEXTURE_2D, this->texture_ID);
 	}
 
+
+	/**************MeshRenderer component**************/
 	MeshRenderer::MeshRenderer() {}
 
 	std::vector<Mesh> MeshRenderer::meshes;
@@ -147,7 +153,7 @@ namespace Popeye {
 		{
 			if (meshes[i].id == mesh.id)
 			{
-				std::cout << mesh.id << std::endl;
+				//std::cout << mesh.id << std::endl;
 				renderables[id].first = i;
 				return;
 			}

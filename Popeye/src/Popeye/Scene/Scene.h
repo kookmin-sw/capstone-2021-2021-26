@@ -11,8 +11,8 @@ namespace Popeye {
 		~Scene();
 	public:
 		std::vector<int> gameobject_IDs;
-		int GameObjectCreated(GameObject&);
-		void GameObjectDeleted(GameObject&);
+		void GameObjectCreated(int);
+		void GameObjectDeleted(int);
 	};
 
 	class SceneManager //load/ save scene :: make it near future...  

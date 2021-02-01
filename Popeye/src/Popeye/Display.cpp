@@ -126,20 +126,16 @@ namespace Popeye {
 
 		while (!glfwWindowShouldClose(Window))
 		{
-			//guimanager->onRun();
+			guimanager->onRun();
 			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
 			glViewport(0, 0, display_w, display_h);
 			glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			
-			//m.draw_mesh();
-
 			renderer.SystemRunning();
-			//glViewport(display_w / 2, 0, display_w/2, display_h/2); // temp :: scene view
-			//object.draw_mesh();
 
-			//guimanager->onRunDraw();
+			guimanager->onRunDraw();
 			glfwSwapBuffers(Window);
 			glfwPollEvents();
 		}

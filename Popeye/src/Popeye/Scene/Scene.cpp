@@ -48,7 +48,12 @@ namespace Popeye {
 	{
 	}
 
-	void Scene::GameObjectDeleted(GameObject& gameobject)
+	void Scene::GameObjectCreated(int id)
+	{
+		gameobject_IDs.push_back(id);
+	}
+
+	void Scene::GameObjectDeleted(int gameobject)
 	{
 	}
 }

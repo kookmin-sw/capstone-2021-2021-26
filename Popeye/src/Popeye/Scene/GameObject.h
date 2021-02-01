@@ -7,8 +7,8 @@ namespace Popeye {
 	private:
 		int ID;
 		char* name;
-		GameObject* parent;
-		std::vector<GameObject*> childs;
+		int parentID;
+		std::vector<int> childs;
 	public:
 		GameObject();
 		virtual ~GameObject();
@@ -31,7 +31,7 @@ namespace Popeye {
 		}
 
 		template<class component>
-		component GetComponent()
+		component& GetComponent()
 		{
 			return component(); //todo :: think about how to access
 		}

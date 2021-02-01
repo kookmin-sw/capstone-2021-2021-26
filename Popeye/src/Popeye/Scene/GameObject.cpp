@@ -7,7 +7,7 @@ namespace Popeye {
 	GameObject::GameObject() 
 	{
 		this->ID = (int)&*this;
-		std::cout << ID << std::endl;
+		SceneManager::GetInstance()->currentScene->GameObjectCreated(this->ID);
 	}
 	GameObject::~GameObject() 
 	{
