@@ -4,7 +4,7 @@ namespace Popeye {
 	struct Shader
 	{
 		unsigned int shader_ID;
-		Shader(const GLchar* vertexPath = "shader/vertexShader.GLSL", const GLchar* fragmentPath = "shader/fragmentShader.GLSL");
+		Shader(const GLchar* vertexPath = "shader/vertexShader.glsl", const GLchar* fragmentPath = "shader/fragmentShader.glsl");
 		void use();
 		void setBool(const std::string &name, bool value) const;
 		void setInt(const std::string& name, int value) const;

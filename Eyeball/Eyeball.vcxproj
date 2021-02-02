@@ -138,10 +138,6 @@
       <Project>{177F93CA-0321-BEA0-ECDB-D1F4D81C45F1}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shader\fragmentShaderfb.glsl" />
-    <None Include="shader\vertexShaderfb.glsl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

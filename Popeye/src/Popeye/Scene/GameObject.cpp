@@ -3,7 +3,6 @@
 #include "Scene.h"
 
 namespace Popeye {
-	
 	GameObject::GameObject() 
 	{
 		this->ID = (int)&*this;

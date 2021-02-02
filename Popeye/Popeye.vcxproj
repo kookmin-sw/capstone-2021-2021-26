@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="src\Popeye.h" />
     <ClInclude Include="src\Popeye\Application.h" />
+    <ClInclude Include="src\Popeye\Component\Camera.h" />
     <ClInclude Include="src\Popeye\Component\RenderingComponents.h" />
     <ClInclude Include="src\Popeye\Component\Transform.h" />
     <ClInclude Include="src\Popeye\Core.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp" />
+    <ClCompile Include="src\Popeye\Component\Camera.cpp" />
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp" />
     <ClCompile Include="src\Popeye\Component\Transform.cpp" />
     <ClCompile Include="src\Popeye\Display.cpp" />
