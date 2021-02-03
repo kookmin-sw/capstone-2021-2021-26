@@ -11,7 +11,6 @@ namespace Popeye
 	{
 		if (cameras.find(id) == cameras.end())
 		{
-			std::cout << " ddhj" << std::endl;
 			cameras[id] = Cam();
 		}
 	}

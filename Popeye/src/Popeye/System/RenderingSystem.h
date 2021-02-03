@@ -6,7 +6,9 @@ namespace Popeye {
 		std::vector<unsigned int> VAOs;
 	
 	public:
+		unsigned int sceneVAO;
 		unsigned int FBO;
+		unsigned int viewTexture;
 	
 	private :
 		void InitBufer();

@@ -110,24 +110,26 @@ namespace Popeye {
 		gameObject->AddComponent<Transform>();
 		gameObject->AddComponent<MeshRenderer>();
 		gameObject->GetComponent<MeshRenderer>().SetMesh(gameObject->GetID(), object);
-		gameObject->GetComponent<Transform>().Set_pos(gameObject->GetID(), { -1.0f, 0.0f, 0.0f });
+		gameObject->GetComponent<Transform>().Set_pos(gameObject->GetID(), { 0.0f, 0.0f, 0.0f });
+		gameObject->GetComponent<Transform>().Set_scale(gameObject->GetID(), { 1.0f, 10.0f, 1.0f });
 
 		Popeye::GameObject* gameObject2 = new GameObject();
 		gameObject2->AddComponent<Transform>();
 		gameObject2->AddComponent<MeshRenderer>();
 		gameObject2->GetComponent<MeshRenderer>().SetMesh(gameObject2->GetID(), object);
-		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 2.0f, 0.0f, 0.0f });
+		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 0.0f, 5.0f, 0.0f });
+		gameObject2->GetComponent<Transform>().Set_scale(gameObject2->GetID(), { 1.0f, 1.0f, 1.0f });
 
 		Popeye::GameObject* gameObject3 = new GameObject();
 		gameObject3->AddComponent<Transform>();
 		gameObject3->AddComponent<MeshRenderer>();
 		gameObject3->GetComponent<MeshRenderer>().SetMesh(gameObject3->GetID(), object);
-		gameObject3->GetComponent<Transform>().Set_pos(gameObject3->GetID(), { 0.0f, 0.0f, 2.0f });
-		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 0.1f, 0.1f, 0.11f });
+		gameObject3->GetComponent<Transform>().Set_pos(gameObject3->GetID(), { 2.0f, 0.0f, -1.0f });
+		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 5.0f, 2.0f, 1.0f });
 
 		Popeye::GameObject* gameObject4 = new GameObject();
 		gameObject4->AddComponent<Transform>();
-		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 0.0f, 0.0f, 5.0f });
+		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
 		gameObject4->AddComponent<Camera>();
 
 
@@ -137,8 +139,8 @@ namespace Popeye {
 			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
 			glViewport(0, 0, display_w, display_h);
-			glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			//glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+			//glClear(GL_COLOR_BUFFER_BIT);
 			
 			renderer.SystemRunning();
 

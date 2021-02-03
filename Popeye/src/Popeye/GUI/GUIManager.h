@@ -1,26 +1,22 @@
 #pragma once
 namespace Popeye {
-	class Tab
+
+	struct Tab
 	{
-	private:
-	char* name;
-	public:
-		Tab();
-		virtual ~Tab();
-		void setTab(char* );
+		const char* name;
+		void setTabName(const char*);
 		void showTab();
-		virtual void contents();
+		virtual void showContents();
 	};
 
-	class Property : public Tab
+	struct Property : public Tab
 	{
-
+		virtual void showContents();
 	};
 
-	class SceneView : public Tab
+	struct SceneView : public Tab
 	{
-	public:
-		virtual void contents();
+		virtual void showContents();
 	};
 
 	class GUIManager
@@ -29,10 +25,10 @@ namespace Popeye {
 		ImGuiWindowFlags flags;
 		ImGuiID dockspace_id;
 		//ImGuiIO&
-		std::vector<Tab> tabs;
+		std::vector<Tab*> tabs;
 	public:
 		GUIManager();
-		virtual ~GUIManager();
+		~GUIManager();
 		void onSet(GLFWwindow*);
 		void setTabs();
 		void set_default_layout();

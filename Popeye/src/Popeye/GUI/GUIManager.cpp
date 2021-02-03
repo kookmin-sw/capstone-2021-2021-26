@@ -43,10 +43,15 @@ namespace Popeye
 		tab_1.setTab("Inspector");
 		this->tabs.push_back(tab_1);*/
 
-		SceneView tab_2 = SceneView();
-		tab_2.setTab("Scene");
-		this->tabs.push_back(tab_2);
+		//Tab tab_0;
+		SceneView* scene = new SceneView();
+		scene->setTabName("scene");
+		//tab_0 = &scene;
+		this->tabs.push_back(scene);
 
+		//SceneView tab_2 = SceneView();
+		//tab_2.setTab("Scene");
+		//this->tabs.push_back(tab_2);
 	}
 
 	void GUIManager::onRun()
@@ -152,7 +157,7 @@ namespace Popeye
 		{
 			for (int i = 0; i < tabs.size(); i++)
 			{
-				tabs[i].showTab();
+				tabs[i]->showTab();
 			}
 		}
 
@@ -176,29 +181,37 @@ namespace Popeye
 		ImGui::DestroyContext();
 	}
 
-	Tab::Tab() {}
-	Tab::~Tab() {}
-	void Tab::setTab(char* _name)
+	void Tab::setTabName(const char* _name)
 	{
 		this->name = _name;
 	}
+
 	void Tab::showTab()
 	{
 		ImGui::Begin(this->name);
-		//this->contents();
-		this->contents();
+		
+		this->showContents();
+
 		ImGui::End();
 	}
-	void Tab::contents() {}
-	
-	void SceneView::contents()
+
+	void Tab::showContents()
 	{
+	}
+
+	//SceneView::SceneView() {}
+
+	void SceneView::showContents()
+	{
+		std::cout << "dfefefe" << std::endl;
+		//std::cout << RenderingSystem::RenderingSystem(). << std::endl;
+
 		ImGui::BeginChild("GameRender");
 		// Get the size of the child (i.e. the whole draw size of the windows).
 		ImVec2 wsize = ImGui::GetWindowSize();
 		//RenderingSystem* renderingsystem = new RenderingSystem(); //temporal initial iaze TODO :: must change
 		// Because I use the texture from OpenGL, I need to invert the V from the UV.
-		ImGui::Image((ImTextureID)RenderingSystem::RenderingSystem().FBO, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		//ImGui::Image((ImTextureID)->viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::EndChild();
 
 	}
