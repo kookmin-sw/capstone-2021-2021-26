@@ -8,7 +8,7 @@ namespace Popeye
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() {}
 
-	void GUIManager::onSet(GLFWwindow* window)
+	void GUIManager::OnSet(GLFWwindow* window)
 	{
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -21,7 +21,7 @@ namespace Popeye
 		config.GlyphMaxAdvanceX = 13.0f;
 		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
 
-		io.Fonts->AddFontFromFileTTF("fonts\\forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
+		io.Fonts->AddFontFromFileTTF("fonts/forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
 
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -45,34 +45,46 @@ namespace Popeye
 
 		//Tab tab_0;
 		SceneView* scene = new SceneView();
-		scene->setTabName("scene");
-		//tab_0 = &scene;
+		scene->SetTabName("Scene");
 		this->tabs.push_back(scene);
+
+		GameView* game = new GameView();
+		game->SetTabName("Game");
+		this->tabs.push_back(game);
+
+		Inspector* inspector = new Inspector();
+		inspector->SetTabName("Inspector");
+		this->tabs.push_back(inspector);
+
+
+		Hierarchy* hierarchy = new Hierarchy();
+		hierarchy->SetTabName("Hierarchy");
+		this->tabs.push_back(hierarchy);
 
 		//SceneView tab_2 = SceneView();
 		//tab_2.setTab("Scene");
 		//this->tabs.push_back(tab_2);
 	}
 
-	void GUIManager::onRun()
+	void GUIManager::OnRun()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		this->show();
-		//ImGui::ShowDemoWindow();
+		this->Show();
+		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
 		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void GUIManager::onRunDraw()
+	void GUIManager::OnRunDraw()
 	{
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void GUIManager::show()
+	void GUIManager::Show()
 	{
 		static int initialized = 0;
 		static int new_window = 0;
@@ -138,17 +150,18 @@ namespace Popeye
 			ImGui::DockBuilderAddNode(dockspace_id, flags); // Add empty node
 
 			ImGuiID dock_main_id = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
-			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.10f, NULL, &dock_main_id);
-			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.20f, NULL, &dock_main_id);
-			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.50f, NULL, &dock_main_id);
+			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 1.0f, NULL, &dock_main_id);
+			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.1f, NULL, &dock_main_id);
+			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 1.0f, NULL, &dock_main_id);
 
 			//ImGui::DockBuilderDockWindow(dock_main_id, "S");
 
 			ImGui::DockBuilderDockWindow("Log", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Project viewer", dock_id_bottom);
-			ImGui::DockBuilderDockWindow("Properties", dock_id_left);
+			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
 			ImGui::DockBuilderDockWindow("Scene", dock_main_id);
+			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderFinish(dockspace_id);
 		}
 
@@ -157,7 +170,7 @@ namespace Popeye
 		{
 			for (int i = 0; i < tabs.size(); i++)
 			{
-				tabs[i]->showTab();
+				tabs[i]->ShowTab();
 			}
 		}
 
@@ -174,45 +187,61 @@ namespace Popeye
 
 	}
 
-	void GUIManager::onClosed()
+	void GUIManager::OnClosed()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
-	void Tab::setTabName(const char* _name)
+
+	//Tab 
+	void Tab::SetTabName(const char* _name)
 	{
 		this->name = _name;
 	}
 
-	void Tab::showTab()
+	void Tab::ShowTab()
 	{
 		ImGui::Begin(this->name);
 		
-		this->showContents();
+		this->ShowContents();
 
 		ImGui::End();
 	}
 
-	void Tab::showContents()
+	void Tab::ShowContents(){}
+
+	//Tab::sceneView
+	void SceneView::ShowContents()
 	{
+		ImGui::BeginChild("Scene Viewer");
+		
+		//ImVec2 wsize = ImGui::GetWindowSize();
+		
+		ImGui::EndChild();
 	}
 
-	//SceneView::SceneView() {}
-
-	void SceneView::showContents()
+	//Tab::GameView
+	void GameView::ShowContents()
 	{
-		std::cout << "dfefefe" << std::endl;
-		//std::cout << RenderingSystem::RenderingSystem(). << std::endl;
+		ImGui::BeginChild("Game Viewer");
 
-		ImGui::BeginChild("GameRender");
-		// Get the size of the child (i.e. the whole draw size of the windows).
 		ImVec2 wsize = ImGui::GetWindowSize();
-		//RenderingSystem* renderingsystem = new RenderingSystem(); //temporal initial iaze TODO :: must change
-		// Because I use the texture from OpenGL, I need to invert the V from the UV.
-		//ImGui::Image((ImTextureID)->viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+
+		ImGui::Image((ImTextureID)RenderingSystem::viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+
 		ImGui::EndChild();
+	}
+
+	//Tab::SceneInfo
+	void Hierarchy::ShowContents()
+	{
+	}
+	
+	//Tab::Inspector
+	void Inspector::ShowContents()
+	{
 
 	}
 

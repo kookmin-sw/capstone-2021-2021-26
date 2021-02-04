@@ -1,22 +1,36 @@
 #pragma once
 namespace Popeye {
-
 	struct Tab
 	{
 		const char* name;
-		void setTabName(const char*);
-		void showTab();
-		virtual void showContents();
+		void SetTabName(const char*);
+		void ShowTab();
+		virtual void ShowContents();
 	};
 
 	struct Property : public Tab
 	{
-		virtual void showContents();
+		virtual void ShowContents();
+	};
+
+	struct Hierarchy : public Tab
+	{
+		virtual void ShowContents();
+	};
+
+	struct Inspector : public Tab
+	{
+		virtual void ShowContents();
 	};
 
 	struct SceneView : public Tab
 	{
-		virtual void showContents();
+		virtual void ShowContents();
+	};
+
+	struct GameView : public Tab 
+	{
+		virtual void ShowContents();
 	};
 
 	class GUIManager
@@ -29,12 +43,12 @@ namespace Popeye {
 	public:
 		GUIManager();
 		~GUIManager();
-		void onSet(GLFWwindow*);
-		void setTabs();
-		void set_default_layout();
-		void onRun();
-		void onRunDraw();
-		void show();
-		void onClosed();
+		void OnSet(GLFWwindow*);
+		void SetTabs();
+		void Set_default_layout();
+		void OnRun();
+		void OnRunDraw();
+		void Show();
+		void OnClosed();
 	};
 }

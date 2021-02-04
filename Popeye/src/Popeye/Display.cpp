@@ -43,7 +43,7 @@ namespace Popeye {
 
 		static GUIManager* guimanager = new GUIManager();
 
-		guimanager->onSet(this->get_window());
+		guimanager->OnSet(this->get_window());
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -125,7 +125,15 @@ namespace Popeye {
 		gameObject3->AddComponent<MeshRenderer>();
 		gameObject3->GetComponent<MeshRenderer>().SetMesh(gameObject3->GetID(), object);
 		gameObject3->GetComponent<Transform>().Set_pos(gameObject3->GetID(), { 2.0f, 0.0f, -1.0f });
-		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 5.0f, 2.0f, 1.0f });
+		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 1.0f, 2.0f, 1.0f });
+
+		Popeye::GameObject* gameObject6 = new GameObject();
+		gameObject6->AddComponent<Transform>();
+		gameObject6->AddComponent<MeshRenderer>();
+		gameObject6->GetComponent<MeshRenderer>().SetMesh(gameObject6->GetID(), object);
+		gameObject6->GetComponent<Transform>().Set_pos(gameObject6->GetID(), { 5.0f, 1.0f, 1.0f });
+		gameObject6->GetComponent<Transform>().Set_scale(gameObject6->GetID(), { 1.0f, 1.0f, 1.0f });
+		gameObject6->GetComponent<Transform>().Set_rotation(gameObject6->GetID(), { 0.0f, 0.0f, 150.0f });
 
 		Popeye::GameObject* gameObject4 = new GameObject();
 		gameObject4->AddComponent<Transform>();
@@ -135,16 +143,16 @@ namespace Popeye {
 
 		while (!glfwWindowShouldClose(Window))
 		{
-			guimanager->onRun();
+			guimanager->OnRun();
 			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
-			glViewport(0, 0, display_w, display_h);
+			//glViewport(0, 0, display_w, display_h);
 			//glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 			//glClear(GL_COLOR_BUFFER_BIT);
 			
 			renderer.SystemRunning();
 
-			guimanager->onRunDraw();
+			guimanager->OnRunDraw();
 			glfwSwapBuffers(Window);
 			glfwPollEvents();
 		}
