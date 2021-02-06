@@ -35,15 +35,6 @@ namespace Popeye
 		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-	/*	Tab tab_0 = Tab();
-		tab_0.setTab("Properties");
-		this->tabs.push_back(tab_0);
-
-		Tab tab_1 = Tab();
-		tab_1.setTab("Inspector");
-		this->tabs.push_back(tab_1);*/
-
-		//Tab tab_0;
 		SceneView* scene = new SceneView();
 		scene->SetTabName("Scene");
 		this->tabs.push_back(scene);
@@ -61,9 +52,9 @@ namespace Popeye
 		hierarchy->SetTabName("Hierarchy");
 		this->tabs.push_back(hierarchy);
 
-		//SceneView tab_2 = SceneView();
-		//tab_2.setTab("Scene");
-		//this->tabs.push_back(tab_2);
+		Project* project = new Project();
+		project->SetTabName("Project");
+		this->tabs.push_back(project);
 	}
 
 	void GUIManager::OnRun()
@@ -150,14 +141,14 @@ namespace Popeye
 			ImGui::DockBuilderAddNode(dockspace_id, flags); // Add empty node
 
 			ImGuiID dock_main_id = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
-			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 1.0f, NULL, &dock_main_id);
-			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.1f, NULL, &dock_main_id);
-			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 1.0f, NULL, &dock_main_id);
+			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.3f, NULL, &dock_main_id);
+			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, NULL, &dock_main_id);
+			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
 
 			//ImGui::DockBuilderDockWindow(dock_main_id, "S");
 
-			ImGui::DockBuilderDockWindow("Log", dock_id_bottom);
-			ImGui::DockBuilderDockWindow("Project viewer", dock_id_bottom);
+			ImGui::DockBuilderDockWindow("Debug", dock_id_bottom);
+			ImGui::DockBuilderDockWindow("Project", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
 			ImGui::DockBuilderDockWindow("Scene", dock_main_id);
@@ -217,8 +208,10 @@ namespace Popeye
 	{
 		ImGui::BeginChild("Scene Viewer");
 		
-		//ImVec2 wsize = ImGui::GetWindowSize();
-		
+		ImVec2 wsize = ImGui::GetWindowSize();
+
+		ImGui::Image((ImTextureID)RenderingSystem::worldTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+
 		ImGui::EndChild();
 	}
 
@@ -241,6 +234,17 @@ namespace Popeye
 	
 	//Tab::Inspector
 	void Inspector::ShowContents()
+	{
+	}
+
+	//Tab::Debug
+	void Debug::ShowContents()
+	{
+
+	}
+
+	//Tab::Project
+	void Project::ShowContents()
 	{
 
 	}

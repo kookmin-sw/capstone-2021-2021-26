@@ -8,11 +8,6 @@ namespace Popeye {
 		virtual void ShowContents();
 	};
 
-	struct Property : public Tab
-	{
-		virtual void ShowContents();
-	};
-
 	struct Hierarchy : public Tab
 	{
 		virtual void ShowContents();
@@ -29,6 +24,16 @@ namespace Popeye {
 	};
 
 	struct GameView : public Tab 
+	{
+		virtual void ShowContents();
+	};
+
+	struct Debug : public Tab
+	{
+		virtual void ShowContents();
+	};
+
+	struct Project : public Tab
 	{
 		virtual void ShowContents();
 	};

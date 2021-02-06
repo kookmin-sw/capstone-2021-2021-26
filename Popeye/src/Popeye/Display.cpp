@@ -146,7 +146,7 @@ namespace Popeye {
 			guimanager->OnRun();
 			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
-			//glViewport(0, 0, display_w, display_h);
+			glViewport(0, 0, display_w, display_h);
 			//glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 			//glClear(GL_COLOR_BUFFER_BIT);
 			
