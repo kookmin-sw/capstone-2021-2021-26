@@ -71,6 +71,12 @@
       <Filter>Popeye\System</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Popeye\System\EventSystem.h">
+      <Filter>Popeye\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Events\KeyboardEvent.h">
+      <Filter>Popeye\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -116,5 +122,11 @@
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Popeye\System\EventSystem.cpp">
+      <Filter>Popeye\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Events\KeyboardEvent.cpp">
+      <Filter>Popeye\Events</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

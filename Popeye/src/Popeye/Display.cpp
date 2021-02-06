@@ -2,6 +2,7 @@
 #include "Display.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
+#include "Events/MouseEvent.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
@@ -93,7 +94,7 @@ namespace Popeye {
 			0, 1, 3,
 			1, 2, 3
 		};
-		RenderingSystem renderer;
+		RenderingSystem* renderer = new RenderingSystem();
 		Popeye::Mesh object;
 		object.id = GET_NAME(object);
 		object.vertsize = sizeof(vertices);
@@ -117,7 +118,7 @@ namespace Popeye {
 		gameObject2->AddComponent<Transform>();
 		gameObject2->AddComponent<MeshRenderer>();
 		gameObject2->GetComponent<MeshRenderer>().SetMesh(gameObject2->GetID(), object);
-		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 0.0f, 5.0f, 0.0f });
+		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 2.0f, 3.0f, 3.0f });
 		gameObject2->GetComponent<Transform>().Set_scale(gameObject2->GetID(), { 1.0f, 1.0f, 1.0f });
 
 		Popeye::GameObject* gameObject3 = new GameObject();
@@ -131,7 +132,7 @@ namespace Popeye {
 		gameObject6->AddComponent<Transform>();
 		gameObject6->AddComponent<MeshRenderer>();
 		gameObject6->GetComponent<MeshRenderer>().SetMesh(gameObject6->GetID(), object);
-		gameObject6->GetComponent<Transform>().Set_pos(gameObject6->GetID(), { 5.0f, 1.0f, 1.0f });
+		gameObject6->GetComponent<Transform>().Set_pos(gameObject6->GetID(), { 1.0f, 1.0f, 1.0f });
 		gameObject6->GetComponent<Transform>().Set_scale(gameObject6->GetID(), { 1.0f, 1.0f, 1.0f });
 		gameObject6->GetComponent<Transform>().Set_rotation(gameObject6->GetID(), { 0.0f, 0.0f, 150.0f });
 
@@ -141,16 +142,15 @@ namespace Popeye {
 		gameObject4->AddComponent<Camera>();
 
 
+
+		int display_w, display_h;
 		while (!glfwWindowShouldClose(Window))
 		{
 			guimanager->OnRun();
-			int display_w, display_h;
 			glfwGetFramebufferSize(Window, &display_w, &display_h);
 			glViewport(0, 0, display_w, display_h);
-			//glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
-			//glClear(GL_COLOR_BUFFER_BIT);
 			
-			renderer.SystemRunning();
+			renderer->SystemRunning();
 
 			guimanager->OnRunDraw();
 			glfwSwapBuffers(Window);
@@ -158,6 +158,7 @@ namespace Popeye {
 		}
 
 		delete(guimanager);
+		delete(renderer);
 	}
 
 	void Display::close_Display()

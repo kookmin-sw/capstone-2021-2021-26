@@ -16,12 +16,6 @@ namespace Popeye {
 	{
 		static RenderState renderstate;
 		static int state = 0; //temp state;
-		static Shader shader; // also temp 
-		static Texture texture; // **
- 
-		static glm::mat4 worldView = glm::mat4(1.0f);
-		static glm::mat4 worldProjection = glm::mat4(1.0f);
-		static glm::vec3 worldPos = {5.0f, 5.0f, 5.0f};
 
 		static Shader screenShader("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
 
@@ -99,7 +93,6 @@ namespace Popeye {
 				VAOs.push_back(tVAO);
 			}
 			state = 1;
-			texture.InitTexture("texture/test.jpg");
 
 			screenShader.use();
 			screenShader.setInt("screenTexture", 0);

@@ -11,7 +11,7 @@ namespace Popeye {
 		std::vector<int> childs;
 	public:
 		GameObject();
-		virtual ~GameObject();
+		~GameObject();
 
 		char* GetName();
 		char* SetName(char*);
