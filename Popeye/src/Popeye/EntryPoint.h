@@ -6,7 +6,6 @@ extern Popeye::Application* Popeye::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	//Engine::Log::Init();
 	auto app = Popeye::CreateApplication();
 	app->Run();
 	delete app;

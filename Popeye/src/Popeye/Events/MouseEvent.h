@@ -3,13 +3,21 @@
 
 namespace Popeye
 {
-	class POPEYE_API MouseEvent
+	enum MouseButton 
 	{
-	public:
-		void mouse_sensor();
-		void mouse_cursor_callback(GLFWwindow* window, double x, double y);
-		void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+		RIGHTBUTTON,
+		LEFTBUTTON,
+		WHEEL
+	};
+	class MouseEvent
+	{
 	private:
+		GLFWwindow* window;
 		double xPos, yPos;
+	private:
+		void mouse_cursor_callback(GLFWwindow*, double&, double&);
+		void mouse_button_callback(GLFWwindow*, int, int, int); //button, action, mods
+	public:
+		void mouse_set_Callback(GLFWwindow*);
 	};
 }

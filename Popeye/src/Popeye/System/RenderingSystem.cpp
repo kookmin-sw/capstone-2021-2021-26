@@ -99,6 +99,9 @@ namespace Popeye {
 		}
 		else if (state == 1)
 		{
+			//glfwGetFramebufferSize(windo, &display_w, &display_h);
+			glViewport(0, 0, 1200, 600);
+
 			if (renderstate == RenderState::RENDERWORLD)
 			{
 				glBindFramebuffer(GL_FRAMEBUFFER, worldViewFBO);
@@ -139,7 +142,6 @@ namespace Popeye {
 
 				renderstate = RenderState::RENDERWORLD;
 			}
-			//glBindTexture(GL_TEXTURE_2D, worldTexture);	// use the color attachment texture as the texture of the quad plane
 
 		}
 

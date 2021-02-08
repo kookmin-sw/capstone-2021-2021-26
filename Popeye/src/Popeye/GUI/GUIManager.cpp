@@ -28,7 +28,7 @@ namespace Popeye
 		ImGui::StyleColorsClassic();
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init();
+		ImGui_ImplOpenGL3_Init("#version 330");
 
 		flags = ImGuiWindowFlags_MenuBar;
 		flags |= ImGuiWindowFlags_NoDocking;
@@ -67,11 +67,6 @@ namespace Popeye
 		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
-		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-
-	void GUIManager::OnRunDraw()
-	{
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
@@ -130,7 +125,7 @@ namespace Popeye
 		ImGui::Columns(1);
 		ImGui::Spacing();
 
-		ImGuiIO& io = ImGui::GetIO();
+		//ImGuiIO& io = ImGui::GetIO();
 		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 
 		if (initialized == 0)
@@ -167,7 +162,6 @@ namespace Popeye
 
 		if (new_window == 1)
 		{
-			// Should dock window to empty space, instead window is not docked anywhere.
 			//ImGui::SetNextWindowDockId(dockspace_id, ImGuiCond_Once);
 			ImGui::Begin("New Window");
 			ImGui::End();

@@ -77,6 +77,9 @@
     <ClInclude Include="src\Popeye\Events\KeyboardEvent.h">
       <Filter>Popeye\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\MouseCode.h">
+      <Filter>Popeye</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">

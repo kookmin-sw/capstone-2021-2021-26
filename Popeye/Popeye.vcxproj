@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Popeye\Events\KeyboardEvent.h" />
+    <ClInclude Include="src\Popeye\MouseCode.h" />
     <ClInclude Include="src\Popeye\System\EventSystem.h" />
     <ClInclude Include="src\Popeye.h" />
     <ClInclude Include="src\Popeye\Application.h" />

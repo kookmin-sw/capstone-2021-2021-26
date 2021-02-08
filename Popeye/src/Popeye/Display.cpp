@@ -2,7 +2,6 @@
 #include "Display.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
-#include "Events/MouseEvent.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
@@ -12,7 +11,7 @@
 namespace Popeye {
 	Display::Display(){}
 	Display::~Display(){}
-	
+
 	bool Display::init_Display()
 	{
 		glfwInit();
@@ -20,12 +19,12 @@ namespace Popeye {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		this->Window = glfwCreateWindow(1200, 600, "Popeye Engine", NULL, NULL);
-		if (!this->Window)
+		this->window = glfwCreateWindow(1200, 600, "Popeye Engine", NULL, NULL);
+		if (!this->window)
 		{
 			return false;
 		}
-		glfwMakeContextCurrent(this->Window);
+		glfwMakeContextCurrent(this->window);
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			return false;
@@ -35,7 +34,7 @@ namespace Popeye {
 
 	GLFWwindow* Display::get_window()
 	{
-		return this->Window;
+		return this->window;
 	}
 
 	void Display::run_Display()
@@ -141,22 +140,19 @@ namespace Popeye {
 		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
 		gameObject4->AddComponent<Camera>();
 
-
-
 		int display_w, display_h;
-		while (!glfwWindowShouldClose(Window))
+		while (!glfwWindowShouldClose(window))
 		{
-			guimanager->OnRun();
-			glfwGetFramebufferSize(Window, &display_w, &display_h);
-			glViewport(0, 0, display_w, display_h);
-			
+			glfwGetFramebufferSize(window, &display_w, &display_h);
 			renderer->SystemRunning();
-
-			guimanager->OnRunDraw();
-			glfwSwapBuffers(Window);
+			
 			glfwPollEvents();
+			guimanager->OnRun();
+
+			glfwSwapBuffers(window);
 		}
 
+		guimanager->OnClosed();
 		delete(guimanager);
 		delete(renderer);
 	}
@@ -165,4 +161,6 @@ namespace Popeye {
 	{
 		glfwTerminate();
 	}
+
+
 }

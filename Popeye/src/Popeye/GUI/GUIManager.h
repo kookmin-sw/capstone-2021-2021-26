@@ -52,7 +52,6 @@ namespace Popeye {
 		void SetTabs();
 		void Set_default_layout();
 		void OnRun();
-		void OnRunDraw();
 		void Show();
 		void OnClosed();
 	};

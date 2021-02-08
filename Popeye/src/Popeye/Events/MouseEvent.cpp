@@ -2,12 +2,14 @@
 #include "MouseEvent.h"
 
 namespace Popeye {
-	void mouse_cursor_callback(struct GLFWwindow* window, double x, double y) 
+	void MouseEvent::mouse_cursor_callback(struct GLFWwindow* window, double& x, double& y) 
 	{
-		std::cout << x << " ," << y << std::endl;
+		this->xPos = x;
+		this->yPos = y;
 	}
 	
-	void mouse_button_callback(struct GLFWwindow* window, int button, int action, int mods) {
-	
+	void MouseEvent::mouse_button_callback(struct GLFWwindow* window, int button, int action, int mods) 
+	{
+		
 	}
 }

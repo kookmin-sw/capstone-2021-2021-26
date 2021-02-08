@@ -3,7 +3,7 @@
 namespace Popeye {
 	class Display
 	{
-		GLFWwindow* Window;
+		GLFWwindow* window;
 		static bool exit;
 	public:
 		Display();
