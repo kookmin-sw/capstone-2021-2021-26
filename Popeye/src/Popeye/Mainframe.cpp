@@ -1,5 +1,7 @@
 #include "pch.h"
-#include "Display.h"
+#include "Mainframe.h"
+#include "Events/MouseEvent.h"
+#include "Events/KeyboardEvent.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
 #include "Scene/Scene.h"
@@ -9,10 +11,10 @@
 #include "Component/Camera.h"
 
 namespace Popeye {
-	Display::Display(){}
-	Display::~Display(){}
+	Mainframe::Mainframe(){}
+	Mainframe::~Mainframe(){}
 
-	bool Display::init_Display()
+	bool Mainframe::init_Display()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -32,12 +34,12 @@ namespace Popeye {
 		return true;
 	}
 
-	GLFWwindow* Display::get_window()
+	GLFWwindow* Mainframe::get_window()
 	{
 		return this->window;
 	}
 
-	void Display::run_Display()
+	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
 
@@ -139,6 +141,12 @@ namespace Popeye {
 		gameObject4->AddComponent<Transform>();
 		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
 		gameObject4->AddComponent<Camera>();
+		
+		MouseEvent* mouseevent = new MouseEvent();
+		KeyboardEvent* keyboardevent = new KeyboardEvent();
+		mouseevent->setCallback(this->window);
+		keyboardevent->setCallback(this->window);
+	
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
@@ -157,10 +165,8 @@ namespace Popeye {
 		delete(renderer);
 	}
 
-	void Display::close_Display()
+	void Mainframe::close_Display()
 	{
 		glfwTerminate();
 	}
-
-
 }

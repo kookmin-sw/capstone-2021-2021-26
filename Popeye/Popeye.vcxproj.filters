@@ -37,9 +37,6 @@
     <ClInclude Include="src\Popeye\Core.h">
       <Filter>Popeye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Display.h">
-      <Filter>Popeye</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\EntryPoint.h">
       <Filter>Popeye</Filter>
     </ClInclude>
@@ -80,6 +77,12 @@
     <ClInclude Include="src\Popeye\MouseCode.h">
       <Filter>Popeye</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\KeyCode.h">
+      <Filter>Popeye</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Mainframe.h">
+      <Filter>Popeye</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -93,9 +96,6 @@
     </ClCompile>
     <ClCompile Include="src\Popeye\Component\Transform.cpp">
       <Filter>Popeye\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Display.cpp">
-      <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Events\MouseEvent.cpp">
       <Filter>Popeye\Events</Filter>
@@ -130,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="src\Popeye\Events\KeyboardEvent.cpp">
       <Filter>Popeye\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Mainframe.cpp">
+      <Filter>Popeye</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
 #pragma once
 
 namespace Popeye {
-	class Display
+	class Mainframe
 	{
 		GLFWwindow* window;
 		static bool exit;
 	public:
-		Display();
-		virtual ~Display();
+		Mainframe();
+		virtual ~Mainframe();
 
 		GLFWwindow* get_window(void);
 

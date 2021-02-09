@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Application.h"
-#include "Display.h"
+#include "Mainframe.h"
 
 namespace Popeye {
 	Application::Application()
@@ -14,20 +14,20 @@ namespace Popeye {
 	void Application::Run()
 	{
 		Popeye::Log::Init();
-		Popeye::Display* display = new Display();
+		Popeye::Mainframe* mainframe = new Mainframe();
 
-		if (!display->init_Display())
+		if (!mainframe->init_Display())
 		{
-			delete(display);
+			delete(mainframe);
 			POPEYE_CORE_ERROR("Renderer Initialize fail.");
 			return;
 		}
 
-		display->run_Display();
+		mainframe->run_Display();
 
 
-		display->close_Display();
-		delete display;
+		mainframe->close_Display();
+		delete mainframe;
 		return;
 	}
 
