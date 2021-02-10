@@ -4,6 +4,7 @@
 #include "Events/KeyboardEvent.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
+#include "System/EventSystem.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/Transform.h"
@@ -45,6 +46,7 @@ namespace Popeye {
 
 		static GUIManager* guimanager = new GUIManager();
 
+		EventSystem* eventsystem = new EventSystem();
 		guimanager->OnSet(this->get_window());
 
 		float vertices[] = {
@@ -156,6 +158,8 @@ namespace Popeye {
 			
 			glfwPollEvents();
 			guimanager->OnRun();
+
+			eventsystem->SystemRunning();
 
 			glfwSwapBuffers(window);
 		}

@@ -18,7 +18,7 @@ namespace Popeye{
 
 	void MouseEvent::mouseCursorCallback(double xPos, double yPos)
 	{
-		POPEYE_CORE_INFO("x: {0} , y: {1}", xPos, yPos);
+		//POPEYE_CORE_INFO("x: {0} , y: {1}", xPos, yPos);
 	}
 
 	void MouseEvent::mouseButtonCallback(int button, int action, int mods)

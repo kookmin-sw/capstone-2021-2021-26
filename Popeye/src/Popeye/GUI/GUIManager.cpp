@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GUIManager.h"
+#include "../Events/EventManager.h"
 #include "../System/RenderingSystem.h"
 
 namespace Popeye
@@ -22,7 +23,6 @@ namespace Popeye
 		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
 
 		io.Fonts->AddFontFromFileTTF("fonts/forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
-
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 		ImGui::StyleColorsClassic();
@@ -46,7 +46,6 @@ namespace Popeye
 		Inspector* inspector = new Inspector();
 		inspector->SetTabName("Inspector");
 		this->tabs.push_back(inspector);
-
 
 		Hierarchy* hierarchy = new Hierarchy();
 		hierarchy->SetTabName("Hierarchy");
@@ -190,33 +189,56 @@ namespace Popeye
 	{
 		ImGui::Begin(this->name);
 		
-		this->ShowContents();
+		ShowContents();
 
 		ImGui::End();
 	}
 
-	void Tab::ShowContents(){}
+	void Tab::ShowContents() { }
 
 	//Tab::sceneView
 	void SceneView::ShowContents()
 	{
-		ImGui::BeginChild("Scene Viewer");
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImVec2 pos = ImGui::GetWindowPos();
 		
+		ImGui::BeginChild("Scene Viewer");
+
 		ImVec2 wsize = ImGui::GetWindowSize();
 
 		ImGui::Image((ImTextureID)RenderingSystem::worldTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
+		if (EventManager::GetInstance()->GetState() != EventMod::EDIT)
+		{
+			if (ImGui::IsWindowHovered())
+			{
+				EventManager::GetInstance()->SetState(EventMod::EDIT);
+			}
+		}
+
 		ImGui::EndChild();
+
 	}
 
 	//Tab::GameView
 	void GameView::ShowContents()
 	{
+
 		ImGui::BeginChild("Game Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
 		ImGui::Image((ImTextureID)RenderingSystem::viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+
+		if (EventManager::GetInstance()->GetState() != EventMod::INPUT)
+		{
+			if (ImGui::IsWindowHovered())
+			{
+				EventManager::GetInstance()->SetState(EventMod::INPUT);
+			}
+		}
 
 		ImGui::EndChild();
 	}
@@ -234,13 +256,11 @@ namespace Popeye
 	//Tab::Debug
 	void Debug::ShowContents()
 	{
-
 	}
 
 	//Tab::Project
 	void Project::ShowContents()
 	{
-
 	}
 
 }

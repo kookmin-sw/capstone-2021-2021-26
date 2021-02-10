@@ -43,7 +43,6 @@ namespace Popeye {
 	private:
 		ImGuiWindowFlags flags;
 		ImGuiID dockspace_id;
-		//ImGuiIO&
 		std::vector<Tab*> tabs;
 	public:
 		GUIManager();

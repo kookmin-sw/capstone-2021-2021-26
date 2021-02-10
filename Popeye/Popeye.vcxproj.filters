@@ -83,6 +83,9 @@
     <ClInclude Include="src\Popeye\Mainframe.h">
       <Filter>Popeye</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\Events\EventManager.h">
+      <Filter>Popeye\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="src\Popeye\Mainframe.cpp">
       <Filter>Popeye</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Events\EventManager.cpp">
+      <Filter>Popeye\Events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

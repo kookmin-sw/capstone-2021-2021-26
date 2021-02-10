@@ -149,6 +149,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Popeye\Events\EventManager.h" />
     <ClInclude Include="src\Popeye\Events\KeyboardEvent.h" />
     <ClInclude Include="src\Popeye\KeyCode.h" />
     <ClInclude Include="src\Popeye\MouseCode.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Popeye\Events\EventManager.cpp" />
     <ClCompile Include="src\Popeye\Events\KeyboardEvent.cpp" />
     <ClCompile Include="src\Popeye\System\EventSystem.cpp" />
     <ClCompile Include="src\Popeye\Application.cpp" />
