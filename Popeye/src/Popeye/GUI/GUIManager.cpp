@@ -1,11 +1,9 @@
 #include "pch.h"
 #include "GUIManager.h"
-#include "../Events/EventManager.h"
 #include "../System/RenderingSystem.h"
 
 namespace Popeye
 {
-
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() {}
 
@@ -27,7 +25,7 @@ namespace Popeye
 
 		ImGui::StyleColorsClassic();
 
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplGlfw_InitForOpenGL(window, false);
 		ImGui_ImplOpenGL3_Init("#version 330");
 
 		flags = ImGuiWindowFlags_MenuBar;
@@ -36,23 +34,23 @@ namespace Popeye
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
 		SceneView* scene = new SceneView();
-		scene->SetTabName("Scene");
+		scene->SetTab("Scene", EventMod::SCENE);
 		this->tabs.push_back(scene);
 
 		GameView* game = new GameView();
-		game->SetTabName("Game");
+		game->SetTab("Game", EventMod::GAME);
 		this->tabs.push_back(game);
 
 		Inspector* inspector = new Inspector();
-		inspector->SetTabName("Inspector");
+		inspector->SetTab("Inspector");
 		this->tabs.push_back(inspector);
 
 		Hierarchy* hierarchy = new Hierarchy();
-		hierarchy->SetTabName("Hierarchy");
+		hierarchy->SetTab("Hierarchy");
 		this->tabs.push_back(hierarchy);
 
 		Project* project = new Project();
-		project->SetTabName("Project");
+		project->SetTab("Project");
 		this->tabs.push_back(project);
 	}
 
@@ -63,6 +61,7 @@ namespace Popeye
 		ImGui::NewFrame();
 
 		this->Show();
+		
 		ImGui::ShowDemoWindow();
 
 		ImGui::Render();
@@ -139,8 +138,6 @@ namespace Popeye
 			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, NULL, &dock_main_id);
 			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
 
-			//ImGui::DockBuilderDockWindow(dock_main_id, "S");
-
 			ImGui::DockBuilderDockWindow("Debug", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Project", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
@@ -180,9 +177,21 @@ namespace Popeye
 
 
 	//Tab 
-	void Tab::SetTabName(const char* _name)
+	void Tab::SetTab(const char* _name, EventMod eventmod)
 	{
 		this->name = _name;
+		this->eventmod = eventmod;
+	}
+
+	void Tab::CheckHover()
+	{
+		if (EventManager::GetInstance()->GetState() != eventmod)
+		{
+			if (ImGui::IsWindowHovered())
+			{
+				EventManager::GetInstance()->SetState(eventmod);
+			}
+		}
 	}
 
 	void Tab::ShowTab()
@@ -199,24 +208,13 @@ namespace Popeye
 	//Tab::sceneView
 	void SceneView::ShowContents()
 	{
-
-		ImGuiIO& io = ImGui::GetIO();
-
-		ImVec2 pos = ImGui::GetWindowPos();
-		
 		ImGui::BeginChild("Scene Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
 		ImGui::Image((ImTextureID)RenderingSystem::worldTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
-		if (EventManager::GetInstance()->GetState() != EventMod::EDIT)
-		{
-			if (ImGui::IsWindowHovered())
-			{
-				EventManager::GetInstance()->SetState(EventMod::EDIT);
-			}
-		}
+		CheckHover();
 
 		ImGui::EndChild();
 
@@ -225,20 +223,13 @@ namespace Popeye
 	//Tab::GameView
 	void GameView::ShowContents()
 	{
-
 		ImGui::BeginChild("Game Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
 		ImGui::Image((ImTextureID)RenderingSystem::viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
-		if (EventManager::GetInstance()->GetState() != EventMod::INPUT)
-		{
-			if (ImGui::IsWindowHovered())
-			{
-				EventManager::GetInstance()->SetState(EventMod::INPUT);
-			}
-		}
+		CheckHover();
 
 		ImGui::EndChild();
 	}
@@ -246,21 +237,25 @@ namespace Popeye
 	//Tab::SceneInfo
 	void Hierarchy::ShowContents()
 	{
+		CheckHover();
 	}
 	
 	//Tab::Inspector
 	void Inspector::ShowContents()
 	{
+		CheckHover();
 	}
 
 	//Tab::Debug
 	void Debug::ShowContents()
 	{
+		CheckHover();
 	}
 
 	//Tab::Project
 	void Project::ShowContents()
 	{
+		CheckHover();
 	}
 
 }

@@ -1,11 +1,11 @@
 #pragma once
 
 namespace Popeye {
-	enum EventMod 
+	enum class EventMod 
 	{
-		NONE,
-		EDIT,
-		INPUT
+		ONGUI,
+		SCENE,
+		GAME
 	};
 
 	class EventManager
@@ -15,7 +15,7 @@ namespace Popeye {
 		EventManager();
 		~EventManager();
 	private:
-		EventMod eventstate = EventMod::NONE;
+		EventMod eventstate = EventMod::ONGUI;
 	public:
 		static EventManager* GetInstance();
 		static void DestroyInstance();

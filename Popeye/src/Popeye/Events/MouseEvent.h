@@ -10,9 +10,9 @@ namespace Popeye
 		MouseCode currentMouse;
 		double xPos, yPos;
 	private:
-		void mouseCursorCallback(double, double);
-		void mouseButtonCallback(int, int, int);
-		void mouseScrollCallback(double, double);
+		void mouseCursorCallback(double&, double&);
+		void mouseButtonCallback(int&, int&, int&);
+		void mouseScrollCallback(double&, double&);
 	public:
 		void setCallback(GLFWwindow*);
 	};

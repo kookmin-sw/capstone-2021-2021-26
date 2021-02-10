@@ -16,17 +16,17 @@ namespace Popeye{
 		glfwSetScrollCallback(window, mouse_scroll);
 	}
 
-	void MouseEvent::mouseCursorCallback(double xPos, double yPos)
+	void MouseEvent::mouseCursorCallback(double& xPos, double& yPos)
 	{
 		//POPEYE_CORE_INFO("x: {0} , y: {1}", xPos, yPos);
 	}
 
-	void MouseEvent::mouseButtonCallback(int button, int action, int mods)
+	void MouseEvent::mouseButtonCallback(int& button, int& action, int& mods)
 	{
 		POPEYE_CORE_INFO("button: {0}, action: {1}, mods: {2}", button, action, mods);
 	}
 
-	void MouseEvent::mouseScrollCallback(double xoffset, double yoffset)
+	void MouseEvent::mouseScrollCallback(double& xoffset, double& yoffset)
 	{
 		POPEYE_CORE_INFO("xoffset: {0}, yoffset: {1}", xoffset, yoffset);
 	}

@@ -1,10 +1,14 @@
 #pragma once
+#include "../Events/EventManager.h"
+
 namespace Popeye {
 	struct Tab
 	{
 		const char* name;
-		void SetTabName(const char*);
+		EventMod eventmod;
+		void SetTab(const char*, EventMod = EventMod::ONGUI);
 		void ShowTab();
+		void CheckHover();
 		virtual void ShowContents();
 	};
 

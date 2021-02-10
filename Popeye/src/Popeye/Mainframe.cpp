@@ -47,7 +47,7 @@ namespace Popeye {
 		static GUIManager* guimanager = new GUIManager();
 
 		EventSystem* eventsystem = new EventSystem();
-		guimanager->OnSet(this->get_window());
+		guimanager->OnSet(window);
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -146,8 +146,8 @@ namespace Popeye {
 		
 		MouseEvent* mouseevent = new MouseEvent();
 		KeyboardEvent* keyboardevent = new KeyboardEvent();
-		mouseevent->setCallback(this->window);
-		keyboardevent->setCallback(this->window);
+		mouseevent->setCallback(window);
+		keyboardevent->setCallback(window);
 	
 
 		int display_w, display_h;
