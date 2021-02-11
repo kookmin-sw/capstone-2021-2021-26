@@ -123,9 +123,9 @@ void ImGui_ImplGlfw_ScrollCallback(GLFWwindow* window, double xoffset, double yo
     if (g_PrevUserCallbackScroll != NULL && window == g_Window)
         g_PrevUserCallbackScroll(window, xoffset, yoffset);
 
-    ImGuiIO& io = ImGui::GetIO();
+    /*ImGuiIO& io = ImGui::GetIO();
     io.MouseWheelH += (float)xoffset;
-    io.MouseWheel += (float)yoffset;
+    io.MouseWheel += (float)yoffset;*/
 }
 
 void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

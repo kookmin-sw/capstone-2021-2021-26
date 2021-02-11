@@ -40,9 +40,6 @@
     <ClInclude Include="src\Popeye\EntryPoint.h">
       <Filter>Popeye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Events\MouseEvent.h">
-      <Filter>Popeye\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\GUI\GUIManager.h">
       <Filter>Popeye\GUI</Filter>
     </ClInclude>
@@ -71,9 +68,6 @@
     <ClInclude Include="src\Popeye\System\EventSystem.h">
       <Filter>Popeye\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Events\KeyboardEvent.h">
-      <Filter>Popeye\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\MouseCode.h">
       <Filter>Popeye</Filter>
     </ClInclude>
@@ -84,6 +78,9 @@
       <Filter>Popeye</Filter>
     </ClInclude>
     <ClInclude Include="src\Popeye\Events\EventManager.h">
+      <Filter>Popeye\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Events\Events.h">
       <Filter>Popeye\Events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -99,9 +96,6 @@
     </ClCompile>
     <ClCompile Include="src\Popeye\Component\Transform.cpp">
       <Filter>Popeye\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Events\MouseEvent.cpp">
-      <Filter>Popeye\Events</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\GUI\GUIManager.cpp">
       <Filter>Popeye\GUI</Filter>
@@ -130,9 +124,6 @@
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Popeye\System\EventSystem.cpp">
       <Filter>Popeye\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Events\KeyboardEvent.cpp">
-      <Filter>Popeye\Events</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Mainframe.cpp">
       <Filter>Popeye</Filter>

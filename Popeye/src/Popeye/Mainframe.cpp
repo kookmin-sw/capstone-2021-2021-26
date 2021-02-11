@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "Mainframe.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyboardEvent.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
 #include "System/EventSystem.h"
@@ -47,6 +45,7 @@ namespace Popeye {
 		static GUIManager* guimanager = new GUIManager();
 
 		EventSystem* eventsystem = new EventSystem();
+		eventsystem->SetEventCallbacks(window);
 		guimanager->OnSet(window);
 
 		float vertices[] = {
@@ -143,12 +142,6 @@ namespace Popeye {
 		gameObject4->AddComponent<Transform>();
 		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
 		gameObject4->AddComponent<Camera>();
-		
-		MouseEvent* mouseevent = new MouseEvent();
-		KeyboardEvent* keyboardevent = new KeyboardEvent();
-		mouseevent->setCallback(window);
-		keyboardevent->setCallback(window);
-	
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
@@ -156,10 +149,9 @@ namespace Popeye {
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			renderer->SystemRunning();
 			
-			glfwPollEvents();
-			guimanager->OnRun();
-
 			eventsystem->SystemRunning();
+
+			guimanager->OnRun();
 
 			glfwSwapBuffers(window);
 		}

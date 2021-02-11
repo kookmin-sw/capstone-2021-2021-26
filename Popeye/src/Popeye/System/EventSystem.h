@@ -1,20 +1,25 @@
 #pragma once
 #include "../Events/EventManager.h"
-namespace Popeye {
+#include "../Events/Events.h"
 
+namespace Popeye {
 	class EventSystem
 	{
 	private:
 		EventMod eventstate;
+		std::queue<Event*> eventqueue;
 	private:
-		void GUIEvent();
-		void SceneEvent();
-		void InputEvent();
+		void KeyPressCallback(int, int, int, int);	//key scancode action mods
+		void MouseCursorCallback(double&, double&); //xpos ypos
+		void MouseButtonCallback(int&, int&, int&); //button action mods
+		void MouseScrollCallback(double&, double&); //xoffset yoffset
+
+		void ExecuteGUIEvent();
+		void ExecuteSceneEvent();
+		void ExecuteGameInput();
 	public:
+		void SetEventCallbacks(GLFWwindow*);
 		void SystemRunning();
-		void Init();
-		void OnUpdate();
-		void OnExit();;
 	};
 
 }

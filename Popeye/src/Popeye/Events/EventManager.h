@@ -3,6 +3,7 @@
 namespace Popeye {
 	enum class EventMod 
 	{
+		NONE,
 		ONGUI,
 		SCENE,
 		GAME
@@ -15,7 +16,7 @@ namespace Popeye {
 		EventManager();
 		~EventManager();
 	private:
-		EventMod eventstate = EventMod::ONGUI;
+		EventMod eventstate = EventMod::NONE;
 	public:
 		static EventManager* GetInstance();
 		static void DestroyInstance();
