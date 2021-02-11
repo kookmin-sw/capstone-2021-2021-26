@@ -29,9 +29,9 @@ namespace Popeye {
 	
 	struct MouseButton : public Event
 	{
-		MouseCode currentMouse;
-		int button, action, mods;
-		virtual std::vector<int> GetMouseButton() { return { currentMouse, button, action, mods }; }
+		MouseCode button;
+		int action, mods;
+		virtual std::vector<int> GetMouseButton() { return {  button, action, mods }; }
 	};
 
 	struct MouseScroll : public Event
@@ -42,8 +42,9 @@ namespace Popeye {
 
 	struct KeyboardButton : public Event
 	{
-		KeyCode pressedkey;
-		virtual std::vector<int> GetKeyButton();
+		KeyCode button;
+		int scancode, action, mods;
+		virtual std::vector<int> GetKeyButton() { return{ button, scancode, action, mods }; }
 	};
 }
 
