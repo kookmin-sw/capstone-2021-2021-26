@@ -7,9 +7,11 @@
 #include "../Component/Camera.h"
 
 namespace Popeye {
+	glm::vec3 g_sceneViewPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	unsigned int RenderingSystem::viewTexture;
 	unsigned int RenderingSystem::worldTexture;
-	//unsigned int RenderingSystem::third_person_viewTexture;
+
 	// render system should run while not on play...
 
 	void RenderingSystem::SystemRunning()
@@ -99,7 +101,6 @@ namespace Popeye {
 		}
 		else if (state == 1)
 		{
-			//glfwGetFramebufferSize(windo, &display_w, &display_h);
 			glViewport(0, 0, 1200, 600);
 
 			if (renderstate == RenderState::RENDERWORLD)
@@ -155,9 +156,9 @@ namespace Popeye {
 
 	void RenderingSystem::Render(RenderState& state)
 	{
-		static Shader shader; // also temp 
-		static Shader shade2; // also temp 
-		static Texture texture; // **
+		static Shader shader; // temp 
+		static Shader shader2; // also temp 
+		static Texture texture; // ..
 		static int  init = 0;
 		if (init == 0) {
 			texture.InitTexture("texture/test.jpg");
@@ -165,7 +166,7 @@ namespace Popeye {
 		}
 		static glm::mat4 worldView = glm::mat4(1.0f);
 		static glm::mat4 worldProjection = glm::mat4(1.0f);
-		static glm::vec3 worldPos = { 5.0f, 5.0f, 5.0f };
+		//static glm::vec3 worldPos = { 5.0f, 5.0f, 5.0f };
 
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
@@ -200,12 +201,13 @@ namespace Popeye {
 			}
 			else
 			{
-				shade2.use();
-				worldView = glm::lookAt(worldPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				shader2.use();
+				worldView = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 				worldProjection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-				shade2.setMat4("view", worldView);
-				shade2.setMat4("projection", worldProjection);
+				shader2.setMat4("view", worldView);
+				shader2.setMat4("projection", worldProjection);
 			}
+
 			if (MeshRenderer::renderables.find(id) != MeshRenderer::renderables.end()) //Rendering
 			{
 
@@ -226,7 +228,7 @@ namespace Popeye {
 				}
 				else
 				{
-					shade2.setMat4("model", model);
+					shader2.setMat4("model", model);
 				}
 
 				glBindVertexArray(VAOs[MeshRenderer::renderables[id].first]);

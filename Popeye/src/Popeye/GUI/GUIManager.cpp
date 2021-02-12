@@ -25,7 +25,7 @@ namespace Popeye
 
 		ImGui::StyleColorsClassic();
 
-		ImGui_ImplGlfw_InitForOpenGL(window, false);
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 
 		flags = ImGuiWindowFlags_MenuBar;
