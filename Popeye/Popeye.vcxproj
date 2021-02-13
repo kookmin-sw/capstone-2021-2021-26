@@ -159,7 +159,6 @@
     <ClInclude Include="src\Popeye\Application.h" />
     <ClInclude Include="src\Popeye\Component\Camera.h" />
     <ClInclude Include="src\Popeye\Component\RenderingComponents.h" />
-    <ClInclude Include="src\Popeye\Component\Transform.h" />
     <ClInclude Include="src\Popeye\Core.h" />
     <ClInclude Include="src\Popeye\Mainframe.h" />
     <ClInclude Include="src\Popeye\EntryPoint.h" />
@@ -180,7 +179,6 @@
     <ClCompile Include="src\Popeye\Application.cpp" />
     <ClCompile Include="src\Popeye\Component\Camera.cpp" />
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp" />
-    <ClCompile Include="src\Popeye\Component\Transform.cpp" />
     <ClCompile Include="src\Popeye\Mainframe.cpp" />
     <ClCompile Include="src\Popeye\GUI\GUIManager.cpp" />
     <ClCompile Include="src\Popeye\GUI\imgui_impl_glfw.cpp" />

@@ -31,9 +31,6 @@
     <ClInclude Include="src\Popeye\Component\RenderingComponents.h">
       <Filter>Popeye\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Component\Transform.h">
-      <Filter>Popeye\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\Core.h">
       <Filter>Popeye</Filter>
     </ClInclude>
@@ -95,9 +92,6 @@
       <Filter>Popeye\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp">
-      <Filter>Popeye\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Component\Transform.cpp">
       <Filter>Popeye\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\GUI\GUIManager.cpp">

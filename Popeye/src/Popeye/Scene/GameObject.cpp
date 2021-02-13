@@ -1,13 +1,18 @@
 #include "pch.h"
 #include "GameObject.h"
-#include "Scene.h"
 
 namespace Popeye {
-	GameObject::GameObject() 
+	
+	GameObject::GameObject()
 	{
-		this->ID = (int)&*this;
-		SceneManager::GetInstance()->currentScene->GameObjectCreated(this->ID);
+		ID = (int)&*this;
 	}
+
+	void GameObject::AddChild(GameObject* child)
+	{
+		childs.push_back(child);
+	}
+
 	GameObject::~GameObject() 
 	{
 
@@ -16,6 +21,10 @@ namespace Popeye {
 	char* GameObject::GetName()
 	{
 		return this->name;
+	}
+	void GameObject::SetName(char* _name)
+	{
+		this->name = _name;
 	}
 
 	int GameObject::GetID()

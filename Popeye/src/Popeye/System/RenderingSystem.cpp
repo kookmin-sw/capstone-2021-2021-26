@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "RenderingSystem.h"
-
+#include "../Scene/SceneManger.h"
 #include "../Scene/Scene.h"
-#include "../Component/Transform.h"
+#include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
 #include "../Component/Camera.h"
 
@@ -171,11 +171,13 @@ namespace Popeye {
 
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		for (int id : SceneManager::GetInstance()->currentScene->gameobject_IDs)
+		for (GameObject* gameObject : SceneManager::GetInstance()->currentScene->gameObjects)
 		{
-			glm::vec3 position = Transform::position[id];
-			glm::vec3 rotation = Transform::rotation[id];
-			glm::vec3 scale = Transform::scale[id];
+			int id = gameObject->GetID();
+			glm::vec3 position	= gameObject->transform.Position();
+			glm::vec3 rotation	= gameObject->transform.Rotation();
+			glm::vec3 scale		= gameObject->transform.Scale();
+			
 			if (state == RenderState::RENDERCAMERAVIEW)
 			{
 				shader.use();
@@ -211,7 +213,6 @@ namespace Popeye {
 
 			if (MeshRenderer::renderables.find(id) != MeshRenderer::renderables.end()) //Rendering
 			{
-
 				texture.drawTexture();
 
 				glm::mat4 model = glm::mat4(1.0f);

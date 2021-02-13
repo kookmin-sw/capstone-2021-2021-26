@@ -1,5 +1,4 @@
 #pragma once
-#include "SceneManger.h"
 
 namespace Popeye {
 	
@@ -10,12 +9,11 @@ namespace Popeye {
 	private:
 		int scene_id;
 	public:
-		glm::vec3 position;
+		std::vector<GameObject*> gameObjects; // root gameobjects at scene
 	public:
 		Scene();
 		~Scene();
-		std::vector<int> gameobject_IDs;
-		void GameObjectCreated(int);
-		void GameObjectDeleted(int);
+		void CreateGameObject();
+		void DeleteGameObject(int);
 	};
 }

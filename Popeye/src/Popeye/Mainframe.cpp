@@ -5,7 +5,6 @@
 #include "System/EventSystem.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
-#include "Component/Transform.h"
 #include "Component/RenderingComponents.h"
 #include "Component/Camera.h"
 
@@ -41,7 +40,6 @@ namespace Popeye {
 	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
-
 		static GUIManager* guimanager = new GUIManager();
 
 		EventSystem* eventsystem = new EventSystem();
@@ -104,12 +102,40 @@ namespace Popeye {
 		object.indicies = indices;
 		object.indsize = sizeof(indices);
 
-		//Popeye::mesh m;
-		//m.shader;
-		//m.texture.InitTexture("texture/test.jpg");
-		//m.init_buffer(vertices, sizeof(vertices), indices, sizeof(indices));
+		scene->CreateGameObject();
+		scene->CreateGameObject();
+		scene->CreateGameObject();
+		scene->CreateGameObject();
+		scene->CreateGameObject();
+
+		scene->gameObjects[0]->AddComponent<MeshRenderer>();
+		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[0]->GetID(), object);
+		scene->gameObjects[0]->transform.SetPosition({ 0.0f, 0.0f, 0.0f });
+		scene->gameObjects[0]->transform.SetScale({ 1.0f, 2.0f, 1.0f });
+		scene->gameObjects[0]->SetName("gameObject1");
+
+		scene->gameObjects[1]->AddComponent<MeshRenderer>();
+		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[1]->GetID(), object);
+		scene->gameObjects[1]->transform.SetPosition({ 2.0f, 3.0f, 3.0f });
+		scene->gameObjects[1]->SetName("gameObject2");
+
+		scene->gameObjects[2]->AddComponent<MeshRenderer>();
+		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[2]->GetID(), object);
+		scene->gameObjects[2]->transform.SetPosition({ 2.0f, 0.0f, -1.0f });
+		scene->gameObjects[2]->transform.SetScale({ 1.0f, 2.0f, 1.0f });
+		scene->gameObjects[2]->SetName("gameObject3");
+
+		scene->gameObjects[3]->transform.SetPosition( {5.0f, 5.0f, 5.0f} );
+		scene->gameObjects[3]->AddComponent<Camera>();
+		scene->gameObjects[3]->SetName("Camera");
+
+		scene->gameObjects[4]->AddComponent<MeshRenderer>();
+		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[4]->GetID(), object);
+		scene->gameObjects[4]->transform.SetPosition({ 1.0f, 4.0f, 5.0f });
+		scene->gameObjects[4]->transform.SetScale({ 6.0f, 2.0f, 6.0f });
+		scene->gameObjects[4]->SetName("gameObject3");
 		
-		Popeye::GameObject* gameObject = new GameObject();
+		/*Popeye::GameObject* gameObject = new GameObject();
 		gameObject->AddComponent<Transform>();
 		gameObject->AddComponent<MeshRenderer>();
 		gameObject->GetComponent<MeshRenderer>().SetMesh(gameObject->GetID(), object);
@@ -141,7 +167,7 @@ namespace Popeye {
 		Popeye::GameObject* gameObject4 = new GameObject();
 		gameObject4->AddComponent<Transform>();
 		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
-		gameObject4->AddComponent<Camera>();
+		gameObject4->AddComponent<Camera>();*/
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))

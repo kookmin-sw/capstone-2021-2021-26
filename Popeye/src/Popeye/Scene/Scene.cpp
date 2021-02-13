@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
+#include "SceneManger.h"
+#include "GameObject.h"
 
 namespace Popeye {
 	//Scene
@@ -13,12 +15,10 @@ namespace Popeye {
 	{
 	}
 
-	void Scene::GameObjectCreated(int id)
+	void Scene::CreateGameObject()
 	{
-		gameobject_IDs.push_back(id);
+		GameObject* gameObject = new GameObject();
+		gameObjects.push_back(gameObject);
 	}
 
-	void Scene::GameObjectDeleted(int gameobject)
-	{
-	}
 }
