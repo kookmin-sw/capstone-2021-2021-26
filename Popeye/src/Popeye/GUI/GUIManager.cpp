@@ -3,6 +3,7 @@
 #include "../System/RenderingSystem.h"
 #include "../Scene/SceneManger.h"
 #include "../Scene/Scene.h"
+#include "../Scene/GameObject.h"
 
 namespace Popeye
 {
@@ -243,7 +244,11 @@ namespace Popeye
 		CheckHover();
 		if (ImGui::TreeNode("Scene"))
 		{
-			//for(int i = 0; i < scene->)
+			for(int i = 0; i < scene->gameObjects.size(); i++)
+			{
+				ImGui::Text(scene->gameObjects[i]->GetName());
+			}
+			ImGui::TreePop();
 		}
 	}
 	

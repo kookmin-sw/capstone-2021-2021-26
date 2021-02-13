@@ -104,14 +104,14 @@ namespace Popeye {
 		{
 			glViewport(0, 0, 1200, 600);
 
-			if (renderstate == RenderState::RENDERWORLD)
+			if (renderstate == RenderState::RENDERSCENEVIEW)
 			{
 				glBindFramebuffer(GL_FRAMEBUFFER, worldViewFBO);
 				glEnable(GL_DEPTH_TEST);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				//render
-				Render(renderstate);
+				Rendering(renderstate);
 				
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -122,7 +122,7 @@ namespace Popeye {
 				glClearColor(0.5f, 0.5f, 0.5f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
 				glClear(GL_COLOR_BUFFER_BIT);
 
-				renderstate = RenderState::RENDERCAMERAVIEW;
+				renderstate = RenderState::RENDERGAMEVIEW;
 			}
 			else
 			{
@@ -131,7 +131,7 @@ namespace Popeye {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				//render
-				Render(renderstate);
+				Rendering(renderstate);
 
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -142,7 +142,7 @@ namespace Popeye {
 				glClearColor(0.5f, 0.5f, 0.5f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
 				glClear(GL_COLOR_BUFFER_BIT);
 
-				renderstate = RenderState::RENDERWORLD;
+				renderstate = RenderState::RENDERSCENEVIEW;
 			}
 
 		}
@@ -155,7 +155,7 @@ namespace Popeye {
 		// onexit -> end
 	}
 
-	void RenderingSystem::Render(RenderState& state)
+	void RenderingSystem::Rendering(RenderState& state)
 	{
 		static Shader shader; // temp 
 		static Shader shader2; // also temp 
@@ -178,7 +178,7 @@ namespace Popeye {
 			glm::vec3 rotation	= gameObject->transform.Rotation();
 			glm::vec3 scale		= gameObject->transform.Scale();
 			
-			if (state == RenderState::RENDERCAMERAVIEW)
+			if (state == RenderState::RENDERGAMEVIEW)
 			{
 				shader.use();
 				if (Camera::cameras.find(id) != Camera::cameras.end()) //Camera
@@ -224,7 +224,7 @@ namespace Popeye {
 
 				model = glm::scale(model, scale);
 
-				if (state == RenderState::RENDERCAMERAVIEW)
+				if (state == RenderState::RENDERGAMEVIEW)
 				{
 					shader.setMat4("model", model);
 				}

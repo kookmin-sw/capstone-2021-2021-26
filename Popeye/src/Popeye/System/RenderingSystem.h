@@ -12,8 +12,8 @@ namespace Popeye {
 
 	enum class RenderState
 	{
-		RENDERWORLD,
-		RENDERCAMERAVIEW
+		RENDERSCENEVIEW,
+		RENDERGAMEVIEW
 	};
 
 	class RenderingSystem
@@ -26,7 +26,7 @@ namespace Popeye {
 		static unsigned int worldTexture;
 	
 	private :
-		void Render(RenderState&);
+		void Rendering(RenderState&);
 	
 	public:
 		void SystemRunning();
