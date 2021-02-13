@@ -6,9 +6,9 @@ namespace Popeye {
 	class EventSystem
 	{
 	private:
-		EventMod eventstate;
-		std::queue<Event*> eventqueue;
-		GLFWwindow* window;
+		EventMod		eventstate;
+		KeyboardEvent	keyevent;
+		MouseEvent		mouseevent;
 	private:
 		void KeyPressCallback(int, int, int, int);	//key scancode action mods
 		void MouseCursorCallback(double, double); //xpos ypos

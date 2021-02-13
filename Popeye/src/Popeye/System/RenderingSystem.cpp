@@ -7,7 +7,8 @@
 #include "../Component/Camera.h"
 
 namespace Popeye {
-	glm::vec3 g_sceneViewPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
+	glm::vec3 g_sceneViewDirection = glm::vec3(0.0f, 0.0f, 1.0f);
 
 	unsigned int RenderingSystem::viewTexture;
 	unsigned int RenderingSystem::worldTexture;
@@ -202,7 +203,7 @@ namespace Popeye {
 			else
 			{
 				shader2.use();
-				worldView = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				worldView = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 				worldProjection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
 				shader2.setMat4("view", worldView);
 				shader2.setMat4("projection", worldProjection);

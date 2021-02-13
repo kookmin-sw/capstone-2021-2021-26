@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GUIManager.h"
 #include "../System/RenderingSystem.h"
+#include "../Scene/SceneManger.h"
+#include "../Scene/Scene.h"
 
 namespace Popeye
 {
@@ -234,10 +236,15 @@ namespace Popeye
 		ImGui::EndChild();
 	}
 
-	//Tab::SceneInfo
+	//Tab::Hierarchy
 	void Hierarchy::ShowContents()
 	{
+		Scene* scene = SceneManager::GetInstance()->currentScene;
 		CheckHover();
+		if (ImGui::TreeNode("Scene"))
+		{
+			//for(int i = 0; i < scene->)
+		}
 	}
 	
 	//Tab::Inspector

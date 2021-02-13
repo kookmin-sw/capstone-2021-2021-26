@@ -3,48 +3,19 @@
 #include "../MouseCode.h"
 
 namespace Popeye {
-	enum class Eventtype
+
+	struct KeyboardEvent
 	{
-		MOUSECURSOR = 0,
-		MOUSEBUTTON = 1,
-		MOUSESCROLL = 2,
-		KEYBOARD = 3,
-		CHARINPUT = 4
+		bool keyPressed[350] = {false};
+		bool IsKeyPressed(KeyCode keycode) { return keyPressed[keycode]; }
 	};
 
-	struct Event
+	struct MouseEvent 
 	{
-		Eventtype eventtype;
-		virtual std::vector<int> GetMouseButton()		{ return{ 0, 0, 0, 0 };}
-		virtual std::vector<double> GetMouseCursor()	{ return{ 0.0, 0.0 }; }
-		virtual std::vector<double> GetMouseScroll()	{ return{ 0.0, 0.0 }; }
-		virtual std::vector<int> GetKeyButton()			{ return{ 0, 0, 0, 0 }; };
-	};
-
-	struct MouseCursor : public Event
-	{
+		bool mousePressed[11] = {false};
 		double xPos, yPos;
-		virtual std::vector<double> GetMouseCursor() { return { xPos, yPos }; }
-	};
-	
-	struct MouseButton : public Event
-	{
-		MouseCode button;
-		int action, mods;
-		virtual std::vector<int> GetMouseButton() { return {  button, action, mods }; }
-	};
-
-	struct MouseScroll : public Event
-	{
 		double xoffset, yoffset;
-		virtual std::vector<double> GetMouseScroll() { return { xoffset, yoffset }; }
-	};
-
-	struct KeyboardButton : public Event
-	{
-		KeyCode button;
-		int scancode, action, mods;
-		virtual std::vector<int> GetKeyButton() { return{ button, scancode, action, mods }; }
+		bool IsMousePressed(MouseCode mousecode) { return mousePressed[mousecode]; }
 	};
 }
 

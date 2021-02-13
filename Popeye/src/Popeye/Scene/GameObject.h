@@ -14,7 +14,7 @@ namespace Popeye {
 		~GameObject();
 
 		char* GetName();
-		char* SetName(char*);
+		void SetName(char*);
 
 		GameObject* GetParent();
 		void SetParent(GameObject*);

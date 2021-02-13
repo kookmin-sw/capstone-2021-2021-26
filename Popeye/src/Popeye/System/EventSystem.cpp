@@ -4,13 +4,12 @@
 namespace Popeye
 {
 	extern glm::vec3 g_sceneViewPosition;
+	extern glm::vec3 g_sceneViewDirection;
 
 	void EventSystem::SetEventCallbacks(GLFWwindow* window)
 	{
-		this->window = window;
-
 		glfwSetWindowUserPointer(window, this);
-		auto key_press =	[](GLFWwindow* w, int _key, int _scancode, int _action, int _mods)	{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->KeyPressCallback(_key, _scancode, _action, _mods); };
+		auto key_press	  =	[](GLFWwindow* w, int _key, int _scancode, int _action, int _mods)	{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->KeyPressCallback(_key, _scancode, _action, _mods); };
 		auto mouse_cursor = [](GLFWwindow* w, double _xPos, double _yPos)						{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseCursorCallback(_xPos, _yPos); };
 		auto mouse_button = [](GLFWwindow* w, int _button, int _action, int _mods)				{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseButtonCallback(_button, _action, _mods); };
 		auto mouse_scroll = [](GLFWwindow* w, double _xOffset, double _yOffset)					{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseScrollCallback(_xOffset, _yOffset); };
@@ -46,140 +45,110 @@ namespace Popeye
 
 		glfwPollEvents();
 
-
 	}
 
 	void EventSystem::ExecuteGUIEvent() //For Dear imGUI events
 	{
-		static Event* _event;
 		static ImGuiIO& io = ImGui::GetIO();
-		while (!eventqueue.empty())
-		{
-			_event = eventqueue.front();
-			if (_event->eventtype == Eventtype::MOUSESCROLL)
-			{
-				io.MouseWheelH	+= (float)_event->GetMouseScroll()[0];
-				io.MouseWheel	+= (float)_event->GetMouseScroll()[1];
-			}
-			if (_event->eventtype == Eventtype::KEYBOARD)
-			{
-			}
-			if (_event->eventtype == Eventtype::CHARINPUT)
-			{
-
-			}
-			eventqueue.pop();
-		}
 	}
 
-	void EventSystem::ExecuteSceneEvent() // on game scene edit
+	void EventSystem::ExecuteSceneEvent() // On game scene edit
 	{
-		static Event* _event;
-		static bool isMouseRightButtonPressed = false;
-		static std::stack<int> keystack;
+		static bool leftM	= false;
+		static bool middleM = false;
+		static bool rightM	= false;
+		static glm::vec2 lastPos = glm::vec2(0.0f, 0.0f);
+		static float yaw = -90.0f;
+		static float pitch = 0.0f;
 
-		int button	= -1;
-		int action	= -1;
-		while (!eventqueue.empty())
+		//mouse
+		if (mouseevent.IsMousePressed(Mouse::ButtonLeft))//drag and drop
 		{
-			_event = eventqueue.front();
-			if (_event->eventtype == Eventtype::MOUSECURSOR)
-			{
-				if (isMouseRightButtonPressed)
-				{
-					POPEYE_CORE_INFO("scene view moving");
-				}
-			}
-			if (_event->eventtype == Eventtype::MOUSEBUTTON)
-			{
-				button = _event->GetMouseButton()[0];
-				action = _event->GetMouseButton()[1];
-				if (action == GLFW_PRESS && button == Mouse::ButtonRight)	{ isMouseRightButtonPressed = true; }
-				if (action == GLFW_RELEASE && button == Mouse::ButtonRight)	{ isMouseRightButtonPressed = false; }
-			}
-			if (_event->eventtype == Eventtype::MOUSESCROLL)
-			{
-				//std::cout << (float)_event->GetMouseScroll()[0] << std::endl;
-				//std::cout << _event->GetMouseScroll()[1] << std::endl;
-			}
-			if (_event->eventtype == Eventtype::KEYBOARD)
-			{
-				button	=	_event->GetKeyButton()[0];
-				action	=	_event->GetKeyButton()[2];
 
-				if (action == GLFW_PRESS || action == GLFW_REPEAT)
-				{
-					if (button == Keyboard::W) 
-					{
-						g_sceneViewPosition += glm::vec3(0.0f, 0.0f, 0.2f);
-					}
-					if (button == Keyboard::A) 
-					{
-						g_sceneViewPosition += glm::vec3(0.2f, 0.0f, 0.0f);
-					}
-					if (button == Keyboard::S) 
-					{
-						g_sceneViewPosition -= glm::vec3(0.0f, 0.0f, 0.2f);
-					}
-					if (button == Keyboard::D) 
-					{
-						g_sceneViewPosition -= glm::vec3(0.2f, 0.0f, 0.0f);
-					}
-				}
-			}
-
-			eventqueue.pop();
 		}
+		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
+		{
+
+		}
+		if (mouseevent.IsMousePressed(Mouse::ButtonRight))	
+		{
+			if (!rightM)
+			{
+				rightM = true;
+				lastPos.x = (float)mouseevent.xPos;
+				lastPos.y = (float)mouseevent.yPos;
+			}
+			if (rightM)
+			{
+				float xoffset = lastPos.x - mouseevent.xPos;
+				float yoffset = lastPos.y - mouseevent.yPos;
+				lastPos.x = mouseevent.xPos;
+				lastPos.y = mouseevent.yPos;
+
+				float sensitivity = 0.25f;
+				xoffset *= sensitivity;
+				yoffset *= sensitivity;
+
+				yaw -= xoffset;
+				pitch += yoffset;
+
+				if (pitch > 89.0f)
+					pitch = 89.0f;
+				if (pitch < -89.0f)
+					pitch = -89.0f;
+				
+				glm::vec3 front;
+				front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+				front.y = sin(glm::radians(pitch));
+				front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+				g_sceneViewDirection = glm::normalize(front);
+			}
+		}
+		else
+		{
+			rightM = false;
+		}
+
+		
+		//keyboard
+		if (keyevent.IsKeyPressed(Keyboard::W)) { g_sceneViewPosition += 0.1f * g_sceneViewDirection; }
+		if (keyevent.IsKeyPressed(Keyboard::S)) { g_sceneViewPosition -= 0.1f * g_sceneViewDirection; }
+		if (keyevent.IsKeyPressed(Keyboard::A)) { g_sceneViewPosition -= 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::D)) { g_sceneViewPosition += 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::Q)) { g_sceneViewPosition -= glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::E)) { g_sceneViewPosition += glm::vec3(0.0f, 0.1f, 0.0f); }
+		
 	}
 
 	void EventSystem::ExecuteGameInput() // input class handle on play
 	{
-		while (!eventqueue.empty())
-		{
-			eventqueue.pop();
-		}
+
 	}
 
 	void EventSystem::MouseCursorCallback(double _xPos, double _yPos)
 	{
-		MouseCursor _event;
-		_event.eventtype	= Eventtype::MOUSECURSOR;
-		_event.xPos			= _xPos;
-		_event.yPos			= _yPos;
-
-		eventqueue.push(&_event);
+		mouseevent.xPos = _xPos;
+		mouseevent.yPos = _yPos;
 	}
 
-	void EventSystem::MouseButtonCallback(int button, int action, int mods)
+	void EventSystem::MouseButtonCallback(int _button, int _action, int _mods)
 	{
-		MouseButton _event;
-		_event.eventtype	= Eventtype::MOUSEBUTTON;
-		_event.button		= button;
-		_event.action		= action;
-		_event.mods			= mods;
-		//POPEYE_CORE_INFO("button : {0}, action : {1}, mods : {2}", button, action, mods);
-		eventqueue.push(&_event);
+		if (_action == GLFW_PRESS)		{ mouseevent.mousePressed[_button] = true; }
+		if (_action == GLFW_RELEASE)	{ mouseevent.mousePressed[_button] = false; }
 	}
 
-	void EventSystem::MouseScrollCallback(double xoffset, double yoffset)
+	void EventSystem::MouseScrollCallback(double _xoffset, double _yoffset)
 	{
-		MouseScroll _event;
-		_event.eventtype	= Eventtype::MOUSESCROLL;
-		_event.xoffset		= xoffset;
-		_event.yoffset		= yoffset;
-		
-		eventqueue.push(&_event);
+		mouseevent.xoffset = _xoffset;
+		mouseevent.yoffset = _yoffset;
 	}
 
 	void EventSystem::KeyPressCallback(int key, int scancode, int action, int mods)
 	{
-		KeyboardButton _event;
-		_event.eventtype	= Eventtype::KEYBOARD;
-		_event.button		= key;
-		_event.scancode		= scancode;
-		_event.action		= action;
-		_event.mods			= mods;
-		POPEYE_CORE_INFO("button : {0}, action : {1}, mods : {2}", key, action, mods);
-		eventqueue.push(&_event);
+		if (key != -1)
+		{
+			if (action == GLFW_PRESS)	{ keyevent.keyPressed[key] = true;	}
+			if (action == GLFW_RELEASE) { keyevent.keyPressed[key] = false;	}
+		}
 	}
 }
