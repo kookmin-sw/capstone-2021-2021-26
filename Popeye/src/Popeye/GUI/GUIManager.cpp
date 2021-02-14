@@ -240,15 +240,14 @@ namespace Popeye
 	//Tab::Hierarchy
 	void Hierarchy::ShowContents()
 	{
-		Scene* scene = SceneManager::GetInstance()->currentScene;
+		static Scene* scene = SceneManager::GetInstance()->currentScene;
 		CheckHover();
-		if (ImGui::TreeNode("Scene"))
+		if (ImGui::CollapsingHeader(scene->GetName()))
 		{
-			for(int i = 0; i < scene->gameObjects.size(); i++)
+			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
-				ImGui::Text(scene->gameObjects[i]->GetName());
+				ImGui::Selectable(scene->gameObjects[i]->GetName());
 			}
-			ImGui::TreePop();
 		}
 	}
 	

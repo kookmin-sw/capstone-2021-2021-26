@@ -3,6 +3,7 @@
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
 #include "System/EventSystem.h"
+#include "Scene/SceneManger.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/RenderingComponents.h"
@@ -40,6 +41,9 @@ namespace Popeye {
 	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
+		SceneManager::GetInstance()->currentScene = scene;
+		scene->SetName("example");
+
 		static GUIManager* guimanager = new GUIManager();
 
 		EventSystem* eventsystem = new EventSystem();

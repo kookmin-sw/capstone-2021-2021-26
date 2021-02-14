@@ -7,7 +7,8 @@ namespace Popeye {
 	class Scene //got gameobjects ID lists, if gameobject create, regist id. if gameobject deleted, 
 	{
 	private:
-		int scene_id;
+		int sceneID;
+		char* sceneName;
 	public:
 		std::vector<GameObject*> gameObjects; // root gameobjects at scene
 	public:
@@ -15,5 +16,8 @@ namespace Popeye {
 		~Scene();
 		void CreateGameObject();
 		void DeleteGameObject(int);
+
+		char* GetName();
+		void SetName(char* );
 	};
 }
