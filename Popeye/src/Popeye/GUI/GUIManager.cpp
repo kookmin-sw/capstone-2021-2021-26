@@ -7,6 +7,8 @@
 
 namespace Popeye
 {
+	static GameObject* selectedGameObject;
+
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() {}
 
@@ -246,7 +248,10 @@ namespace Popeye
 		{
 			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
-				ImGui::Selectable(scene->gameObjects[i]->GetName());
+				if (ImGui::Selectable(scene->gameObjects[i]->GetName()))
+				{
+					selectedGameObject = scene->gameObjects[i];
+				}
 			}
 		}
 	}
@@ -255,6 +260,13 @@ namespace Popeye
 	void Inspector::ShowContents()
 	{
 		CheckHover();
+		if (selectedGameObject) // transform info first
+		{
+			ImGui::Text("Transform");
+			ImGui::DragFloat3("position", (float*)&selectedGameObject->transform.position);
+			ImGui::DragFloat3("rotation", (float*)&selectedGameObject->transform.rotation);
+			ImGui::DragFloat3("scale", (float*)&selectedGameObject->transform.scale);
+		}
 	}
 
 	//Tab::Debug
