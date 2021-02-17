@@ -3,9 +3,9 @@
 
 namespace Popeye {
 	
-	GameObject::GameObject()
+	GameObject::GameObject(int _id)
 	{
-		ID = (int)&*this;
+		id = _id;
 	}
 
 	void GameObject::AddChild(GameObject* child)
@@ -29,6 +29,6 @@ namespace Popeye {
 
 	int GameObject::GetID()
 	{
-		return this->ID;
+		return this->id;
 	}
 }

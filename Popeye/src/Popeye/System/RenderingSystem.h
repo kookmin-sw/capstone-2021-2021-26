@@ -3,12 +3,6 @@ namespace Popeye {
 	struct Texture;
 	struct Shader;
 	struct Cam;
-	enum class SystemState
-	{
-		INIT,
-		RUN,
-		EXIT
-	};
 
 	enum class RenderState
 	{

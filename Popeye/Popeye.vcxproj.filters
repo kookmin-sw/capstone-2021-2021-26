@@ -83,6 +83,9 @@
       <Filter>Popeye\System</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Popeye\GUI\Tabs.h">
+      <Filter>Popeye\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -131,5 +134,8 @@
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Popeye\GUI\Tabs.cpp">
+      <Filter>Popeye\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

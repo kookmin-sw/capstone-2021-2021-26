@@ -175,5 +175,4 @@ namespace Popeye {
 		materials.push_back(material);
 		renderables[id].second = meshes.size() - 1;
 	}
-
 }

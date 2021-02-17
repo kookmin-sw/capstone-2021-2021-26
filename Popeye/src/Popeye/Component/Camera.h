@@ -7,9 +7,7 @@ namespace Popeye {
 		Projection mod = Projection::ORTHOGRAPHIC;
 		float fov = 45.0f;
 		float nearView = 0.1f, farView = 100.0f;
-
 		float offsetX = 800.0f, offsetY = 600.0f;
-		
 		float size = 20.0f;
 	};
 

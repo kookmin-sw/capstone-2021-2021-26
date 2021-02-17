@@ -174,9 +174,9 @@ namespace Popeye {
 		for (GameObject* gameObject : SceneManager::GetInstance()->currentScene->gameObjects)
 		{
 			int id = gameObject->GetID();
-			glm::vec3 position	= gameObject->transform.Position();
-			glm::vec3 rotation	= gameObject->transform.Rotation();
-			glm::vec3 scale		= gameObject->transform.Scale();
+			glm::vec3 position	= gameObject->transform.position;
+			glm::vec3 rotation	= gameObject->transform.rotation;
+			glm::vec3 scale		= gameObject->transform.scale;
 			
 			if (state == RenderState::RENDERGAMEVIEW)
 			{
