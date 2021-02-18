@@ -167,7 +167,6 @@ namespace Popeye {
 		}
 		static glm::mat4 worldView = glm::mat4(1.0f);
 		static glm::mat4 worldProjection = glm::mat4(1.0f);
-		//static glm::vec3 worldPos = { 5.0f, 5.0f, 5.0f };
 
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);

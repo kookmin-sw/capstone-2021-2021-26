@@ -7,8 +7,6 @@ namespace Popeye {
 	Scene::Scene(){}
 	Scene::~Scene(){}
 
-	int Scene::gameObjectID = 0;
-
 	void Scene::CreateGameObject()
 	{
 		int newID = 0;

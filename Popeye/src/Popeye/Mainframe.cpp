@@ -6,6 +6,7 @@
 #include "Scene/SceneManger.h"
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
+#include "Component/ComponentManager.h"
 #include "Component/RenderingComponents.h"
 #include "Component/Camera.h"
 
@@ -42,6 +43,16 @@ namespace Popeye {
 	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
+
+		//ComponentDatatable<testComponent0> dataset0;
+
+
+		ComponentManager* componentManager = new ComponentManager();
+		componentManager->RegistComponent<testComponent0>();
+		componentManager->RegistComponent<testComponent1>();
+		componentManager->RegistComponent<testComponent2>();
+		componentManager->RegistComponent<testComponent3>();
+
 		SceneManager::GetInstance()->currentScene = scene;
 		scene->SetName("example");
 
@@ -113,7 +124,12 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 
-		scene->gameObjects[0]->AddComponent<MeshRenderer>();
+		for (int i = 0; i < scene->gameObjects.size(); i++)
+		{
+			std::cout << scene->gameObjects[i]->GetID() << std::endl;
+		}
+
+		/*scene->gameObjects[0]->AddComponent<MeshRenderer>();
 		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[0]->GetID(), object);
 		scene->gameObjects[0]->transform.position = { 0.0f, 0.0f, 0.0f };
 		scene->gameObjects[0]->transform.scale = { 1.0f, 2.0f, 1.0f };
@@ -138,10 +154,10 @@ namespace Popeye {
 		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[4]->GetID(), object);
 		scene->gameObjects[4]->transform.position = { 1.0f, 4.0f, 5.0f };
 		scene->gameObjects[4]->transform.scale = { 6.0f, 2.0f, 6.0f };
-		scene->gameObjects[4]->SetName("gameObject4");
+		scene->gameObjects[4]->SetName("gameObject4");*/
 
 		int display_w, display_h;
-		while (!glfwWindowShouldClose(window))
+		/*while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			renderer->SystemRunning();
@@ -151,7 +167,7 @@ namespace Popeye {
 			guimanager->OnRun();
 
 			glfwSwapBuffers(window);
-		}
+		}*/
 
 		guimanager->OnClosed();
 		delete(guimanager);

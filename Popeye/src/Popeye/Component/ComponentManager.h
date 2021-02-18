@@ -2,15 +2,20 @@
 
 namespace Popeye {
 
-	class Datatable
+	struct testComponent0 { int x = 0; int y = 1; int z = 3; };
+	struct testComponent1 { bool blahblah = true; };
+	struct testComponent2 {};
+	struct testComponent3 {};
+	struct testComponent4 {};
+
+	class BaseDatatable
 	{
 	public:
-		Datatable();
-		virtual ~Datatable() = 0;
+		virtual ~BaseDatatable() = default;
 	};
 
 	template<class component>
-	class ComponentDatatable : public Datatable
+	class ComponentDatatable : public BaseDatatable
 	{
 	private:
 		std::vector<component> componentDatatable;
@@ -21,12 +26,12 @@ namespace Popeye {
 	class ComponentManager
 	{
 	private:
-		std::vector<Datatable> components;
+		std::vector<BaseDatatable*> datas;
 	public:
-		template<class component>
+		template<typename component>
 		void RegistComponent()
 		{
-			components.push_back(ComponentDatatable<component>);
+			datas.push_back(new ComponentDatatable<component>());
 		}
 	};
 }

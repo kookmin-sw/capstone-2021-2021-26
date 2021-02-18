@@ -10,7 +10,7 @@ namespace Popeye {
 		int	sceneID;
 		char* sceneName;
 	private:
-		static int gameObjectID;
+		int gameObjectID = 0;
 		std::queue<int> reusableIDs;
 	public:
 		std::vector<GameObject*> gameObjects; // root gameobjects at scene
