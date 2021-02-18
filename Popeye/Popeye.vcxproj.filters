@@ -86,6 +86,9 @@
     <ClInclude Include="src\Popeye\GUI\Tabs.h">
       <Filter>Popeye\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="src\Popeye\Component\ComponentManager.h">
+      <Filter>Popeye\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">

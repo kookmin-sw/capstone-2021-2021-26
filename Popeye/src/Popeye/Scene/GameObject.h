@@ -1,4 +1,5 @@
 #pragma once
+#include "../Component/ComponentManager.h"
 namespace Popeye {
 	struct Transform
 	{

@@ -1,8 +1,32 @@
 #pragma once
 
-class ComponentManager
-{
-public:
+namespace Popeye {
+
+	class Datatable
+	{
+	public:
+		Datatable();
+		virtual ~Datatable() = 0;
+	};
+
 	template<class component>
-	void RegistComponent(component);
-};
+	class ComponentDatatable : public Datatable
+	{
+	private:
+		std::vector<component> componentDatatable;
+	public:
+		component GetData(int key){ return componentDatatable[key]; }
+	};
+
+	class ComponentManager
+	{
+	private:
+		std::vector<Datatable> components;
+	public:
+		template<class component>
+		void RegistComponent()
+		{
+			components.push_back(ComponentDatatable<component>);
+		}
+	};
+}

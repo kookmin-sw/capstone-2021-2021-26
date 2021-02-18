@@ -152,6 +152,7 @@
     <ClInclude Include="src\Popeye.h" />
     <ClInclude Include="src\Popeye\Application.h" />
     <ClInclude Include="src\Popeye\Component\Camera.h" />
+    <ClInclude Include="src\Popeye\Component\ComponentManager.h" />
     <ClInclude Include="src\Popeye\Component\RenderingComponents.h" />
     <ClInclude Include="src\Popeye\Core.h" />
     <ClInclude Include="src\Popeye\EntryPoint.h" />
