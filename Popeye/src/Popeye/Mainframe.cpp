@@ -15,7 +15,7 @@ namespace Popeye {
 	Mainframe::Mainframe(){}
 	Mainframe::~Mainframe(){}
 
-	bool Mainframe::init_Display()
+	bool Mainframe::Init()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -35,31 +35,21 @@ namespace Popeye {
 		return true;
 	}
 
-	GLFWwindow* Mainframe::get_window()
-	{
-		return this->window;
-	}
-
-	void Mainframe::run_Display()
+	void Mainframe::Run()
 	{
 		Scene* scene = new Scene();
 
 		//ComponentDatatable<testComponent0> dataset0;
 
-
-		ComponentManager* componentManager = new ComponentManager();
-		componentManager->RegistComponent<testComponent0>();
-		componentManager->RegistComponent<testComponent1>();
-		componentManager->RegistComponent<testComponent2>();
-		componentManager->RegistComponent<testComponent3>();
-
 		SceneManager::GetInstance()->currentScene = scene;
 		scene->SetName("example");
+		scene->AddData<testComponent0>(0);
+		scene->AddData<testComponent1>(0);
+		scene->AddData<testComponent2>(0);
+		scene->AddData<testComponent3>(0);
+		scene->AddData<MeshRenderer>(0);
 
 		static GUIManager* guimanager = new GUIManager();
-
-		EventSystem* eventsystem = new EventSystem();
-		eventsystem->SetEventCallbacks(window);
 		guimanager->OnSet(window);
 
 		float vertices[] = {
@@ -124,11 +114,6 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 
-		for (int i = 0; i < scene->gameObjects.size(); i++)
-		{
-			std::cout << scene->gameObjects[i]->GetID() << std::endl;
-		}
-
 		/*scene->gameObjects[0]->AddComponent<MeshRenderer>();
 		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[0]->GetID(), object);
 		scene->gameObjects[0]->transform.position = { 0.0f, 0.0f, 0.0f };
@@ -174,7 +159,7 @@ namespace Popeye {
 		delete(renderer);
 	}
 
-	void Mainframe::close_Display()
+	void Mainframe::Close()
 	{
 		glfwTerminate();
 	}

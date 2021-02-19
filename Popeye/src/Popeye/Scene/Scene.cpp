@@ -1,11 +1,22 @@
 #include "pch.h"
 #include "Scene.h"
+#include "../Component/ComponentManager.h"
 #include "GameObject.h"
+
 
 namespace Popeye {
 	//Scene
-	Scene::Scene(){}
-	Scene::~Scene(){}
+	Scene::Scene() 
+	{
+		componentManager = new ComponentManager();
+
+		componentManager->InitComponents();
+	}
+	
+	Scene::~Scene()
+	{
+		delete(componentManager);
+	}
 
 	void Scene::CreateGameObject()
 	{
@@ -19,7 +30,7 @@ namespace Popeye {
 			gameObjectID++;
 		}
 
-		GameObject* gameObject = new GameObject(newID);
+		GameObject* gameObject = new GameObject(this, newID);
 		gameObjects.push_back(gameObject);
 	}
 

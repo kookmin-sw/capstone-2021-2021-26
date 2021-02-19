@@ -3,7 +3,7 @@
 
 namespace Popeye {
 	
-	GameObject::GameObject(int _id)
+	GameObject::GameObject(Scene* scene, int _id)
 	{
 		id = _id;
 	}

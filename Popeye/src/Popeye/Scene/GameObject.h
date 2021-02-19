@@ -1,6 +1,8 @@
 #pragma once
 
 namespace Popeye {
+	class Scene;
+
 	struct Transform
 	{
 		glm::vec3 position	= glm::vec3(0.0f, 0.0f, 0.0f);
@@ -11,6 +13,7 @@ namespace Popeye {
 	class GameObject
 	{
 	private:
+		Scene* scene;
 		int id;
 		char* name;
 		GameObject* parent;
@@ -18,7 +21,7 @@ namespace Popeye {
 	public:
 		Transform transform;
 	public:
-		GameObject(int);
+		GameObject(Scene* , int);
 		~GameObject();
 
 		char* GetName();
@@ -36,7 +39,7 @@ namespace Popeye {
 		template<class component>
 		void AddComponent()
 		{
-			component::ComponentAdded(id);
+			scene->AddData<component>(id);
 		}
 
 		template<class component>
