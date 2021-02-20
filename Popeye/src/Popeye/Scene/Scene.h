@@ -15,6 +15,7 @@ namespace Popeye {
 		std::queue<int> reusableIDs;
 		std::vector <int> gameObjectIDs;
 	public:
+		int mainCameraID;
 		std::vector <GameObject*> gameObjects;		// root gameobjects at scene
 	public:
 		Scene();
@@ -24,15 +25,15 @@ namespace Popeye {
 		void DeleteGameObject(int);
 
 		template<class component>
-		void AddData(int id)
+		void AddData(int _id)
 		{
-			componentManager->AddDataToComponent<component>(id);
+			componentManager->AddDataToComponent<component>(_id);
 		}
 		
 		template<class component>
-		component& GetData(int id) // gameobject's data
+		component GetData(int _id) // gameobject's data
 		{
-			return;
+			return componentManager->GetDataToComponent<component>(_id);
 		}
 
 		char* GetName();

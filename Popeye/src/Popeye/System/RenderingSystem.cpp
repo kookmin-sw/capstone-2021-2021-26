@@ -3,8 +3,8 @@
 #include "../Scene/SceneManger.h"
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
+#include "../Component/ComponentManager.h"
 #include "../Component/RenderingComponents.h"
-#include "../Component/Camera.h"
 
 namespace Popeye {
 	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
@@ -160,7 +160,9 @@ namespace Popeye {
 		static Shader shader; // temp 
 		static Shader shader2; // also temp 
 		static Texture texture; // ..
+
 		static int  init = 0;
+
 		if (init == 0) {
 			texture.InitTexture("texture/test.jpg");
 			init = 1;
@@ -180,9 +182,9 @@ namespace Popeye {
 			if (state == RenderState::RENDERGAMEVIEW)
 			{
 				shader.use();
-				if (Camera::cameras.find(id) != Camera::cameras.end()) //Camera
+				if (id == SceneManager::GetInstance()->currentScene->mainCameraID)
 				{
-					Cam camera = Camera::cameras[id];
+					Camera camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(id);
 					view = glm::lookAt(position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //View
 
 					if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
@@ -196,7 +198,7 @@ namespace Popeye {
 							-(camera.size / 2.0f), (camera.size / 2.0f),
 							camera.nearView, camera.farView);
 					}
-
+					
 					shader.setMat4("view", view);
 					shader.setMat4("projection", projection);
 				}
@@ -210,32 +212,31 @@ namespace Popeye {
 				shader2.setMat4("projection", worldProjection);
 			}
 
-			if (MeshRenderer::renderables.find(id) != MeshRenderer::renderables.end()) //Rendering
+
+			MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
+			texture.drawTexture();
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, position);
+
+			model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+			model = glm::scale(model, scale);
+
+			if (state == RenderState::RENDERGAMEVIEW)
 			{
-				texture.drawTexture();
-
-				glm::mat4 model = glm::mat4(1.0f);
-				model = glm::translate(model, position);
-
-				model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-				model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-				model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-				model = glm::scale(model, scale);
-
-				if (state == RenderState::RENDERGAMEVIEW)
-				{
-					shader.setMat4("model", model);
-				}
-				else
-				{
-					shader2.setMat4("model", model);
-				}
-
-				glBindVertexArray(VAOs[MeshRenderer::renderables[id].first]);
-				glDrawArrays(GL_TRIANGLES, 0, 36);
-				//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+				shader.setMat4("model", model);
 			}
+			else
+			{
+				shader2.setMat4("model", model);
+			}
+
+			glBindVertexArray(VAOs[meshrenderer.meshIndex]);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
 	}
 

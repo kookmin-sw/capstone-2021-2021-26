@@ -13,7 +13,6 @@ namespace Popeye {
 	class GameObject
 	{
 	private:
-		Scene* scene;
 		int id;
 		char* name;
 		GameObject* parent;
@@ -21,7 +20,7 @@ namespace Popeye {
 	public:
 		Transform transform;
 	public:
-		GameObject(Scene* , int);
+		GameObject(int);
 		~GameObject();
 
 		char* GetName();
@@ -39,13 +38,13 @@ namespace Popeye {
 		template<class component>
 		void AddComponent()
 		{
-			scene->AddData<component>(id);
+			SceneManager::GetInstance()->currentScene->AddData<component>(id);
 		}
 
 		template<class component>
 		component& GetComponent()
 		{
-			return component(); //todo :: think about how to access
+			return SceneManager::GetInstance()->currentScene->GetData<component>(id);; //todo :: think about how to access
 		}
 
 	};

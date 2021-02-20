@@ -1,21 +1,22 @@
 #pragma once
-#include "pch.h"
+#include "RenderingComponents.h"
+
 namespace Popeye {
+	struct Address
+	{
+		int gameObjectID , dataIndex;
+		Address(int _id, int _index) { gameObjectID = _id; dataIndex = _index; }
+	};
 
-	struct testComponent0 { int x = 0; int y = 1; int z = 3; };
-	struct testComponent1 { bool blahblah = true; };
-	struct testComponent2 {};
-	struct testComponent3 {};
-	struct testComponent4 {};
-
-	class BaseDatatable
+	class BaseComponentDatatable
 	{
 	public:
-		virtual ~BaseDatatable() = default;
+		int componentID;
+		virtual ~BaseComponentDatatable() = default;
 	};
 
 	template<class component>
-	class ComponentDatatable : public BaseDatatable
+	class ComponentDatatable : public BaseComponentDatatable
 	{
 	private:
 		std::vector<component> componentDatatable;
@@ -25,40 +26,67 @@ namespace Popeye {
 			return componentDatatable[key];
 		}
 
-		component SetType()
+		std::vector<int> AddData()
 		{
-			return component;
+			component data;
+			componentDatatable.push_back(data);
+
+			std::vector<int> tempvector;
+			tempvector.push_back(componentID);
+			tempvector.push_back(componentDatatable.size() - 1);
+
+			/*POPEYE_CORE_INFO("{0}", typeid(component).name());
+			for (int i = 0; i < componentDatatable.size(); i++)
+			{
+				POPEYE_CORE_INFO(i);
+			}*/
+
+			return tempvector;
 		}
+		
 	};
 
 	class ComponentManager
 	{
 	private:
-		std::unordered_map<const char*, BaseDatatable*> componentDatas;
+		std::unordered_map<const char*, BaseComponentDatatable*> componentDatas;
+		std::vector<std::vector<Address>> address;
 	private:
 		template<typename component>
-		ComponentDatatable<component>* accessComponent(BaseDatatable* basedata)
+		ComponentDatatable<component>* AccessComponent(BaseComponentDatatable* _basedata)
 		{
-			ComponentDatatable<component>* compenentData = dynamic_cast<ComponentDatatable<component>*> basedata;
-			return componentData;
+			ComponentDatatable<component>* compenentData = static_cast<ComponentDatatable<component>*> (_basedata);
+			return compenentData;
 		}
+
 	public:
 		template<typename component>
 		void RegistComponent()
 		{
+			static int id = 0;
 			const char* componentType = typeid(component).name();
 
 			if (componentDatas.find(componentType) == componentDatas.end())
+			{
 				componentDatas[componentType] = new ComponentDatatable<component>();
+				componentDatas[componentType]->componentID = id;
+				id++;
+
+				std::vector<Address> componentAddress;
+				address.push_back(componentAddress);
+			}
 		}
 		
 		template<typename component>
 		void AddDataToComponent(int id)
 		{
+			static std::vector<int> compNindex;
 			const char* componentType = typeid(component).name();
 			if (componentDatas.find(componentType) != componentDatas.end())
 			{
-				std::cout << typeid(accessComponent<component>(componentDatas[componentType])->SetType()).name() << std::endl;
+				compNindex = AccessComponent<component>(componentDatas[componentType])->AddData();
+				Address instaddress(compNindex[1], id);
+				address[compNindex[0]].push_back(instaddress);
 			}
 			else
 			{
@@ -66,12 +94,28 @@ namespace Popeye {
 			}
 		}
 
+		template<typename component>
+		component GetDataToComponent(int id)
+		{
+			component temp;
+			const char* componentType = typeid(component).name();
+			ComponentDatatable<component>* castedcomponent = AccessComponent<component>(componentDatas[componentType]);
+			int componentID = castedcomponent->componentID;
+			for (int i = 0; i < address[componentID].size(); i++)
+			{
+				if (address[componentID][i].gameObjectID == id)
+				{
+					component temp = castedcomponent->GetData(address[componentID][i].dataIndex);
+					return temp;
+				}
+			}
+			return temp;
+		}
+
 		void InitComponents()
 		{
-			RegistComponent<testComponent0>();
-			RegistComponent<testComponent1>();
-			RegistComponent<testComponent2>();
-			RegistComponent<testComponent3>();
+			RegistComponent<Camera>();
+			RegistComponent<MeshRenderer>();
 		}
 	};
 }

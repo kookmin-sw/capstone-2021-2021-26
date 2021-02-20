@@ -7,8 +7,6 @@
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Component/ComponentManager.h"
-#include "Component/RenderingComponents.h"
-#include "Component/Camera.h"
 
 namespace Popeye {
 
@@ -37,20 +35,17 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		Scene* scene = new Scene();
-
-		//ComponentDatatable<testComponent0> dataset0;
-
-		SceneManager::GetInstance()->currentScene = scene;
-		scene->SetName("example");
-		scene->AddData<testComponent0>(0);
-		scene->AddData<testComponent1>(0);
-		scene->AddData<testComponent2>(0);
-		scene->AddData<testComponent3>(0);
-		scene->AddData<MeshRenderer>(0);
+		EventSystem* eventSystem = new EventSystem();
+		eventSystem->SetEventCallbacks(window);
 
 		static GUIManager* guimanager = new GUIManager();
 		guimanager->OnSet(window);
+
+		Scene* scene = new Scene();
+		scene->SetName("example");
+
+		SceneManager::GetInstance()->currentScene = scene;
+
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -100,7 +95,9 @@ namespace Popeye {
 			0, 1, 3,
 			1, 2, 3
 		};
+
 		RenderingSystem* renderer = new RenderingSystem();
+
 		Popeye::Mesh object;
 		object.id = GET_NAME(object);
 		object.vertsize = sizeof(vertices);
@@ -114,45 +111,45 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 
-		/*scene->gameObjects[0]->AddComponent<MeshRenderer>();
-		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[0]->GetID(), object);
+		scene->gameObjects[0]->SetName("gameObject1");
+		scene->gameObjects[0]->AddComponent<MeshRenderer>();
+		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(object);
 		scene->gameObjects[0]->transform.position = { 0.0f, 0.0f, 0.0f };
 		scene->gameObjects[0]->transform.scale = { 1.0f, 2.0f, 1.0f };
-		scene->gameObjects[0]->SetName("gameObject1");
 
-		scene->gameObjects[1]->AddComponent<MeshRenderer>();
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[1]->GetID(), object);
-		scene->gameObjects[1]->transform.position = { 2.0f, 3.0f, 3.0f };
 		scene->gameObjects[1]->SetName("gameObject2");
+		scene->gameObjects[1]->AddComponent<MeshRenderer>();
+		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(object);
+		scene->gameObjects[1]->transform.position = { 2.0f, 3.0f, 3.0f };
 
+		scene->gameObjects[2]->SetName("gameObject3");
 		scene->gameObjects[2]->AddComponent<MeshRenderer>();
-		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[2]->GetID(), object);
+		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(object);
 		scene->gameObjects[2]->transform.position = { 2.0f, 0.0f, -1.0f };
 		scene->gameObjects[2]->transform.scale = { 1.0f, 2.0f, 1.0f };
-		scene->gameObjects[2]->SetName("gameObject3");
 
-		scene->gameObjects[3]->transform.position = {5.0f, 5.0f, 5.0f};
-		scene->gameObjects[3]->AddComponent<Camera>();
-	
-		scene->gameObjects[3]->SetName("Camera");
-		scene->gameObjects[4]->AddComponent<MeshRenderer>();
-		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[4]->GetID(), object);
-		scene->gameObjects[4]->transform.position = { 1.0f, 4.0f, 5.0f };
-		scene->gameObjects[4]->transform.scale = { 6.0f, 2.0f, 6.0f };
-		scene->gameObjects[4]->SetName("gameObject4");*/
+		scene->gameObjects[3]->SetName("gameObject4");
+		scene->gameObjects[3]->AddComponent<MeshRenderer>();
+		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(object);
+		scene->gameObjects[3]->transform.position = { 1.0f, 4.0f, 5.0f };
+		scene->gameObjects[3]->transform.scale = { 6.0f, 2.0f, 6.0f };
+
+		scene->gameObjects[4]->SetName("Camera");
+		scene->gameObjects[4]->AddComponent<Camera>();
+		scene->mainCameraID = scene->gameObjects[4]->GetID();
 
 		int display_w, display_h;
-		/*while (!glfwWindowShouldClose(window))
+		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			renderer->SystemRunning();
 			
-			eventsystem->SystemRunning();
+			eventSystem->SystemRunning();
 
 			guimanager->OnRun();
 
 			glfwSwapBuffers(window);
-		}*/
+		}
 
 		guimanager->OnClosed();
 		delete(guimanager);

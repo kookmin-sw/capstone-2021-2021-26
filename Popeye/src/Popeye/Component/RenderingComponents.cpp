@@ -136,43 +136,22 @@ namespace Popeye {
 
 
 	/**************MeshRenderer component**************/
-	MeshRenderer::MeshRenderer() {}
+	//MeshRenderer::MeshRenderer() {}
 
-	std::vector<Mesh> MeshRenderer::meshes;
-	std::vector<Material> MeshRenderer::materials;
-	std::unordered_map<int, std::pair< int, int>> MeshRenderer::renderables;
+	std::vector<Mesh>		MeshRenderer::meshes;
+	std::vector<Material>	MeshRenderer::materials;
 
-	void MeshRenderer::ComponentAdded(int id)
-	{
-		renderables[id] = {-1, -1};
-	}
-
-	void MeshRenderer::SetMesh(int id, Mesh& mesh)
+	void MeshRenderer::SetMesh(Mesh& mesh)
 	{
 		for (int i = 0; i < meshes.size(); i++)
 		{
 			if (meshes[i].id == mesh.id)
 			{
-				//std::cout << mesh.id << std::endl;
-				renderables[id].first = i;
+				meshIndex = i;
 				return;
 			}
 		}
 		meshes.push_back(mesh);
-		renderables[id].first = meshes.size() - 1;
-	}
-
-	void MeshRenderer::SetMaterial(int id, Material& material)
-	{
-		for (int i = 0; i < materials.size(); i++)
-		{
-			if (materials[i].id == material.id)
-			{
-				renderables[id].second = i;
-				return;
-			}
-		}
-		materials.push_back(material);
-		renderables[id].second = meshes.size() - 1;
+		meshIndex = meshes.size() - 1;
 	}
 }

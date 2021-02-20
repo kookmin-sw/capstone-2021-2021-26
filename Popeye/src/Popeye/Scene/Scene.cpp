@@ -30,7 +30,7 @@ namespace Popeye {
 			gameObjectID++;
 		}
 
-		GameObject* gameObject = new GameObject(this, newID);
+		GameObject* gameObject = new GameObject(newID);
 		gameObjects.push_back(gameObject);
 	}
 

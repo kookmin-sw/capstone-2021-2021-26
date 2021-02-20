@@ -42,5 +42,11 @@ namespace Popeye{
 	{
 		virtual void ShowContents();
 	};
+
+	template<typename component>
+	struct Property
+	{
+
+	};
 }
 

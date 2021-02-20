@@ -25,9 +25,6 @@
     <ClInclude Include="src\Popeye\Application.h">
       <Filter>Popeye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Component\Camera.h">
-      <Filter>Popeye\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\Component\RenderingComponents.h">
       <Filter>Popeye\Component</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
       <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Component\Camera.cpp">
-      <Filter>Popeye\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp">
       <Filter>Popeye\Component</Filter>

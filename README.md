@@ -20,9 +20,6 @@
 
 **팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/
 
-**예시)** 2020년 0조  https://kookmin-sw.github.io/capstone-2020-0/
-
-
 ## 내용에 아래와 같은 내용들을 추가하세요.
 
 ### 1. 프로잭트 소개
@@ -35,13 +32,31 @@
 
 ### 3. 팀 소개
 
-팀을 소개하세요.
+최석원(팀장)
 
-팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
+조성호
+
+김성주
 
 ### 4. 사용법
 
-소스코드제출시 설치법이나 사용법을 작성하세요.
+```markdown
+Syntax highlighted code block
+
+# Header 1
+## Header 2
+### Header 3
+
+- Bulleted
+- List
+
+1. Numbered
+2. List
+
+**Bold** and _Italic_ and `Code` text
+
+[Link](url) and ![Image](src)
+```
 
 ### 5. 기타
 

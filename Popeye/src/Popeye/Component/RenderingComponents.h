@@ -41,17 +41,28 @@ namespace Popeye {
 
 	struct MeshRenderer
 	{
-		MeshRenderer();
-
 		static std::vector<Mesh> meshes;
 		static std::vector<Material> materials;
-		static std::unordered_map<int, std::pair< int, int>> renderables;
 
-		static void ComponentAdded(int);
-		static void SetMesh(int, Mesh&);
-		//static mesh& getMesh(int);
-		static void SetMaterial(int, Material&);
-		//static Material& getMaterial(int);
+		int meshIndex = 0;
+		int materialIndex = 0;
+
+		void SetMesh(Mesh&);
+		void SetMaterial(Material&);
 	};
+
+
+	enum class Projection { ORTHOGRAPHIC, PERSPECTIVE };
+	struct Camera
+	{
+		void SetMainCamera();
+
+		Projection mod = Projection::ORTHOGRAPHIC;
+		float fov = 45.0f;
+		float nearView = 0.1f, farView = 100.0f;
+		float offsetX = 800.0f, offsetY = 600.0f;
+		float size = 20.0f;
+	};
+
 }
 
