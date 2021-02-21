@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp" />
+    <ClCompile Include="src\Popeye\Component\ComponentManager.cpp" />
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp" />
     <ClCompile Include="src\Popeye\Events\EventManager.cpp" />
     <ClCompile Include="src\Popeye\GUI\GUIManager.cpp" />

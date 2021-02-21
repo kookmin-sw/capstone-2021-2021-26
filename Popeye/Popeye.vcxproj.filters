@@ -134,5 +134,8 @@
     <ClCompile Include="src\Popeye\GUI\Tabs.cpp">
       <Filter>Popeye\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="src\Popeye\Component\ComponentManager.cpp">
+      <Filter>Popeye\Component</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

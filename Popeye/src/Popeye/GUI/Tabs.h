@@ -46,6 +46,7 @@ namespace Popeye{
 	template<typename component>
 	struct Property
 	{
+		void ShowCamera();
 
 	};
 }

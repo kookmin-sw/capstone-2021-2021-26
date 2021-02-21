@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Scene.h"
-#include "../Component/ComponentManager.h"
 #include "GameObject.h"
 
 
@@ -8,14 +7,10 @@ namespace Popeye {
 	//Scene
 	Scene::Scene() 
 	{
-		componentManager = new ComponentManager();
-
-		componentManager->InitComponents();
 	}
 	
 	Scene::~Scene()
 	{
-		delete(componentManager);
 	}
 
 	void Scene::CreateGameObject()

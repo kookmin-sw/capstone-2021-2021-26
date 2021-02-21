@@ -9,7 +9,6 @@ namespace Popeye {
 	private:
 		int	sceneID;
 		char* sceneName;
-		ComponentManager* componentManager;
 	private:
 		int gameObjectID = 0;
 		std::queue<int> reusableIDs;
@@ -27,13 +26,13 @@ namespace Popeye {
 		template<class component>
 		void AddData(int _id)
 		{
-			componentManager->AddDataToComponent<component>(_id);
+			ComponentManager::GetInstance()->AddDataToComponent<component>(_id);
 		}
 		
 		template<class component>
 		component GetData(int _id) // gameobject's data
 		{
-			return componentManager->GetDataToComponent<component>(_id);
+			return ComponentManager::GetInstance()->GetDataToComponent<component>(_id);
 		}
 
 		char* GetName();

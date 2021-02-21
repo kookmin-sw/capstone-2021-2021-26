@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Tabs.h"
+#include "../Component/ComponentManager.h"
 #include "../System/RenderingSystem.h"
 #include "../Scene/SceneManger.h"
 #include "../Scene/Scene.h"
@@ -86,6 +87,9 @@ namespace Popeye{
 	//Tab::Inspector
 	void Inspector::ShowContents()
 	{
+		static ImGuiTextFilter filter;
+		static bool addcomponentCall = false;
+
 		CheckHover();
 		if (selectedGameObject) // transform info first
 		{
@@ -94,6 +98,24 @@ namespace Popeye{
 				ImGui::DragFloat3("position", (float*)&selectedGameObject->transform.position);
 				ImGui::DragFloat3("rotation", (float*)&selectedGameObject->transform.rotation);
 				ImGui::DragFloat3("scale", (float*)&selectedGameObject->transform.scale);
+			}
+
+
+			if (ImGui::Button("Add Component", ImVec2(ImGui::GetWindowSize().x, 0.0f)))
+				addcomponentCall = true;
+			
+			if (addcomponentCall)
+			{
+				//ImGui::BeginMenuBar();
+				ImGui::BeginChild("search_component");
+				filter.Draw("search");
+				//std::vector<const char*> allcomponents = ComponentManager::GetInstance()->GetAllComponents();
+				/*for (int i = 0; i < allcomponents.size(); i++)
+				{
+					ImGui::Selectable(allcomponents[i]);
+				}*/
+				ImGui::EndChild();
+				//ImGui::EndMenuBar();
 			}
 		}
 	}

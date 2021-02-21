@@ -35,6 +35,8 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
+		ComponentManager::GetInstance()->InitComponents();
+
 		EventSystem* eventSystem = new EventSystem();
 		eventSystem->SetEventCallbacks(window);
 
@@ -45,7 +47,6 @@ namespace Popeye {
 		scene->SetName("example");
 
 		SceneManager::GetInstance()->currentScene = scene;
-
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,

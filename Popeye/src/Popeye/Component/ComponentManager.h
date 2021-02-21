@@ -5,7 +5,7 @@ namespace Popeye {
 	struct Address
 	{
 		int gameObjectID , dataIndex;
-		Address(int _id, int _index) { gameObjectID = _id; dataIndex = _index; }
+		Address(int _id = -1, int _index = -1) { gameObjectID = _id; dataIndex = _index; }
 	};
 
 	class BaseComponentDatatable
@@ -35,12 +35,6 @@ namespace Popeye {
 			tempvector.push_back(componentID);
 			tempvector.push_back(componentDatatable.size() - 1);
 
-			/*POPEYE_CORE_INFO("{0}", typeid(component).name());
-			for (int i = 0; i < componentDatatable.size(); i++)
-			{
-				POPEYE_CORE_INFO(i);
-			}*/
-
 			return tempvector;
 		}
 		
@@ -51,6 +45,7 @@ namespace Popeye {
 	private:
 		std::unordered_map<const char*, BaseComponentDatatable*> componentDatas;
 		std::vector<std::vector<Address>> address;
+	
 	private:
 		template<typename component>
 		ComponentDatatable<component>* AccessComponent(BaseComponentDatatable* _basedata)
@@ -60,6 +55,8 @@ namespace Popeye {
 		}
 
 	public:
+		void InitComponents();
+
 		template<typename component>
 		void RegistComponent()
 		{
@@ -88,34 +85,60 @@ namespace Popeye {
 				Address instaddress(compNindex[1], id);
 				address[compNindex[0]].push_back(instaddress);
 			}
-			else
-			{
-				std::cout << "there is no such component" << std::endl;
-			}
 		}
 
 		template<typename component>
 		component GetDataToComponent(int id)
 		{
-			component temp;
 			const char* componentType = typeid(component).name();
+			component temp;
 			ComponentDatatable<component>* castedcomponent = AccessComponent<component>(componentDatas[componentType]);
 			int componentID = castedcomponent->componentID;
 			for (int i = 0; i < address[componentID].size(); i++)
 			{
 				if (address[componentID][i].gameObjectID == id)
 				{
-					component temp = castedcomponent->GetData(address[componentID][i].dataIndex);
+					temp = castedcomponent->GetData(address[componentID][i].dataIndex);
 					return temp;
 				}
 			}
 			return temp;
 		}
 
-		void InitComponents()
+		template<typename component>
+		bool CheckIfThereIsData(int id)
 		{
-			RegistComponent<Camera>();
-			RegistComponent<MeshRenderer>();
+			static int componentIndex = 0;
+			componentIndex = componentDatas.find(typeid(component).name())->second->componentID;
+			for (int i = 0; i < address[componentIndex].size(); i++)
+			{
+				if (address[componentIndex][i].gameObjectID == id)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
+
+		std::vector<const char*> GetAllComponents()
+		{
+			std::vector<const char*> allComponents;
+			int compid = -1;
+			for (std::pair<const char*, BaseComponentDatatable*> components : componentDatas)
+			{
+				allComponents.push_back(components.first);
+			}
+
+			return allComponents;
+		}
+
+	
+	private:
+		static ComponentManager* instance;
+		ComponentManager();
+		~ComponentManager();
+	public:
+		static ComponentManager* GetInstance();
+		static void DestroyInstance();
 	};
 }
