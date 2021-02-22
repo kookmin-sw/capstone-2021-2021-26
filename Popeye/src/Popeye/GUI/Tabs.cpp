@@ -78,6 +78,7 @@ namespace Popeye{
 			{
 				if (ImGui::Selectable(scenes->gameObjects[i]->GetName()))
 				{
+					scenes->GetAllComponents(scenes->gameObjects[i]->GetID());
 					selectedGameObject = scenes->gameObjects[i];
 				}
 			}
@@ -100,6 +101,7 @@ namespace Popeye{
 				ImGui::DragFloat3("scale", (float*)&selectedGameObject->transform.scale);
 			}
 
+			
 
 			if (ImGui::Button("Add Component", ImVec2(ImGui::GetWindowSize().x, 0.0f)))
 				addcomponentCall = true;
@@ -107,14 +109,9 @@ namespace Popeye{
 			if (addcomponentCall)
 			{
 				//ImGui::BeginMenuBar();
-				ImGui::BeginChild("search_component");
+				//ImGui::BeginChild("search_component");
 				filter.Draw("search");
-				//std::vector<const char*> allcomponents = ComponentManager::GetInstance()->GetAllComponents();
-				/*for (int i = 0; i < allcomponents.size(); i++)
-				{
-					ImGui::Selectable(allcomponents[i]);
-				}*/
-				ImGui::EndChild();
+				//ImGui::EndChild();
 				//ImGui::EndMenuBar();
 			}
 		}

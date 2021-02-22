@@ -213,7 +213,7 @@ namespace Popeye {
 				shader2.setMat4("projection", worldProjection);
 			}
 
-			if (ComponentManager::GetInstance()->CheckIfThereIsData<MeshRenderer>(id))
+			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
 			{
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
 				texture.drawTexture();

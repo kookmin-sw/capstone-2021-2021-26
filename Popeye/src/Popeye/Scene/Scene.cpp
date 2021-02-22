@@ -27,6 +27,17 @@ namespace Popeye {
 
 		GameObject* gameObject = new GameObject(newID);
 		gameObjects.push_back(gameObject);
+
+		if (newID + 1 <= keysToAccessComponent.size())
+		{
+			ResetAccessor(newID);
+		}
+		else
+		{
+			std::vector<Accessor> newAccessor;
+			keysToAccessComponent.push_back(newAccessor);
+		}
+
 	}
 
 	void Scene::DeleteGameObject(int _id)
@@ -43,5 +54,13 @@ namespace Popeye {
 	char* Scene::GetName()
 	{
 		return sceneName;
+	}
+
+	void Scene::ResetAccessor(int id)
+	{
+		for (int i = 0; i < keysToAccessComponent[id].size(); i++)
+		{
+			keysToAccessComponent[id][i].Reset();
+		}
 	}
 }

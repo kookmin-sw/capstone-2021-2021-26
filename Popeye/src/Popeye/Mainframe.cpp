@@ -37,16 +37,16 @@ namespace Popeye {
 	{
 		ComponentManager::GetInstance()->InitComponents();
 
+		Scene* scene = new Scene();
+		scene->SetName("example");
+
+		SceneManager::GetInstance()->currentScene = scene;
+
 		EventSystem* eventSystem = new EventSystem();
 		eventSystem->SetEventCallbacks(window);
 
 		static GUIManager* guimanager = new GUIManager();
 		guimanager->OnSet(window);
-
-		Scene* scene = new Scene();
-		scene->SetName("example");
-
-		SceneManager::GetInstance()->currentScene = scene;
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -105,6 +105,8 @@ namespace Popeye {
 		object.vertices = vertices;
 		object.indicies = indices;
 		object.indsize = sizeof(indices);
+
+		POPEYE_CORE_INFO(object.id);
 
 		scene->CreateGameObject();
 		scene->CreateGameObject();
