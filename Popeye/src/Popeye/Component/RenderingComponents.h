@@ -47,12 +47,13 @@ namespace Popeye {
 		int meshIndex = 0;
 		int materialIndex = 0;
 
+		MeshRenderer();
 		void SetMesh(Mesh&);
 		void SetMaterial(Material&);
 	};
 
 
-	enum class Projection { ORTHOGRAPHIC, PERSPECTIVE };
+	enum class Projection { PERSPECTIVE, ORTHOGRAPHIC };
 	struct Camera
 	{
 		void SetMainCamera();

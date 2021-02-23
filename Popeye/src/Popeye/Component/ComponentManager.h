@@ -2,10 +2,10 @@
 #include "RenderingComponents.h"
 
 namespace Popeye {
+	
 	class BaseComponentDatatable
 	{
 	public:
-		int componentID;
 		virtual ~BaseComponentDatatable() = default;
 	};
 
@@ -15,7 +15,7 @@ namespace Popeye {
 	private:
 		std::vector<component> componentDatatable;
 	public:
-		component GetData(int key)
+		component& GetData(int key)
 		{
 			return componentDatatable[key];
 		}
@@ -39,7 +39,7 @@ namespace Popeye {
 		template<typename component>
 		ComponentDatatable<component>* AccessComponent(BaseComponentDatatable* _basedata)
 		{
-			ComponentDatatable<component>* compenentData = static_cast<ComponentDatatable<component>*> (_basedata);
+			ComponentDatatable<component>* compenentData = dynamic_cast<ComponentDatatable<component>*> (_basedata);
 			return compenentData;
 		}
 
@@ -49,21 +49,17 @@ namespace Popeye {
 		template<typename component>
 		void RegistComponent()
 		{
-			static int id = 0;
-			const char* componentType = typeid(component).name() + 15;
-			POPEYE_CORE_INFO(componentType);
+			const char* componentType = typeid(component).name();
 			if (componentDatas.find(componentType) == componentDatas.end())
 			{
 				componentDatas[componentType] = new ComponentDatatable<component>();
-				componentDatas[componentType]->componentID = id;
-				id++;
 			}
 		}
 		
 		template<typename component>
 		void AddDataOfComponent(const char*& type, int& index)
 		{
-			const char* componentType = typeid(component).name() + 15;
+			const char* componentType = typeid(component).name();
 			if (componentDatas.find(componentType) != componentDatas.end())
 			{
 				type = componentType;
@@ -72,7 +68,7 @@ namespace Popeye {
 		}
 
 		template<typename component>
-		component GetDataOfComponent(const const char*& type, const int& index)
+		component& GetDataOfComponent(const const char*& type, const int& index)
 		{
 			return AccessComponent<component>(componentDatas[type])->GetData(index);
 		}

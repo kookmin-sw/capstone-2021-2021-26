@@ -2,6 +2,8 @@
 #include "../Events/EventManager.h"
 
 namespace Popeye{
+	struct MeshRenderer;
+	struct Camera;
 
 	struct Tab
 	{
@@ -21,6 +23,8 @@ namespace Popeye{
 	struct Inspector : public Tab
 	{
 		virtual void ShowContents();
+		void ShowCamera(Camera&, int id);
+		void ShowMeshRenderer(MeshRenderer&);
 	};
 
 	struct SceneView : public Tab
@@ -41,13 +45,6 @@ namespace Popeye{
 	struct Project : public Tab
 	{
 		virtual void ShowContents();
-	};
-
-	template<typename component>
-	struct Property
-	{
-		void ShowCamera();
-
 	};
 }
 

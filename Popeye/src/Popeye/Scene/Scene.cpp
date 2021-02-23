@@ -63,4 +63,20 @@ namespace Popeye {
 			keysToAccessComponent[id][i].Reset();
 		}
 	}
+	
+	std::vector<const char*> Scene::GetAllComponents(int _id)
+	{
+		std::vector<const char*> components;
+
+		for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
+		{
+			components.push_back(keysToAccessComponent[_id][i].componentType);
+		}
+		return components;
+	}
+
+	std::vector<Accessor> Scene::GetAllAddressOfID(int _id)
+	{
+		return keysToAccessComponent[_id];
+	}
 }

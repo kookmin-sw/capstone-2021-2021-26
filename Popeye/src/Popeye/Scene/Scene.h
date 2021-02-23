@@ -44,10 +44,10 @@ namespace Popeye {
 		}
 		
 		template<class component>
-		component GetData(int _id) // gameobject's data
+		component& GetData(int _id) // gameobject's data
 		{
 			const char* componentType = typeid(component).name();
-			component temp;
+			component& temp = component();
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -62,7 +62,7 @@ namespace Popeye {
 		template<class component>
 		bool CheckIfThereIsData(int _id)
 		{
-			const char* componentType = typeid(component).name() + 15;
+			const char* componentType = typeid(component).name();
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -74,16 +74,9 @@ namespace Popeye {
 		}
 
 
-		void GetAllComponents(int _id)
-		{
-			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
-			{
-				if (keysToAccessComponent[_id][i].componentType != nullptr)
-				{
-					POPEYE_CORE_INFO(keysToAccessComponent[_id][i].componentType);
-				}
-			}
-		}
+		std::vector<const char*> GetAllComponents(int _id);
+
+		std::vector<Accessor> GetAllAddressOfID(int _id);
 
 		char* GetName();
 		void SetName(char* );

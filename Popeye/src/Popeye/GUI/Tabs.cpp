@@ -8,12 +8,12 @@
 
 namespace Popeye{
 	static GameObject* selectedGameObject;
-	
+	static Scene* scene;
 	//Tab 
-	void Tab::SetTab(const char* _name, EventMod eventmod)
+	void Tab::SetTab(const char* _name, EventMod _eventmod)
 	{
-		this->name = _name;
-		this->eventmod = eventmod;
+		name = _name;
+		eventmod = _eventmod;
 	}
 
 	void Tab::CheckHover()
@@ -29,7 +29,7 @@ namespace Popeye{
 
 	void Tab::ShowTab()
 	{
-		ImGui::Begin(this->name);
+		ImGui::Begin(name);
 
 		ShowContents();
 
@@ -70,16 +70,15 @@ namespace Popeye{
 	//Tab::Hierarchy
 	void Hierarchy::ShowContents()
 	{
-		static Scene* scenes = SceneManager::GetInstance()->currentScene;
+		scene = SceneManager::GetInstance()->currentScene;
 		CheckHover();
-		if (ImGui::CollapsingHeader(scenes->GetName()))
+		if (ImGui::CollapsingHeader(scene->GetName()))
 		{
-			for (int i = 0; i < scenes->gameObjects.size(); i++)
+			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
-				if (ImGui::Selectable(scenes->gameObjects[i]->GetName()))
+				if (ImGui::Selectable(scene->gameObjects[i]->GetName()))
 				{
-					scenes->GetAllComponents(scenes->gameObjects[i]->GetID());
-					selectedGameObject = scenes->gameObjects[i];
+					selectedGameObject = scene->gameObjects[i];
 				}
 			}
 		}
@@ -101,20 +100,60 @@ namespace Popeye{
 				ImGui::DragFloat3("scale", (float*)&selectedGameObject->transform.scale);
 			}
 
-			
+			/*Show all Component*/
+			int id = selectedGameObject->GetID();
+			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id);
 
+			for (int i = 0; i < accessor.size(); i++)
+			{
+				if (accessor[i].componentType != nullptr)
+				{
+					if (accessor[i].componentType == typeid(Camera).name())
+					{
+						ShowCamera(selectedGameObject->GetComponent<Camera>(), id);
+					}
+				}
+			}
+
+			/*Add Component*/
 			if (ImGui::Button("Add Component", ImVec2(ImGui::GetWindowSize().x, 0.0f)))
 				addcomponentCall = true;
 			
 			if (addcomponentCall)
 			{
-				//ImGui::BeginMenuBar();
-				//ImGui::BeginChild("search_component");
 				filter.Draw("search");
-				//ImGui::EndChild();
-				//ImGui::EndMenuBar();
 			}
 		}
+	}
+
+	void Inspector::ShowCamera(Camera& camera, int id)
+	{
+		const char* camMod[] = { "Perspective", "Otrhomatric" };
+
+		static int cameraMod = -1;
+		if (cameraMod == -1 && camera.mod == Projection::PERSPECTIVE) { cameraMod = 0; }
+		if (cameraMod == -1 && camera.mod == Projection::ORTHOGRAPHIC) { cameraMod = 1; }
+
+		if (ImGui::CollapsingHeader("Camera"))
+		{
+			ImGui::Combo("Projection", &cameraMod, camMod,IM_ARRAYSIZE(camMod), IM_ARRAYSIZE(camMod));
+			if (cameraMod == 0) 
+			{
+				//selectedGameObject->GetComponent<Camera>().mod = Projection::PERSPECTIVE;
+				//POPEYE_CORE_INFO("perspective");
+				camera.mod = Projection::PERSPECTIVE;
+			}
+			if (cameraMod == 1) 
+			{
+				//POPEYE_CORE_INFO("ortho");
+				//selectedGameObject->GetComponent<Camera>().mod = Projection::ORTHOGRAPHIC;
+			}
+		}
+	}
+
+	void Inspector::ShowMeshRenderer(MeshRenderer& camera)
+	{
+
 	}
 
 	//Tab::Debug

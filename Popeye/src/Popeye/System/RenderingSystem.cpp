@@ -236,6 +236,7 @@ namespace Popeye {
 					shader2.setMat4("model", model);
 				}
 
+				//POPEYE_CORE_INFO(meshrenderer.meshIndex);
 				glBindVertexArray(VAOs[meshrenderer.meshIndex]);
 				glDrawArrays(GL_TRIANGLES, 0, 36);
 				//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

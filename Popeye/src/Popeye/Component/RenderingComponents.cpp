@@ -141,17 +141,19 @@ namespace Popeye {
 	std::vector<Mesh>		MeshRenderer::meshes;
 	std::vector<Material>	MeshRenderer::materials;
 
+	MeshRenderer::MeshRenderer() {}
+
 	void MeshRenderer::SetMesh(Mesh& mesh)
 	{
 		for (int i = 0; i < meshes.size(); i++)
 		{
 			if (meshes[i].id == mesh.id)
 			{
-				meshIndex = i;
+				this->meshIndex = i;
 				return;
 			}
 		}
 		meshes.push_back(mesh);
-		meshIndex = meshes.size() - 1;
+		this->meshIndex = meshes.size() - 1;
 	}
 }

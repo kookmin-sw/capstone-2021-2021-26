@@ -72,7 +72,6 @@ namespace Popeye
 	void GUIManager::Show()
 	{
 		static int initialized = 0;
-		static int new_window = 0;
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);
@@ -155,13 +154,6 @@ namespace Popeye
 			{
 				tabs[i]->ShowTab();
 			}
-		}
-
-		if (new_window == 1)
-		{
-			//ImGui::SetNextWindowDockId(dockspace_id, ImGuiCond_Once);
-			ImGui::Begin("New Window");
-			ImGui::End();
 		}
 
 		ImGui::End();
