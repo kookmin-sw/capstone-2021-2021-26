@@ -185,8 +185,12 @@ namespace Popeye {
 				if (id == SceneManager::GetInstance()->currentScene->mainCameraID)
 				{
 					Camera camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(id);
-					
-					view = glm::lookAt(position, -position + rotation, glm::vec3(0.0f, 1.0f, 0.0f) * rotation.y); //View
+					glm::vec3 camForward = glm::vec3(0.0f);
+					camForward.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+					camForward.y = position.y * sin(glm::radians(rotation.y));
+					camForward.z = position.z + cos(glm::radians(rotation.z));
+
+					view = glm::lookAt(position, position + camForward, glm::vec3(0.0f, 1.0f, 0.0f) * rotation.y); //View
 
 					if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
 					{
@@ -195,8 +199,8 @@ namespace Popeye {
 					else if (camera.mod == Projection::ORTHOGRAPHIC) //Projection :: orthographic
 					{
 						projection = glm::ortho(
-							-(camera.size) /2, (camera.size) / 2,
-							-(camera.size) / 2, (camera.size) / 2,
+							-(camera.width) * 0.5f,	(camera.width) * 0.5f,
+							-(camera.height) * 0.5f,(camera.height) * 0.5f,
 							camera.nearView, camera.farView);
 					}
 					

@@ -141,22 +141,18 @@ namespace Popeye {
 
 		scene->gameObjects[2]->SetName("gameObject3");
 		scene->gameObjects[2]->AddComponent<MeshRenderer>();
-		MeshRenderer mesh = scene->gameObjects[2]->GetComponent<MeshRenderer>();
-		mesh.SetMesh(object2);
-		POPEYE_CORE_INFO("{0}, {1}", mesh.meshIndex, mesh.materialIndex);
+		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(object2);
 		scene->gameObjects[2]->transform.position = { 2.0f, 0.0f, -1.0f };
 		scene->gameObjects[2]->transform.scale = { 1.0f, 2.0f, 1.0f };
 
 		scene->gameObjects[3]->SetName("gameObject4");
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
 		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(object2);
-		//POPEYE_CORE_INFO("{0}, {1}", scene->gameObjects[3]->GetComponent<MeshRenderer>().materialIndex, scene->gameObjects[3]->GetComponent<MeshRenderer>().materials);
 		scene->gameObjects[3]->transform.position = { 1.0f, 4.0f, 5.0f };
 		scene->gameObjects[3]->transform.scale = { 6.0f, 2.0f, 6.0f };
 
 		scene->gameObjects[4]->SetName("Camera");
 		scene->gameObjects[4]->AddComponent<Camera>();
-		//scene->gameObjects[3]->GetComponent<Camera>().mod = Projection::PERSPECTIVE
 		scene->mainCameraID = scene->gameObjects[4]->GetID();
 
 		int display_w, display_h;

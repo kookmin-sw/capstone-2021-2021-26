@@ -102,7 +102,7 @@ namespace Popeye{
 
 			/*Show all Component*/
 			int id = selectedGameObject->GetID();
-			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id);
+			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id); // TODO::Make copy once.
 
 			for (int i = 0; i < accessor.size(); i++)
 			{
@@ -110,7 +110,11 @@ namespace Popeye{
 				{
 					if (accessor[i].componentType == typeid(Camera).name())
 					{
-						ShowCamera(selectedGameObject->GetComponent<Camera>(), id);
+						ShowCamera(selectedGameObject->GetComponent<Camera>());
+					}
+					if (accessor[i].componentType == typeid(MeshRenderer).name())
+					{
+						ShowMeshRenderer(selectedGameObject->GetComponent<MeshRenderer>());
 					}
 				}
 			}
@@ -122,11 +126,16 @@ namespace Popeye{
 			if (addcomponentCall)
 			{
 				filter.Draw("search");
+
+				for (int i = 0; i < accessor.size(); i++)
+				{
+
+				}
 			}
 		}
 	}
 
-	void Inspector::ShowCamera(Camera& camera, int id)
+	void Inspector::ShowCamera(Camera& camera)
 	{
 		const char* camMod[] = { "Perspective", "Otrhomatric" };
 
@@ -136,24 +145,30 @@ namespace Popeye{
 
 		if (ImGui::CollapsingHeader("Camera"))
 		{
-			ImGui::Combo("Projection", &cameraMod, camMod,IM_ARRAYSIZE(camMod), IM_ARRAYSIZE(camMod));
-			if (cameraMod == 0) 
-			{
-				//selectedGameObject->GetComponent<Camera>().mod = Projection::PERSPECTIVE;
-				//POPEYE_CORE_INFO("perspective");
+			ImGui::Combo("Projection", &cameraMod, camMod, IM_ARRAYSIZE(camMod), IM_ARRAYSIZE(camMod)); // TODO::Make look pretty.
+			if (cameraMod == 0) {
 				camera.mod = Projection::PERSPECTIVE;
+				ImGui::DragFloat("fov", &camera.fov);
+				ImGui::DragFloat("offset x", &camera.offsetX);
+				ImGui::DragFloat("offset y", &camera.offsetY);
 			}
-			if (cameraMod == 1) 
-			{
-				//POPEYE_CORE_INFO("ortho");
-				//selectedGameObject->GetComponent<Camera>().mod = Projection::ORTHOGRAPHIC;
+			if (cameraMod == 1) {
+				camera.mod = Projection::ORTHOGRAPHIC;
+				ImGui::DragFloat("width", &camera.width);
+				ImGui::DragFloat("height", &camera.height);
 			}
+
+			ImGui::DragFloat("far view", &camera.farView);
+			ImGui::DragFloat("near view", &camera.nearView);
 		}
 	}
 
 	void Inspector::ShowMeshRenderer(MeshRenderer& camera)
 	{
+		if (ImGui::CollapsingHeader("MeshRenderer"))
+		{
 
+		}
 	}
 
 	//Tab::Debug

@@ -23,7 +23,7 @@ namespace Popeye{
 	struct Inspector : public Tab
 	{
 		virtual void ShowContents();
-		void ShowCamera(Camera&, int id);
+		void ShowCamera(Camera&);
 		void ShowMeshRenderer(MeshRenderer&);
 	};
 

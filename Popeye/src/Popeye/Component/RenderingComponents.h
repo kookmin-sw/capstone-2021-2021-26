@@ -56,13 +56,15 @@ namespace Popeye {
 	enum class Projection { PERSPECTIVE, ORTHOGRAPHIC };
 	struct Camera
 	{
-		void SetMainCamera();
-
-		Projection mod = Projection::ORTHOGRAPHIC;
+		Projection mod = Projection::PERSPECTIVE;
 		float fov = 45.0f;
-		float nearView = 0.1f, farView = 100.0f;
 		float offsetX = 800.0f, offsetY = 600.0f;
-		float size = 20.0f;
+
+		/*Perspective view*/
+		float nearView = 0.1f, farView = 100.0f;
+
+		/*ORTHOGRAPHIC*/
+		float width = 5.0f, height = 5.0f;
 	};
 
 }

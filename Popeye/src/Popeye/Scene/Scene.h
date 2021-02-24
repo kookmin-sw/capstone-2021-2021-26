@@ -52,7 +52,7 @@ namespace Popeye {
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
 				{
-					temp = ComponentManager::GetInstance()->GetDataOfComponent<component>
+					return ComponentManager::GetInstance()->GetDataOfComponent<component>
 						(keysToAccessComponent[_id][i].componentType, keysToAccessComponent[_id][i].dataIndex);
 				}
 			}

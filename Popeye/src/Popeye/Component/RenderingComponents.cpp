@@ -149,11 +149,11 @@ namespace Popeye {
 		{
 			if (meshes[i].id == mesh.id)
 			{
-				this->meshIndex = i;
+				meshIndex = i;
 				return;
 			}
 		}
 		meshes.push_back(mesh);
-		this->meshIndex = meshes.size() - 1;
+		meshIndex = meshes.size() - 1;
 	}
 }
