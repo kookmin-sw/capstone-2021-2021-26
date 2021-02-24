@@ -246,7 +246,10 @@ namespace Popeye
 		{
 			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
-				ImGui::Selectable(scene->gameObjects[i]->GetName());
+				if (ImGui::Selectable(scene->gameObjects[i]->GetName()))
+				{
+					std::cout << scene->gameObjects[i]->GetName() << std::endl;
+				}
 			}
 		}
 	}

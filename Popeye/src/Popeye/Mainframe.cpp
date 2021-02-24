@@ -33,11 +33,6 @@ namespace Popeye {
 		return true;
 	}
 
-	GLFWwindow* Mainframe::get_window()
-	{
-		return this->window;
-	}
-
 	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
@@ -137,7 +132,7 @@ namespace Popeye {
 		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[4]->GetID(), object);
 		scene->gameObjects[4]->transform.SetPosition({ 1.0f, 4.0f, 5.0f });
 		scene->gameObjects[4]->transform.SetScale({ 6.0f, 2.0f, 6.0f });
-		scene->gameObjects[4]->SetName("gameObject3");
+		scene->gameObjects[4]->SetName("gameObject4");
 		
 		/*Popeye::GameObject* gameObject = new GameObject();
 		gameObject->AddComponent<Transform>();

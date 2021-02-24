@@ -9,8 +9,6 @@ namespace Popeye {
 		Mainframe();
 		virtual ~Mainframe();
 
-		GLFWwindow* get_window(void);
-
 		bool init_Display(void);
 		void run_Display(void);
 		void close_Display(void);

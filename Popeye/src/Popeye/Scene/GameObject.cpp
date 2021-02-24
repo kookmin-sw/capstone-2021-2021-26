@@ -15,7 +15,6 @@ namespace Popeye {
 
 	GameObject::~GameObject() 
 	{
-
 	}
 
 	char* GameObject::GetName()
