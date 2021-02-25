@@ -185,14 +185,10 @@ namespace Popeye {
 				if (id == SceneManager::GetInstance()->currentScene->mainCameraID)
 				{
 					Camera camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(id);
-					glm::vec3 camDir = glm::vec3(0.0f);
-					glm::mat4 rotMet = glm::mat4(1.0f);
-					rotMet = glm::rotate(rotMet, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-					rotMet = glm::rotate(rotMet, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-					rotMet = glm::rotate(rotMet, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-					camDir = rotMet * glm::vec4(position.x, position.y, position.z, 1.0f);
-				
-					view = glm::lookAt(position, position - glm::vec3(camDir.x, camDir.y, camDir.z), glm::vec3(0.0f, 1.0f, 0.0f)); //View
+					view = glm::rotate(view, glm::radians(rotation.x), glm::vec3(-1.0f, 0.0f, 0.0f));
+					view = glm::rotate(view, glm::radians(rotation.y), glm::vec3(0.0f, -1.0f, 0.0f));
+					view = glm::rotate(view, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, -1.0f));
+					view = glm::translate(view, -position);
 
 					if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
 					{

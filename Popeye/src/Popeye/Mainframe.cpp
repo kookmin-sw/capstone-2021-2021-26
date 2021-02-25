@@ -154,6 +154,8 @@ namespace Popeye {
 		scene->gameObjects[4]->SetName("Camera");
 		scene->gameObjects[4]->AddComponent<Camera>();
 		scene->mainCameraID = scene->gameObjects[4]->GetID();
+		scene->gameObjects[4]->transform.position = { 8.0f, 8.0f, 8.0f };
+		scene->gameObjects[4]->transform.rotation = { -22.5f, 45.0f, 0.0f };
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
