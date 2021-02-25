@@ -67,35 +67,8 @@ namespace Popeye {
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			/********************************************************************************************************/
-
-			for (int i = 0; i < MeshRenderer::meshes.size(); i++)
-			{
-				unsigned int tVBO;
-				glGenBuffers(1, &tVBO);
-				glBindBuffer(GL_ARRAY_BUFFER, tVBO);
-
-				unsigned int tVAO;
-				glGenVertexArrays(1, &tVAO);
-				glBindVertexArray(tVAO);
-
-				/*unsigned int tEBO;
-				glGenBuffers(1, &tEBO);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);*/
-
-				glBufferData(GL_ARRAY_BUFFER, MeshRenderer::meshes[i].vertsize, &MeshRenderer::meshes[i].vertices[0], GL_STATIC_DRAW);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, MeshRenderer::meshes[i].indsize, &MeshRenderer::meshes[i].indicies[0], GL_STATIC_DRAW);
-
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-				glEnableVertexAttribArray(0);
-				/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-				glEnableVertexAttribArray(1);*/
-				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-				glEnableVertexAttribArray(2);
-
-				VAOs.push_back(tVAO);
-			}
 			state = 1;
+			/********************************************************************************************************/
 
 			screenShader.use();
 			screenShader.setInt("screenTexture", 0);
@@ -119,7 +92,7 @@ namespace Popeye {
 				screenShader.use();
 				glBindTexture(GL_TEXTURE_2D, worldTexture);
 
-				glClearColor(0.5f, 0.5f, 0.5f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
 				renderstate = RenderState::RENDERGAMEVIEW;
@@ -139,7 +112,7 @@ namespace Popeye {
 				screenShader.use();
 				glBindTexture(GL_TEXTURE_2D, viewTexture);
 
-				glClearColor(0.5f, 0.5f, 0.5f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
 				renderstate = RenderState::RENDERSCENEVIEW;
@@ -164,7 +137,7 @@ namespace Popeye {
 		static int  init = 0;
 
 		if (init == 0) {
-			texture.InitTexture("texture/test.jpg");
+			//texture.InitTexture("texture/test.jpg");
 			init = 1;
 		}
 		static glm::mat4 worldView = glm::mat4(1.0f);
@@ -239,7 +212,7 @@ namespace Popeye {
 				}
 
 				//POPEYE_CORE_INFO(meshrenderer.meshIndex);
-				glBindVertexArray(VAOs[meshrenderer.meshIndex]);
+				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
 				glDrawArrays(GL_TRIANGLES, 0, 36);
 				//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 			}

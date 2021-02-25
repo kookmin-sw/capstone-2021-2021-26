@@ -153,6 +153,29 @@ namespace Popeye {
 				return;
 			}
 		}
+
+
+		unsigned int tVBO;
+		glGenBuffers(1, &tVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, tVBO);
+
+		glGenVertexArrays(1, &mesh.VAO);
+		glBindVertexArray(mesh.VAO);
+
+		/*unsigned int tEBO;
+		glGenBuffers(1, &tEBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);*/
+
+		glBufferData(GL_ARRAY_BUFFER, mesh.vertsize, &mesh.vertices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indsize, &mesh.indicies[0], GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);*/
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+
 		meshes.push_back(mesh);
 		meshIndex = meshes.size() - 1;
 	}

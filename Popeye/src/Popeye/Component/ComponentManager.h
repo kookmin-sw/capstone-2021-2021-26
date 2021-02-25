@@ -39,7 +39,7 @@ namespace Popeye {
 		template<typename component>
 		ComponentDatatable<component>* AccessComponent(BaseComponentDatatable* _basedata)
 		{
-			ComponentDatatable<component>* compenentData = dynamic_cast<ComponentDatatable<component>*> (_basedata);
+			ComponentDatatable<component>* compenentData = static_cast<ComponentDatatable<component>*> (_basedata);
 			return compenentData;
 		}
 

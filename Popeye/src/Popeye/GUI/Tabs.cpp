@@ -139,9 +139,9 @@ namespace Popeye{
 	{
 		const char* camMod[] = { "Perspective", "Otrhomatric" };
 
-		static int cameraMod = -1;
-		if (cameraMod == -1 && camera.mod == Projection::PERSPECTIVE) { cameraMod = 0; }
-		if (cameraMod == -1 && camera.mod == Projection::ORTHOGRAPHIC) { cameraMod = 1; }
+		int cameraMod = -1;
+		if (camera.mod == Projection::PERSPECTIVE) { cameraMod = 0; }
+		if (camera.mod == Projection::ORTHOGRAPHIC) { cameraMod = 1; }
 
 		if (ImGui::CollapsingHeader("Camera"))
 		{

@@ -37,6 +37,8 @@ namespace Popeye {
 		int vertsize;
 		unsigned int* indicies;
 		int indsize;
+
+		unsigned int VAO;
 	};
 
 	struct MeshRenderer
