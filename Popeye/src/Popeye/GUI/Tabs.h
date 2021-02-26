@@ -4,6 +4,7 @@
 namespace Popeye{
 	struct MeshRenderer;
 	struct Camera;
+	struct Light;
 
 	struct Tab
 	{
@@ -23,8 +24,10 @@ namespace Popeye{
 	struct Inspector : public Tab
 	{
 		virtual void ShowContents();
-		void ShowCamera(Camera&);
-		void ShowMeshRenderer(MeshRenderer&);
+		
+		void ShowComponent(Camera&);
+		void ShowComponent(MeshRenderer&);
+		void ShowComponent(Light&);
 	};
 
 	struct SceneView : public Tab

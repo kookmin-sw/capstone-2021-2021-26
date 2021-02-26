@@ -95,6 +95,10 @@ namespace Popeye {
 	{
 		glUniform1i(glGetUniformLocation(shader_ID, name.c_str()), value);
 	}
+	void Shader::setVec3(const std::string& name, glm::vec3 value) const
+	{
+		glUniform3fv(glGetUniformLocation(shader_ID, name.c_str()), 1, &value[0]);
+	}
 	void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(shader_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
@@ -169,14 +173,29 @@ namespace Popeye {
 		glBufferData(GL_ARRAY_BUFFER, mesh.vertsize, &mesh.vertices[0], GL_STATIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indsize, &mesh.indicies[0], GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);*/
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 		glEnableVertexAttribArray(2);
 
 		meshes.push_back(mesh);
 		meshIndex = meshes.size() - 1;
+	}
+
+	void MeshRenderer::SetMaterial(Material& material) 
+	{
+		for (int i = 0; i < materials.size(); i++)
+		{
+			if (materials[i].id == material.id)
+			{
+				materialIndex = i;
+				return;
+			}
+		}
+
+		materials.push_back(material);
+		materialIndex = materials.size() - 1;
 	}
 }

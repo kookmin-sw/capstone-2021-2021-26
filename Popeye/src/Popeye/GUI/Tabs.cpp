@@ -110,11 +110,15 @@ namespace Popeye{
 				{
 					if (accessor[i].componentType == typeid(Camera).name())
 					{
-						ShowCamera(selectedGameObject->GetComponent<Camera>());
+						ShowComponent(selectedGameObject->GetComponent<Camera>());
 					}
 					if (accessor[i].componentType == typeid(MeshRenderer).name())
 					{
-						ShowMeshRenderer(selectedGameObject->GetComponent<MeshRenderer>());
+						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>());
+					}
+					if (accessor[i].componentType == typeid(Light).name())
+					{
+						ShowComponent(selectedGameObject->GetComponent<Light>());
 					}
 				}
 			}
@@ -135,7 +139,8 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowCamera(Camera& camera)
+
+	void Inspector::ShowComponent(Camera& camera)
 	{
 		const char* camMod[] = { "Perspective", "Otrhomatric" };
 
@@ -163,9 +168,18 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowMeshRenderer(MeshRenderer& camera)
+	void Inspector::ShowComponent(MeshRenderer& meshRenderer)
 	{
 		if (ImGui::CollapsingHeader("MeshRenderer"))
+		{
+
+			ImGui::ColorEdit3("color", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].albedo);
+		}
+	}
+
+	void Inspector::ShowComponent(Light& light)
+	{
+		if (ImGui::CollapsingHeader("Light"))
 		{
 
 		}

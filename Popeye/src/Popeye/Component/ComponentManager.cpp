@@ -8,6 +8,7 @@ namespace Popeye
 	{
 		RegistComponent<Camera>();
 		RegistComponent<MeshRenderer>();
+		RegistComponent<Light>();
 	}
 
 	ComponentManager::ComponentManager()

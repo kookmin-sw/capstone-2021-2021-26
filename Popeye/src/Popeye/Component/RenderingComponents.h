@@ -9,6 +9,7 @@ namespace Popeye {
 		void setBool(const std::string &name, bool value) const;
 		void setInt(const std::string& name, int value) const;
 		void setFloat(const std::string& name, float value) const;
+		void setVec3(const std::string& name, glm::vec3 value) const;
 		void setMat4(const std::string& name, const glm::mat4& mat) const;
 	};
 
@@ -26,8 +27,6 @@ namespace Popeye {
 		std::string id;
 		Texture texture;
 		glm::vec3 albedo;
-		float metalic;
-		float smoothness;
 	};
 
 	struct Mesh 
@@ -41,6 +40,7 @@ namespace Popeye {
 		unsigned int VAO;
 	};
 
+	/*MeshRenderer*/
 	struct MeshRenderer
 	{
 		static std::vector<Mesh> meshes;
@@ -55,6 +55,7 @@ namespace Popeye {
 	};
 
 
+	/*Camera Component*/
 	enum class Projection { PERSPECTIVE, ORTHOGRAPHIC };
 	struct Camera
 	{
@@ -68,6 +69,15 @@ namespace Popeye {
 		/*ORTHOGRAPHIC*/
 		float width = 5.0f, height = 5.0f;
 	};
+
+	/*Light Component*/
+	enum class LightType { DIRECTIONAL, POINT, SPOT };
+	struct Light 
+	{
+		LightType mod;
+		glm::vec3 lightColor = glm::vec3(1.0f);
+	};
+
 
 }
 

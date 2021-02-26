@@ -17,19 +17,19 @@ namespace Popeye {
 
 	void RenderingSystem::SystemRunning()
 	{
-		static RenderState renderstate;
 		static int state = 0; //temp state;
 
 		static Shader screenShader("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
 
 		if (state == 0)
 		{
+			renderstate = RenderState::RENDERSCENEVIEW;
 			/****************************************frame buffer****************************************************/
 			/********************************************************************************************************/
 			
 			//game view frame buffer
-			glGenFramebuffers(1, &FBO);
-			glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+			glGenFramebuffers(1, &gameViewFBO);
+			glBindFramebuffer(GL_FRAMEBUFFER, gameViewFBO);
 			
 			// create a color attachment texture
 			glGenTextures(1, &viewTexture);
@@ -84,7 +84,7 @@ namespace Popeye {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				//render
-				Rendering(renderstate);
+				Rendering();
 				
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -94,17 +94,16 @@ namespace Popeye {
 
 				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
-
 				renderstate = RenderState::RENDERGAMEVIEW;
 			}
 			else
 			{
-				glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+				glBindFramebuffer(GL_FRAMEBUFFER, gameViewFBO);
 				glEnable(GL_DEPTH_TEST);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				//render
-				Rendering(renderstate);
+				Rendering();
 
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -114,37 +113,61 @@ namespace Popeye {
 
 				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
-
 				renderstate = RenderState::RENDERSCENEVIEW;
 			}
 
 		}
 
 		/***********************game framework***********************/
-		//init -> initializing
-
-		// onUpdate -> main loop
-
-		// onexit -> end
 	}
 
-	void RenderingSystem::Rendering(RenderState& state)
+	void RenderingSystem::Rendering()
 	{
 		static Shader shader; // temp 
-		static Shader shader2; // also temp 
-		static Texture texture; // ..
+		static Camera camera; 
 
-		static int  init = 0;
-
-		if (init == 0) {
-			//texture.InitTexture("texture/test.jpg");
-			init = 1;
-		}
-		static glm::mat4 worldView = glm::mat4(1.0f);
-		static glm::mat4 worldProjection = glm::mat4(1.0f);
-
+		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
+		
+		shader.use();
+		if (renderstate == RenderState::RENDERGAMEVIEW)
+		{
+			int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
+			GameObject* cameraObject = SceneManager::GetInstance()->currentScene->gameObjects[currentCameraID];
+			glm::vec3 position	= cameraObject->transform.position;
+			glm::vec3 rotation	= cameraObject->transform.rotation;
+			glm::vec3 scale		= cameraObject->transform.scale;
+			camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(currentCameraID);
+
+			view = glm::rotate(view, glm::radians(rotation.x), glm::vec3(-1.0f, 0.0f, 0.0f));
+			view = glm::rotate(view, glm::radians(rotation.y), glm::vec3(0.0f, -1.0f, 0.0f));
+			view = glm::rotate(view, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, -1.0f));
+			view = glm::translate(view, -position);
+
+			if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
+			{
+				projection = glm::perspective(camera.fov, camera.offsetX / camera.offsetY, camera.nearView, camera.farView);
+			}
+			else if (camera.mod == Projection::ORTHOGRAPHIC) //Projection :: orthographic
+			{
+				projection = glm::ortho(
+					-(camera.width) * 0.5f, (camera.width) * 0.5f,
+					-(camera.height) * 0.5f, (camera.height) * 0.5f,
+					camera.nearView, camera.farView);
+			}
+			//shader.setVec3("viewPos", -position);
+		}
+		else
+		{
+			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+			//shader.setVec3("viewPos", g_sceneViewPosition);
+		}
+
+		shader.setMat4("view", view);
+		shader.setMat4("projection", projection);
+
 		for (GameObject* gameObject : SceneManager::GetInstance()->currentScene->gameObjects)
 		{
 			int id = gameObject->GetID();
@@ -152,48 +175,19 @@ namespace Popeye {
 			glm::vec3 rotation	= gameObject->transform.rotation;
 			glm::vec3 scale		= gameObject->transform.scale;
 			
-			if (state == RenderState::RENDERGAMEVIEW)
+			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
-				shader.use();
-				if (id == SceneManager::GetInstance()->currentScene->mainCameraID)
-				{
-					Camera camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(id);
-					view = glm::rotate(view, glm::radians(rotation.x), glm::vec3(-1.0f, 0.0f, 0.0f));
-					view = glm::rotate(view, glm::radians(rotation.y), glm::vec3(0.0f, -1.0f, 0.0f));
-					view = glm::rotate(view, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, -1.0f));
-					view = glm::translate(view, -position);
-
-					if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
-					{
-						projection = glm::perspective(camera.fov, camera.offsetX / camera.offsetY, camera.nearView, camera.farView);
-					}
-					else if (camera.mod == Projection::ORTHOGRAPHIC) //Projection :: orthographic
-					{
-						projection = glm::ortho(
-							-(camera.width) * 0.5f,	(camera.width) * 0.5f,
-							-(camera.height) * 0.5f,(camera.height) * 0.5f,
-							camera.nearView, camera.farView);
-					}
-					
-					shader.setMat4("view", view);
-					shader.setMat4("projection", projection);
-				}
-			}
-			else
-			{
-				shader2.use();
-				worldView = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
-				worldProjection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-				shader2.setMat4("view", worldView);
-				shader2.setMat4("projection", worldProjection);
+				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
+				shader.setVec3("lightColor", light.lightColor);
+				shader.setVec3("lightPos", position);
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
 			{
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
-				texture.drawTexture();
-
-				glm::mat4 model = glm::mat4(1.0f);
+				
+				model = glm::mat4(1.0f);
+				
 				model = glm::translate(model, position);
 
 				model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -202,16 +196,10 @@ namespace Popeye {
 
 				model = glm::scale(model, scale);
 
-				if (state == RenderState::RENDERGAMEVIEW)
-				{
-					shader.setMat4("model", model);
-				}
-				else
-				{
-					shader2.setMat4("model", model);
-				}
+				shader.setMat4("model", model);
 
-				//POPEYE_CORE_INFO(meshrenderer.meshIndex);
+				shader.setVec3("objectColor", MeshRenderer::materials[meshrenderer.materialIndex].albedo);
+
 				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
 				glDrawArrays(GL_TRIANGLES, 0, 36);
 				//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

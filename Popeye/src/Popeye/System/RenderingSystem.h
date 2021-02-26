@@ -1,8 +1,5 @@
 #pragma once
 namespace Popeye {
-	struct Texture;
-	struct Shader;
-	struct Cam;
 
 	enum class RenderState
 	{
@@ -13,14 +10,14 @@ namespace Popeye {
 	class RenderingSystem
 	{
 	private:
-		std::vector<unsigned int> VAOs;
+		RenderState renderstate;
+		unsigned int worldViewFBO, gameViewFBO;
 	public:
-		unsigned int worldViewFBO, FBO;
 		static unsigned int viewTexture;
 		static unsigned int worldTexture;
 	
 	private :
-		void Rendering(RenderState&);
+		void Rendering();
 	
 	public:
 		void SystemRunning();
