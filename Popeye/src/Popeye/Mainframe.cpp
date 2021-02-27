@@ -124,10 +124,12 @@ namespace Popeye {
 
 		Popeye::Material material0;
 		material0.id = GET_NAME(material0);
+		material0.albedo = glm::vec3(1.0f, 0.5f, 0.5f);
+		material0.texture.InitTexture("texture/test.jpg");
 
 		Popeye::Material material1;
 		material1.id = GET_NAME(material1);
-		material1.albedo = glm::vec3(1.0f, 0.5f, 0.5f);
+		material1.albedo = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		scene->CreateGameObject();
 		scene->CreateGameObject();
@@ -146,20 +148,20 @@ namespace Popeye {
 		scene->gameObjects[1]->SetName("gameObject2");
 		scene->gameObjects[1]->AddComponent<MeshRenderer>();
 		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(object);
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material1);
+		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material0);
 		scene->gameObjects[1]->transform.position = { 2.0f, 3.0f, 3.0f };
 
 		scene->gameObjects[2]->SetName("gameObject3");
 		scene->gameObjects[2]->AddComponent<MeshRenderer>();
 		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(object2);
-		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMaterial(material1);
+		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMaterial(material0);
 		scene->gameObjects[2]->transform.position = { 2.0f, 0.0f, -1.0f };
 		scene->gameObjects[2]->transform.scale = { 1.0f, 2.0f, 1.0f };
 
 		scene->gameObjects[3]->SetName("gameObject4");
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
 		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(object2);
-		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMaterial(material1);
+		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMaterial(material0);
 		scene->gameObjects[3]->transform.position = { 1.0f, 4.0f, 5.0f };
 		scene->gameObjects[3]->transform.scale = { 6.0f, 2.0f, 6.0f };
 
@@ -171,6 +173,7 @@ namespace Popeye {
 
 		scene->gameObjects[5]->SetName("Light");
 		scene->gameObjects[5]->AddComponent<Light>();
+		scene->gameObjects[5]->transform.position = { 5.0f, 5.0f, 5.0f };
 
 
 		POPEYE_CORE_INFO("sds");

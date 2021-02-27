@@ -156,13 +156,11 @@ namespace Popeye {
 					-(camera.height) * 0.5f, (camera.height) * 0.5f,
 					camera.nearView, camera.farView);
 			}
-			//shader.setVec3("viewPos", -position);
 		}
 		else
 		{
 			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-			//shader.setVec3("viewPos", g_sceneViewPosition);
 		}
 
 		shader.setMat4("view", view);

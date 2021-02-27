@@ -172,8 +172,15 @@ namespace Popeye{
 	{
 		if (ImGui::CollapsingHeader("MeshRenderer"))
 		{
-
-			ImGui::ColorEdit3("color", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].albedo);
+			if (ImGui::TreeNode("Mesh"))
+			{
+				ImGui::TreePop();
+			}
+			if (ImGui::TreeNode("Material"))
+			{
+				ImGui::ColorEdit3("albedo", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].albedo);
+				ImGui::TreePop();
+			}
 		}
 	}
 
