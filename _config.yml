@@ -2,6 +2,8 @@
 # This file contains configuration flags to customize your site
 #
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
+
+theme: jekyll-theme-minimal
 avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png
 
 #
@@ -77,5 +79,3 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
-
-theme: jekyll-theme-minimal
