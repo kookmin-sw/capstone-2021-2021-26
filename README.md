@@ -1,7 +1,5 @@
 [![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=365375&assignment_repo_type=GroupAssignmentRepo)
-# Capstone-2021-26
-
-### Popeye Engine
+# Popeye Engine
 
 (프로젝트 로고)
 
@@ -19,7 +17,7 @@ Popeye Engine은 사용자에게 유니티3D와 유사한 환경제공을 목표
 
 최석원 - 엔진 개발
 
-조성호 - 팀페이지, 문서 관리
+조성호 - 페이지 제작, 문서 관리
 
 김성주 - 엔진 사용 예시 제작
 
