@@ -130,11 +130,6 @@ namespace Popeye{
 			if (addcomponentCall)
 			{
 				filter.Draw("search");
-
-				for (int i = 0; i < accessor.size(); i++)
-				{
-
-				}
 			}
 		}
 	}
@@ -179,6 +174,9 @@ namespace Popeye{
 			if (ImGui::TreeNode("Material"))
 			{
 				ImGui::ColorEdit3("albedo", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].albedo);
+				ImGui::DragFloat("diffuse", &MeshRenderer::materials[meshRenderer.materialIndex].diffuse);
+				ImGui::DragFloat("ambiant", &MeshRenderer::materials[meshRenderer.materialIndex].ambiant);
+				ImGui::DragFloat("specular", &MeshRenderer::materials[meshRenderer.materialIndex].specular);
 				ImGui::TreePop();
 			}
 		}
@@ -188,7 +186,10 @@ namespace Popeye{
 	{
 		if (ImGui::CollapsingHeader("Light"))
 		{
-
+			ImGui::ColorEdit3("albedo", (float*)&light.lightColor);
+			ImGui::DragFloat("diffuse", &light.diffuse);
+			ImGui::DragFloat("ambiant", &light.ambiant);
+			ImGui::DragFloat("specular", &light.specular);
 		}
 	}
 

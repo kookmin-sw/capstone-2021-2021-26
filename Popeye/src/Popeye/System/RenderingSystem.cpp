@@ -129,13 +129,13 @@ namespace Popeye {
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		
+		//glm::vec3 viewPos = glm::vec3(0.0f);
 		shader.use();
 		if (renderstate == RenderState::RENDERGAMEVIEW)
 		{
 			int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
 			GameObject* cameraObject = SceneManager::GetInstance()->currentScene->gameObjects[currentCameraID];
-			glm::vec3 position	= cameraObject->transform.position;
+			glm::vec3 position = cameraObject->transform.position;
 			glm::vec3 rotation	= cameraObject->transform.rotation;
 			glm::vec3 scale		= cameraObject->transform.scale;
 			camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(currentCameraID);
@@ -156,13 +156,15 @@ namespace Popeye {
 					-(camera.height) * 0.5f, (camera.height) * 0.5f,
 					camera.nearView, camera.farView);
 			}
+			shader.setVec3("viewPos", position);
 		}
 		else
 		{
 			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+			//position = g_sceneViewPosition;
+			shader.setVec3("viewPos", g_sceneViewPosition);
 		}
-
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
 
@@ -176,14 +178,21 @@ namespace Popeye {
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
 				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
-				shader.setVec3("lightColor", light.lightColor);
-				shader.setVec3("lightPos", position);
+
+				glm::vec3 diffuseColor = light.lightColor * light.diffuse; // decrease the influence
+				glm::vec3 ambientColor = light.lightColor * light.ambiant; // low influence
+				shader.setVec3("light.position", position);
+
+				shader.setVec3("light.ambient", ambientColor);
+				shader.setVec3("light.diffuse", diffuseColor);
+				
+				shader.setVec3("light.specular", glm::vec3(light.specular));
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
 			{
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
-				
+				Material material = MeshRenderer::materials[meshrenderer.materialIndex];
 				model = glm::mat4(1.0f);
 				
 				model = glm::translate(model, position);
@@ -196,7 +205,11 @@ namespace Popeye {
 
 				shader.setMat4("model", model);
 
-				shader.setVec3("objectColor", MeshRenderer::materials[meshrenderer.materialIndex].albedo);
+				shader.setVec3("material.ambient", material.albedo);
+				shader.setVec3("material.diffuse", material.albedo);
+				shader.setVec3("material.specular", glm::vec3(1.0) * material.specular); // specular lighting doesn't have full effect on this object's material
+				shader.setFloat("material.shininess", 32.0f);
+				
 
 				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
 				glDrawArrays(GL_TRIANGLES, 0, 36);

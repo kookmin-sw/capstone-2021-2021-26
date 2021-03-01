@@ -93,12 +93,12 @@ namespace Popeye {
 		};
 
 		float vertices2[] = {
-		-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.0f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f, 0.0f, 0.5f, 0.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f, 0.0f, 0.5f, 0.0f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.5f, 0.0f,  0.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f,  0.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, 0.0f, 0.0f, 0.5f, 0.0f,  1.0f, 1.0f,
+		 0.5f,  0.5f, 0.0f, 0.0f, 0.5f, 0.0f,  1.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f,  0.0f, 0.0f,
 		};
 
 		unsigned int indices[] = {
@@ -125,8 +125,7 @@ namespace Popeye {
 		Popeye::Material material0;
 		material0.id = GET_NAME(material0);
 		material0.albedo = glm::vec3(1.0f, 0.5f, 0.5f);
-		material0.texture.InitTexture("texture/test.jpg");
-
+		
 		Popeye::Material material1;
 		material1.id = GET_NAME(material1);
 		material1.albedo = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -173,7 +172,10 @@ namespace Popeye {
 
 		scene->gameObjects[5]->SetName("Light");
 		scene->gameObjects[5]->AddComponent<Light>();
-		scene->gameObjects[5]->transform.position = { 5.0f, 5.0f, 5.0f };
+		scene->gameObjects[5]->AddComponent<MeshRenderer>();
+		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMesh(object);
+		scene->gameObjects[5]->transform.scale = { 0.25f, 0.25f , 0.25f };
+		scene->gameObjects[5]->transform.position = { 5.0f, 10.0f, 5.0f };
 
 
 		POPEYE_CORE_INFO("sds");

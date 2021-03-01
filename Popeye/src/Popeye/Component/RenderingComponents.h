@@ -27,6 +27,9 @@ namespace Popeye {
 		std::string id;
 		Texture texture;
 		glm::vec3 albedo;
+		float diffuse = 0.1f;
+		float ambiant = 0.1f;
+		float specular = 0.1f;
 	};
 
 	struct Mesh 
@@ -76,6 +79,9 @@ namespace Popeye {
 	{
 		LightType mod;
 		glm::vec3 lightColor = glm::vec3(1.0f);
+		float diffuse = 1.0f;
+		float ambiant = 0.1f;
+		float specular = 1.0f;
 	};
 
 
