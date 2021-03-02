@@ -160,10 +160,10 @@ namespace Popeye {
 		}
 		else
 		{
+			glm::vec3 position = g_sceneViewPosition;
 			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-			//position = g_sceneViewPosition;
-			shader.setVec3("viewPos", g_sceneViewPosition);
+			shader.setVec3("viewPos", position);
 		}
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
@@ -178,15 +178,16 @@ namespace Popeye {
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
 				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
+				//glm::vec3 diffuseColor = light.lightColor * light.diffuse; // decrease the influence
+				//glm::vec3 ambientColor = light.lightColor * light.ambiant; // low influence
 
-				glm::vec3 diffuseColor = light.lightColor * light.diffuse; // decrease the influence
-				glm::vec3 ambientColor = light.lightColor * light.ambiant; // low influence
 				shader.setVec3("light.position", position);
+				shader.setVec3("light.color", light.lightColor);
 
-				shader.setVec3("light.ambient", ambientColor);
-				shader.setVec3("light.diffuse", diffuseColor);
-				
-				shader.setVec3("light.specular", glm::vec3(light.specular));
+				//shader.setVec3("light.ambient", ambientColor);
+				//shader.setVec3("light.diffuse", diffuseColor);
+				//
+				//shader.setVec3("light.specular", glm::vec3(1.0f) * light.specular);
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
@@ -205,10 +206,14 @@ namespace Popeye {
 
 				shader.setMat4("model", model);
 
-				shader.setVec3("material.ambient", material.albedo);
-				shader.setVec3("material.diffuse", material.albedo);
-				shader.setVec3("material.specular", glm::vec3(1.0) * material.specular); // specular lighting doesn't have full effect on this object's material
-				shader.setFloat("material.shininess", 32.0f);
+				shader.setVec3("material.color", material.color);
+				shader.setFloat("material.ambient", material.ambient);
+				shader.setFloat("material.diffuse", material.diffuse);
+				shader.setFloat("material.specular", material.specular);
+				//shader.setFloat("material.shininess", material.shininess);
+				//shader.setVec3("material.diffuse", material.albedo * material.ambiant * material.diffuse);
+				//shader.setVec3("material.specular", glm::vec3(1.0) * material.specular); // specular lighting doesn't have full effect on this object's material
+				//shader.setFloat("material.shininess", 32.0f);
 				
 
 				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);

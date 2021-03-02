@@ -115,23 +115,14 @@ namespace Popeye {
 		object.indicies = indices;
 		object.indsize = sizeof(indices);
 
-		Popeye::Mesh object2;
-		object2.id = GET_NAME(object2);
-		object2.vertsize = sizeof(vertices2);
-		object2.vertices = vertices2;
-		object2.indicies = indices;
-		object2.indsize = sizeof(indices);
-
 		Popeye::Material material0;
 		material0.id = GET_NAME(material0);
-		material0.albedo = glm::vec3(1.0f, 0.5f, 0.5f);
+		material0.color = glm::vec3(1.0f, 0.5f, 0.5f);
 		
 		Popeye::Material material1;
 		material1.id = GET_NAME(material1);
-		material1.albedo = glm::vec3(1.0f, 1.0f, 1.0f);
+		material1.color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-		scene->CreateGameObject();
-		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
@@ -150,32 +141,18 @@ namespace Popeye {
 		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material0);
 		scene->gameObjects[1]->transform.position = { 2.0f, 3.0f, 3.0f };
 
-		scene->gameObjects[2]->SetName("gameObject3");
-		scene->gameObjects[2]->AddComponent<MeshRenderer>();
-		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(object2);
-		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMaterial(material0);
-		scene->gameObjects[2]->transform.position = { 2.0f, 0.0f, -1.0f };
-		scene->gameObjects[2]->transform.scale = { 1.0f, 2.0f, 1.0f };
+		scene->gameObjects[2]->SetName("Camera");
+		scene->gameObjects[2]->AddComponent<Camera>();
+		scene->mainCameraID = scene->gameObjects[2]->GetID();
+		scene->gameObjects[2]->transform.position = { 8.0f, 8.0f, 8.0f };
+		scene->gameObjects[2]->transform.rotation = { -22.5f, 45.0f, 0.0f };
 
-		scene->gameObjects[3]->SetName("gameObject4");
+		scene->gameObjects[3]->SetName("Light");
+		scene->gameObjects[3]->AddComponent<Light>();
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
-		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(object2);
-		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMaterial(material0);
-		scene->gameObjects[3]->transform.position = { 1.0f, 4.0f, 5.0f };
-		scene->gameObjects[3]->transform.scale = { 6.0f, 2.0f, 6.0f };
-
-		scene->gameObjects[4]->SetName("Camera");
-		scene->gameObjects[4]->AddComponent<Camera>();
-		scene->mainCameraID = scene->gameObjects[4]->GetID();
-		scene->gameObjects[4]->transform.position = { 8.0f, 8.0f, 8.0f };
-		scene->gameObjects[4]->transform.rotation = { -22.5f, 45.0f, 0.0f };
-
-		scene->gameObjects[5]->SetName("Light");
-		scene->gameObjects[5]->AddComponent<Light>();
-		scene->gameObjects[5]->AddComponent<MeshRenderer>();
-		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMesh(object);
-		scene->gameObjects[5]->transform.scale = { 0.25f, 0.25f , 0.25f };
-		scene->gameObjects[5]->transform.position = { 5.0f, 10.0f, 5.0f };
+		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(object);
+		scene->gameObjects[3]->transform.scale = { 0.25f, 0.25f , 0.25f };
+		scene->gameObjects[3]->transform.position = { 5.0f, 10.0f, 5.0f };
 
 
 		POPEYE_CORE_INFO("sds");

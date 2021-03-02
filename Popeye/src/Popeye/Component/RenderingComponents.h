@@ -26,10 +26,11 @@ namespace Popeye {
 	{
 		std::string id;
 		Texture texture;
-		glm::vec3 albedo;
-		float diffuse = 0.1f;
-		float ambiant = 0.1f;
-		float specular = 0.1f;
+		glm::vec3 color;
+		float ambient	= 0.1f;
+		float diffuse	= 0.1f;
+		float specular	= 0.1f;
+		float shininess = 32.0f;
 	};
 
 	struct Mesh 
@@ -74,14 +75,13 @@ namespace Popeye {
 	};
 
 	/*Light Component*/
-	enum class LightType { DIRECTIONAL, POINT, SPOT };
+	enum class LightType { POINT, DIRECTION, SPOT };
 	struct Light 
 	{
-		LightType mod;
+		LightType mod = LightType::POINT;
 		glm::vec3 lightColor = glm::vec3(1.0f);
-		float diffuse = 1.0f;
-		float ambiant = 0.1f;
-		float specular = 1.0f;
+		/*float diffuse = 1.0f;
+		float specular = 1.0f;*/
 	};
 
 

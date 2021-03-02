@@ -173,10 +173,11 @@ namespace Popeye{
 			}
 			if (ImGui::TreeNode("Material"))
 			{
-				ImGui::ColorEdit3("albedo", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].albedo);
+				ImGui::ColorEdit3("albedo", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].color);
 				ImGui::DragFloat("diffuse", &MeshRenderer::materials[meshRenderer.materialIndex].diffuse);
-				ImGui::DragFloat("ambiant", &MeshRenderer::materials[meshRenderer.materialIndex].ambiant);
+				ImGui::DragFloat("ambiant", &MeshRenderer::materials[meshRenderer.materialIndex].ambient);
 				ImGui::DragFloat("specular", &MeshRenderer::materials[meshRenderer.materialIndex].specular);
+				ImGui::DragFloat("shininess", &MeshRenderer::materials[meshRenderer.materialIndex].shininess);
 				ImGui::TreePop();
 			}
 		}
@@ -184,12 +185,23 @@ namespace Popeye{
 
 	void Inspector::ShowComponent(Light& light)
 	{
+		const char* lighttype[] = { "Point", "Direction", "Spot" };
+
+		int lightMod = -1;
+		if (light.mod == LightType::POINT) { lightMod = 0; }
+		if (light.mod == LightType::DIRECTION) { lightMod = 1; }
+		if (light.mod == LightType::SPOT) { lightMod = 2; }
+
 		if (ImGui::CollapsingHeader("Light"))
 		{
+			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
+			if (lightMod == 0) { light.mod = LightType::POINT; }
+			else if (lightMod == 1) { light.mod = LightType::DIRECTION; }
+			else if (lightMod == 2) { light.mod = LightType::SPOT; }
+
 			ImGui::ColorEdit3("albedo", (float*)&light.lightColor);
-			ImGui::DragFloat("diffuse", &light.diffuse);
-			ImGui::DragFloat("ambiant", &light.ambiant);
-			ImGui::DragFloat("specular", &light.specular);
+			//ImGui::DragFloat("diffuse", &light.diffuse, 0.01f, -1.0f, 1.0f);
+			//ImGui::DragFloat("specular", &light.specular, 0.01f, -1.0f, 1.0f);
 		}
 	}
 
