@@ -175,19 +175,22 @@ namespace Popeye {
 			glm::vec3 rotation	= gameObject->transform.rotation;
 			glm::vec3 scale		= gameObject->transform.scale;
 			
+			glm::vec3 vectorValueHanlder = glm::vec3(1.0f);
+
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
 				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
-				//glm::vec3 diffuseColor = light.lightColor * light.diffuse; // decrease the influence
-				//glm::vec3 ambientColor = light.lightColor * light.ambiant; // low influence
 
 				shader.setVec3("light.position", position);
-				shader.setVec3("light.color", light.lightColor);
 
-				//shader.setVec3("light.ambient", ambientColor);
-				//shader.setVec3("light.diffuse", diffuseColor);
-				//
-				//shader.setVec3("light.specular", glm::vec3(1.0f) * light.specular);
+				vectorValueHanlder = light.color * light.ambient;
+				shader.setVec3("light.ambient", vectorValueHanlder);
+				
+				vectorValueHanlder *= light.diffuse;
+				shader.setVec3("light.diffuse", vectorValueHanlder);
+				
+				vectorValueHanlder *= light.specular;
+				shader.setVec3("light.specular", vectorValueHanlder);
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
@@ -206,15 +209,16 @@ namespace Popeye {
 
 				shader.setMat4("model", model);
 
-				shader.setVec3("material.color", material.color);
-				shader.setFloat("material.ambient", material.ambient);
-				shader.setFloat("material.diffuse", material.diffuse);
-				shader.setFloat("material.specular", material.specular);
-				//shader.setFloat("material.shininess", material.shininess);
-				//shader.setVec3("material.diffuse", material.albedo * material.ambiant * material.diffuse);
-				//shader.setVec3("material.specular", glm::vec3(1.0) * material.specular); // specular lighting doesn't have full effect on this object's material
-				//shader.setFloat("material.shininess", 32.0f);
+				vectorValueHanlder = material.color * material.ambient;
+				shader.setVec3("material.ambient", vectorValueHanlder);
 				
+				vectorValueHanlder *= material.diffuse;
+				shader.setVec3("material.diffuse", vectorValueHanlder);
+				
+				vectorValueHanlder *= material.specular;
+				shader.setVec3("material.specular", vectorValueHanlder);
+
+				shader.setInt("material.shininess", material.shininess);
 
 				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
 				glDrawArrays(GL_TRIANGLES, 0, 36);
