@@ -173,11 +173,15 @@ namespace Popeye{
 			}
 			if (ImGui::TreeNode("Material"))
 			{
-				ImGui::ColorEdit3("albedo", (float*)&MeshRenderer::materials[meshRenderer.materialIndex].color);
-				ImGui::DragFloat("ambiant", &MeshRenderer::materials[meshRenderer.materialIndex].ambient);
-				ImGui::DragFloat("diffuse", &MeshRenderer::materials[meshRenderer.materialIndex].diffuse);
-				ImGui::DragFloat("specular", &MeshRenderer::materials[meshRenderer.materialIndex].specular);
-				ImGui::DragInt("shininess", &MeshRenderer::materials[meshRenderer.materialIndex].shininess);
+				Material& material = MeshRenderer::materials[meshRenderer.materialIndex];
+
+				ImGui::ColorEdit3("material color", (float*)&material.color);
+				
+				ImGui::DragFloat("ambiant",	&material.ambient);
+				ImGui::DragFloat("diffuse",	&material.diffuse);
+				ImGui::DragFloat("specular",&material.specular);
+				ImGui::DragInt("shininess",	&material.shininess);
+				
 				ImGui::TreePop();
 			}
 		}
@@ -188,16 +192,18 @@ namespace Popeye{
 		const char* lighttype[] = { "Point", "Direction", "Spot" };
 
 		int lightMod = -1;
-		if (light.mod == LightType::POINT) { lightMod = 0; }
-		if (light.mod == LightType::DIRECTION) { lightMod = 1; }
-		if (light.mod == LightType::SPOT) { lightMod = 2; }
+		LightType type = light.ShowLightType();
+		
+		if (type == LightType::POINT) { lightMod = 0; }
+		else if (type == LightType::DIRECTION) { lightMod = 1; }
+		else if (type == LightType::SPOT) { lightMod = 2; }
 
 		if (ImGui::CollapsingHeader("Light"))
 		{
 			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
-			if (lightMod == 0) { light.mod = LightType::POINT; }
-			else if (lightMod == 1) { light.mod = LightType::DIRECTION; }
-			else if (lightMod == 2) { light.mod = LightType::SPOT; }
+			if (lightMod == 0)		{ light.ChangeLightType(LightType::POINT); }
+			else if (lightMod == 1) { light.ChangeLightType(LightType::DIRECTION); }
+			else if (lightMod == 2) { light.ChangeLightType(LightType::SPOT); }
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
 			

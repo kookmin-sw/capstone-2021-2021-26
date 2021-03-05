@@ -47,7 +47,6 @@ namespace Popeye {
 		component& GetData(int _id) // gameobject's data
 		{
 			const char* componentType = typeid(component).name();
-			component& temp = component();
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -56,6 +55,7 @@ namespace Popeye {
 						(keysToAccessComponent[_id][i].componentType, keysToAccessComponent[_id][i].dataIndex);
 				}
 			}
+			component& temp = component();
 			return temp;
 		}
 

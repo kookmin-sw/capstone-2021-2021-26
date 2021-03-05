@@ -16,8 +16,9 @@ namespace Popeye {
 	struct Texture
 	{
 		unsigned int texture_ID;
-		Texture();
 		int width, height, nrChannel;
+		
+		Texture();
 		void InitTexture(const char*);
 		void drawTexture();
 	};
@@ -26,11 +27,30 @@ namespace Popeye {
 	enum class LightType { POINT, DIRECTION, SPOT };
 	struct Light
 	{
-		LightType mod = LightType::POINT;
-		glm::vec3 color = glm::vec3(1.0f);
-		float ambient = 0.5f;
-		float diffuse = 0.2f;
-		float specular = 0.1f;
+		static int pointLightCounter;
+		static int directionalLightCounter;
+		static int spotLightCounter;
+
+		glm::vec3 color;
+		
+		float ambient;
+		float diffuse;
+		float specular;
+
+		//point & spot
+		float constant;
+		float linear;
+		float quadratic;
+
+		//spot
+		float cutoff;
+		float outercutoff;
+
+		Light();
+		void ChangeLightType(LightType);
+		LightType ShowLightType();
+	private:
+		LightType type;
 	};
 
 	struct Material
@@ -38,10 +58,13 @@ namespace Popeye {
 		std::string id;
 		Texture texture;
 		glm::vec3 color;
-		float ambient	= 0.5f;
-		float diffuse	= 0.2f;
-		float specular	= 0.1f;
-		int shininess = 32;
+
+		float ambient;
+		float diffuse;
+		float specular;
+		int shininess;
+
+		Material();
 	};
 
 	struct Mesh 

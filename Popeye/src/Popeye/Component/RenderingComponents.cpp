@@ -4,7 +4,7 @@
 
 namespace Popeye {
 
-	/**************Shader define**************/
+	/**************Shader**************/
 	Shader::Shader(const GLchar* vertexPath , const GLchar* fragmentPath)
 	{
 		std::string vertexCode;
@@ -105,7 +105,7 @@ namespace Popeye {
 	}
 
 
-	/**************Texture define**************/
+	/**************Texture**************/
 	Texture::Texture() {};
 
 	void Texture::InitTexture(const char* imgPath)
@@ -137,6 +137,58 @@ namespace Popeye {
 		glActiveTexture(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, this->texture_ID);
 	}
+
+	/**************Material**************/
+
+	Material::Material()
+	{
+		color		= glm::vec3(1.0f);
+		ambient		= 1.0f;
+		diffuse		= 0.5f;
+		specular	= 0.1f;
+		shininess	= 32;
+	}
+
+
+	/**************Light**************/
+	int Light::pointLightCounter		= 0;
+	int Light::directionalLightCounter	= 0;
+	int Light::spotLightCounter			= 0;
+
+	Light::Light()
+	{
+		type		= LightType::POINT;
+		pointLightCounter++;
+
+		color		= glm::vec3(1.0f);
+		
+		ambient		= 0.8f;
+		diffuse		= 0.5f;
+		specular	= 0.1f;
+
+		constant	= 1.0f;
+		linear		= 0.09f;
+		quadratic	= 0.032f;
+	}
+	
+	void Light::ChangeLightType(LightType changeType)
+	{
+		if (type == LightType::POINT)			{ pointLightCounter--; }
+		else if (type == LightType::DIRECTION)	{ directionalLightCounter--; }
+		else if (type == LightType::SPOT)		{ spotLightCounter--; }
+
+		if (changeType == LightType::POINT)				{ pointLightCounter++; }
+		else if (changeType == LightType::DIRECTION)	{ directionalLightCounter++; }
+		else if (changeType == LightType::SPOT)			{ spotLightCounter++; }
+
+		type = changeType;
+	}
+	
+	LightType Light::ShowLightType()
+	{
+		return type;
+	}
+
 
 
 	/**************MeshRenderer component**************/

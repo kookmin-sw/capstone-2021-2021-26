@@ -126,11 +126,23 @@ namespace Popeye {
 		static Shader shader; // temp 
 		static Camera camera; 
 
+		int pointLightCount = 0;
+		int dirLightCount = 0;
+		int spotLightCount = 0;
+
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		//glm::vec3 viewPos = glm::vec3(0.0f);
+
 		shader.use();
+
+		shader.setInt("pointlightCount", Light::pointLightCounter);
+		POPEYE_CORE_INFO(Light::pointLightCounter);
+		shader.setInt("dirlightCount", Light::directionalLightCounter);
+		POPEYE_CORE_INFO(Light::directionalLightCounter);
+		shader.setInt("spotlightCount", Light::spotLightCounter);
+		POPEYE_CORE_INFO(Light::spotLightCounter);
+		//camera
 		if (renderstate == RenderState::RENDERGAMEVIEW)
 		{
 			int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
@@ -180,17 +192,38 @@ namespace Popeye {
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
 				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
-
-				shader.setVec3("light.position", position);
-
-				vectorValueHanlder = light.color * light.ambient;
-				shader.setVec3("light.ambient", vectorValueHanlder);
+				LightType type = light.ShowLightType();
 				
-				vectorValueHanlder *= light.diffuse;
-				shader.setVec3("light.diffuse", vectorValueHanlder);
-				
-				vectorValueHanlder *= light.specular;
-				shader.setVec3("light.specular", vectorValueHanlder);
+				if (type == LightType::POINT)
+				{
+					POPEYE_CORE_INFO(pointLightCount);
+					pointLightCount++;
+				}
+				else if (type == LightType::DIRECTION)
+				{
+					std::string str = "dirLights[" + std::to_string(dirLightCount) + "]";
+					model = glm::mat4(1.0f); //temp
+					model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+					model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+					model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+					glm::vec3 rot = model * glm::vec4(position, 0.0f);
+
+					shader.setVec3(str + ".direction", rot);
+
+					vectorValueHanlder = light.color * light.ambient;
+					shader.setVec3(str + ".ambient", vectorValueHanlder);
+					vectorValueHanlder *= light.diffuse;
+					shader.setVec3(str + ".diffuse", vectorValueHanlder);
+					vectorValueHanlder *= light.specular;
+					shader.setVec3(str + ".specular", vectorValueHanlder);
+					//POPEYE_CORE_INFO((std::string)"dirLights[" + std::to_string(dirLightCount) + (std::string)"].specular");
+					dirLightCount++;
+				}
+				else if (type == LightType::SPOT)
+				{
+
+					spotLightCount++;
+				}
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
