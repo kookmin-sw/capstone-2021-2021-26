@@ -201,14 +201,31 @@ namespace Popeye{
 		if (ImGui::CollapsingHeader("Light"))
 		{
 			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
-			if (lightMod == 0)		{ light.ChangeLightType(LightType::POINT); }
-			else if (lightMod == 1) { light.ChangeLightType(LightType::DIRECTION); }
-			else if (lightMod == 2) { light.ChangeLightType(LightType::SPOT); }
+			if (lightMod == 0)		{ 
+				light.ChangeLightType(LightType::POINT);
+
+				ImGui::DragFloat("constant", &light.constant);
+				ImGui::DragFloat("linear", &light.linear);
+				ImGui::DragFloat("quadratic", &light.quadratic);
+			}
+			else if (lightMod == 1) { 
+				light.ChangeLightType(LightType::DIRECTION); 
+			}
+			else if (lightMod == 2) { 
+				light.ChangeLightType(LightType::SPOT);
+
+				ImGui::DragFloat("constant", &light.constant);
+				ImGui::DragFloat("linear", &light.linear);
+				ImGui::DragFloat("quadratic", &light.quadratic);
+
+				ImGui::DragFloat("cutOff", &light.cutoff);
+				ImGui::DragFloat("outerCutOff", &light.outercutoff);
+			}
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
 			
 			ImGui::DragFloat("ambient", &light.ambient);
-			ImGui::DragFloat("diffuse",	&light.diffuse);
+			ImGui::DragFloat("diffuse", &light.diffuse);
 			ImGui::DragFloat("specular",&light.specular);
 		}
 	}

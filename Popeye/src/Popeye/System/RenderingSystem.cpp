@@ -92,7 +92,7 @@ namespace Popeye {
 				screenShader.use();
 				glBindTexture(GL_TEXTURE_2D, worldTexture);
 
-				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+				glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 				renderstate = RenderState::RENDERGAMEVIEW;
 			}
@@ -111,7 +111,7 @@ namespace Popeye {
 				screenShader.use();
 				glBindTexture(GL_TEXTURE_2D, viewTexture);
 
-				glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+				glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 				renderstate = RenderState::RENDERSCENEVIEW;
 			}
@@ -133,15 +133,13 @@ namespace Popeye {
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
+		glm::vec3 viewPos = glm::vec3(0.0f);
 
 		shader.use();
 
 		shader.setInt("pointlightCount", Light::pointLightCounter);
-		POPEYE_CORE_INFO(Light::pointLightCounter);
 		shader.setInt("dirlightCount", Light::directionalLightCounter);
-		POPEYE_CORE_INFO(Light::directionalLightCounter);
 		shader.setInt("spotlightCount", Light::spotLightCounter);
-		POPEYE_CORE_INFO(Light::spotLightCounter);
 		//camera
 		if (renderstate == RenderState::RENDERGAMEVIEW)
 		{
@@ -168,15 +166,16 @@ namespace Popeye {
 					-(camera.height) * 0.5f, (camera.height) * 0.5f,
 					camera.nearView, camera.farView);
 			}
-			shader.setVec3("viewPos", position);
+			viewPos = position;
 		}
 		else
 		{
-			glm::vec3 position = g_sceneViewPosition;
 			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-			shader.setVec3("viewPos", position);
+			viewPos = g_sceneViewPosition;
 		}
+
+		shader.setVec3("viewPos", viewPos);
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
 
@@ -186,44 +185,65 @@ namespace Popeye {
 			glm::vec3 position	= gameObject->transform.position;
 			glm::vec3 rotation	= gameObject->transform.rotation;
 			glm::vec3 scale		= gameObject->transform.scale;
-			
-			glm::vec3 vectorValueHanlder = glm::vec3(1.0f);
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
 				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
 				LightType type = light.ShowLightType();
-				
+				std::string str;
+
 				if (type == LightType::POINT)
 				{
-					POPEYE_CORE_INFO(pointLightCount);
+					str = "pointLights[" + std::to_string(pointLightCount) + "]";
+
+					shader.setVec3(str + ".position", position);
+
+					shader.setFloat(str + ".constant", light.constant);
+					shader.setFloat(str + ".linear", light.linear);
+					shader.setFloat(str + ".quadratic", light.quadratic);
+
 					pointLightCount++;
 				}
 				else if (type == LightType::DIRECTION)
 				{
-					std::string str = "dirLights[" + std::to_string(dirLightCount) + "]";
+					str = "dirLights[" + std::to_string(dirLightCount) + "]";
+					
 					model = glm::mat4(1.0f); //temp
 					model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 					model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 					model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-					glm::vec3 rot = model * glm::vec4(position, 0.0f);
+					glm::vec3 rot = model * glm::vec4(1.0f);
 
 					shader.setVec3(str + ".direction", rot);
 
-					vectorValueHanlder = light.color * light.ambient;
-					shader.setVec3(str + ".ambient", vectorValueHanlder);
-					vectorValueHanlder *= light.diffuse;
-					shader.setVec3(str + ".diffuse", vectorValueHanlder);
-					vectorValueHanlder *= light.specular;
-					shader.setVec3(str + ".specular", vectorValueHanlder);
-					//POPEYE_CORE_INFO((std::string)"dirLights[" + std::to_string(dirLightCount) + (std::string)"].specular");
 					dirLightCount++;
 				}
 				else if (type == LightType::SPOT)
 				{
+					str = "spotLights[" + std::to_string(spotLightCount) + "]";
+
+					model = glm::mat4(1.0f); //temp
+					model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+					model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+					model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+					glm::vec3 rot = model * glm::vec4(position, 1.0f);
+
+					shader.setVec3(str + ".direction", rot);
+
+					shader.setVec3(str + ".position", position);
+
+					shader.setFloat(str + ".cutOff", light.cutoff);
+					shader.setFloat(str + ".outerCutOff", light.outercutoff);
+
+					shader.setFloat(str + ".constant", light.constant);
+					shader.setFloat(str + ".linear", light.linear);
+					shader.setFloat(str + ".quadratic", light.quadratic);
 
 					spotLightCount++;
 				}
+				shader.setVec3(str + ".ambient",	light.color * light.ambient);
+				shader.setVec3(str + ".diffuse",	light.color * light.diffuse);
+				shader.setVec3(str + ".specular",	light.color	* light.specular);
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
@@ -242,14 +262,9 @@ namespace Popeye {
 
 				shader.setMat4("model", model);
 
-				vectorValueHanlder = material.color * material.ambient;
-				shader.setVec3("material.ambient", vectorValueHanlder);
-				
-				vectorValueHanlder *= material.diffuse;
-				shader.setVec3("material.diffuse", vectorValueHanlder);
-				
-				vectorValueHanlder *= material.specular;
-				shader.setVec3("material.specular", vectorValueHanlder);
+				shader.setVec3("material.ambient",	material.color * material.ambient);
+				shader.setVec3("material.diffuse",	material.color * material.diffuse);
+				shader.setVec3("material.specular", material.color * material.specular);
 
 				shader.setInt("material.shininess", material.shininess);
 

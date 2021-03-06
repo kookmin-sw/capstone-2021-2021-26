@@ -143,7 +143,7 @@ namespace Popeye {
 	Material::Material()
 	{
 		color		= glm::vec3(1.0f);
-		ambient		= 1.0f;
+		ambient		= 0.9f;
 		diffuse		= 0.5f;
 		specular	= 0.1f;
 		shininess	= 32;
@@ -163,12 +163,15 @@ namespace Popeye {
 		color		= glm::vec3(1.0f);
 		
 		ambient		= 0.8f;
-		diffuse		= 0.5f;
-		specular	= 0.1f;
+		diffuse		= 0.7f;
+		specular	= 0.0f;
 
 		constant	= 1.0f;
 		linear		= 0.09f;
 		quadratic	= 0.032f;
+
+		cutoff		= 12.5f;
+		outercutoff = 17.5f;
 	}
 	
 	void Light::ChangeLightType(LightType changeType)

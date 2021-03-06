@@ -37,16 +37,16 @@ namespace Popeye {
 	{
 		ComponentManager::GetInstance()->InitComponents();
 
-		Scene* scene = new Scene();
-		scene->SetName("example");
-
-		SceneManager::GetInstance()->currentScene = scene;
-
 		EventSystem* eventSystem = new EventSystem();
 		eventSystem->SetEventCallbacks(window);
 
 		static GUIManager* guimanager = new GUIManager();
 		guimanager->OnSet(window);
+
+		Scene* scene = new Scene();
+		scene->SetName("example");
+
+		SceneManager::GetInstance()->currentScene = scene;
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,  0.0f, 0.0f,
@@ -127,6 +127,7 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
+		scene->CreateGameObject();
 
 		scene->gameObjects[0]->SetName("gameObject1");
 		scene->gameObjects[0]->AddComponent<MeshRenderer>();
@@ -145,15 +146,34 @@ namespace Popeye {
 		scene->gameObjects[2]->AddComponent<Camera>();
 		scene->mainCameraID = scene->gameObjects[2]->GetID();
 		scene->gameObjects[2]->transform.position = { 8.0f, 8.0f, 8.0f };
-		scene->gameObjects[2]->transform.rotation = { -22.5f, 45.0f, 0.0f };
+		scene->gameObjects[2]->transform.rotation = { -30.0f, 45.0f, 0.0f };
 
 		scene->gameObjects[3]->SetName("Light");
 		scene->gameObjects[3]->AddComponent<Light>();
-		scene->gameObjects[3]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
+		scene->gameObjects[3]->GetComponent<Light>().ChangeLightType(LightType::SPOT);
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
 		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(cube);
 		scene->gameObjects[3]->transform.scale	=	{ 0.5f, 0.5f , 0.5f };
+		scene->gameObjects[3]->transform.rotation	=	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[3]->transform.position = { 5.0f, 10.0f, 5.0f };
+
+		scene->gameObjects[4]->SetName("Light2");
+		scene->gameObjects[4]->AddComponent<Light>();
+		scene->gameObjects[4]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
+		scene->gameObjects[4]->AddComponent<MeshRenderer>();
+		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(cube);
+		scene->gameObjects[4]->transform.scale = { 0.5f, 0.5f , 0.5f };
+		scene->gameObjects[4]->transform.rotation = { -90.0f, -30.0f , 0.0f };
+		scene->gameObjects[4]->transform.position = { 5.0f, 10.0f, 5.0f };
+
+		/*scene->gameObjects[4]->SetName("Light2");
+		scene->gameObjects[4]->AddComponent<Light>();
+		scene->gameObjects[4]->GetComponent<Light>().ChangeLightType(LightType::POINT);
+		scene->gameObjects[4]->AddComponent<MeshRenderer>();
+		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(cube);
+		scene->gameObjects[4]->transform.scale = { 0.5f, 0.5f , 0.5f };
+		scene->gameObjects[4]->transform.rotation = { -90.0f, -30.0f , 0.0f };
+		scene->gameObjects[4]->transform.position = { 5.0f, 10.0f, 5.0f };*/
 
 
 		POPEYE_CORE_INFO("sds");

@@ -8,14 +8,6 @@ struct Material{
     int shininess;
 };
 
-struct Light{
-    vec3 position;
-    
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-};
-
 struct PointLight{
     vec3 position;
 
@@ -65,7 +57,6 @@ uniform SpotLight spotLights[10];
 
 uniform vec3 viewPos;
 uniform Material material;
-uniform Light light;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -73,10 +64,12 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
+    vec3 result = vec3(0.0);
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
 
-    vec3 result = CalcDirLight(dirLights[0], norm, viewDir);
+    for(int i = 0; i < dirlightCount; i++)
+        result += CalcDirLight(dirLights[i], norm, viewDir);
     
     for(int i = 0; i < pointlightCount; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
@@ -139,8 +132,8 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
     vec3 ambient = light.ambient * material.ambient;
     vec3 diffuse = light.diffuse * diff * material.diffuse;
     vec3 specular = light.specular * spec * material.specular;
-    ambient *= attenuation * intensity;
-    diffuse *= attenuation * intensity;
-    specular *= attenuation * intensity;
+    //ambient *= attenuation * intensity;
+    //diffuse *= attenuation * intensity;
+    //specular *= attenuation * intensity;
     return (ambient + diffuse + specular);
 }

@@ -6,8 +6,8 @@ namespace Popeye {
 
 	struct Accessor 
 	{
-		const char* componentType = nullptr;
-		int dataIndex = -1;
+		const char* componentType;
+		int dataIndex;
 		
 		Accessor() : componentType(nullptr), dataIndex(-1) {};
 		void Reset() { componentType = nullptr; dataIndex = -1; }
