@@ -93,7 +93,7 @@ namespace Popeye {
 	}
 	void Shader::setFloat(const std::string& name, float value) const
 	{
-		glUniform1i(glGetUniformLocation(shader_ID, name.c_str()), value);
+		glUniform1f(glGetUniformLocation(shader_ID, name.c_str()), value);
 	}
 	void Shader::setVec3(const std::string& name, glm::vec3 value) const
 	{
@@ -146,7 +146,7 @@ namespace Popeye {
 		ambient		= 0.9f;
 		diffuse		= 0.5f;
 		specular	= 0.1f;
-		shininess	= 32;
+		shininess	= 32.0f;
 	}
 
 
@@ -164,7 +164,7 @@ namespace Popeye {
 		
 		ambient		= 0.8f;
 		diffuse		= 0.7f;
-		specular	= 0.0f;
+		specular	= 0.1f;
 
 		constant	= 1.0f;
 		linear		= 0.09f;

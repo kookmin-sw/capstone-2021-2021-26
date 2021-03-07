@@ -62,7 +62,7 @@ namespace Popeye {
 		float ambient;
 		float diffuse;
 		float specular;
-		int shininess;
+		float shininess;
 
 		Material();
 	};

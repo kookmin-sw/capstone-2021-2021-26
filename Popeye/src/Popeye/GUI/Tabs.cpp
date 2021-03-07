@@ -180,7 +180,7 @@ namespace Popeye{
 				ImGui::DragFloat("ambiant",	&material.ambient);
 				ImGui::DragFloat("diffuse",	&material.diffuse);
 				ImGui::DragFloat("specular",&material.specular);
-				ImGui::DragInt("shininess",	&material.shininess);
+				ImGui::DragFloat("shininess",	&material.shininess);
 				
 				ImGui::TreePop();
 			}

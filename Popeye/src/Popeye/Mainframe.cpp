@@ -127,7 +127,6 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
-		scene->CreateGameObject();
 
 		scene->gameObjects[0]->SetName("gameObject1");
 		scene->gameObjects[0]->AddComponent<MeshRenderer>();
@@ -150,32 +149,14 @@ namespace Popeye {
 
 		scene->gameObjects[3]->SetName("Light");
 		scene->gameObjects[3]->AddComponent<Light>();
-		scene->gameObjects[3]->GetComponent<Light>().ChangeLightType(LightType::SPOT);
+		scene->gameObjects[3]->GetComponent<Light>().ChangeLightType(LightType::POINT);
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
 		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[3]->transform.scale	=	{ 0.5f, 0.5f , 0.5f };
-		scene->gameObjects[3]->transform.rotation	=	{ -90.0f, -30.0f , 0.0f };
+		scene->gameObjects[3]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
+		scene->gameObjects[3]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[3]->transform.position = { 5.0f, 10.0f, 5.0f };
 
-		scene->gameObjects[4]->SetName("Light2");
-		scene->gameObjects[4]->AddComponent<Light>();
-		scene->gameObjects[4]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
-		scene->gameObjects[4]->AddComponent<MeshRenderer>();
-		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[4]->transform.scale = { 0.5f, 0.5f , 0.5f };
-		scene->gameObjects[4]->transform.rotation = { -90.0f, -30.0f , 0.0f };
-		scene->gameObjects[4]->transform.position = { 5.0f, 10.0f, 5.0f };
-
-		/*scene->gameObjects[4]->SetName("Light2");
-		scene->gameObjects[4]->AddComponent<Light>();
-		scene->gameObjects[4]->GetComponent<Light>().ChangeLightType(LightType::POINT);
-		scene->gameObjects[4]->AddComponent<MeshRenderer>();
-		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[4]->transform.scale = { 0.5f, 0.5f , 0.5f };
-		scene->gameObjects[4]->transform.rotation = { -90.0f, -30.0f , 0.0f };
-		scene->gameObjects[4]->transform.position = { 5.0f, 10.0f, 5.0f };*/
-
-
+		
 		POPEYE_CORE_INFO("sds");
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))

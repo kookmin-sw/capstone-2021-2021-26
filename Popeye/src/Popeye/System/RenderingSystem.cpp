@@ -185,6 +185,7 @@ namespace Popeye {
 			glm::vec3 position	= gameObject->transform.position;
 			glm::vec3 rotation	= gameObject->transform.rotation;
 			glm::vec3 scale		= gameObject->transform.scale;
+			glm::vec3 vec3ValuePocket = glm::vec3(1.0f);
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
 			{
@@ -212,7 +213,7 @@ namespace Popeye {
 					model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 					model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 					model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-					glm::vec3 rot = model * glm::vec4(1.0f);
+					glm::vec3 rot = model * glm::vec4(position, 1.0f);
 
 					shader.setVec3(str + ".direction", rot);
 
@@ -232,8 +233,8 @@ namespace Popeye {
 
 					shader.setVec3(str + ".position", position);
 
-					shader.setFloat(str + ".cutOff", light.cutoff);
-					shader.setFloat(str + ".outerCutOff", light.outercutoff);
+					shader.setFloat(str + ".cutOff", glm::cos(glm::radians(light.cutoff)));
+					shader.setFloat(str + ".outerCutOff", glm::cos(glm::radians(light.outercutoff)));
 
 					shader.setFloat(str + ".constant", light.constant);
 					shader.setFloat(str + ".linear", light.linear);
@@ -241,9 +242,9 @@ namespace Popeye {
 
 					spotLightCount++;
 				}
-				shader.setVec3(str + ".ambient",	light.color * light.ambient);
-				shader.setVec3(str + ".diffuse",	light.color * light.diffuse);
-				shader.setVec3(str + ".specular",	light.color	* light.specular);
+				shader.setVec3(str + ".ambient", light.color * light.ambient);
+				shader.setVec3(str + ".diffuse", light.color * light.diffuse);
+				shader.setVec3(str + ".specular", light.color * light.specular);
 			}
 
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
@@ -266,7 +267,7 @@ namespace Popeye {
 				shader.setVec3("material.diffuse",	material.color * material.diffuse);
 				shader.setVec3("material.specular", material.color * material.specular);
 
-				shader.setInt("material.shininess", material.shininess);
+				shader.setFloat("material.shininess", material.shininess);
 
 				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
 				glDrawArrays(GL_TRIANGLES, 0, 36);
