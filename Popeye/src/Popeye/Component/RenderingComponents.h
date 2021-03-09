@@ -58,10 +58,7 @@ namespace Popeye {
 		std::string id;
 		Texture texture;
 		glm::vec3 color;
-
-		float ambient;
-		float diffuse;
-		float specular;
+		glm::vec3 amb_diff_spec;
 		float shininess;
 
 		Material();

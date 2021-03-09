@@ -175,11 +175,12 @@ namespace Popeye{
 			{
 				Material& material = MeshRenderer::materials[meshRenderer.materialIndex];
 
-				ImGui::ColorEdit3("material color", (float*)&material.color);
+				ImGui::ColorEdit3("color", (float*)&material.color);
 				
-				ImGui::DragFloat("ambiant",	&material.ambient);
-				ImGui::DragFloat("diffuse",	&material.diffuse);
-				ImGui::DragFloat("specular",&material.specular);
+				ImGui::DragFloat("ambient", &material.amb_diff_spec[0]);
+				ImGui::DragFloat("diffuse", &material.amb_diff_spec[1]);
+				ImGui::DragFloat("specular", &material.amb_diff_spec[2]);
+				
 				ImGui::DragFloat("shininess",	&material.shininess);
 				
 				ImGui::TreePop();
@@ -213,16 +214,16 @@ namespace Popeye{
 			}
 			else if (lightMod == 2) { 
 				light.ChangeLightType(LightType::SPOT);
+				ImGui::DragFloat("cutOff", &light.cutoff);
+				ImGui::DragFloat("outerCutOff", &light.outercutoff);
 
 				ImGui::DragFloat("constant", &light.constant);
 				ImGui::DragFloat("linear", &light.linear);
 				ImGui::DragFloat("quadratic", &light.quadratic);
-
-				ImGui::DragFloat("cutOff", &light.cutoff);
-				ImGui::DragFloat("outerCutOff", &light.outercutoff);
 			}
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
+
 			
 			ImGui::DragFloat("ambient", &light.ambient);
 			ImGui::DragFloat("diffuse", &light.diffuse);

@@ -127,6 +127,8 @@ namespace Popeye {
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
+		scene->CreateGameObject();
+		scene->CreateGameObject();
 
 		scene->gameObjects[0]->SetName("gameObject1");
 		scene->gameObjects[0]->AddComponent<MeshRenderer>();
@@ -155,6 +157,18 @@ namespace Popeye {
 		scene->gameObjects[3]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
 		scene->gameObjects[3]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[3]->transform.position = { 5.0f, 10.0f, 5.0f };
+
+		scene->gameObjects[4]->SetName("gameObject3");
+		scene->gameObjects[4]->AddComponent<MeshRenderer>();
+		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(cube);
+		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMaterial(material_0);
+		scene->gameObjects[4]->transform.position = { 2.0f, 2.0f, 2.0f };
+
+		scene->gameObjects[5]->SetName("gameObject4");
+		scene->gameObjects[5]->AddComponent<MeshRenderer>();
+		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMesh(cube);
+		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMaterial(material_0);
+		scene->gameObjects[5]->transform.position = { 3.0f, 3.0f, 3.0f };
 
 		
 		POPEYE_CORE_INFO("sds");
