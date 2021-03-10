@@ -204,23 +204,20 @@ namespace Popeye{
 			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
 			if (lightMod == 0)		{ 
 				light.ChangeLightType(LightType::POINT);
-
-				ImGui::DragFloat("constant", &light.constant);
-				ImGui::DragFloat("linear", &light.linear);
-				ImGui::DragFloat("quadratic", &light.quadratic);
 			}
 			else if (lightMod == 1) { 
 				light.ChangeLightType(LightType::DIRECTION); 
 			}
 			else if (lightMod == 2) { 
 				light.ChangeLightType(LightType::SPOT);
+				
 				ImGui::DragFloat("cutOff", &light.cutoff);
 				ImGui::DragFloat("outerCutOff", &light.outercutoff);
-
-				ImGui::DragFloat("constant", &light.constant);
-				ImGui::DragFloat("linear", &light.linear);
-				ImGui::DragFloat("quadratic", &light.quadratic);
 			}
+			
+			ImGui::DragFloat("constant", &light.constant);
+			ImGui::DragFloat("linear", &light.linear);
+			ImGui::DragFloat("quadratic", &light.quadratic);
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
 

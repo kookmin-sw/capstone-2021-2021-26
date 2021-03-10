@@ -47,7 +47,6 @@ struct SpotLight{
     vec3 specular;
 };
 
-in vec3 ViewPos;
 in vec3 Normal;
 in vec3 FragPos;
 in vec2 TexCoord;
@@ -60,6 +59,7 @@ uniform PointLight pointLights[10];
 uniform DirLight dirLights[10];
 uniform SpotLight spotLights[10];
 
+uniform vec3 ViewPos;
 uniform Material material;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
@@ -69,6 +69,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 viewDir);
 void main()
 {
     vec3 result = vec3(0.0);
+    
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(ViewPos - FragPos);
 
@@ -92,7 +93,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
     float distance = 2.0;
-    float attenuation = 1.0 / (light.constant + light.linear + light.quadratic * (distance * distance));
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
     
     vec3 ambient = light.ambient * material.ambient * material.diffuse;
     vec3 diffuse = light.diffuse * diff * material.diffuse;
