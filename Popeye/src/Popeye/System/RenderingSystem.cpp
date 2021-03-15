@@ -42,13 +42,12 @@ namespace Popeye {
 			unsigned int rbo;
 			glGenRenderbuffers(1, &rbo);
 			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600); // use a single renderbuffer object for both a depth AND stencil buffer.
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 			//world view frame buffer
-
 			glGenFramebuffers(1, &worldViewFBO);
 			glBindFramebuffer(GL_FRAMEBUFFER, worldViewFBO);
 
@@ -59,11 +58,9 @@ namespace Popeye {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, worldTexture, 0);
 
-			unsigned int rbo2;
-			glGenRenderbuffers(1, &rbo2);
-			glBindRenderbuffer(GL_RENDERBUFFER, rbo2);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600); // use a single renderbuffer object for both a depth AND stencil buffer.
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo2); // now actually attach it
+			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600); 
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -117,8 +114,6 @@ namespace Popeye {
 			}
 
 		}
-
-		/***********************game framework***********************/
 	}
 
 	void RenderingSystem::Rendering()
@@ -133,7 +128,6 @@ namespace Popeye {
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		//glm::vec3 viewPos = glm::vec3(1.0f);
 
 		shader.use();
 

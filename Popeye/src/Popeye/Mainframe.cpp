@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Mainframe.h"
+#include "Manager/FileManager.h"
 #include "GUI/GUIManager.h"
 #include "System/RenderingSystem.h"
 #include "System/EventSystem.h"
@@ -10,11 +11,15 @@
 
 namespace Popeye {
 
+	FileManager* fileManager;
+
 	Mainframe::Mainframe(){}
 	Mainframe::~Mainframe(){}
 
 	bool Mainframe::Init()
 	{
+
+		/****glfw*****/
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -30,17 +35,20 @@ namespace Popeye {
 		{
 			return false;
 		}
+		/*************/
 		return true;
 	}
 
 	void Mainframe::Run()
 	{
+		fileManager = new FileManager();
+
 		ComponentManager::GetInstance()->InitComponents();
 
 		EventSystem* eventSystem = new EventSystem();
 		eventSystem->SetEventCallbacks(window);
 
-		static GUIManager* guimanager = new GUIManager();
+		GUIManager* guimanager = new GUIManager();
 		guimanager->OnSet(window);
 
 		Scene* scene = new Scene();
@@ -106,7 +114,7 @@ namespace Popeye {
 			1, 2, 3
 		};
 
-		RenderingSystem* renderer = new RenderingSystem();
+		RenderingSystem* renderingSystem = new RenderingSystem();
 
 		Popeye::Mesh cube;
 		cube.id = GET_NAME(object_0);
@@ -170,13 +178,12 @@ namespace Popeye {
 		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[5]->transform.position = { 3.0f, 3.0f, 3.0f };
 
-		
 		POPEYE_CORE_INFO("sds");
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
-			renderer->SystemRunning();
+			renderingSystem->SystemRunning();
 			
 			eventSystem->SystemRunning();
 
@@ -186,8 +193,6 @@ namespace Popeye {
 		}
 
 		guimanager->OnClosed();
-		delete(guimanager);
-		delete(renderer);
 	}
 
 	void Mainframe::Close()

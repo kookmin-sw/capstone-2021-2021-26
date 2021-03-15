@@ -149,6 +149,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Popeye\Resource\ResourceManager.h" />
+    <ClInclude Include="src\Popeye\Resource\Texture.h" />
+    <ClInclude Include="src\Popeye\Manager\FileManager.h" />
     <ClInclude Include="src\Popeye.h" />
     <ClInclude Include="src\Popeye\Application.h" />
     <ClInclude Include="src\Popeye\Component\ComponentManager.h" />
@@ -174,6 +177,8 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Popeye\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\Popeye\Manager\FileManager.cpp" />
     <ClCompile Include="src\Popeye\Application.cpp" />
     <ClCompile Include="src\Popeye\Component\ComponentManager.cpp" />
     <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp" />

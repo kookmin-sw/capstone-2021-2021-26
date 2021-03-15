@@ -9,6 +9,9 @@
 namespace Popeye{
 	static GameObject* selectedGameObject;
 	static Scene* scene;
+
+	extern FileManager* fileManager;
+
 	//Tab 
 	void Tab::SetTab(const char* _name, EventMod _eventmod)
 	{
@@ -238,5 +241,19 @@ namespace Popeye{
 	void Project::ShowContents()
 	{
 		CheckHover();
+		ImGuiIO& io = ImGui::GetIO();
+		ImTextureID textID = io.Fonts->TexID;
+
+		float my_tex_w = (float)io.Fonts->TexWidth;
+		float my_tex_h = (float)io.Fonts->TexHeight;
+
+		ImVec2 size = ImVec2(64.0f, 64.0f);                     // Size of the image we want to make visible
+		ImVec2 uv0 = ImVec2(0.219f, 0.663f);                        // UV coordinates for lower-left
+		ImVec2 uv1 = ImVec2(0.289f, 0.673f);
+		ImGui::ImageButton(textID, size, uv0, uv1);
+
+		
+		ImGui::Text(ICON_FK_FOLDER);
+
 	}
 }

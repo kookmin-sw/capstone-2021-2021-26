@@ -79,13 +79,18 @@
     <ClInclude Include="src\Popeye\Scene\SceneManger.h">
       <Filter>Popeye\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\System\EventSystem.h">
-      <Filter>Popeye\System</Filter>
-    </ClInclude>
     <ClInclude Include="src\Popeye\System\RenderingSystem.h">
       <Filter>Popeye\System</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Popeye\Resource\Texture.h" />
+    <ClInclude Include="src\Popeye\Resource\ResourceManager.h" />
+    <ClInclude Include="src\Popeye\System\EventSystem.h">
+      <Filter>Popeye\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Popeye\Manager\FileManager.h">
+      <Filter>Popeye</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Popeye\Application.cpp">
@@ -127,9 +132,6 @@
     <ClCompile Include="src\Popeye\Scene\SceneManger.cpp">
       <Filter>Popeye\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Popeye\System\EventSystem.cpp">
-      <Filter>Popeye\System</Filter>
-    </ClCompile>
     <ClCompile Include="src\Popeye\System\RenderingSystem.cpp">
       <Filter>Popeye\System</Filter>
     </ClCompile>
@@ -137,5 +139,12 @@
       <Filter>Popeye</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Popeye\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\Popeye\System\EventSystem.cpp">
+      <Filter>Popeye\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Popeye\Manager\FileManager.cpp">
+      <Filter>Popeye</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

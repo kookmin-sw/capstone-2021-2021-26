@@ -12,8 +12,6 @@ namespace Popeye {
 		GUIManager();
 		~GUIManager();
 		void OnSet(GLFWwindow*);
-		void SetTabs();
-		void Set_default_layout();
 		void OnRun();
 		void Show();
 		void OnClosed();

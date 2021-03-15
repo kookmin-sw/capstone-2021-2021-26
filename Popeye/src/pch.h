@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -35,5 +36,3 @@
 #ifdef POPEYE_PLATFORM_WINDOWS
 #include <windows.h>
 #endif // ENGINE_PLATFORM_WINDOWS
-
-
