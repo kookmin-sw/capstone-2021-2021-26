@@ -1,14 +1,17 @@
-#include "pch.h"
 #include "Mainframe.h"
+
 #include "Manager/FileManager.h"
-#include "GUI/GUIManager.h"
+#include "Manager/GUIManager.h"
+#include "Manager/SceneManager.h"
+#include "Manager/ComponentManager.h"
+
 #include "System/RenderingSystem.h"
 #include "System/EventSystem.h"
-#include "Scene/SceneManger.h"
+
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
-#include "Component/ComponentManager.h"
 
+#include "Component/RenderingComponents.h"
 namespace Popeye {
 
 	FileManager* fileManager;

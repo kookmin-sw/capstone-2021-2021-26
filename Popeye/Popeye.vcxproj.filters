@@ -1,150 +1,165 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Popeye">
-      <UniqueIdentifier>{177F93CA-0321-BEA0-ECDB-D1F4D81C45F1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Popeye\Component">
-      <UniqueIdentifier>{396084D6-2559-A328-4E8B-88AD3AE38234}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Popeye\Events">
-      <UniqueIdentifier>{1B6B2E75-872B-AAAB-5066-F328BCE5EE87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Popeye\GUI">
-      <UniqueIdentifier>{AB31F6D7-97E9-3725-00F1-1081ECC7D215}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Popeye\Scene">
-      <UniqueIdentifier>{74A12AAF-6004-BA53-098A-F209F5CB85D6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Popeye\System">
-      <UniqueIdentifier>{4BB21496-B772-90CC-80AD-D949EC2CD5A8}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Mainframe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\stb_img.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Component\RenderingComponents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\EventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\Tabs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\GUIManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\FileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ComponentManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\EventSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\RenderingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Popeye.h" />
-    <ClInclude Include="src\Popeye\Application.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Component\ComponentManager.h">
-      <Filter>Popeye\Component</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Application.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Component\RenderingComponents.h">
-      <Filter>Popeye\Component</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Core.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Core.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\EntryPoint.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\EntryPoint.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Log.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Events\EventManager.h">
-      <Filter>Popeye\Events</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Mainframe.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Events\Events.h">
-      <Filter>Popeye\Events</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Component\RenderingComponents.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\GUI\GUIManager.h">
-      <Filter>Popeye\GUI</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\EventManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\GUI\IconsForkAwesome.h">
-      <Filter>Popeye\GUI</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\KeyCode.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\GUI\Tabs.h">
-      <Filter>Popeye\GUI</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\MouseCode.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\GUI\imgui_impl_glfw.h">
-      <Filter>Popeye\GUI</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\Events.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\GUI\imgui_impl_opengl3.h">
-      <Filter>Popeye\GUI</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\IconsForkAwesome.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\KeyCode.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_glfw.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Log.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Mainframe.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\Tabs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\MouseCode.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\GUIManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Scene\GameObject.h">
-      <Filter>Popeye\Scene</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\FileManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Scene\Scene.h">
-      <Filter>Popeye\Scene</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ResourceManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Scene\SceneManger.h">
-      <Filter>Popeye\Scene</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\SceneManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\System\RenderingSystem.h">
-      <Filter>Popeye\System</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ComponentManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Popeye\Resource\Texture.h" />
-    <ClInclude Include="src\Popeye\Resource\ResourceManager.h" />
-    <ClInclude Include="src\Popeye\System\EventSystem.h">
-      <Filter>Popeye\System</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Resource\Texture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Popeye\Manager\FileManager.h">
-      <Filter>Popeye</Filter>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\EventSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\RenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\MinSizeRel\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\RelWithDebInfo\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Popeye\Application.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Component\ComponentManager.cpp">
-      <Filter>Popeye\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp">
-      <Filter>Popeye\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Events\EventManager.cpp">
-      <Filter>Popeye\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\GUI\GUIManager.cpp">
-      <Filter>Popeye\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\GUI\Tabs.cpp">
-      <Filter>Popeye\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\GUI\imgui_impl_glfw.cpp">
-      <Filter>Popeye\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\GUI\imgui_impl_opengl3.cpp">
-      <Filter>Popeye\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Log.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Mainframe.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Scene\GameObject.cpp">
-      <Filter>Popeye\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Scene\Scene.cpp">
-      <Filter>Popeye\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Scene\SceneManger.cpp">
-      <Filter>Popeye\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\System\RenderingSystem.cpp">
-      <Filter>Popeye\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\stb_img.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Popeye\Resource\ResourceManager.cpp" />
-    <ClCompile Include="src\Popeye\System\EventSystem.cpp">
-      <Filter>Popeye\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Popeye\Manager\FileManager.cpp">
-      <Filter>Popeye</Filter>
-    </ClCompile>
+    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{BEE6E021-28A3-3BE0-8A24-FEA3F11C86A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{54D50D75-77B4-3EDF-8C34-149721310AC7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{45D33237-1A1C-3EF9-8801-30B3FF698E95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

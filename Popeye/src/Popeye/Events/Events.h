@@ -1,6 +1,6 @@
 #pragma once
-#include "../KeyCode.h"
-#include "../MouseCode.h"
+#include "KeyCode.h"
+#include "MouseCode.h"
 
 namespace Popeye {
 

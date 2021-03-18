@@ -1,2 +1,2 @@
-call vendor\premake\premake5.exe vs2019
+cmake -S . -B .
 PAUSE

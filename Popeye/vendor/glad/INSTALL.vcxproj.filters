@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26_CMake\CMakeFiles\7fced39db0b4bfe9d5d0759cd38ab6d1\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0F2313CB-7E6D-3D71-942B-220BA2D8869F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

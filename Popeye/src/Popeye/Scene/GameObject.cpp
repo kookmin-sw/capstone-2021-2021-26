@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "GameObject.h"
 
 namespace Popeye {
@@ -15,7 +14,6 @@ namespace Popeye {
 
 	GameObject::~GameObject() 
 	{
-
 	}
 
 	char* GameObject::GetName()

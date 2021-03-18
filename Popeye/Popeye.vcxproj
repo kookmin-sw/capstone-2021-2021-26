@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -9,205 +12,485 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Dist|x64">
-      <Configuration>Dist</Configuration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{177F93CA-0321-BEA0-ECDB-D1F4D81C45F1}</ProjectGuid>
-    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <ProjectGuid>{E4DEAEF5-A2A3-3EF0-B065-4E8958690FC0}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Popeye</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>popeye</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug-windows-x86_64\Popeye\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\Popeye\</IntDir>
-    <TargetName>Popeye</TargetName>
-    <TargetExt>.dll</TargetExt>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release-windows-x86_64\Popeye\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\Popeye\</IntDir>
-    <TargetName>Popeye</TargetName>
-    <TargetExt>.dll</TargetExt>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Dist-windows-x86_64\Popeye\</OutDir>
-    <IntDir>..\bin-int\Dist-windows-x86_64\Popeye\</IntDir>
-    <TargetName>Popeye</TargetName>
-    <TargetExt>.dll</TargetExt>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\bin\PopeyeEngine\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">popeye.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">popeye</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\bin\PopeyeEngine\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">popeye.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">popeye</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\bin\PopeyeEngine\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">popeye.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">popeye</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\bin\PopeyeEngine\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">popeye.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">popeye</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;POPEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\stb_image;vendor\glm;vendor\GLFW\include;vendor\glad\include;vendor\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR="Debug";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"Debug\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>vendor\glad\Debug\glad.lib;vendor\GLFW\src\Debug\glfw3.lib;vendor\imgui\Debug\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\Popeye\Popeye.lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/Debug/popeye.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26_CMake/bin/PopeyeEngine/Debug/popeye.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Popeye\Popeye.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Popeye\Popeye.dll ..\bin\Debug-windows-x86_64\Eyeball &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Popeye\Popeye.dll ..\bin\Debug-windows-x86_64\Eyeball &gt; nul)</Command>
-    </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;POPEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\stb_image;vendor\glm;vendor\GLFW\include;vendor\glad\include;vendor\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR="Release";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"Release\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Release-windows-x86_64\Popeye\Popeye.lib</ImportLibrary>
+      <AdditionalDependencies>vendor\glad\Release\glad.lib;vendor\GLFW\src\Release\glfw3.lib;vendor\imgui\Release\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/Release/popeye.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26_CMake/bin/PopeyeEngine/Release/popeye.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Popeye\Popeye.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Popeye\Popeye.dll ..\bin\Release-windows-x86_64\Eyeball &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Popeye\Popeye.dll ..\bin\Release-windows-x86_64\Eyeball &gt; nul)</Command>
-    </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;POPEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\stb_image;vendor\glm;vendor\GLFW\include;vendor\glad\include;vendor\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/MinSizeRel/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR="MinSizeRel";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"MinSizeRel\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\Popeye\Popeye.lib</ImportLibrary>
+      <AdditionalDependencies>vendor\glad\MinSizeRel\glad.lib;vendor\GLFW\src\MinSizeRel\glfw3.lib;vendor\imgui\MinSizeRel\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/MinSizeRel/popeye.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26_CMake/bin/PopeyeEngine/MinSizeRel/popeye.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Popeye\Popeye.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Popeye\Popeye.dll ..\bin\Dist-windows-x86_64\Eyeball &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Popeye\Popeye.dll ..\bin\Dist-windows-x86_64\Eyeball &gt; nul)</Command>
-    </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/RelWithDebInfo/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR="RelWithDebInfo";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"RelWithDebInfo\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>vendor\glad\RelWithDebInfo\glad.lib;vendor\GLFW\src\RelWithDebInfo\glfw3.lib;vendor\imgui\RelWithDebInfo\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/RelWithDebInfo/popeye.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26_CMake/bin/PopeyeEngine/RelWithDebInfo/popeye.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Popeye\Resource\ResourceManager.h" />
-    <ClInclude Include="src\Popeye\Resource\Texture.h" />
-    <ClInclude Include="src\Popeye\Manager\FileManager.h" />
-    <ClInclude Include="src\Popeye.h" />
-    <ClInclude Include="src\Popeye\Application.h" />
-    <ClInclude Include="src\Popeye\Component\ComponentManager.h" />
-    <ClInclude Include="src\Popeye\Component\RenderingComponents.h" />
-    <ClInclude Include="src\Popeye\Core.h" />
-    <ClInclude Include="src\Popeye\EntryPoint.h" />
-    <ClInclude Include="src\Popeye\Events\EventManager.h" />
-    <ClInclude Include="src\Popeye\Events\Events.h" />
-    <ClInclude Include="src\Popeye\GUI\GUIManager.h" />
-    <ClInclude Include="src\Popeye\GUI\IconsForkAwesome.h" />
-    <ClInclude Include="src\Popeye\GUI\Tabs.h" />
-    <ClInclude Include="src\Popeye\GUI\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Popeye\GUI\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\Popeye\KeyCode.h" />
-    <ClInclude Include="src\Popeye\Log.h" />
-    <ClInclude Include="src\Popeye\Mainframe.h" />
-    <ClInclude Include="src\Popeye\MouseCode.h" />
-    <ClInclude Include="src\Popeye\Scene\GameObject.h" />
-    <ClInclude Include="src\Popeye\Scene\Scene.h" />
-    <ClInclude Include="src\Popeye\Scene\SceneManger.h" />
-    <ClInclude Include="src\Popeye\System\EventSystem.h" />
-    <ClInclude Include="src\Popeye\System\RenderingSystem.h" />
-    <ClInclude Include="src\pch.h" />
+    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26_CMake -BC:/Users/aston/Documents/capstone-2021-26_CMake --check-stamp-file C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26_CMake -BC:/Users/aston/Documents/capstone-2021-26_CMake --check-stamp-file C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26_CMake -BC:/Users/aston/Documents/capstone-2021-26_CMake --check-stamp-file C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26_CMake -BC:/Users/aston/Documents/capstone-2021-26_CMake --check-stamp-file C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Popeye\Resource\ResourceManager.cpp" />
-    <ClCompile Include="src\Popeye\Manager\FileManager.cpp" />
-    <ClCompile Include="src\Popeye\Application.cpp" />
-    <ClCompile Include="src\Popeye\Component\ComponentManager.cpp" />
-    <ClCompile Include="src\Popeye\Component\RenderingComponents.cpp" />
-    <ClCompile Include="src\Popeye\Events\EventManager.cpp" />
-    <ClCompile Include="src\Popeye\GUI\GUIManager.cpp" />
-    <ClCompile Include="src\Popeye\GUI\Tabs.cpp" />
-    <ClCompile Include="src\Popeye\GUI\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\Popeye\GUI\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="src\Popeye\Log.cpp" />
-    <ClCompile Include="src\Popeye\Mainframe.cpp" />
-    <ClCompile Include="src\Popeye\Scene\GameObject.cpp" />
-    <ClCompile Include="src\Popeye\Scene\Scene.cpp" />
-    <ClCompile Include="src\Popeye\Scene\SceneManger.cpp" />
-    <ClCompile Include="src\Popeye\System\EventSystem.cpp" />
-    <ClCompile Include="src\Popeye\System\RenderingSystem.cpp" />
-    <ClCompile Include="src\Popeye\stb_img.cpp" />
-    <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\cmake_pch.cxx">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/Debug/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/Release/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/MinSizeRel/cmake_pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/popeye.dir/RelWithDebInfo/cmake_pch.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Application.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Application.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Core.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\EntryPoint.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Log.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Log.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Mainframe.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Mainframe.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\stb_img.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Component\RenderingComponents.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Component\RenderingComponents.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\EventManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\EventManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\KeyCode.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\MouseCode.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Events\Events.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\IconsForkAwesome.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_glfw.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_glfw.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_opengl3.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\imgui_impl_opengl3.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\Tabs.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\GUI\Tabs.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\GUIManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\GUIManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\FileManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\FileManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ResourceManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ResourceManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\SceneManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\SceneManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ComponentManager.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Manager\ComponentManager.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Resource\Texture.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\GameObject.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\GameObject.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\Scene.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\Scene\Scene.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\EventSystem.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\EventSystem.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\RenderingSystem.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\src\Popeye\System\RenderingSystem.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26_CMake/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\Debug\cmake_pch.hxx" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\Release\cmake_pch.hxx" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\MinSizeRel\cmake_pch.hxx" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\CMakeFiles\popeye.dir\RelWithDebInfo\cmake_pch.hxx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
-      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26_CMake\ZERO_CHECK.vcxproj">
+      <Project>{50294041-7D2E-3987-83F6-44A0A737F4D5}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="vendor\glad\glad.vcxproj">
-      <Project>{DD62977C-C999-980D-7286-7E105E9C140F}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\glad\glad.vcxproj">
+      <Project>{FB0150D0-6436-3517-8092-E3A6D8DD903B}</Project>
+      <Name>glad</Name>
     </ProjectReference>
-    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
-      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\GLFW\src\glfw.vcxproj">
+      <Project>{8EE252D1-EE9D-3961-8DDB-0A89B77F58F3}</Project>
+      <Name>glfw</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26_CMake\Popeye\vendor\imgui\imgui.vcxproj">
+      <Project>{F3C092A2-1C61-3FC3-8B9F-BE68FCCC370F}</Project>
+      <Name>imgui</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

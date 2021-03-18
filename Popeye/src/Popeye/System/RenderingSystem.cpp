@@ -1,9 +1,8 @@
-#include "pch.h"
 #include "RenderingSystem.h"
-#include "../Scene/SceneManger.h"
+#include "../Manager/SceneManager.h"
+#include "../Manager/ComponentManager.h"
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
-#include "../Component/ComponentManager.h"
 #include "../Component/RenderingComponents.h"
 
 namespace Popeye {

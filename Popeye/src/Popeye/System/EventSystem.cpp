@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "EventSystem.h"
 
 namespace Popeye

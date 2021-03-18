@@ -1,10 +1,14 @@
-#include "pch.h"
 #include "Tabs.h"
-#include "../Component/ComponentManager.h"
+
+#include "../Manager/ComponentManager.h"
+#include "../Manager/SceneManager.h"
+
 #include "../System/RenderingSystem.h"
-#include "../Scene/SceneManger.h"
+
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
+
+#include "../Component/RenderingComponents.h"
 
 namespace Popeye{
 	static GameObject* selectedGameObject;
