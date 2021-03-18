@@ -9,5 +9,5 @@
 	url = https://github.com/g-truc/glm.git
 [submodule "Popeye/vendor/imgui"]
 	path = Popeye/vendor/imgui
-	url = https://github.com/astone30/imgui.git
+	url = https://github.com/ocornut/imgui.git
 	branch = docking
