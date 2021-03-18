@@ -10,4 +10,3 @@
 [submodule "Popeye/vendor/imgui"]
 	path = Popeye/vendor/imgui
 	url = https://github.com/astone30/imgui.git
-	branch = docking
