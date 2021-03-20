@@ -1,9 +1,8 @@
 #include "Tabs.h"
+#include "imgui_custom_widgets.h"
 
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
-
-#include "../System/RenderingSystem.h"
 
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
@@ -11,10 +10,14 @@
 #include "../Component/RenderingComponents.h"
 
 namespace Popeye{
+
+	extern FileManager* g_fileManager;
+
+	extern unsigned int g_SceneView;
+	extern unsigned int g_GameView;
+
 	static GameObject* selectedGameObject;
 	static Scene* scene;
-
-	extern FileManager* fileManager;
 
 	//Tab 
 	void Tab::SetTab(const char* _name, EventMod _eventmod)
@@ -52,7 +55,7 @@ namespace Popeye{
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
-		ImGui::Image((ImTextureID)RenderingSystem::worldTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)g_SceneView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
 		CheckHover();
 
@@ -67,7 +70,7 @@ namespace Popeye{
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
-		ImGui::Image((ImTextureID)RenderingSystem::viewTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)g_GameView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
 		CheckHover();
 
@@ -244,20 +247,41 @@ namespace Popeye{
 	//Tab::Project
 	void Project::ShowContents()
 	{
+
+		static ImVec2 size(50.0f, 50.0f);
+		static ImVec2 offset(20.0f, 20.0f);
+
+
 		CheckHover();
-		ImGuiIO& io = ImGui::GetIO();
-		ImTextureID textID = io.Fonts->TexID;
+		ImGuiStyle& style = ImGui::GetStyle();
+		int buttons_count = 5;
+		const char* files[5] = { "dwdw", "asddd", "asddddd", "dd", "aw" };
+		float window_visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
 
-		float my_tex_w = (float)io.Fonts->TexWidth;
-		float my_tex_h = (float)io.Fonts->TexHeight;
+		for (int n = 0; n < buttons_count; n++)
+		{
+			ImGui::PushID(n);
+			ImGui::BeginGroup();
+			ImDrawList* draw_list = ImGui::GetWindowDrawList();
+			const ImVec2 p0 = ImGui::GetItemRectMin();
+			const ImVec2 p1 = ImGui::GetItemRectMax();
+			ImVec2 text_pos = ImVec2(p0.x + offset.x, p0.y + offset.y);
+			POPEYE_INFO(p0.x);
+			ImGui::Selectable("##selectable", false, 0, size);
+			if(n == 2)
+				draw_list->AddImage((void*)g_SceneView, p0, p1);
+			else
+				draw_list->AddImage((void*)g_GameView, p0, p1);
+			draw_list->AddText(text_pos, IM_COL32_WHITE, files[n]);
 
-		ImVec2 size = ImVec2(64.0f, 64.0f);                     // Size of the image we want to make visible
-		ImVec2 uv0 = ImVec2(0.219f, 0.663f);                        // UV coordinates for lower-left
-		ImVec2 uv1 = ImVec2(0.289f, 0.673f);
-		ImGui::ImageButton(textID, size, uv0, uv1);
+			ImGui::EndGroup();
+			
+			float last_button_x2 = ImGui::GetItemRectMax().x;
+			float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+			if (n + 1 < buttons_count && next_button_x2 < window_visible_x2 * 2)
+				ImGui::SameLine();
 
-		
-		ImGui::Text(ICON_FK_FOLDER);
-
+			ImGui::PopID();
+		}
 	}
 }

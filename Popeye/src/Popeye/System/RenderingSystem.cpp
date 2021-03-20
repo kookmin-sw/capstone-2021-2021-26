@@ -9,116 +9,102 @@ namespace Popeye {
 	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
 	glm::vec3 g_sceneViewDirection = glm::vec3(0.0f, 0.0f, 1.0f);
 
-	unsigned int RenderingSystem::viewTexture;
-	unsigned int RenderingSystem::worldTexture;
+	unsigned int g_GameView;
+	unsigned int g_SceneView;
+
+	static Shader g_ScreenShader;
+
+	void RenderingSystem::SystemInit()
+	{
+		g_ScreenShader.Init("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
+
+		unsigned int rbo;
+
+		glGenFramebuffers(1, &gameViewFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, gameViewFBO);
+
+		//gmae view frame buffer
+		glGenTextures(1, &g_GameView);
+		glBindTexture(GL_TEXTURE_2D, g_GameView);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1200, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_GameView, 0);
+
+		glGenRenderbuffers(1, &rbo);
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		//world view frame buffer
+		glGenFramebuffers(1, &sceneViewFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, sceneViewFBO);
+
+		glGenTextures(1, &g_SceneView);
+		glBindTexture(GL_TEXTURE_2D, g_SceneView);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1200, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_SceneView, 0);
+
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
 
 	// render system should run while not on play...
-
 	void RenderingSystem::SystemRunning()
 	{
-		static int state = 0; //temp state;
-
-		static Shader screenShader("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
-
-		if (state == 0)
+		if (renderstate == RenderState::RENDERSCENEVIEW)
 		{
-			renderstate = RenderState::RENDERSCENEVIEW;
-			/****************************************frame buffer****************************************************/
-			/********************************************************************************************************/
-			
-			//game view frame buffer
-			glGenFramebuffers(1, &gameViewFBO);
+			glBindFramebuffer(GL_FRAMEBUFFER, sceneViewFBO);
+			glEnable(GL_DEPTH_TEST);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			//render
+			Rendering();
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+			glDisable(GL_DEPTH_TEST);
+			g_ScreenShader.use();
+			glBindTexture(GL_TEXTURE_2D, g_SceneView);
+
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			renderstate = RenderState::RENDERGAMEVIEW;
+		}
+		else
+		{
 			glBindFramebuffer(GL_FRAMEBUFFER, gameViewFBO);
-			
-			// create a color attachment texture
-			glGenTextures(1, &viewTexture);
-			glBindTexture(GL_TEXTURE_2D, viewTexture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1200, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, viewTexture, 0);
+			glEnable(GL_DEPTH_TEST);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			unsigned int rbo;
-			glGenRenderbuffers(1, &rbo);
-			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600);
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+			//render
+			Rendering();
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			//world view frame buffer
-			glGenFramebuffers(1, &worldViewFBO);
-			glBindFramebuffer(GL_FRAMEBUFFER, worldViewFBO);
+			glDisable(GL_DEPTH_TEST);
+			g_ScreenShader.use();
+			glBindTexture(GL_TEXTURE_2D, g_GameView);
 
-			glGenTextures(1, &worldTexture);
-			glBindTexture(GL_TEXTURE_2D, worldTexture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1200, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, worldTexture, 0);
-
-			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1200, 600); 
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-			state = 1;
-			/********************************************************************************************************/
-
-			screenShader.use();
-			screenShader.setInt("screenTexture", 0);
-		}
-		else if (state == 1)
-		{
-			glViewport(0, 0, 1200, 600);
-
-			if (renderstate == RenderState::RENDERSCENEVIEW)
-			{
-				glBindFramebuffer(GL_FRAMEBUFFER, worldViewFBO);
-				glEnable(GL_DEPTH_TEST);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-				//render
-				Rendering();
-				
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-				glDisable(GL_DEPTH_TEST);
-				screenShader.use();
-				glBindTexture(GL_TEXTURE_2D, worldTexture);
-
-				glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
-				renderstate = RenderState::RENDERGAMEVIEW;
-			}
-			else
-			{
-				glBindFramebuffer(GL_FRAMEBUFFER, gameViewFBO);
-				glEnable(GL_DEPTH_TEST);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-				//render
-				Rendering();
-
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-				glDisable(GL_DEPTH_TEST);
-				screenShader.use();
-				glBindTexture(GL_TEXTURE_2D, viewTexture);
-
-				glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
-				renderstate = RenderState::RENDERSCENEVIEW;
-			}
-
-		}
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			renderstate = RenderState::RENDERSCENEVIEW;
+		}		
 	}
 
 	void RenderingSystem::Rendering()
 	{
 		static Shader shader; // temp 
-		static Camera camera; 
+		static Camera camera;
+		static int init = 0;
+		if (!init) { shader.Init(); init++; }
 
 		int pointLightCount = 0;
 		int dirLightCount = 0;
@@ -254,20 +240,4 @@ namespace Popeye {
 			}
 		}
 	}
-
-	// On play -> init -> update -> on exit....
-	void RenderingSystem::Init()
-	{
-	}
-
-	void RenderingSystem::OnUpdate()
-	{
-	}
-
-	void RenderingSystem::OnExit()
-	{
-	}
-
-
-
 }

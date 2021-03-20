@@ -4,7 +4,9 @@
 namespace Popeye {
 
 	/**************Shader**************/
-	Shader::Shader(const GLchar* vertexPath , const GLchar* fragmentPath)
+	Shader::Shader(){}
+
+	void Shader::Init(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		std::string vertexCode;
 		std::string fragmentCode;
@@ -13,12 +15,12 @@ namespace Popeye {
 
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-		try 
+		try
 		{
 			vShaderFile.open(vertexPath);
 			fShaderFile.open(fragmentPath);
 			std::stringstream vShaderStream, fShaderStream;
-			
+
 			vShaderStream << vShaderFile.rdbuf();
 			fShaderStream << fShaderFile.rdbuf();
 
@@ -28,7 +30,7 @@ namespace Popeye {
 			vertexCode = vShaderStream.str();
 			fragmentCode = fShaderStream.str();
 		}
-		catch(std::ifstream::failure e)
+		catch (std::ifstream::failure e)
 		{
 			POPEYE_CORE_ERROR("Can't load shader.");
 		}

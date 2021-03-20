@@ -13,7 +13,6 @@
 
 #include "Component/RenderingComponents.h"
 namespace Popeye {
-
 	FileManager* fileManager;
 
 	Mainframe::Mainframe(){}
@@ -21,8 +20,6 @@ namespace Popeye {
 
 	bool Mainframe::Init()
 	{
-
-		/****glfw*****/
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -38,20 +35,21 @@ namespace Popeye {
 		{
 			return false;
 		}
-		/*************/
+		
 		return true;
 	}
 
 	void Mainframe::Run()
 	{
 		fileManager = new FileManager();
-
 		ComponentManager::GetInstance()->InitComponents();
 
+		RenderingSystem* renderingSystem = new RenderingSystem();
 		EventSystem* eventSystem = new EventSystem();
-		eventSystem->SetEventCallbacks(window);
-
 		GUIManager* guimanager = new GUIManager();
+
+		renderingSystem->SystemInit();
+		eventSystem->SetEventCallbacks(window);
 		guimanager->OnSet(window);
 
 		Scene* scene = new Scene();
@@ -116,8 +114,6 @@ namespace Popeye {
 			0, 1, 3,
 			1, 2, 3
 		};
-
-		RenderingSystem* renderingSystem = new RenderingSystem();
 
 		Popeye::Mesh cube;
 		cube.id = GET_NAME(object_0);

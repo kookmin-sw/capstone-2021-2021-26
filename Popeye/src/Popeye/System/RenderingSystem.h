@@ -11,19 +11,12 @@ namespace Popeye {
 	{
 	private:
 		RenderState renderstate;
-		unsigned int worldViewFBO, gameViewFBO;
-	public:
-		static unsigned int viewTexture;
-		static unsigned int worldTexture;
-	
+		unsigned int sceneViewFBO, gameViewFBO;
 	private :
 		void Rendering();
-	
 	public:
+		void SystemInit();
 		void SystemRunning();
-		void Init();
-		void OnUpdate();
-		void OnExit();
 	};
 }
 

@@ -1,9 +1,12 @@
 #include "GUIManager.h"
-#include "../GUI/Tabs.h"
 
+#include "../GUI/imgui_impl_glfw.h"
+#include "../GUI/imgui_impl_opengl3.h"
+#include "../GUI/IconsForkAwesome.h"
+
+#include "../GUI/Tabs.h"
 namespace Popeye
 {
-
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() {}
 
@@ -35,23 +38,23 @@ namespace Popeye
 
 		SceneView* scene = new SceneView();
 		scene->SetTab("Scene", EventMod::SCENE);
-		this->tabs.push_back(scene);
+		tabs.push_back(scene);
 
 		GameView* game = new GameView();
 		game->SetTab("Game", EventMod::GAME);
-		this->tabs.push_back(game);
+		tabs.push_back(game);
 
 		Inspector* inspector = new Inspector();
 		inspector->SetTab("Inspector");
-		this->tabs.push_back(inspector);
+		tabs.push_back(inspector);
 
 		Hierarchy* hierarchy = new Hierarchy();
 		hierarchy->SetTab("Hierarchy");
-		this->tabs.push_back(hierarchy);
+		tabs.push_back(hierarchy);
 
 		Project* project = new Project();
 		project->SetTab("Project");
-		this->tabs.push_back(project);
+		tabs.push_back(project);
 	}
 
 	void GUIManager::OnRun()

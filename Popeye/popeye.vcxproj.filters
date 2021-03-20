@@ -28,6 +28,9 @@
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_custom_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\Tabs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_custom_widgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\Tabs.h">
