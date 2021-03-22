@@ -140,12 +140,12 @@ namespace Popeye
 			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, NULL, &dock_main_id);
 			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
 
-			ImGui::DockBuilderDockWindow("Debug", dock_id_bottom);
-			ImGui::DockBuilderDockWindow("Project", dock_id_bottom);
 			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
 			ImGui::DockBuilderDockWindow("Scene", dock_main_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
+			ImGui::DockBuilderDockWindow("Debug", dock_id_bottom);
+			ImGui::DockBuilderDockWindow("Project", dock_id_bottom);
 			ImGui::DockBuilderFinish(dockspace_id);
 		}
 

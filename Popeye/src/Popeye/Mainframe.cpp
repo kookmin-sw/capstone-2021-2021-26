@@ -13,7 +13,7 @@
 
 #include "Component/RenderingComponents.h"
 namespace Popeye {
-	FileManager* fileManager;
+	FileManager* g_fileManager;
 
 	Mainframe::Mainframe(){}
 	Mainframe::~Mainframe(){}
@@ -41,7 +41,7 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		fileManager = new FileManager();
+		g_fileManager = new FileManager();
 		ComponentManager::GetInstance()->InitComponents();
 
 		RenderingSystem* renderingSystem = new RenderingSystem();

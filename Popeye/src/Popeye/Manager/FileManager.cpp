@@ -2,21 +2,38 @@
 
 namespace Popeye
 {
-	FileManager::FileManager() {};
-	FileManager::~FileManager() {};
+	FileManager::FileManager() { this->ScanFilesNFolders(); }
+	FileManager::~FileManager() {}
 	
-	std::vector<std::string> FileManager::AllFilesInDir() 
+	std::vector<std::string> FileManager::ScanFilesInDir()
 	{
 		std::vector<std::string> files;
 		root = fs::current_path() / "Root";
 		for (const auto& file : fs::directory_iterator(root))
 		{
-			POPEYE_CORE_INFO(file.path().filename().string());
+			//POPEYE_CORE_INFO(file.path().filename().string());
 			files.push_back(file.path().filename().string());
 		}
 
 		return files;
-	};
+	}
+
+	void FileManager::ScanFilesNFolders()
+	{
+		root = fs::current_path() / "Root";
+		for (const auto& file : fs::directory_iterator(root))
+		{
+			if (file.is_directory())
+			{
+				//POPEYE_CORE_INFO(file.path().filename().c_str());
+				directories.push_back(file.path().filename().string());
+			}
+			else
+			{
+				files.push_back(Pfile());
+			}
+		}
+	}
 }
 
 

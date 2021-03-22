@@ -2,7 +2,6 @@
 #include "../Events/EventManager.h"
 
 namespace Popeye{
-	class FileManager;
 	struct MeshRenderer;
 	struct Camera;
 	struct Light;

@@ -1,8 +1,8 @@
 #include "Tabs.h"
-#include "imgui_custom_widgets.h"
 
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
+#include "../Manager/FileManager.h"
 
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
@@ -55,7 +55,7 @@ namespace Popeye{
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
-		ImGui::Image((void*)g_SceneView, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)g_SceneView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
 		CheckHover();
 
@@ -70,7 +70,7 @@ namespace Popeye{
 
 		ImVec2 wsize = ImGui::GetWindowSize();
 
-		ImGui::Image((void*)g_GameView, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)g_GameView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
 		CheckHover();
 
@@ -230,8 +230,7 @@ namespace Popeye{
 			ImGui::DragFloat("quadratic", &light.quadratic);
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
-
-			
+	
 			ImGui::DragFloat("ambient", &light.ambient);
 			ImGui::DragFloat("diffuse", &light.diffuse);
 			ImGui::DragFloat("specular",&light.specular);
@@ -247,41 +246,65 @@ namespace Popeye{
 	//Tab::Project
 	void Project::ShowContents()
 	{
-
-		static ImVec2 size(50.0f, 50.0f);
+		static ImVec2 fileSize(70.0f, 80.0f);
 		static ImVec2 offset(20.0f, 20.0f);
-
 
 		CheckHover();
 		ImGuiStyle& style = ImGui::GetStyle();
-		int buttons_count = 5;
-		const char* files[5] = { "dwdw", "asddd", "asddddd", "dd", "aw" };
+		ImGuiContext& g = *GImGui;
+
+		std::vector<std::string> files = g_fileManager->ScanFilesInDir();
 		float window_visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
 
-		for (int n = 0; n < buttons_count; n++)
+
 		{
-			ImGui::PushID(n);
-			ImGui::BeginGroup();
-			ImDrawList* draw_list = ImGui::GetWindowDrawList();
-			const ImVec2 p0 = ImGui::GetItemRectMin();
-			const ImVec2 p1 = ImGui::GetItemRectMax();
-			ImVec2 text_pos = ImVec2(p0.x + offset.x, p0.y + offset.y);
-			POPEYE_INFO(p0.x);
-			ImGui::Selectable("##selectable", false, 0, size);
-			if(n == 2)
-				draw_list->AddImage((void*)g_SceneView, p0, p1);
-			else
-				draw_list->AddImage((void*)g_GameView, p0, p1);
-			draw_list->AddText(text_pos, IM_COL32_WHITE, files[n]);
+			ImGui::BeginChild("Dirs", ImVec2(150, 0), true);
 
-			ImGui::EndGroup();
+
 			
-			float last_button_x2 = ImGui::GetItemRectMax().x;
-			float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
-			if (n + 1 < buttons_count && next_button_x2 < window_visible_x2 * 2)
-				ImGui::SameLine();
+			ImGui::EndChild();
+		}
+		ImGui::SameLine();
 
-			ImGui::PopID();
+		{
+			ImGui::BeginChild("FilesOfCurrentDir", ImVec2(0, 0), true);
+			for (int i = 0; i < files.size(); i++)
+			{
+				const char* file_name = files[i].c_str();
+				ImGui::PushID(i);
+
+				ImGui::BeginGroup();
+
+				ImGui::Selectable("##selectable", false, 0, fileSize);
+
+				const ImVec2 p0 = ImGui::GetItemRectMin();
+				const ImVec2 p1 = ImGui::GetItemRectMax();
+
+				ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+				float centerPosX = (p0.x + p1.x) * 0.5f;
+
+				ImVec2 imgRectMin = ImVec2(centerPosX - 30.0f, p0.y + 2.0f);
+				ImVec2 imgRectMax = ImVec2(centerPosX + 30.0f, imgRectMin.y + 60.0f);
+
+				draw_list->AddImage((ImTextureID)g_GameView, imgRectMin, imgRectMax);
+
+				ImVec2 textsize = ImGui::CalcTextSize(file_name);
+				float text_x_pos = textsize.x < fileSize.x ? centerPosX - (textsize.x * 0.5f) : centerPosX - (fileSize.x * 0.5f);
+				ImVec2 text_pos = ImVec2(text_x_pos, imgRectMax.y);
+
+				draw_list->AddText(g.Font, g.FontSize, text_pos, IM_COL32_WHITE, file_name, 0, textsize.x);
+
+				ImGui::EndGroup();
+
+				ImGui::PopID();
+
+				float last_button_x2 = p1.x;
+				float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+				if (i + 1 < files.size() && next_button_x2 < window_visible_x2)
+					ImGui::SameLine();
+			}
+			ImGui::EndChild();
 		}
 	}
 }
