@@ -7,36 +7,41 @@ namespace Popeye {
 	enum class FileType 
 	{ 
 		DIR,	//	directory(folder)
-		TEXT,	//	.txt
-		SOURCE,	//	.cpp
-		HEADER, //	.h, .hpp
-		IMAGE,	//	.png, jpg ...
-		MODEL	//	.fbx, obj ...
+		SOURCE,	//	.cpp, .h, .hpp
+		IMAGE,	//	.png, .jpg ...
+		MODEL,	//	.fbx, .obj ...
+		TEXT,	//	or else just text
 	};
 
-	struct Pfile
+	struct FileData
 	{
 		FileType type;
-		std::string pfile;
+		std::string fileName;
 
-		Pfile();
+		FileData(FileType _type, std::string _filename);
+	};
+
+	struct DirectoryData
+	{
+		fs::path path;
+		bool hasSubDir;
+
+		DirectoryData(fs::path _path, bool _hasSubDir);
 	};
 
 	class FileManager 
 	{
 		fs::path root;
-
-		std::vector<fs::path> directories;
-		std::vector<Pfile> files;
+		fs::path current;
+	private:
+		bool HaveSubDir(fs::path _path);
 	public:
 		FileManager();
 		~FileManager();
-		
-		std::vector<std::string> ScanDirs();
-		std::vector<std::string> ScanFilesInDir();
-		//std::vector<Pfile> ScanFilesInDir();
 
-		void ScanFilesNFolders();
+		std::vector<fs::path> ShowAllDirs(fs::path directory = fs::current_path() / "Root");
+		int ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files);
+		int ShowDirAtDir(std::vector<DirectoryData>& dirDats);
 	};
 }
 

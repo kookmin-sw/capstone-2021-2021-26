@@ -1,5 +1,6 @@
 #include "Tabs.h"
 
+#include "../GUI/IconsForkAwesome.h"
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/FileManager.h"
@@ -247,30 +248,59 @@ namespace Popeye{
 	void Project::ShowContents()
 	{
 		static ImVec2 fileSize(70.0f, 80.0f);
-		static ImVec2 offset(20.0f, 20.0f);
-
 		CheckHover();
 		ImGuiStyle& style = ImGui::GetStyle();
 		ImGuiContext& g = *GImGui;
 
-		std::vector<std::string> files = g_fileManager->ScanFilesInDir();
+		std::vector<FileData> dirs, files;
+		int totalFileNum = g_fileManager->ShowFilesAtDir(dirs, files);
+		
+		std::vector<DirectoryData> dirDats;
+		int rootdirNum = g_fileManager->ShowDirAtDir(dirDats);
+		//std::vector<fs::path> directories = g_fileManager->ShowFilesAtDir();
 		float window_visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
 
-
 		{
-			ImGui::BeginChild("Dirs", ImVec2(150, 0), true);
+			ImGui::BeginChild("Directories", ImVec2(150, 0), true);
 
+			for (int i = 0; i < rootdirNum; i++)
+			{
+				ImGui::PushID(i);
+				std::string str = ICON_FK_FOLDER + dirDats[i].path.filename().string();
+				
+				if (!dirDats[i].hasSubDir)
+				{
+					ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+					ImGui::TreeNodeEx(str.c_str(), flags);
+				}
+				else
+				{
+					ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_NoTreePushOnOpen;
+					ImGui::TreeNodeEx(str.c_str(), flags);
+				}
+				ImGui::PopID();
+			}
 
-			
 			ImGui::EndChild();
 		}
 		ImGui::SameLine();
 
 		{
-			ImGui::BeginChild("FilesOfCurrentDir", ImVec2(0, 0), true);
-			for (int i = 0; i < files.size(); i++)
+			ImGui::BeginChild("Files", ImVec2(0, 0), true);
+			int i = 0,  fi = 0, di = 0;
+			while(i != totalFileNum)
 			{
-				const char* file_name = files[i].c_str();
+				const char* file_name = NULL;
+				if (di < dirs.size())
+				{
+					file_name = dirs[di].fileName.c_str();
+					di++;
+				}
+				else
+				{
+					file_name = files[fi].fileName.c_str();
+					fi++;
+				}
 				ImGui::PushID(i);
 
 				ImGui::BeginGroup();
@@ -301,10 +331,19 @@ namespace Popeye{
 
 				float last_button_x2 = p1.x;
 				float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
-				if (i + 1 < files.size() && next_button_x2 < window_visible_x2)
+				if (i + 1 < totalFileNum && next_button_x2 < window_visible_x2)
 					ImGui::SameLine();
+
+				i++;
 			}
 			ImGui::EndChild();
 		}
+	}
+
+	void Project::ShowDirectories(fs::path directory)
+	{
+		static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		std::vector<fs::path> dirs = g_fileManager->ShowAllDirs(directory);
 	}
 }

@@ -2,6 +2,8 @@
 #include "../Events/EventManager.h"
 
 namespace Popeye{
+	namespace fs = std::filesystem;
+
 	struct MeshRenderer;
 	struct Camera;
 	struct Light;
@@ -48,6 +50,7 @@ namespace Popeye{
 	struct Project : public Tab
 	{
 		virtual void ShowContents();
+		void ShowDirectories(fs::path directory);
 	};
 }
 
