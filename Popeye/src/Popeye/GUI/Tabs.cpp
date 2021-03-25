@@ -291,9 +291,10 @@ namespace Popeye{
 				{
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DIR"))
 					{
-						//payload->DataSize = sizeof(int);
-						//std::string* path = static_cast<std::string*> (payload->Data);
-						std::cout << (char*)payload->Data << std::endl;
+						//std::string str = *static_cast<std::string*>(payload->Data);
+						std::string str(static_cast<const char*>(payload->Data), payload->DataSize);
+						fs::path path = str;
+						std::cout << str << '\n';
 					}
 					ImGui::EndDragDropTarget();
 				}
@@ -353,15 +354,13 @@ namespace Popeye{
 				{
 					if (filedata.type == FileType::DIR)
 					{
-						char testteest[] = "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
-						//std::string* path = new std::string(filedata.path.string());
-						int size = sizeof(char) * filedata.path.string().length();
+						std::string path = filedata.path.string().c_str();
+						int size = filedata.path.string().size();
 						//std::shared_ptr<std::string> path(new std::string(filedata.path.string()));
 						//const void* data = static_cast<void*>(new std::string(path));
-						ImGui::SetDragDropPayload("DIR", testteest, sizeof(char)* 71 + 1, ImGuiCond_Once);
+						ImGui::SetDragDropPayload("DIR", &path[0], size, ImGuiCond_Once);
 
 						//delete path;
-						//POPEYE_CORE_INFO("size : {0}", size);
 					}
 
 					ImGui::Text(file_name);
