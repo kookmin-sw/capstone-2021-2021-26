@@ -4,13 +4,8 @@
 
 namespace Popeye {
 	//Scene
-	Scene::Scene() 
-	{
-	}
-	
-	Scene::~Scene()
-	{
-	}
+	Scene::Scene() {}
+	Scene::~Scene(){ for (int i = 0; i < gameObjects.size(); i++) { delete gameObjects[i];} }
 
 	void Scene::CreateGameObject()
 	{
@@ -24,8 +19,7 @@ namespace Popeye {
 			gameObjectID++;
 		}
 
-		GameObject* gameObject = new GameObject(newID);
-		gameObjects.push_back(gameObject);
+		gameObjects.push_back(new GameObject(newID));
 
 		if (newID + 1 <= keysToAccessComponent.size())
 		{

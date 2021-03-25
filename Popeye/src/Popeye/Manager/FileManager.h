@@ -15,10 +15,11 @@ namespace Popeye {
 
 	struct FileData
 	{
+		fs::path path;
 		FileType type;
-		std::string fileName;
-
-		FileData(FileType _type, std::string _filename);
+		//std::string fileName;
+		FileData();
+		FileData(FileType _type, fs::path _path);
 	};
 
 	struct DirectoryData

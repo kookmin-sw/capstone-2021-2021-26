@@ -1,10 +1,13 @@
 #include "SceneManager.h"
+#include "../Scene/Scene.h"
 
 namespace Popeye {
 
 	//SceneManager
 	SceneManager::SceneManager()
-	{}
+	{
+		currentScene = nullptr;
+	}
 
 	SceneManager::~SceneManager()
 	{}
@@ -34,5 +37,10 @@ namespace Popeye {
 	{
 		//this->scene_IDs.push_back((int)&scene);
 		return (int)&scene;
+	}
+
+	void SceneManager::UnloadScene()
+	{
+		delete(currentScene);
 	}
 }

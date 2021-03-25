@@ -2,7 +2,8 @@
 
 namespace Popeye
 {
-	FileData::FileData(FileType _type, std::string _filename) : type(_type), fileName(_filename) {}
+	FileData::FileData() {}
+	FileData::FileData(FileType _type, fs::path _path) : type(_type), path(_path) {}
 
 	DirectoryData::DirectoryData(fs::path _path, bool _hasSubDir) : path(_path), hasSubDir(_hasSubDir) {}
 
@@ -23,7 +24,7 @@ namespace Popeye
 		return dirs;
 	}
 
-	//scan all files locate current dir
+	//scan all files locate current dir return size
 	int FileManager::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files)
 	{
 		std::vector<FileData> filedatas;
@@ -31,7 +32,6 @@ namespace Popeye
 		for (const auto& file : fs::directory_iterator(root))
 		{
 			FileType type = FileType::DIR;
-			std::string filename = file.path().filename().string();
 			if (!file.is_directory())
 			{
 				std::string extension = file.path().filename().extension().string();
@@ -49,17 +49,18 @@ namespace Popeye
 					type = FileType::MODEL;
 				}
 
-				files.push_back(FileData(type, filename));
+				files.push_back(FileData(type, file));
 			}
 			else
 			{
-				dirs.push_back(FileData(type, filename));
+				dirs.push_back(FileData(type, file));
 			}
 			size++;
 		}
 		return size;
 	}
 
+	//dir scan, return size
 	int FileManager::ShowDirAtDir(std::vector<DirectoryData>& dirDats)
 	{
 		int size = 0;

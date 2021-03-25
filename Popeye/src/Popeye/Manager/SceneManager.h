@@ -16,6 +16,7 @@ namespace Popeye {
 		static SceneManager* GetInstance();
 		static void DestroyInstance();
 		int SceneCreated(Scene&);
+		void UnloadScene();
 		void LoadScene();
 		void SaveScene();
 	};

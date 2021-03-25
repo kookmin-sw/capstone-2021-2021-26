@@ -7,13 +7,13 @@ namespace Popeye {
 		id = _id;
 	}
 
+	GameObject::~GameObject()
+	{
+	}
+
 	void GameObject::AddChild(GameObject* child)
 	{
 		childs.push_back(child);
-	}
-
-	GameObject::~GameObject() 
-	{
 	}
 
 	char* GameObject::GetName()

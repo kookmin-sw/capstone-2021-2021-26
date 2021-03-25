@@ -8,7 +8,7 @@
 namespace Popeye
 {
 	GUIManager::GUIManager() {}
-	GUIManager::~GUIManager() {}
+	GUIManager::~GUIManager() { for (int i = 0; i < tabs.size(); i++) { delete(tabs[i]); } }
 
 	void GUIManager::OnSet(GLFWwindow* window)
 	{

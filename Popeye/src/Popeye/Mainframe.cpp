@@ -52,10 +52,10 @@ namespace Popeye {
 		eventSystem->SetEventCallbacks(window);
 		guimanager->OnSet(window);
 
-		Scene* scene = new Scene();
-		scene->SetName("example");
+		SceneManager::GetInstance()->currentScene = new Scene();
 
-		SceneManager::GetInstance()->currentScene = scene;
+		Scene* scene = SceneManager::GetInstance()->currentScene;
+		scene->SetName("example");
 
 		float vertices[] = {
 		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,  0.0f, 0.0f,
@@ -177,7 +177,7 @@ namespace Popeye {
 		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[5]->transform.position = { 3.0f, 3.0f, 3.0f };
 
-		POPEYE_CORE_INFO("sds");
+		POPEYE_CORE_INFO("deededede");
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
@@ -190,8 +190,23 @@ namespace Popeye {
 
 			glfwSwapBuffers(window);
 		}
+		
+		//TODO:: fix destructor more fancy way later..
+
+		//free managers
+		SceneManager::GetInstance()->UnloadScene();
+		SceneManager::GetInstance()->DestroyInstance();
+
+		ComponentManager::GetInstance()->DestroyInstance();
 
 		guimanager->OnClosed();
+		delete(guimanager);
+
+		delete(g_fileManager);
+
+		delete(eventSystem);
+		delete(renderingSystem);
+
 	}
 
 	void Mainframe::Close()
