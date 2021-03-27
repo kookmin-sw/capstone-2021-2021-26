@@ -7,29 +7,14 @@ namespace Popeye
 
 	DirectoryData::DirectoryData(fs::path _path, bool _hasSubDir) : path(_path), hasSubDir(_hasSubDir) {}
 
-	FileManager::FileManager() { root = fs::current_path() / "Root";}
+	FileManager::FileManager() { root = fs::current_path() / "Root"; curr_focused_path = root; }
 	FileManager::~FileManager() {}
-	
-	std::vector<fs::path> FileManager::ShowAllDirs(fs::path directory)
-	{
-		std::vector<fs::path> dirs;
-		for (const auto& file : fs::directory_iterator(directory))
-		{
-			if (file.is_directory())
-			{
-				dirs.push_back(file);
-			}
-		}
-
-		return dirs;
-	}
 
 	//scan all files locate current dir return size
-	int FileManager::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files)
+	int FileManager::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
 	{
-		std::vector<FileData> filedatas;
 		int size = 0;
-		for (const auto& file : fs::directory_iterator(root))
+		for (const auto& file : fs::directory_iterator(currPath))
 		{
 			FileType type = FileType::DIR;
 			if (!file.is_directory())
@@ -61,10 +46,10 @@ namespace Popeye
 	}
 
 	//dir scan, return size
-	int FileManager::ShowDirAtDir(std::vector<DirectoryData>& dirDats)
+	int FileManager::ShowDirAtDir(std::vector<DirectoryData>& dirDats, fs::path currPath)
 	{
 		int size = 0;
-		for (const auto& file : fs::directory_iterator(root))
+		for (const auto& file : fs::directory_iterator(currPath))
 		{
 			if (file.is_directory())
 			{

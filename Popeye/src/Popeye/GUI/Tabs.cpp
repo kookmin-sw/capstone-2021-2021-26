@@ -244,62 +244,55 @@ namespace Popeye{
 		CheckHover();
 	}
 
-	//Tab::Project
+	//Tab::Project TODO :: Try make code shorter
 	void Project::ShowContents()
 	{
 		static ImVec2 fileSize(70.0f, 80.0f);
 		CheckHover();
 		ImGuiStyle& style = ImGui::GetStyle();
 		ImGuiContext& g = *GImGui;
-
-		std::vector<FileData> dirs, files;
-		int totalFileNum = g_fileManager->ShowFilesAtDir(dirs, files);
 		
-		std::vector<DirectoryData> dirDats;
-		int rootdirNum = g_fileManager->ShowDirAtDir(dirDats);
 		float window_visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
 
 		{
 			ImGui::BeginChild("Directories", ImVec2(150, 0), true);
+			
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-			for (int i = 0; i < rootdirNum; i++)
+			if (ImGui::TreeNodeEx((void*)(intptr_t)0, flags, ICON_FK_FOLDER" Root"))
 			{
-				ImGui::PushID(i);
-				std::string str = ICON_FK_FOLDER + dirDats[i].path.filename().string();
-				const char* filename = str.c_str();
-				ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_OpenOnArrow;
-				if (!dirDats[i].hasSubDir)
+				if (ImGui::IsItemHovered())
 				{
-					flags |= ImGuiTreeNodeFlags_Leaf;
-					ImGui::TreeNodeEx(filename, flags);
-				}
-				else
-				{
-					ImGui::TreeNodeEx(filename, flags);
+					if (ImGui::IsMouseDoubleClicked(0))
+					{
+						g_fileManager->curr_focused_path = fs::current_path() / "Root";
+					}
 				}
 
-				//drag and drop
-				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-				{
-					ImGui::SetDragDropPayload("DIR", &dirDats[i].path.string(), sizeof(std::string));
-
-					ImGui::Text(filename);
-
-					ImGui::EndDragDropSource();
-				}
 				if (ImGui::BeginDragDropTarget())
 				{
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DIR"))
 					{
-						//std::string str = *static_cast<std::string*>(payload->Data);
-						std::string str(static_cast<const char*>(payload->Data), payload->DataSize);
+						std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
 						fs::path path = str;
-						std::cout << str << '\n';
+
+						fs::rename(path, fs::current_path() / "Root" / path.filename());
 					}
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+					{
+						std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+						fs::path path = str;
+
+						fs::rename(path, fs::current_path() / "Root" / path.filename());
+					}
+
 					ImGui::EndDragDropTarget();
 				}
 
-				ImGui::PopID();
+				ShowDirectories(0, fs::current_path() / "Root");
+				ImGui::TreePop();
 			}
 
 			ImGui::EndChild();
@@ -308,16 +301,54 @@ namespace Popeye{
 
 		{
 			ImGui::BeginChild("Files", ImVec2(0, 0), true);
+
+			std::vector<FileData> dirs, files;
+			int totalFileNum = g_fileManager->ShowFilesAtDir(dirs, files, g_fileManager->curr_focused_path);
+
 			int i = 0,  fi = 0, di = 0;
 			while(i != totalFileNum)
 			{
 				ImGui::PushID(i);
 
+				ImGui::Selectable("##selectable", false, 0, fileSize);
+
 				FileData filedata;
 				if (di < dirs.size())
 				{
 					filedata = dirs[di];
+
+					if (ImGui::IsItemHovered())
+					{
+						if (ImGui::IsMouseDoubleClicked(0))
+						{
+							g_fileManager->curr_focused_path = filedata.path;
+						}
+					}
 					
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DIR"))
+						{
+							std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+							fs::path path = str;
+
+							if (!fs::equivalent(path, filedata.path))
+								fs::rename(path, filedata.path / path.filename());
+						}
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+						{
+							std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+							fs::path path = str;
+
+							if (!fs::equivalent(path, filedata.path))
+								fs::rename(path, filedata.path / path.filename());
+						}
+
+						ImGui::EndDragDropTarget();
+					}
+
 					di++;
 				}
 				else
@@ -330,8 +361,6 @@ namespace Popeye{
 				std::string fileNamestr = filedata.path.filename().string();
 				const char* file_name = fileNamestr.c_str();
 
-				ImGui::Selectable("##selectable", false, 0, fileSize);
-
 				const ImVec2 p0 = ImGui::GetItemRectMin();
 				const ImVec2 p1 = ImGui::GetItemRectMax();
 
@@ -342,7 +371,7 @@ namespace Popeye{
 				ImVec2 imgRectMin = ImVec2(centerPosX - 30.0f, p0.y + 2.0f);
 				ImVec2 imgRectMax = ImVec2(centerPosX + 30.0f, imgRectMin.y + 60.0f);
 
-				draw_list->AddImage((ImTextureID)g_GameView, imgRectMin, imgRectMax);
+				draw_list->AddText(g.Font, g.FontSize, imgRectMin, IM_COL32_WHITE, ICON_FK_FOLDER, 0, fileSize.x);
 
 				ImVec2 textsize = ImGui::CalcTextSize(file_name);
 				float text_x_pos = textsize.x < fileSize.x ? centerPosX - (textsize.x * 0.5f) : centerPosX - (fileSize.x * 0.5f);
@@ -352,16 +381,9 @@ namespace Popeye{
 
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 				{
-					if (filedata.type == FileType::DIR)
-					{
-						std::string path = filedata.path.string().c_str();
-						int size = filedata.path.string().size();
-						//std::shared_ptr<std::string> path(new std::string(filedata.path.string()));
-						//const void* data = static_cast<void*>(new std::string(path));
-						ImGui::SetDragDropPayload("DIR", &path[0], size, ImGuiCond_Once);
+					std::string path = filedata.path.string();
 
-						//delete path;
-					}
+					ImGui::SetDragDropPayload("FILE", &path[0], path.size(), ImGuiCond_Once);
 
 					ImGui::Text(file_name);
 
@@ -381,8 +403,90 @@ namespace Popeye{
 		}
 	}
 
-	void Project::ShowDirectories(fs::path directory)
+	void Project::ShowDirectories(int id, fs::path directory)
 	{
-		std::vector<fs::path> dirs = g_fileManager->ShowAllDirs(directory);
+		ImGui::PushID(id);
+
+		std::vector<DirectoryData> dirs;
+		int dircount = g_fileManager->ShowDirAtDir(dirs, directory);
+		
+		ImGui::AlignTextToFramePadding();
+		for (int i = 0; i < dircount; i++)
+		{
+			ImGui::PushID(i);
+
+			fs::path currDir = dirs[i].path;
+			std::string str = ICON_FK_FOLDER + currDir.filename().string();
+			const char* filename = str.c_str();
+			bool is_open = false;
+
+			ImGui::AlignTextToFramePadding();
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+			if (!dirs[i].hasSubDir)
+			{
+				flags |= ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf;
+				ImGui::TreeNodeEx((void*)(intptr_t)i, flags, filename);
+			}
+			else
+			{
+				is_open = ImGui::TreeNodeEx((void*)(intptr_t)i, flags, filename);
+			}
+
+			if (ImGui::IsItemHovered())
+			{
+				if (ImGui::IsMouseDoubleClicked(0))
+				{
+					g_fileManager->curr_focused_path = currDir;
+				}
+
+				// TODO :: add rename later
+				//else if (ImGui::IsMouseClicked(0))
+					//POPEYE_CORE_INFO("Popeye clicked {0}", currDir.filename().string());
+			}
+
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+			{
+				std::string path = currDir.string();
+
+				ImGui::SetDragDropPayload("DIR", &path[0], path.size(), ImGuiCond_Once);
+
+				ImGui::Text(filename);
+
+				ImGui::EndDragDropSource();
+			}
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DIR"))
+				{
+					std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+					fs::path path = str;
+
+					if(!fs::equivalent(path, currDir))
+						fs::rename(path, currDir / path.filename());
+				}
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+				{
+					std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+					fs::path path = str;
+
+					if (!fs::equivalent(path, currDir))
+						fs::rename(path, currDir / path.filename());
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			if (is_open)
+			{
+				ShowDirectories(i, currDir);
+				ImGui::TreePop();
+			}
+
+			ImGui::PopID();
+		}
+
+		ImGui::PopID();
+		
 	}
 }

@@ -50,7 +50,7 @@ namespace Popeye{
 	struct Project : public Tab
 	{
 		virtual void ShowContents();
-		void ShowDirectories(fs::path directory);
+		void ShowDirectories(int id, fs::path directory);
 	};
 }
 
