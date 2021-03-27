@@ -11,3 +11,6 @@
 	path = Popeye/vendor/imgui
 	url = https://github.com/astone30/imgui.git
 	branch = docking
+[submodule "Popeye/vendor/assimp"]
+	path = Popeye/vendor/assimp
+	url = https://github.com/astone30/assimp.git
