@@ -20,18 +20,21 @@ namespace Popeye
 			if (!file.is_directory())
 			{
 				std::string extension = file.path().filename().extension().string();
-
-				if (extension.compare(".cpp") || extension.compare(".h") || extension.compare(".hpp"))
+				if (!extension.compare(".cpp") || !extension.compare(".h") || !extension.compare(".hpp"))
 				{
 					type = FileType::SOURCE;
 				}
-				else if (extension.compare(".png") || extension.compare(".jpg"))
+				else if (!extension.compare(".png") || !extension.compare(".jpg"))
 				{
 					type = FileType::IMAGE;
 				}
-				else if (extension.compare(".fbx") || extension.compare(".obj"))
+				else if (!extension.compare(".fbx") || !extension.compare(".obj"))
 				{
 					type = FileType::MODEL;
+				}
+				else
+				{
+					type = FileType::TEXT;
 				}
 
 				files.push_back(FileData(type, file));

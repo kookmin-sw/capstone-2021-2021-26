@@ -3,10 +3,13 @@
 #include "../GUI/imgui_impl_glfw.h"
 #include "../GUI/imgui_impl_opengl3.h"
 #include "../GUI/IconsForkAwesome.h"
+#include "../GUI/IconsForkAwesomeLargeIcon.h"
 
 #include "../GUI/Tabs.h"
 namespace Popeye
 {
+	ImFont *g_Icon;
+
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() { for (int i = 0; i < tabs.size(); i++) { delete(tabs[i]); } }
 
@@ -20,10 +23,26 @@ namespace Popeye
 
 		ImFontConfig config;
 		config.MergeMode = true;
-		config.GlyphMaxAdvanceX = 13.0f;
-		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
+		config.OversampleH = 2;
+		config.OversampleV = 1;
+		config.GlyphExtraSpacing.x = 1.0f;
 
+		static const ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
 		io.Fonts->AddFontFromFileTTF("fonts/forkawesome-webfont.ttf", 13.0f, &config, icon_ranges);
+
+		ImFontConfig configL;
+		configL.MergeMode = false;
+		configL.OversampleH = 2;
+		configL.OversampleV = 1;
+		configL.GlyphExtraSpacing.x = 1.0f;
+
+		static const ImWchar icon_ranges_L[] = { ICON_FK_FOLDER_L, ICON_FK_FOLDER_L, ICON_FK_CODE_L,ICON_FK_CODE_L,  ICON_FK_TEXT_L,ICON_FK_TEXT_L, 
+			ICON_FK_IMAGE_L,ICON_FK_IMAGE_L, ICON_FK_MODEL_L,ICON_FK_MODEL_L, 0 };
+
+		g_Icon = io.Fonts->AddFontFromFileTTF("fonts/forkawesome-webfont.ttf", 50.0f, &configL, icon_ranges_L);
+
+		io.Fonts->Build();
+
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 		ImGui::StyleColorsDark();
@@ -74,6 +93,7 @@ namespace Popeye
 	void GUIManager::Show()
 	{
 		static int initialized = 0;
+		
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);

@@ -170,6 +170,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\assimp.vcxproj">
+      <Project>{DDA78F3A-AA40-358E-BDE0-97FDB3E81848}</Project>
+      <Name>assimp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\tools\assimp_cmd\assimp_cmd.vcxproj">
+      <Project>{FCC14F7C-B61E-317D-8FDB-904C5238357F}</Project>
+      <Name>assimp_cmd</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Eyeball\eyeball.vcxproj">
       <Project>{81DDDD4C-52D1-3ACC-87A2-DBA129391FEC}</Project>
       <Name>eyeball</Name>
@@ -189,6 +197,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye.vcxproj">
       <Project>{982167D6-626D-3F70-AEDC-ABE7385FABE6}</Project>
       <Name>popeye</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\test\unit.vcxproj">
+      <Project>{DDB47066-4F7D-3C6A-9CD1-3BD517AE2C5B}</Project>
+      <Name>unit</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{F441E892-0F24-394D-B7C1-AC55C99D96FF}</Project>
+      <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,9 @@
 #include "Tabs.h"
 
 #include "../GUI/IconsForkAwesome.h"
+#include "../GUI/IconsForkAwesomeLargeIcon.h"
+
+#include "../Manager/GUIManager.h"
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/FileManager.h"
@@ -11,14 +14,14 @@
 #include "../Component/RenderingComponents.h"
 
 namespace Popeye{
-
-	extern FileManager* g_fileManager;
+	extern ImFont	*g_Icon;
+	extern FileManager	*g_fileManager;
 
 	extern unsigned int g_SceneView;
 	extern unsigned int g_GameView;
 
-	static GameObject* selectedGameObject;
-	static Scene* scene;
+	static GameObject *selectedGameObject;
+	static Scene *scene;
 
 	//Tab 
 	void Tab::SetTab(const char* _name, EventMod _eventmod)
@@ -61,7 +64,6 @@ namespace Popeye{
 		CheckHover();
 
 		ImGui::EndChild();
-
 	}
 
 	//Tab::GameView
@@ -261,6 +263,8 @@ namespace Popeye{
 
 			if (ImGui::TreeNodeEx((void*)(intptr_t)0, flags, ICON_FK_FOLDER" Root"))
 			{
+				fs::path currpath = fs::current_path() / "Root";
+
 				if (ImGui::IsItemHovered())
 				{
 					if (ImGui::IsMouseDoubleClicked(0))
@@ -277,7 +281,12 @@ namespace Popeye{
 
 						fs::path path = str;
 
-						fs::rename(path, fs::current_path() / "Root" / path.filename());
+						if (fs::equivalent(path, g_fileManager->curr_focused_path))
+						{
+							g_fileManager->curr_focused_path = (currpath / path.filename());
+						}
+
+						fs::rename(path, (currpath / path.filename()).string());
 					}
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
 					{
@@ -285,13 +294,13 @@ namespace Popeye{
 
 						fs::path path = str;
 
-						fs::rename(path, fs::current_path() / "Root" / path.filename());
+						fs::rename(path, (currpath / path.filename()).string());
 					}
 
 					ImGui::EndDragDropTarget();
 				}
 
-				ShowDirectories(0, fs::current_path() / "Root");
+				ShowDirectories(0, currpath.string());
 				ImGui::TreePop();
 			}
 
@@ -368,10 +377,14 @@ namespace Popeye{
 
 				float centerPosX = (p0.x + p1.x) * 0.5f;
 
-				ImVec2 imgRectMin = ImVec2(centerPosX - 30.0f, p0.y + 2.0f);
-				ImVec2 imgRectMax = ImVec2(centerPosX + 30.0f, imgRectMin.y + 60.0f);
+				ImVec2 imgRectMin = ImVec2(centerPosX - 21.0f, p0.y + 2.0f);
+				ImVec2 imgRectMax = ImVec2(centerPosX + 25.0f, imgRectMin.y + 50.0f);
 
-				draw_list->AddText(g.Font, g.FontSize, imgRectMin, IM_COL32_WHITE, ICON_FK_FOLDER, 0, fileSize.x);
+				if (filedata.type == FileType::DIR) { draw_list->AddText(g_Icon, 50.0f, imgRectMin, IM_COL32_WHITE, ICON_FOLDER, 0, fileSize.x); }
+				else if (filedata.type == FileType::SOURCE) { draw_list->AddText(g_Icon, 50.0f, imgRectMin, IM_COL32_WHITE, ICON_SOURCE, 0, fileSize.x); }
+				else if (filedata.type == FileType::IMAGE) { draw_list->AddText(g_Icon, 50.0f, imgRectMin, IM_COL32_WHITE, ICON_IMAGE, 0, fileSize.x); }
+				else if (filedata.type == FileType::MODEL) { draw_list->AddText(g_Icon, 50.0f, imgRectMin, IM_COL32_WHITE, ICON_CUBE, 0, fileSize.x); }
+				else  { draw_list->AddText(g_Icon, 50.0f, imgRectMin, IM_COL32_WHITE, ICON_TEXT, 0, fileSize.x); }
 
 				ImVec2 textsize = ImGui::CalcTextSize(file_name);
 				float text_x_pos = textsize.x < fileSize.x ? centerPosX - (textsize.x * 0.5f) : centerPosX - (fileSize.x * 0.5f);
@@ -403,7 +416,7 @@ namespace Popeye{
 		}
 	}
 
-	void Project::ShowDirectories(int id, fs::path directory)
+	void Project::ShowDirectories(int id, std::string directory)
 	{
 		ImGui::PushID(id);
 
@@ -438,14 +451,11 @@ namespace Popeye{
 				{
 					g_fileManager->curr_focused_path = currDir;
 				}
-
-				// TODO :: add rename later
-				//else if (ImGui::IsMouseClicked(0))
-					//POPEYE_CORE_INFO("Popeye clicked {0}", currDir.filename().string());
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 			{
+
 				std::string path = currDir.string();
 
 				ImGui::SetDragDropPayload("DIR", &path[0], path.size(), ImGuiCond_Once);
@@ -462,8 +472,16 @@ namespace Popeye{
 
 					fs::path path = str;
 
-					if(!fs::equivalent(path, currDir))
+
+					if (!fs::equivalent(path, currDir))
+					{
+						if (fs::equivalent(path, g_fileManager->curr_focused_path))
+						{
+							g_fileManager->curr_focused_path = currDir / path.filename();
+						}
 						fs::rename(path, currDir / path.filename());
+					}
+					
 				}
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
 				{
@@ -479,7 +497,8 @@ namespace Popeye{
 
 			if (is_open)
 			{
-				ShowDirectories(i, currDir);
+				ShowDirectories(i, currDir.string());
+				
 				ImGui::TreePop();
 			}
 

@@ -223,7 +223,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm\ALL_BUILD.vcxproj">
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\contrib\zlib\ALL_BUILD.vcxproj">
       <Project>{98410805-AEE8-3E7F-8B64-212ABB57A79A}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

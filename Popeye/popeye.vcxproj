@@ -61,7 +61,7 @@
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\aston\Documents\capstone-2021-26\bin\PopeyeEngine\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">popeye.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">popeye</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">popeyed</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -104,10 +104,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"Debug\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -115,13 +115,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>vendor\glad\Debug\glad.lib;vendor\GLFW\src\Debug\glfw3.lib;vendor\imgui\Debug\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>vendor\glad\Debug\gladd.lib;vendor\GLFW\src\Debug\glfw3d.lib;vendor\imgui\Debug\imguid.lib;opengl32.lib;vendor\assimp\lib\Debug\assimp-vc142-mtd.lib;vendor\assimp\contrib\zlib\Debug\zlibstaticd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26/Popeye/Debug/popeye.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26/bin/PopeyeEngine/Debug/popeye.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/aston/Documents/capstone-2021-26/Popeye/Debug/popeyed.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/aston/Documents/capstone-2021-26/bin/PopeyeEngine/Debug/popeyed.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -148,10 +148,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"Release\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -159,7 +159,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>vendor\glad\Release\glad.lib;vendor\GLFW\src\Release\glfw3.lib;vendor\imgui\Release\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>vendor\glad\Release\glad.lib;vendor\GLFW\src\Release\glfw3.lib;vendor\imgui\Release\imgui.lib;opengl32.lib;vendor\assimp\lib\Release\assimp-vc142-mt.lib;vendor\assimp\contrib\zlib\Release\zlibstatic.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -192,10 +192,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"MinSizeRel\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -203,7 +203,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>vendor\glad\MinSizeRel\glad.lib;vendor\GLFW\src\MinSizeRel\glfw3.lib;vendor\imgui\MinSizeRel\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>vendor\glad\MinSizeRel\glad.lib;vendor\GLFW\src\MinSizeRel\glfw3.lib;vendor\imgui\MinSizeRel\imgui.lib;opengl32.lib;vendor\assimp\lib\MinSizeRel\assimp-vc142-mt.lib;vendor\assimp\contrib\zlib\MinSizeRel\zlibstatic.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -218,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -235,10 +235,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;POPEYE_PLATFORM_WINDOWS;POPEYE_BUILD_DLL;CMAKE_INTDIR=\"RelWithDebInfo\";popeye_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -246,7 +246,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>vendor\glad\RelWithDebInfo\glad.lib;vendor\GLFW\src\RelWithDebInfo\glfw3.lib;vendor\imgui\RelWithDebInfo\imgui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>vendor\glad\RelWithDebInfo\glad.lib;vendor\GLFW\src\RelWithDebInfo\glfw3.lib;vendor\imgui\RelWithDebInfo\imgui.lib;opengl32.lib;vendor\assimp\lib\RelWithDebInfo\assimp-vc142-mt.lib;vendor\assimp\contrib\zlib\RelWithDebInfo\zlibstatic.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -487,6 +487,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\assimp.vcxproj">
+      <Project>{DDA78F3A-AA40-358E-BDE0-97FDB3E81848}</Project>
+      <Name>assimp</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\glad.vcxproj">
       <Project>{EAC96FC8-7DE1-3AB6-B691-DA7D9407D25E}</Project>
       <Name>glad</Name>
@@ -498,6 +502,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui\imgui.vcxproj">
       <Project>{4C1CBDA4-35C3-35CF-A4B1-DD44AFCF8260}</Project>
       <Name>imgui</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{F441E892-0F24-394D-B7C1-AC55C99D96FF}</Project>
+      <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

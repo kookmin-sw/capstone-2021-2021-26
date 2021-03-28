@@ -12,8 +12,13 @@
 #include "Scene/GameObject.h"
 
 #include "Component/RenderingComponents.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+
 namespace Popeye {
 	FileManager* g_fileManager;
+
 
 	Mainframe::Mainframe(){}
 	Mainframe::~Mainframe(){}
@@ -42,15 +47,17 @@ namespace Popeye {
 	void Mainframe::Run()
 	{
 		g_fileManager = new FileManager();
+		Assimp::Importer importer;
+		GUIManager* guiManager = new GUIManager();
+
 		ComponentManager::GetInstance()->InitComponents();
 
-		RenderingSystem* renderingSystem = new RenderingSystem();
-		EventSystem* eventSystem = new EventSystem();
-		GUIManager* guimanager = new GUIManager();
+		RenderingSystem *renderingSystem = new RenderingSystem();
+		EventSystem *eventSystem = new EventSystem();
 
 		renderingSystem->SystemInit();
 		eventSystem->SetEventCallbacks(window);
-		guimanager->OnSet(window);
+		guiManager->OnSet(window);
 
 		SceneManager::GetInstance()->currentScene = new Scene();
 
@@ -186,7 +193,7 @@ namespace Popeye {
 			
 			eventSystem->SystemRunning();
 
-			guimanager->OnRun();
+			guiManager->OnRun();
 
 			glfwSwapBuffers(window);
 		}
@@ -199,8 +206,8 @@ namespace Popeye {
 
 		ComponentManager::GetInstance()->DestroyInstance();
 
-		guimanager->OnClosed();
-		delete(guimanager);
+		guiManager->OnClosed();
+		delete(guiManager);
 
 		delete(g_fileManager);
 

@@ -81,6 +81,7 @@ add_subdirectory(vendor/glm)
 add_subdirectory(vendor/GLFW)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/imgui)
+add_subdirectory(vendor/assimp)
 
 include_directories(popeye 
     vendor/GLFW/include
@@ -89,6 +90,7 @@ include_directories(popeye
     vendor/imgui
     vendor/glm
     vendor/stb_image
+    vendor/assimp/include
     )
 
 target_link_libraries(popeye 
@@ -96,7 +98,8 @@ target_link_libraries(popeye
     glad
     glfw
     imgui
-    opengl32.lib)
+    opengl32.lib
+    assimp)
 
 target_precompile_headers(popeye PRIVATE
     ${PLATFORM_HEADER}

@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -89,7 +89,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -112,7 +112,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -135,7 +135,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\spdlog\include;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\stb_image;C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -223,7 +223,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glm\ALL_BUILD.vcxproj">
+    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\contrib\zlib\ALL_BUILD.vcxproj">
       <Project>{98410805-AEE8-3E7F-8B64-212ABB57A79A}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
