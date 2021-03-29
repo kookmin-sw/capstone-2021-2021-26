@@ -42,7 +42,7 @@ url: https://kookmin-sw.github.io/capstone-2021-26/
 # (http://yourusername.github.io/repository-name)
 # and NOT your User repository (http://yourusername.github.io)
 # then add in the baseurl here, like this: "/repository-name"
-baseurl: ""
+baseurl: "https://kookmin-sw.github.io/capstone-2021-26/"
 
 #
 # !! You don't need to change any of the configuration flags below !!
