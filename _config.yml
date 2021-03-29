@@ -13,7 +13,7 @@ baseurl: "https://kookmin-sw.github.io/capstone-2021-26"
 #
 # !! You don't need to change any of the configuration flags below !!
 #
-
+permalink: /:title/
 # The release of Jekyll Now that you're using
 version: v1.2.0
 
@@ -46,8 +46,6 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
-  
-permalink: /:title/
 
 category_archive:
   type: ddd
