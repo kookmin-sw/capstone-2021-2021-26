@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Guide
-permalink: /guide/
+permalink: /about/
 ---
 
-Popeye Guide
+about Popeye
 
 ### More Information
 
