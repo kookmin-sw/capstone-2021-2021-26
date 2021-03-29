@@ -1,9 +1,11 @@
 [![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=365375&assignment_repo_type=GroupAssignmentRepo)
 # Capstone-2021-26
 
-### Popeye Engine
+## Popeye Engine  
 
 (프로젝트 로고)
+
+### 설명
 
 Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입니다.
 
@@ -11,8 +13,10 @@ Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입�
 
 또한 Popeye Engine은 Dear ImGui를 이용하여 보다 유저 친화적인 환경을 제공합니다.
 
-**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/
+**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/  
 
+
+### Introduction
 
 Popeye Engine is 3D game engine with C++ and OpenGL.
 
