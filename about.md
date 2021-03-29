@@ -1,14 +1,14 @@
 ---
 layout: page
-title: About
-permalink: /about/
+title: Guide
+permalink: /Guide/
 ---
 
-Some information about you!
+Popeye Guide
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+blah blah
 
 ### Contact me
 
