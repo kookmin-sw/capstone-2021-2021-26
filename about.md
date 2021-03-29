@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Guide
-permalink: /Guide/
+permalink: /guide/
 ---
 
 Popeye Guide
