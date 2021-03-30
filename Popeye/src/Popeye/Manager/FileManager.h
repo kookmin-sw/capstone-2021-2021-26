@@ -33,7 +33,10 @@ namespace Popeye {
 	class FileManager 
 	{
 	private:
+		std::thread t;
 		bool HaveSubDir(fs::path _path);
+		void ReadModel(fs::path _path);
+		void ReadImage(fs::path _path);
 	public:
 		fs::path root;
 		fs::path curr_focused_path;
@@ -44,6 +47,8 @@ namespace Popeye {
 		//std::vector<fs::path> ShowAllDirs(fs::path directory = fs::current_path() / "Root");
 		int ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath = fs::current_path() / "Root");
 		int ShowDirAtDir(std::vector<DirectoryData>& dirDats, fs::path currPath = fs::current_path() / "Root");
+
+		void ReadFile(FileData filedata);
 	};
 }
 

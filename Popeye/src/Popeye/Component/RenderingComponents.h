@@ -23,6 +23,7 @@ namespace Popeye {
 		Texture();
 		void InitTexture(const char*);
 		void drawTexture();
+		void DeleteTexture();
 	};
 
 	/*Light Component*/
@@ -80,6 +81,7 @@ namespace Popeye {
 	/*MeshRenderer*/
 	struct MeshRenderer
 	{
+		// this will managed by resource sysyem/manager later
 		static std::vector<Mesh> meshes;
 		static std::vector<Material> materials;
 

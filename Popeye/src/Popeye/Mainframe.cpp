@@ -13,9 +13,6 @@
 
 #include "Component/RenderingComponents.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
 namespace Popeye {
 	FileManager* g_fileManager;
 
@@ -47,7 +44,6 @@ namespace Popeye {
 	void Mainframe::Run()
 	{
 		g_fileManager = new FileManager();
-		Assimp::Importer importer;
 		GUIManager* guiManager = new GUIManager();
 
 		ComponentManager::GetInstance()->InitComponents();

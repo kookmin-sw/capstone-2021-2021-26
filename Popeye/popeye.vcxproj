@@ -447,6 +447,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Texture.h" />
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.h" />
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.h" />
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/capstone-2021-26/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>

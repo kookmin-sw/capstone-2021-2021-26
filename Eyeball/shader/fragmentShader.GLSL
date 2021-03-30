@@ -2,6 +2,8 @@
 out vec4 FragColor;
 
 struct Material{
+    bool text;
+    sampler2D texture;
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -81,6 +83,9 @@ void main()
     
     for(int i = 0; i < spotlightCount; i++)
         result += CalcSpotLight(spotLights[i], norm, viewDir);
+
+    if(material.text)
+        result *= vec3(texture(material.texture, TexCoord));
     
     FragColor = vec4(result, 1.0);
 }

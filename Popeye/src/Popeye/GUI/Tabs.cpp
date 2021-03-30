@@ -182,12 +182,59 @@ namespace Popeye{
 		{
 			if (ImGui::TreeNode("Mesh"))
 			{
+				Mesh& mesh = MeshRenderer::meshes[meshRenderer.meshIndex];
+
+				ImGui::Selectable(mesh.id.c_str());
+				if (ImGui::IsItemHovered())
+				{
+					if (ImGui::IsKeyDown(261))
+					{
+						
+					}
+				}
+
+
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Material"))
 			{
 				Material& material = MeshRenderer::materials[meshRenderer.materialIndex];
 
+				ImGui::Text("texture");
+				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
+				if (ImGui::IsItemHovered())
+				{
+					if (ImGui::IsKeyDown(261))
+					{
+						material.texture.DeleteTexture();
+					}
+				}
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+					{
+						std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+						fs::path path = str;
+
+						if (path.extension() == ".jpg" || path.extension() == ".jpg")
+						{
+							material.texture.InitTexture(str.c_str());
+						}
+					}
+
+					ImGui::EndDragDropTarget();
+				}
+				
+				ImDrawList* draw_list = ImGui::GetWindowDrawList();
+				const ImVec2 p0 = ImGui::GetItemRectMin();
+				const ImVec2 p1 = ImGui::GetItemRectMax();
+
+				ImVec2 imgRectMin = ImVec2(p0.x + 2.5f, p0.y + 2.5f);
+				ImVec2 imgRectMax = ImVec2(p1.x - 2.5f, p1.y - 2.5f);
+
+				draw_list->AddImage((ImTextureID)material.texture.texture_ID, imgRectMin, imgRectMax);
+				
 				ImGui::ColorEdit3("color", (float*)&material.color);
 				
 				ImGui::DragFloat("ambient", &material.amb_diff_spec[0]);
@@ -363,7 +410,13 @@ namespace Popeye{
 				else
 				{
 					filedata = files[fi];
-					
+					if (ImGui::IsItemHovered())
+					{
+						if (ImGui::IsMouseDoubleClicked(0))
+						{
+							g_fileManager->ReadFile(filedata);
+						}
+					}
 					fi++;
 				}
 
@@ -390,7 +443,7 @@ namespace Popeye{
 				float text_x_pos = textsize.x < fileSize.x ? centerPosX - (textsize.x * 0.5f) : centerPosX - (fileSize.x * 0.5f);
 				ImVec2 text_pos = ImVec2(text_x_pos, imgRectMax.y);
 
-				draw_list->AddText(g.Font, g.FontSize, text_pos, IM_COL32_WHITE, file_name, 0, textsize.x);
+				draw_list->AddText(g.Font, g.FontSize, text_pos, IM_COL32_WHITE, file_name, 0, fileSize.x);
 
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 				{
@@ -508,4 +561,5 @@ namespace Popeye{
 		ImGui::PopID();
 		
 	}
+
 }

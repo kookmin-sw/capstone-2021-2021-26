@@ -49,6 +49,9 @@
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.h">

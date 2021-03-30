@@ -136,7 +136,13 @@ namespace Popeye {
 	void Texture::drawTexture()
 	{
 		glActiveTexture(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, this->texture_ID);
+		glBindTexture(GL_TEXTURE_2D, texture_ID);
+	}
+
+	void Texture::DeleteTexture()
+	{
+		glDeleteTextures(1, &texture_ID);
+		texture_ID = -1;
 	}
 
 	/**************Material**************/
@@ -144,7 +150,7 @@ namespace Popeye {
 	Material::Material()
 	{
 		color = glm::vec3(1.0f);
-		//amdispec	= glm::mat3x4(1.0f);
+		texture.texture_ID = -1;
 		amb_diff_spec[0] = 0.8f; //ambient
 		amb_diff_spec[1] = 0.4f; //diffuse
 		amb_diff_spec[2] = 0.1f; //specular

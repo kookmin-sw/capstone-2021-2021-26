@@ -228,9 +228,24 @@ namespace Popeye {
 
 				shader.setMat4("model", model);
 
-				shader.setVec3("material.ambient",	material.color * material.amb_diff_spec[0]);
-				shader.setVec3("material.diffuse",	material.color * material.amb_diff_spec[1]);
-				shader.setVec3("material.specular", material.color * material.amb_diff_spec[2]);
+				if (material.texture.texture_ID == -1)
+				{
+					shader.setBool("material.text", false);
+				}
+				else
+				{
+					shader.setBool("material.text", true);
+					shader.setInt("material.texture", 1);
+
+
+					glActiveTexture(GL_TEXTURE1);
+					glBindTexture(GL_TEXTURE_2D, material.texture.texture_ID);
+
+				}
+
+				shader.setVec3("material.ambient",  material.color* material.amb_diff_spec[0]);
+				shader.setVec3("material.diffuse",	material.color* material.amb_diff_spec[1]);
+				shader.setVec3("material.specular", material.color* material.amb_diff_spec[2]);
 
 				shader.setFloat("material.shininess", material.shininess);
 

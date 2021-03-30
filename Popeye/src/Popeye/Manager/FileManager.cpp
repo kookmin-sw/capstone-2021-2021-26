@@ -1,5 +1,9 @@
 #include "FileManager.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>        
+#include <assimp/postprocess.h>
+
 namespace Popeye
 {
 	FileData::FileData() {}
@@ -63,7 +67,7 @@ namespace Popeye
 		}
 		return size;
 	}
-
+	
 	bool FileManager::HaveSubDir(fs::path _path)
 	{
 		for (const auto& file : fs::directory_iterator(_path))
@@ -74,6 +78,40 @@ namespace Popeye
 			}
 		}
 		return false;
+	}
+
+	void FileManager::ReadModel(fs::path _path)
+	{
+		Assimp::Importer importer;
+		std::string path = _path.string();
+		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+		for (int i = 0; i < scene->mNumMeshes; i++)
+		{
+			POPEYE_CORE_INFO("Current Model Number {0}. Name : {1}", i, scene->mMeshes[i]->mName.C_Str());
+		}
+
+		t.detach();
+	}
+
+	void FileManager::ReadImage(fs::path _path)
+	{
+
+
+		t.detach();
+	}
+
+	void FileManager::ReadFile(FileData filedata)
+	{
+		//static std::thread t;
+		if (filedata.type == FileType::MODEL)
+		{
+			t = std::thread(&FileManager::ReadModel, this, filedata.path);
+		}
+		else if (filedata.type == FileType::IMAGE)
+		{
+			t = std::thread(&FileManager::ReadImage, this, filedata.path);
+		}
 	}
 }
 

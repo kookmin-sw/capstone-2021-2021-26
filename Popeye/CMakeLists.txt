@@ -53,7 +53,9 @@ set(POPEYE_MANAGER
     src/Popeye/Manager/ComponentManager.cpp)
 
 set(POPEYE_RESOURCE 
-    src/Popeye/Resource/Texture.h)
+    src/Popeye/Resource/Texture.h
+    src/Popeye/Resource/Mesh.h
+    src/Popeye/Resource/Mesh.cpp)
 
 set(POPEYE_SCENE 
     src/Popeye/Scene/GameObject.h
@@ -81,7 +83,7 @@ add_subdirectory(vendor/glm)
 add_subdirectory(vendor/GLFW)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/imgui)
-add_subdirectory(vendor/assimp)
+
 
 include_directories(popeye 
     vendor/GLFW/include
@@ -99,7 +101,8 @@ target_link_libraries(popeye
     glfw
     imgui
     opengl32.lib
-    assimp)
+    assimp
+    )
 
 target_precompile_headers(popeye PRIVATE
     ${PLATFORM_HEADER}
