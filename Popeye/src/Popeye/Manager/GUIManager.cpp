@@ -55,25 +55,29 @@ namespace Popeye
 		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-		SceneView* scene = new SceneView();
+		SceneView *scene = new SceneView();
 		scene->SetTab("Scene", EventMod::SCENE);
 		tabs.push_back(scene);
 
-		GameView* game = new GameView();
+		GameView *game = new GameView();
 		game->SetTab("Game", EventMod::GAME);
 		tabs.push_back(game);
 
-		Inspector* inspector = new Inspector();
+		Inspector *inspector = new Inspector();
 		inspector->SetTab("Inspector");
 		tabs.push_back(inspector);
 
-		Hierarchy* hierarchy = new Hierarchy();
+		Hierarchy *hierarchy = new Hierarchy();
 		hierarchy->SetTab("Hierarchy");
 		tabs.push_back(hierarchy);
 
-		Project* project = new Project();
+		Project *project = new Project();
 		project->SetTab("Project");
 		tabs.push_back(project);
+
+		Resource *resource = new Resource();
+		resource->SetTab("Resource");
+		tabs.push_back(resource);
 	}
 
 	void GUIManager::OnRun()

@@ -6,16 +6,19 @@
 #include "../Manager/GUIManager.h"
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
-#include "../Manager/FileManager.h"
+#include "../Manager/ResourceManager.h"
+#include "../System/FileSystem.h"
 
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 
 #include "../Component/RenderingComponents.h"
+#include "../Resource/Texture.h"
 
 namespace Popeye{
 	extern ImFont	*g_Icon;
-	extern FileManager	*g_fileManager;
+	extern FileSystem *g_fileSystem;
+	extern ResourceManager *g_ResourceManager;
 
 	extern unsigned int g_SceneView;
 	extern unsigned int g_GameView;
@@ -316,7 +319,7 @@ namespace Popeye{
 				{
 					if (ImGui::IsMouseDoubleClicked(0))
 					{
-						g_fileManager->curr_focused_path = fs::current_path() / "Root";
+						g_fileSystem->curr_focused_path = fs::current_path() / "Root";
 					}
 				}
 
@@ -328,9 +331,9 @@ namespace Popeye{
 
 						fs::path path = str;
 
-						if (fs::equivalent(path, g_fileManager->curr_focused_path))
+						if (fs::equivalent(path, g_fileSystem->curr_focused_path))
 						{
-							g_fileManager->curr_focused_path = (currpath / path.filename());
+							g_fileSystem->curr_focused_path = (currpath / path.filename());
 						}
 
 						fs::rename(path, (currpath / path.filename()).string());
@@ -359,7 +362,7 @@ namespace Popeye{
 			ImGui::BeginChild("Files", ImVec2(0, 0), true);
 
 			std::vector<FileData> dirs, files;
-			int totalFileNum = g_fileManager->ShowFilesAtDir(dirs, files, g_fileManager->curr_focused_path);
+			int totalFileNum = g_fileSystem->ShowFilesAtDir(dirs, files, g_fileSystem->curr_focused_path);
 
 			int i = 0,  fi = 0, di = 0;
 			while(i != totalFileNum)
@@ -377,7 +380,7 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0))
 						{
-							g_fileManager->curr_focused_path = filedata.path;
+							g_fileSystem->curr_focused_path = filedata.path;
 						}
 					}
 					
@@ -414,7 +417,7 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0))
 						{
-							g_fileManager->ReadFile(filedata);
+							g_fileSystem->ReadFile(filedata);
 						}
 					}
 					fi++;
@@ -474,7 +477,7 @@ namespace Popeye{
 		ImGui::PushID(id);
 
 		std::vector<DirectoryData> dirs;
-		int dircount = g_fileManager->ShowDirAtDir(dirs, directory);
+		int dircount = g_fileSystem->ShowDirAtDir(dirs, directory);
 		
 		ImGui::AlignTextToFramePadding();
 		for (int i = 0; i < dircount; i++)
@@ -502,7 +505,7 @@ namespace Popeye{
 			{
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
-					g_fileManager->curr_focused_path = currDir;
+					g_fileSystem->curr_focused_path = currDir;
 				}
 			}
 
@@ -528,9 +531,9 @@ namespace Popeye{
 
 					if (!fs::equivalent(path, currDir))
 					{
-						if (fs::equivalent(path, g_fileManager->curr_focused_path))
+						if (fs::equivalent(path, g_fileSystem->curr_focused_path))
 						{
-							g_fileManager->curr_focused_path = currDir / path.filename();
+							g_fileSystem->curr_focused_path = currDir / path.filename();
 						}
 						fs::rename(path, currDir / path.filename());
 					}
@@ -560,6 +563,73 @@ namespace Popeye{
 
 		ImGui::PopID();
 		
+	}
+
+
+	void Resource::ShowContents()
+	{
+		static bool image_show = false;
+		if (ImGui::BeginTabBar("ResourceManager"))
+		{
+			if (ImGui::BeginTabItem("Texture"))
+			{
+				unsigned int image;
+
+				ImGui::EndTabItem();
+			}
+
+			if (ImGui::BeginTabItem("Model"))
+			{
+
+				ImGui::EndTabItem();
+			}
+
+			if (ImGui::BeginTabItem("Material"))
+			{
+
+				ImGui::EndTabItem();
+			}
+
+			ImGui::InvisibleButton("##empty", ImGui::GetWindowSize());
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+				{
+					std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+
+					fs::path path = str;
+
+					POPEYE_CORE_INFO(path.filename().string());
+
+					if (path.extension() == ".jpg" || path.extension() == ".png")
+					{
+						g_fileSystem->WriteDataToFile("Textures.dat", "Texturestable.dat", path);
+					}
+
+					if (path.extension() == ".fbx" || path.extension() == ".obj")
+					{
+						POPEYE_CORE_INFO("regist 3d model.");
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+
+			if (ImGui::Button("Set Resource"))
+			{
+				g_ResourceManager->SetResources();
+				image_show = true;
+			}
+			if (image_show)
+			{
+				for(int i = 0; i < g_ResourceManager->textures.size(); i++)
+				{
+					ImGui::Image((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(100.0f, 100.0f));
+				}
+			}
+			ImGui::EndTabBar();
+		}
+
 	}
 
 }

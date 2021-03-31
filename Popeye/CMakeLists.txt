@@ -43,8 +43,6 @@ set(POPEYE_GUI
 set(POPEYE_MANAGER
     src/Popeye/Manager/GUIManager.h
     src/Popeye/Manager/GUIManager.cpp
-    src/Popeye/Manager/FileManager.h
-    src/Popeye/Manager/FileManager.cpp
     src/Popeye/Manager/ResourceManager.h
     src/Popeye/Manager/ResourceManager.cpp
     src/Popeye/Manager/SceneManager.h
@@ -67,7 +65,9 @@ set(POPEYE_SYSTEM
     src/Popeye/System/EventSystem.h
     src/Popeye/System/EventSystem.cpp
     src/Popeye/System/RenderingSystem.h
-    src/Popeye/System/RenderingSystem.cpp)
+    src/Popeye/System/RenderingSystem.cpp
+    src/Popeye/System/FileSystem.h
+    src/Popeye/System/FileSystem.cpp)
 
 add_library(popeye SHARED
     ${POPEYE_SRC}

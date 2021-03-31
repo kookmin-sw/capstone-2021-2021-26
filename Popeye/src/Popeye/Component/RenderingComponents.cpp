@@ -1,7 +1,10 @@
 #include "RenderingComponents.h"
+#include "../Manager/ResourceManager.h"
+
 #include "stb_image.h"
 
 namespace Popeye {
+	extern ResourceManager* g_ResourceManager;
 
 	/**************Shader**************/
 	Shader::Shader(){}
@@ -133,12 +136,6 @@ namespace Popeye {
 		stbi_image_free(data);
 	}
 
-	void Texture::drawTexture()
-	{
-		glActiveTexture(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texture_ID);
-	}
-
 	void Texture::DeleteTexture()
 	{
 		glDeleteTextures(1, &texture_ID);
@@ -203,18 +200,19 @@ namespace Popeye {
 
 
 	/**************MeshRenderer component**************/
-	//MeshRenderer::MeshRenderer() {}
+	MeshRenderer::MeshRenderer() {}
 
 	std::vector<Mesh>		MeshRenderer::meshes;
 	std::vector<Material>	MeshRenderer::materials;
 
-	MeshRenderer::MeshRenderer() {}
+	//MeshRenderer::MeshRenderer() {}
 
 	void MeshRenderer::SetMesh(Mesh& mesh)
 	{
-		for (int i = 0; i < meshes.size(); i++)
+		int meshes_size = g_ResourceManager->meshes.size();
+		for (int i = 0; i < meshes_size; i++)
 		{
-			if (meshes[i].id == mesh.id)
+			if (g_ResourceManager->meshes[i].id == mesh.id)
 			{
 				meshIndex = i;
 				return;
@@ -249,7 +247,8 @@ namespace Popeye {
 
 	void MeshRenderer::SetMaterial(Material& material) 
 	{
-		for (int i = 0; i < materials.size(); i++)
+		int material_size = g_ResourceManager->materials.size();
+		for (int i = 0; i < material_size; i++)
 		{
 			if (materials[i].id == material.id)
 			{

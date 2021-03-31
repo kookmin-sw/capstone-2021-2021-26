@@ -52,5 +52,10 @@ namespace Popeye{
 		virtual void ShowContents();
 		void ShowDirectories(int id, std::string directory);
 	};
+
+	struct Resource : public Tab
+	{
+		virtual void ShowContents();
+	};
 }
 

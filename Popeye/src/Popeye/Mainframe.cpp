@@ -1,10 +1,11 @@
 #include "Mainframe.h"
 
-#include "Manager/FileManager.h"
 #include "Manager/GUIManager.h"
 #include "Manager/SceneManager.h"
 #include "Manager/ComponentManager.h"
+#include "Manager/ResourceManager.h"
 
+#include "System/FileSystem.h"
 #include "System/RenderingSystem.h"
 #include "System/EventSystem.h"
 
@@ -14,7 +15,8 @@
 #include "Component/RenderingComponents.h"
 
 namespace Popeye {
-	FileManager* g_fileManager;
+	FileSystem* g_fileSystem;
+	ResourceManager* g_ResourceManager;
 
 
 	Mainframe::Mainframe(){}
@@ -43,7 +45,11 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		g_fileManager = new FileManager();
+		g_fileSystem = new FileSystem();
+		g_fileSystem->Init();
+
+		g_ResourceManager = new ResourceManager();
+
 		GUIManager* guiManager = new GUIManager();
 
 		ComponentManager::GetInstance()->InitComponents();
@@ -142,15 +148,15 @@ namespace Popeye {
 
 		scene->gameObjects[0]->SetName("gameObject1");
 		scene->gameObjects[0]->AddComponent<MeshRenderer>();
-		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMaterial(material_1);
+		//scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(cube);
+		//scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMaterial(material_1);
 		scene->gameObjects[0]->transform.position = { 0.0f, 0.0f, 0.0f };
 		scene->gameObjects[0]->transform.scale = { 1.0f, 2.0f, 1.0f };
 
 		scene->gameObjects[1]->SetName("gameObject2");
 		scene->gameObjects[1]->AddComponent<MeshRenderer>();
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material_0);
+		//scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(cube);
+		//scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[1]->transform.position = { 2.0f, 3.0f, 3.0f };
 
 		scene->gameObjects[2]->SetName("Camera");
@@ -163,7 +169,7 @@ namespace Popeye {
 		scene->gameObjects[3]->AddComponent<Light>();
 		scene->gameObjects[3]->GetComponent<Light>().ChangeLightType(LightType::POINT);
 		scene->gameObjects[3]->AddComponent<MeshRenderer>();
-		scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(cube);
+		//scene->gameObjects[3]->GetComponent<MeshRenderer>().SetMesh(cube);
 		scene->gameObjects[3]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
 		scene->gameObjects[3]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[3]->transform.position = { 5.0f, 10.0f, 5.0f };
@@ -176,8 +182,8 @@ namespace Popeye {
 
 		scene->gameObjects[5]->SetName("gameObject4");
 		scene->gameObjects[5]->AddComponent<MeshRenderer>();
-		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMesh(cube);
-		scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMaterial(material_0);
+		//scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMesh(cube);
+		//scene->gameObjects[5]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[5]->transform.position = { 3.0f, 3.0f, 3.0f };
 
 		POPEYE_CORE_INFO("deededede");
@@ -205,7 +211,7 @@ namespace Popeye {
 		guiManager->OnClosed();
 		delete(guiManager);
 
-		delete(g_fileManager);
+		delete(g_fileSystem);
 
 		delete(eventSystem);
 		delete(renderingSystem);

@@ -22,7 +22,6 @@ namespace Popeye {
 		
 		Texture();
 		void InitTexture(const char*);
-		void drawTexture();
 		void DeleteTexture();
 	};
 
