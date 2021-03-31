@@ -7,6 +7,7 @@
 
 @import "reset";
 @import "variables";
+
 // Syntax highlighting @import is at the bottom of this file
 
 /**************/
@@ -111,6 +112,7 @@ img {
 }
 
 // Fixes images in popup boxes from Google Translate
+
 .gmnoprint img {
   max-width: none;
 }
@@ -132,6 +134,7 @@ img {
 
 // Nicolas Gallagher's micro clearfix hack
 // http://nicolasgallagher.com/micro-clearfix-hack/
+
 .clearfix:before,
 .clearfix:after {
     content: " ";
