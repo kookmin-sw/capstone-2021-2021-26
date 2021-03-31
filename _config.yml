@@ -15,15 +15,7 @@ avatar: https://user-images.githubusercontent.com/79034911/113077739-ab87d200-92
 # Flags below are optional
 #
 
-# Enter your Disqus shortname (not your username) to enable commenting on posts
-# You can find your shortname on the Settings page of your Disqus account
-disqus:
-
-# Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics:
-
 # Your website URL
-# Used for Sitemap.xml and your RSS feed
 url: https://kookmin-sw.github.io/capstone-2021-26/
 baseurl: "https://kookmin-sw.github.io/capstone-2021-26"
 
