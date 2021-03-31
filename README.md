@@ -1,11 +1,10 @@
-[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=365375&assignment_repo_type=GroupAssignmentRepo)
 # Capstone-2021-26
 
-## Popeye Engine  
+## Popeye Engine
 
-(프로젝트 로고)
+<img width="105" alt="popeye" src="https://user-images.githubusercontent.com/79034911/113077739-ab87d200-920c-11eb-9025-91e9bd2577bb.png">
 
-### 설명
+## Introduction
 
 Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입니다.
 
@@ -13,34 +12,23 @@ Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입�
 
 또한 Popeye Engine은 Dear ImGui를 이용하여 보다 유저 친화적인 환경을 제공합니다.
 
-**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/  
+
+**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/
 
 
-### Introduction
+## Introduction Video
 
-Popeye Engine is 3D game engine with C++ and OpenGL.
+![popeye-engine](https://user-images.githubusercontent.com/79034911/113079925-ebe94f00-9210-11eb-810c-773ec2db13e4.gif)
 
-Popeye provide ECS(Entity-Component-System) so that user can make his game more easier.
-
-Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
-
-**page** -> https://kookmin-sw.github.io/capstone-2021-26/
-
-
-### 소개 영상 및 이미지
-
-![popeye](https://user-images.githubusercontent.com/17774946/112793795-e2d97000-90a0-11eb-9293-b9749bcd7f27.PNG)
-
-
-### 팀 소개
+## Team Members
 
 최석원 - 엔진 개발
 
-조성호 - 팀페이지, 문서 관리
+조성호 - 페이지 제작, 엔진 예시 제작
 
-김성주 - 엔진 사용 예시 제작
+김성주 - 엔진 예시 제작, 이미지 파일 제작
 
-### 사용법
+## How to use
 
 - 프로젝트 다운
 ```markdown
@@ -53,10 +41,10 @@ GenerateProject.bat 실행
 ```
 
 
-### 기타
+## Etc
 
 추가적인 내용은 자유롭게 작성하세요.
 
-### Support or Contact
+## Support or Contact
 
 readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
