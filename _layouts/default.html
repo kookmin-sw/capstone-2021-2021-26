@@ -22,31 +22,41 @@
           <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
 
           <div class="site-info">
-            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+            <h1 class="site-name">{{ site.name }}</h1>
             <p class="site-description">{{ site.description }}</p>
           </div>
 
           <nav>
+            <span style="font-size:20px;cursor:pointer" onclick="openNav()">Menu</span>
             <a href="{{ site.baseurl }}/">Introduction</a>
-            <a href="{{ site.baseurl }}/guide/">Guide</a>
             <a href="{{ site.baseurl }}/about/">About</a>
           </nav>
+         
         </header>
       </div>
     </div>
+    
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      {% for post in site.posts %}
+        <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+      {% endfor %}
+    </div>
+    
+    <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
 
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+    
     <div id="main" role="main" class="container">
       {{ content }}
     </div>
-
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include svg-icons.html %}
-        </footer>
-      </div>
-    </div>
-
+    
     {% include analytics.html %}
   </body>
 </html>
