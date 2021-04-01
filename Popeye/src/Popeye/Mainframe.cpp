@@ -90,6 +90,7 @@ namespace Popeye {
 		scene->gameObjects[1]->SetName("Directional Light");
 		scene->gameObjects[1]->AddComponent<Light>();
 		scene->gameObjects[1]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
+		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[1]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
 		scene->gameObjects[1]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[1]->transform.position = { 5.0f, 10.0f, 5.0f };
