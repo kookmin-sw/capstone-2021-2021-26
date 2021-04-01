@@ -2,19 +2,24 @@
 
 namespace Popeye 
 {
-	struct Vertex
+	/*struct Vertex
 	{
-		glm::vec3 pos;
-		glm::vec3 norm;
-		glm::vec2 texCoord;
-	};
+		float pos_norm_Tex[8] = { 0, };
+	};*/
 
 	struct Mesh 
 	{
-		std::string id;
-		std::vector<Vertex> vert;
-		Mesh();
-		void MeshInit();
+		unsigned int VAO, VBO, EBO;
+		std::vector<float> vertices;
+		std::vector<unsigned int> indices;
+
+		Mesh(std::vector<float> _vertices, std::vector<unsigned int> _indices);
+		void SetMesh();
+	};
+
+	struct Model
+	{
+		std::vector<Mesh> meshes;
 	};
 
 }

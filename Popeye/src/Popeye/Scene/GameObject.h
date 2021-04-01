@@ -14,7 +14,7 @@ namespace Popeye {
 	{
 	private:
 		int id;
-		char* name;
+		std::string name;
 		GameObject* parent;
 		std::vector<GameObject*> childs;
 	public:
@@ -23,8 +23,8 @@ namespace Popeye {
 		GameObject(int);
 		~GameObject();
 
-		char* GetName();
-		void SetName(char*);
+		std::string GetName();
+		void SetName(std::string);
 
 		GameObject* GetParent();
 		void SetParent(GameObject*);

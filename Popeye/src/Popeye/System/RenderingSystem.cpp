@@ -1,11 +1,14 @@
 #include "RenderingSystem.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/ComponentManager.h"
+#include "../Manager/ResourceManager.h"
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
 
 namespace Popeye {
+	extern ResourceManager* g_ResourceManager;
+
 	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
 	glm::vec3 g_sceneViewDirection = glm::vec3(0.0f, 0.0f, 1.0f);
 
@@ -221,37 +224,42 @@ namespace Popeye {
 			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
 			{
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
-				Material material = MeshRenderer::materials[meshrenderer.materialIndex];
-				
-				model = glm::mat4(1.0f);
-				model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
-
-				shader.setMat4("model", model);
-
-				if (material.texture.texture_ID == -1)
+				if (!meshrenderer.isEmpty)
 				{
-					shader.setBool("material.text", false);
+					int id = meshrenderer.meshID;
+					Material material = MeshRenderer::materials[meshrenderer.materialIndex];
+
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
+
+					shader.setMat4("model", model);
+
+					if (material.textureID == -1)
+					{
+						shader.setBool("material.text", false);
+					}
+					else
+					{
+						shader.setBool("material.text", true);
+						shader.setInt("material.texture", 1);
+
+
+						glActiveTexture(GL_TEXTURE1);
+						glBindTexture(GL_TEXTURE_2D, material.textureID);
+					}
+
+					shader.setVec3("material.ambient", material.color * material.amb_diff_spec[0]);
+					shader.setVec3("material.diffuse", material.color * material.amb_diff_spec[1]);
+					shader.setVec3("material.specular", material.color * material.amb_diff_spec[2]);
+
+					shader.setFloat("material.shininess", material.shininess);
+
+					glBindVertexArray(g_ResourceManager->meshes[id].VAO);
+					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[id].indices.size(), GL_UNSIGNED_INT, (void*)0);
+					
+					glBindVertexArray(0);
+
 				}
-				else
-				{
-					shader.setBool("material.text", true);
-					shader.setInt("material.texture", 1);
-
-
-					glActiveTexture(GL_TEXTURE1);
-					glBindTexture(GL_TEXTURE_2D, material.texture.texture_ID);
-
-				}
-
-				shader.setVec3("material.ambient",  material.color* material.amb_diff_spec[0]);
-				shader.setVec3("material.diffuse",	material.color* material.amb_diff_spec[1]);
-				shader.setVec3("material.specular", material.color* material.amb_diff_spec[2]);
-
-				shader.setFloat("material.shininess", material.shininess);
-
-				glBindVertexArray(MeshRenderer::meshes[meshrenderer.meshIndex].VAO);
-				glDrawArrays(GL_TRIANGLES, 0, 36);
-				//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 			}
 		}
 	}

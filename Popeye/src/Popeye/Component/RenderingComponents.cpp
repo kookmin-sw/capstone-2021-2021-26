@@ -109,45 +109,18 @@ namespace Popeye {
 	}
 
 
-	/**************Texture**************/
-	Texture::Texture() {};
-
-	void Texture::InitTexture(const char* imgPath)
-	{
-		glGenTextures(1, &texture_ID);
-		glBindTexture(GL_TEXTURE_2D, texture_ID);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		unsigned char* data = stbi_load(imgPath, &width, &height, &nrChannel, 0);
-		if (data)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			POPEYE_CORE_ERROR("Failed to load texture");
-		}
-
-		stbi_image_free(data);
-	}
-
-	void Texture::DeleteTexture()
+	/*void Texture::DeleteTexture()
 	{
 		glDeleteTextures(1, &texture_ID);
 		texture_ID = -1;
-	}
+	}*/
 
 	/**************Material**************/
 
 	Material::Material()
 	{
 		color = glm::vec3(1.0f);
-		texture.texture_ID = -1;
+		textureID = -1;
 		amb_diff_spec[0] = 0.8f; //ambient
 		amb_diff_spec[1] = 0.4f; //diffuse
 		amb_diff_spec[2] = 0.1f; //specular
@@ -200,50 +173,13 @@ namespace Popeye {
 
 
 	/**************MeshRenderer component**************/
-	MeshRenderer::MeshRenderer() {}
-
-	std::vector<Mesh>		MeshRenderer::meshes;
-	std::vector<Material>	MeshRenderer::materials;
-
-	//MeshRenderer::MeshRenderer() {}
-
-	void MeshRenderer::SetMesh(Mesh& mesh)
+	MeshRenderer::MeshRenderer() 
 	{
-		int meshes_size = g_ResourceManager->meshes.size();
-		for (int i = 0; i < meshes_size; i++)
-		{
-			if (g_ResourceManager->meshes[i].id == mesh.id)
-			{
-				meshIndex = i;
-				return;
-			}
-		}
-
-
-		unsigned int tVBO;
-		glGenBuffers(1, &tVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, tVBO);
-
-		glGenVertexArrays(1, &mesh.VAO);
-		glBindVertexArray(mesh.VAO);
-
-		/*unsigned int tEBO;
-		glGenBuffers(1, &tEBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);*/
-
-		glBufferData(GL_ARRAY_BUFFER, mesh.vertsize, &mesh.vertices[0], GL_STATIC_DRAW);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indsize, &mesh.indicies[0], GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-		glEnableVertexAttribArray(2);
-
-		meshes.push_back(mesh);
-		meshIndex = meshes.size() - 1;
+		meshID = 0;
+		isEmpty = true;
 	}
+
+	std::vector<Material>	MeshRenderer::materials;
 
 	void MeshRenderer::SetMaterial(Material& material) 
 	{

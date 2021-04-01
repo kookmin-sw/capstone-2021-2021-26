@@ -7,7 +7,7 @@ namespace Popeye {
 	Scene::Scene() {}
 	Scene::~Scene(){ for (int i = 0; i < gameObjects.size(); i++) { delete gameObjects[i];} }
 
-	void Scene::CreateGameObject()
+	void Scene::CreateGameObject(std::string name)
 	{
 		int newID = 0;
 		if (!reusableIDs.empty()){
@@ -18,8 +18,12 @@ namespace Popeye {
 			newID = gameObjectID;
 			gameObjectID++;
 		}
-
-		gameObjects.push_back(new GameObject(newID));
+		GameObject* gameobject = new GameObject(newID);
+		
+		std::string idstr = std::to_string(newID);
+		name += idstr;
+		gameobject->SetName(name);
+		gameObjects.push_back(gameobject);
 
 		if (newID + 1 <= keysToAccessComponent.size())
 		{

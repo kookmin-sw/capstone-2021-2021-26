@@ -16,11 +16,11 @@ namespace Popeye {
 		childs.push_back(child);
 	}
 
-	char* GameObject::GetName()
+	std::string GameObject::GetName()
 	{
 		return name;
 	}
-	void GameObject::SetName(char* _name)
+	void GameObject::SetName(std::string _name)
 	{
 		this->name = _name;
 	}

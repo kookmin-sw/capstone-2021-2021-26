@@ -32,8 +32,8 @@ namespace Popeye {
 		Scene();
 		~Scene();
 		
-		void CreateGameObject();
-		void DeleteGameObject(int);
+		void CreateGameObject(std::string name = "GameObject");
+		void DeleteGameObject(int id);
 
 		template<class component>
 		void AddData(int _id)

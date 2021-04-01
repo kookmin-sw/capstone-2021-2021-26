@@ -92,14 +92,14 @@ namespace Popeye
 
 	void FileSystem::ReadModel(fs::path _path)
 	{
-		Assimp::Importer importer;
+		/*Assimp::Importer importer;
 		std::string path = _path.string();
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			POPEYE_CORE_INFO("Current Model Number {0}. Name : {1}", i, scene->mMeshes[i]->mName.C_Str());
-		}
+		}*/
 
 		t.detach();
 	}

@@ -1,6 +1,8 @@
 #pragma once
+
 #define GET_NAME(name) #name
 namespace Popeye {
+
 	struct Shader
 	{
 		unsigned int shader_ID;
@@ -13,16 +15,6 @@ namespace Popeye {
 		void setFloat(const std::string& name, float value) const;
 		void setVec3(const std::string& name, glm::vec3 value) const;
 		void setMat4(const std::string& name, const glm::mat4& mat) const;
-	};
-
-	struct Texture
-	{
-		unsigned int texture_ID;
-		int width, height, nrChannel;
-		
-		Texture();
-		void InitTexture(const char*);
-		void DeleteTexture();
 	};
 
 	/*Light Component*/
@@ -58,7 +50,7 @@ namespace Popeye {
 	struct Material
 	{
 		std::string id;
-		Texture texture;
+		unsigned int textureID;
 		glm::vec3 color;
 		glm::vec3 amb_diff_spec;
 		float shininess;
@@ -66,29 +58,18 @@ namespace Popeye {
 		Material();
 	};
 
-	struct Mesh 
-	{
-		std::string id;
-		float* vertices;
-		int vertsize;
-		unsigned int* indicies;
-		int indsize;
-
-		unsigned int VAO;
-	};
-
 	/*MeshRenderer*/
 	struct MeshRenderer
 	{
-		// this will managed by resource sysyem/manager later
-		static std::vector<Mesh> meshes;
+		//he gotta go too.
 		static std::vector<Material> materials;
 
-		int meshIndex = 0;
+		unsigned int meshID;
+		bool isEmpty;
+
 		int materialIndex = 0;
 
 		MeshRenderer();
-		void SetMesh(Mesh&);
 		void SetMaterial(Material&);
 	};
 

@@ -1,8 +1,9 @@
 #pragma once
 #include "../Resource/Texture.h"
+#include "../Resource/Mesh.h"
 namespace Popeye {
 	
-	struct Mesh;
+	struct Msh;
 	struct Textre;
 	struct Material;
 
@@ -14,6 +15,8 @@ namespace Popeye {
 		std::vector<Material> materials;
 
 		void SetResources();
+		void SetTextureResources();
+		void Set3DModelResources();
 	};
 }
 

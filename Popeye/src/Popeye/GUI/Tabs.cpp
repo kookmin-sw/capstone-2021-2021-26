@@ -14,6 +14,7 @@
 
 #include "../Component/RenderingComponents.h"
 #include "../Resource/Texture.h"
+#include "../Resource/Mesh.h"
 
 namespace Popeye{
 	extern ImFont	*g_Icon;
@@ -88,11 +89,26 @@ namespace Popeye{
 	{
 		scene = SceneManager::GetInstance()->currentScene;
 		CheckHover();
+		if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
+		{
+			ImGui::OpenPopup("GameObject");
+			//popup
+		}
+		if (ImGui::BeginPopup("GameObject"))
+		{
+			if (ImGui::Selectable("Create GameObject"))
+			{
+				scene->CreateGameObject("GameObject");
+			}
+
+			ImGui::EndPopup();
+		}
+
 		if (ImGui::CollapsingHeader(scene->GetName()))
 		{
 			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
-				if (ImGui::Selectable(scene->gameObjects[i]->GetName()))
+				if (ImGui::Selectable(scene->gameObjects[i]->GetName().c_str()))
 				{
 					selectedGameObject = scene->gameObjects[i];
 				}
@@ -146,6 +162,21 @@ namespace Popeye{
 			if (addcomponentCall)
 			{
 				filter.Draw("search");
+				std::vector<const char*> components = {"Camera", "MeshRenderer", "Light"};
+				for (int i = 0; i < components.size(); i++)
+				{
+					if (filter.PassFilter(components[i]))
+						if (ImGui::Selectable(components[i]))
+						{
+							if (i == 0)
+								selectedGameObject->AddComponent<Camera>();
+							else if (i == 1)
+								selectedGameObject->AddComponent<MeshRenderer>();
+							else if (i == 2)
+								selectedGameObject->AddComponent<Light>();
+						}
+				}
+
 			}
 		}
 	}
@@ -185,17 +216,29 @@ namespace Popeye{
 		{
 			if (ImGui::TreeNode("Mesh"))
 			{
-				Mesh& mesh = MeshRenderer::meshes[meshRenderer.meshIndex];
+				//Mesh& mesh = MeshRenderer::meshes[meshRenderer.meshIndex];
+				ImGui::Text("texture");
+				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
 
-				ImGui::Selectable(mesh.id.c_str());
+				//ImGui::Selectable(mesh.id.c_str());
 				if (ImGui::IsItemHovered())
 				{
 					if (ImGui::IsKeyDown(261))
 					{
-						
+						meshRenderer.meshID = 0;
+						meshRenderer.isEmpty = true;
 					}
 				}
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
+					{
+						meshRenderer.meshID = *(unsigned int*)payload->Data;
+						meshRenderer.isEmpty = false;
+					}
 
+					ImGui::EndDragDropTarget();
+				}
 
 				ImGui::TreePop();
 			}
@@ -209,21 +252,18 @@ namespace Popeye{
 				{
 					if (ImGui::IsKeyDown(261))
 					{
-						material.texture.DeleteTexture();
+						material.textureID = -1;
 					}
 				}
 				if (ImGui::BeginDragDropTarget())
 				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE"))
 					{
-						std::string str(static_cast<char*>(payload->Data), payload->DataSize);
+						int id = *(const int*)payload->Data;
 
-						fs::path path = str;
+						//POPEYE_CORE_INFO("received id : {0}", id);
 
-						if (path.extension() == ".jpg" || path.extension() == ".jpg")
-						{
-							material.texture.InitTexture(str.c_str());
-						}
+						material.textureID = id;
 					}
 
 					ImGui::EndDragDropTarget();
@@ -236,7 +276,7 @@ namespace Popeye{
 				ImVec2 imgRectMin = ImVec2(p0.x + 2.5f, p0.y + 2.5f);
 				ImVec2 imgRectMax = ImVec2(p1.x - 2.5f, p1.y - 2.5f);
 
-				draw_list->AddImage((ImTextureID)material.texture.texture_ID, imgRectMin, imgRectMax);
+				draw_list->AddImage((ImTextureID)material.textureID, imgRectMin, imgRectMax);
 				
 				ImGui::ColorEdit3("color", (float*)&material.color);
 				
@@ -573,13 +613,75 @@ namespace Popeye{
 		{
 			if (ImGui::BeginTabItem("Texture"))
 			{
-				unsigned int image;
+				if (image_show)
+				{
+					for (int i = 0; i < g_ResourceManager->textures.size(); i++)
+					{
+						ImGui::PushID(i);
+						ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
+						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+						const ImVec2 p0 = ImGui::GetItemRectMin();
+						const ImVec2 p1 = ImGui::GetItemRectMax();
+
+
+						draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
+
+
+						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+						{
+							unsigned int id = g_ResourceManager->textures[i].id;
+
+							ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(int), ImGuiCond_Once);
+
+
+							ImGui::Text("texture : {0}", id);
+
+							ImGui::EndDragDropSource();
+						}
+
+
+						ImGui::PopID();
+
+						ImGui::SameLine();
+					}
+				}
 
 				ImGui::EndTabItem();
 			}
 
 			if (ImGui::BeginTabItem("Model"))
 			{
+				if (image_show)
+				{
+					for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
+					{
+						ImGui::PushID(i);
+						ImGui::Selectable("MODEL", false, 0, ImVec2(100.0f, 100.0f));
+						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+						const ImVec2 p0 = ImGui::GetItemRectMin();
+						const ImVec2 p1 = ImGui::GetItemRectMax();
+
+
+						//draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
+
+
+						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+						{
+							ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
+
+							//ImGui::Text("model : {0}", mesh);
+
+							ImGui::EndDragDropSource();
+						}
+
+
+						ImGui::PopID();
+
+						ImGui::SameLine();
+					}
+				}
 
 				ImGui::EndTabItem();
 			}
@@ -608,7 +710,7 @@ namespace Popeye{
 
 					if (path.extension() == ".fbx" || path.extension() == ".obj")
 					{
-						POPEYE_CORE_INFO("regist 3d model.");
+						g_fileSystem->WriteDataToFile("Models.dat", "Modelstable.dat", path);
 					}
 				}
 				ImGui::EndDragDropTarget();
@@ -619,13 +721,6 @@ namespace Popeye{
 			{
 				g_ResourceManager->SetResources();
 				image_show = true;
-			}
-			if (image_show)
-			{
-				for(int i = 0; i < g_ResourceManager->textures.size(); i++)
-				{
-					ImGui::Image((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(100.0f, 100.0f));
-				}
 			}
 			ImGui::EndTabBar();
 		}
