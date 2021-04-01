@@ -38,7 +38,7 @@ Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
 
 조성호 - 팀페이지, 문서 관리
 
-김성주 - 엔진 사용 예시 제작
+이성주 - 엔진 사용 예시 제작
 
 ### 사용법
 
