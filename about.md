@@ -7,5 +7,3 @@ permalink: /about/
 about Popeye
 
 ### More Information
-
-blah blah
