@@ -9,6 +9,7 @@ namespace Popeye
 
 	struct Mesh 
 	{
+		std::string name;
 		unsigned int VAO, VBO, EBO;
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;

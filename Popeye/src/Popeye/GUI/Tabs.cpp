@@ -217,7 +217,7 @@ namespace Popeye{
 			if (ImGui::TreeNode("Mesh"))
 			{
 				//Mesh& mesh = MeshRenderer::meshes[meshRenderer.meshIndex];
-				ImGui::Text("texture");
+				ImGui::Text("Mesh");
 				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
 
 				//ImGui::Selectable(mesh.id.c_str());
@@ -657,7 +657,7 @@ namespace Popeye{
 					for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
 					{
 						ImGui::PushID(i);
-						ImGui::Selectable("MODEL", false, 0, ImVec2(100.0f, 100.0f));
+						ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
 						ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 						const ImVec2 p0 = ImGui::GetItemRectMin();

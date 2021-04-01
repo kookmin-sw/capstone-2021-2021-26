@@ -122,10 +122,10 @@ namespace Popeye
 				Assimp::Importer importer;
 				const aiScene* scene = importer.ReadFileFromMemory(buffer + models_adress[i], len, aiProcess_Triangulate | aiProcess_FlipUVs);
 				//const aiScene* scene = importer.ReadFile("Root/models/01_Duck/duck.obj", aiProcess_Triangulate | aiProcess_FlipUVs);
-
 				for (int i = 0; i < scene->mNumMeshes; i++)
 				{
 					aiMesh* aimesh = scene->mMeshes[i];
+					std::string meshName = aimesh->mName.C_Str();
 					unsigned int vertNum = aimesh->mNumVertices;
 					unsigned int faceNum = aimesh->mNumFaces;
 
@@ -170,7 +170,7 @@ namespace Popeye
 						}
 					}
 					Mesh mesh(vert, indices);
-
+					mesh.name = meshName;
 					meshes.push_back(mesh);
 				}
 			}
