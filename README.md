@@ -9,9 +9,23 @@
 
 Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입니다.
 
-엔티티 컴포넌트 시스템을 지원하여 사용자가 게임을 보다 쉽게 만들도록 만들었습니다.
+OpenGL 3.3버전 이상을 필요로 하며, 현재 윈도우에서만 실행 가능합니다.
 
-또한 Popeye Engine은 Dear ImGui를 이용하여 보다 유저 친화적인 환경을 제공합니다.
+엔티티 컴포넌트 시스템을 지원하여 사용자가 게임을 보다 쉽게 만들 수 있도록 제작중입니다.
+
+또한 Popeye Engine은 오픈소스 Dear ImGui를 이용하여 보다 유저 친화적인 환경 구성을 목표로 하고 있습니다.
+
+#### 사용법
+
+- 프로젝트 다운
+```markdown
+git clone --recursive <프로젝트 링크>
+```
+
+- 프로젝트 빌드
+```markdown
+GenerateProject.bat 실행
+```
 
 **팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2021-26/  
 
@@ -20,9 +34,23 @@ Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입�
 
 Popeye Engine is 3D game engine with C++ and OpenGL.
 
+This program needs OpenGL version 3.3 or higher. Also current version is window-only.
+
 Popeye provide ECS(Entity-Component-System) so that user can make his game more easier.
 
 Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
+
+#### How To Build
+
+- clone project
+```markdown
+git clone --recursive <Project>
+```
+
+- build project
+```markdown
+Click GenerateProject.bat
+```
 
 **page** -> https://kookmin-sw.github.io/capstone-2021-26/
 
@@ -67,17 +95,6 @@ git :
 역할  : 엔진 사용, 예시 제작
 ```
 
-### 사용법
-
-- 프로젝트 다운
-```markdown
-git clone --recursive <프로젝트 링크>
-```
-
-- 프로젝트 빌드
-```markdown
-GenerateProject.bat 실행
-```
 
 
 ### Support or Contact
