@@ -35,11 +35,37 @@ Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
 
 ### 팀 소개
 
-최석원 - 엔진 개발
 
-조성호 - 팀페이지, 문서 관리
+```
+(사진)
 
-이성주 - 엔진 사용 예시 제작
+최석원
+
+git : https://github.com/astone30
+
+역할  : 엔진 개발
+
+```
+
+```
+(사진)
+
+조성호 
+
+git : 
+
+역할  : 깃 페이지 관리
+```
+
+```
+(사진)
+
+이성주
+
+git :
+
+역할  : 엔진 사용, 예시 제작
+```
 
 ### 사용법
 
@@ -57,3 +83,6 @@ GenerateProject.bat 실행
 ### Support or Contact
 
 readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
+
+
+
