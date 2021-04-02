@@ -13,4 +13,10 @@ OpenGL 3.3버전 이상을 필요로 하며, 현재 윈도우에서만 실행 �
 
 또한 Popeye Engine은 오픈소스 Dear ImGui를 이용하여 보다 유저 친화적인 환경 구성을 목표로 하고 있습니다.
 
+Popeye Engine is 3D game engine with C++ and OpenGL.
 
+This program needs OpenGL version 3.3 or higher. Also current version is window-only.
+
+Popeye provide ECS(Entity-Component-System) so that user can make his game more easier.
+
+Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
