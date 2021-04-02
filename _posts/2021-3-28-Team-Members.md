@@ -8,7 +8,7 @@ title: Team Members
 
 최석원
 
-email : astone3080@gmail.com
+git : https://github.com/astone30
 
 역할  : 엔진 개발
 
@@ -19,7 +19,7 @@ email : astone3080@gmail.com
 
 조성호 
 
-email : 
+git : 
 
 역할  : 깃 페이지 관리
 ```
@@ -29,7 +29,7 @@ email :
 
 이성주
 
-email :
+git :
 
 역할  : 엔진 사용, 예시 제작
 ```
