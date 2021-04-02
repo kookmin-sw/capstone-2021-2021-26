@@ -34,11 +34,36 @@ Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
 
 ### 팀 소개
 
-최석원 - 엔진 개발
+```
+(사진)
 
-조성호 - 팀페이지, 문서 관리
+최석원
 
-성주 - 엔진 사용 예시 제작
+git : https://github.com/astone30
+
+역할  : 엔진 개발
+
+```
+
+```
+(사진)
+
+조성호 
+
+git : 
+
+역할  : 깃 페이지 관리
+```
+
+```
+(사진)
+
+이성주
+
+git :
+
+역할  : 엔진 사용, 예시 제작
+```
 
 ### 사용법
 
