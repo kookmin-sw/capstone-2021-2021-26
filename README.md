@@ -29,7 +29,8 @@ Also, by using Dear ImGui, Popeye is provide somewhat 'user freindly' interface.
 
 ### 소개 영상 및 이미지
 
-![popeye](https://user-images.githubusercontent.com/17774946/112793795-e2d97000-90a0-11eb-9293-b9749bcd7f27.PNG)
+![POP](https://user-images.githubusercontent.com/17774946/113366142-53c7a300-9393-11eb-9423-3fe65b3237f5.PNG)
+
 
 
 ### 팀 소개
