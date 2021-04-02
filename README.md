@@ -4,6 +4,40 @@
 ## Popeye Engine  
 
 (프로젝트 로고)
+### 팀 
+
+
+```
+(사진)
+
+최석원
+
+git : https://github.com/astone30
+
+역할  : 엔진 개발
+
+```
+
+```
+(사진)
+
+조성호 
+
+git : 
+
+역할  : 깃 페이지 관리
+```
+
+```
+(사진)
+
+이성주
+
+git :
+
+역할  : 엔진 사용, 예시 제작
+```
+
 
 ### 설명
 
@@ -59,41 +93,6 @@ Click GenerateProject.bat
 ![image](https://user-images.githubusercontent.com/17774946/113366636-be2d1300-9394-11eb-9b49-9cff7fb947a0.png)
 
 
-
-
-### 팀 소개
-
-
-```
-(사진)
-
-최석원
-
-git : https://github.com/astone30
-
-역할  : 엔진 개발
-
-```
-
-```
-(사진)
-
-조성호 
-
-git : 
-
-역할  : 깃 페이지 관리
-```
-
-```
-(사진)
-
-이성주
-
-git :
-
-역할  : 엔진 사용, 예시 제작
-```
 
 
 
