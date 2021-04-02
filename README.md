@@ -1,6 +1,40 @@
 [![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=365375&assignment_repo_type=GroupAssignmentRepo)
 # Capstone-2021-26
 
+### 팀 구성
+
+
+```
+(사진)
+
+최석원
+
+git : https://github.com/astone30
+
+역할  : 엔진 개발
+
+```
+
+```
+(사진)
+
+조성호 
+
+git : 
+
+역할  : 깃 페이지 관리
+```
+
+```
+(사진)
+
+이성주
+
+git :
+
+역할  : 엔진 사용, 예시 제작
+```
+
 ## Popeye Engine  
 
 (프로젝트 로고)
@@ -57,42 +91,6 @@ Click GenerateProject.bat
 
 ### 소개 영상 및 이미지
 ![image](https://user-images.githubusercontent.com/17774946/113366636-be2d1300-9394-11eb-9b49-9cff7fb947a0.png)
-
-### 팀 구성
-
-
-```
-(사진)
-
-최석원
-
-git : https://github.com/astone30
-
-역할  : 엔진 개발
-
-```
-
-```
-(사진)
-
-조성호 
-
-git : 
-
-역할  : 깃 페이지 관리
-```
-
-```
-(사진)
-
-이성주
-
-git :
-
-역할  : 엔진 사용, 예시 제작
-```
-
-
 
 
 
