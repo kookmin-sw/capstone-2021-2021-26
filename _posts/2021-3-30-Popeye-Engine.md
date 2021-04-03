@@ -3,7 +3,7 @@ layout: post
 title: Popeye Engine
 ---
 
-"logo 추후 "
+"logo 추후 추가"
 
 Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입니다.
 
