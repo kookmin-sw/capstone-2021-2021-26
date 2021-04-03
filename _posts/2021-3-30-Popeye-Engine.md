@@ -3,7 +3,7 @@ layout: post
 title: Popeye Engine
 ---
 
-<img width="105" alt="popeye" src="https://user-images.githubusercontent.com/79034911/113077739-ab87d200-920c-11eb-9025-91e9bd2577bb.png">
+"logo 추후 "
 
 Popeye Engine은 C++과 OpenGL를 사용하여 제작중인 3D 게임엔진 입니다.
 
