@@ -19,7 +19,7 @@ git : https://github.com/astone30
 
 조성호 
 
-git : 
+git : https://github.com/gv8b00ff
 
 역할  : 깃 페이지 관리
 ```
