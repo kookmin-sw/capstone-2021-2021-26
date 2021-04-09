@@ -56,11 +56,11 @@ namespace Popeye
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
 		SceneView *scene = new SceneView();
-		scene->SetTab("Scene", EventMod::SCENE);
+		scene->SetTab("Scene", 2);
 		tabs.push_back(scene);
 
 		GameView *game = new GameView();
-		game->SetTab("Game", EventMod::GAME);
+		game->SetTab("Game", 3);
 		tabs.push_back(game);
 
 		Inspector *inspector = new Inspector();

@@ -1,17 +1,19 @@
-#include "EventSystem.h"
+#include "EventHandler.h"
 
 namespace Popeye
 {
+	int g_eventMod;
+	
 	extern glm::vec3 g_sceneViewPosition;
 	extern glm::vec3 g_sceneViewDirection;
 
-	void EventSystem::SetEventCallbacks(GLFWwindow* window)
+	void EventHandler::SetEventCallbacks(GLFWwindow* window)
 	{
 		glfwSetWindowUserPointer(window, this);
-		auto key_press	  =	[](GLFWwindow* w, int _key, int _scancode, int _action, int _mods)	{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->KeyPressCallback(_key, _scancode, _action, _mods); };
-		auto mouse_cursor = [](GLFWwindow* w, double _xPos, double _yPos)						{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseCursorCallback(_xPos, _yPos); };
-		auto mouse_button = [](GLFWwindow* w, int _button, int _action, int _mods)				{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseButtonCallback(_button, _action, _mods); };
-		auto mouse_scroll = [](GLFWwindow* w, double _xOffset, double _yOffset)					{static_cast<EventSystem*>(glfwGetWindowUserPointer(w))->MouseScrollCallback(_xOffset, _yOffset); };
+		auto key_press	  =	[](GLFWwindow* w, int _key, int _scancode, int _action, int _mods)	{static_cast<EventHandler*>(glfwGetWindowUserPointer(w))->KeyPressCallback(_key, _scancode, _action, _mods); };
+		auto mouse_cursor = [](GLFWwindow* w, double _xPos, double _yPos)						{static_cast<EventHandler*>(glfwGetWindowUserPointer(w))->MouseCursorCallback(_xPos, _yPos); };
+		auto mouse_button = [](GLFWwindow* w, int _button, int _action, int _mods)				{static_cast<EventHandler*>(glfwGetWindowUserPointer(w))->MouseButtonCallback(_button, _action, _mods); };
+		auto mouse_scroll = [](GLFWwindow* w, double _xOffset, double _yOffset)					{static_cast<EventHandler*>(glfwGetWindowUserPointer(w))->MouseScrollCallback(_xOffset, _yOffset); };
 
 		glfwSetKeyCallback(window, key_press);
 		glfwSetCursorPosCallback(window, mouse_cursor);
@@ -19,25 +21,25 @@ namespace Popeye
 		glfwSetScrollCallback(window, mouse_scroll);
 	}
 
-	void EventSystem::SystemRunning()
+	void EventHandler::HandleEvent()
 	{
-		if (eventstate != EventManager::GetInstance()->GetState())
+		if (eventstate != g_eventMod)
 		{
-			eventstate = EventManager::GetInstance()->GetState();
+			eventstate = g_eventMod;
 		}
 
 		//execute events
 		switch (eventstate)
 		{
-		case EventMod::NONE:
+		case 0:
 			break;
-		case EventMod::ONGUI:
+		case 1:
 			ExecuteGUIEvent();
 			break;
-		case EventMod::SCENE:
+		case 2:
 			ExecuteSceneEvent();
 			break;
-		case EventMod::GAME:
+		case 3:
 			ExecuteGameInput();
 			break;
 		}
@@ -46,12 +48,12 @@ namespace Popeye
 
 	}
 
-	void EventSystem::ExecuteGUIEvent() //For Dear imGUI events
+	void EventHandler::ExecuteGUIEvent() //For Dear imGUI events
 	{
 		static ImGuiIO& io = ImGui::GetIO();
 	}
 
-	void EventSystem::ExecuteSceneEvent() // On game scene edit
+	void EventHandler::ExecuteSceneEvent() // On game scene edit
 	{
 		static bool leftM	= false;
 		static bool middleM = false;
@@ -119,30 +121,30 @@ namespace Popeye
 		
 	}
 
-	void EventSystem::ExecuteGameInput() // input class handle on play
+	void EventHandler::ExecuteGameInput() // input class handle on play
 	{
 
 	}
 
-	void EventSystem::MouseCursorCallback(double _xPos, double _yPos)
+	void EventHandler::MouseCursorCallback(double _xPos, double _yPos)
 	{
 		mouseevent.xPos = _xPos;
 		mouseevent.yPos = _yPos;
 	}
 
-	void EventSystem::MouseButtonCallback(int _button, int _action, int _mods)
+	void EventHandler::MouseButtonCallback(int _button, int _action, int _mods)
 	{
 		if (_action == GLFW_PRESS)		{ mouseevent.mousePressed[_button] = true; }
 		if (_action == GLFW_RELEASE)	{ mouseevent.mousePressed[_button] = false; }
 	}
 
-	void EventSystem::MouseScrollCallback(double _xoffset, double _yoffset)
+	void EventHandler::MouseScrollCallback(double _xoffset, double _yoffset)
 	{
 		mouseevent.xoffset = _xoffset;
 		mouseevent.yoffset = _yoffset;
 	}
 
-	void EventSystem::KeyPressCallback(int key, int scancode, int action, int mods)
+	void EventHandler::KeyPressCallback(int key, int scancode, int action, int mods)
 	{
 		if (key != -1)
 		{

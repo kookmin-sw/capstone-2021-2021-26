@@ -1,22 +1,24 @@
 #pragma once
-#include "../Resource/Texture.h"
 #include "../Resource/Mesh.h"
+#include "../Resource/Material.h"
+#include "../Resource/Texture.h"
+
 namespace Popeye {
-	
-	struct Msh;
-	struct Textre;
-	struct Material;
 
 	class ResourceManager
 	{
 	public:
 		std::vector<Mesh> meshes;
-		std::vector<Textre> textures;
+		std::vector<Texture> textures;
 		std::vector<Material> materials;
+
+		ResourceManager();
+		~ResourceManager();
 
 		void SetResources();
 		void SetTextureResources();
 		void Set3DModelResources();
+
 	};
 }
 

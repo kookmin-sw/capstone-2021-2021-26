@@ -11,13 +11,20 @@
 
 namespace Popeye 
 {
+	ResourceManager::ResourceManager()
+	{
+		materials.push_back(Material());
+	}
+
+	ResourceManager::~ResourceManager()
+	{
+
+	}
+
 	void ResourceManager::SetResources()
 	{
 		SetTextureResources();
-
-
 		Set3DModelResources();
-
 	}
 
 
@@ -57,7 +64,7 @@ namespace Popeye
 
 			for (int i = 0; i < texture_size; i++)
 			{
-				Textre texture;
+				Texture texture;
 				unsigned int len = i + 1 == texture_size ? sizeof(char) * length - texture_adress[i] : texture_adress[i + 1] - texture_adress[i];
 				unsigned char* data = stbi_load_from_memory(buffer + texture_adress[i], len, &texture.width, &texture.height, &texture.nrChannel, 0);
 
@@ -121,7 +128,7 @@ namespace Popeye
 
 				Assimp::Importer importer;
 				const aiScene* scene = importer.ReadFileFromMemory(buffer + models_adress[i], len, aiProcess_Triangulate | aiProcess_FlipUVs);
-				//const aiScene* scene = importer.ReadFile("Root/models/01_Duck/duck.obj", aiProcess_Triangulate | aiProcess_FlipUVs);
+				
 				for (int i = 0; i < scene->mNumMeshes; i++)
 				{
 					aiMesh* aimesh = scene->mMeshes[i];
@@ -158,7 +165,6 @@ namespace Popeye
 							vert.push_back(0); vert.push_back(0);
 						}
 
-						//vertices.push_back(vert);
 					}
 
 					for (unsigned int j = 0; j < faceNum; j++)
@@ -170,6 +176,7 @@ namespace Popeye
 						}
 					}
 					Mesh mesh(vert, indices);
+
 					mesh.name = meshName;
 					meshes.push_back(mesh);
 				}

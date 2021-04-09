@@ -22,12 +22,14 @@ namespace Popeye {
 		std::queue<int> reusableIDs;
 		std::vector<std::vector<Accessor>> keysToAccessComponent;
 		std::vector <int> gameObjectIDs;
+	
 	public:
 		int mainCameraID;
 		std::vector <GameObject*> gameObjects;		// root gameobjects at scene
-	
+
 	private:
 		void ResetAccessor(int id);
+	
 	public:
 		Scene();
 		~Scene();

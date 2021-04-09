@@ -47,30 +47,14 @@ namespace Popeye {
 		LightType type;
 	};
 
-	struct Material
-	{
-		std::string id;
-		unsigned int textureID;
-		glm::vec3 color;
-		glm::vec3 amb_diff_spec;
-		float shininess;
-
-		Material();
-	};
-
 	/*MeshRenderer*/
 	struct MeshRenderer
 	{
-		//he gotta go too.
-		static std::vector<Material> materials;
-
 		unsigned int meshID;
+		unsigned int materialID;
 		bool isEmpty;
 
-		int materialIndex = 0;
-
 		MeshRenderer();
-		void SetMaterial(Material&);
 	};
 
 

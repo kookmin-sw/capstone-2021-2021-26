@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Popeye {
-	struct Textre
+	struct Texture
 	{
 		unsigned int id;
 		int width, height, nrChannel;

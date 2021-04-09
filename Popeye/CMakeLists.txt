@@ -11,6 +11,8 @@ set(POPEYE_SRC
     src/Popeye/Application.cpp
     src/Popeye/Core.h
     src/Popeye/EntryPoint.h
+    src/Popeye/FileIO.h
+    src/Popeye/FileIO.cpp
     src/Popeye/Log.h
     src/Popeye/Log.cpp
     src/Popeye/Mainframe.h
@@ -23,14 +25,13 @@ set(POPEYE_COMPONENT
     src/Popeye/Component/RenderingComponents.cpp)
 
 set(POPEYE_EVENT 
-    src/Popeye/Events/EventManager.h    
-    src/Popeye/Events/EventManager.cpp
-    src/Popeye/Events/KeyCode.h
-    src/Popeye/Events/MouseCode.h
-    src/Popeye/Events/Events.h)
+    src/Popeye/Event/KeyCode.h
+    src/Popeye/Event/MouseCode.h
+    src/Popeye/Event/Events.h
+    src/Popeye/Event/EventHandler.h
+    src/Popeye/Event/EventHandler.cpp)
 
-set(POPEYE_GUI 
-    src/Popeye/GUI/IconsForkAwesome.h
+set(POPEYE_GUI
     src/Popeye/GUI/imgui_impl_glfw.h
     src/Popeye/GUI/imgui_impl_glfw.cpp
     src/Popeye/GUI/imgui_impl_opengl3.h
@@ -53,7 +54,9 @@ set(POPEYE_MANAGER
 set(POPEYE_RESOURCE 
     src/Popeye/Resource/Texture.h
     src/Popeye/Resource/Mesh.h
-    src/Popeye/Resource/Mesh.cpp)
+    src/Popeye/Resource/Mesh.cpp
+    src/Popeye/Resource/Material.h
+    src/Popeye/Resource/Material.cpp)
 
 set(POPEYE_SCENE 
     src/Popeye/Scene/GameObject.h
@@ -62,12 +65,9 @@ set(POPEYE_SCENE
     src/Popeye/Scene/Scene.cpp)
 
 set(POPEYE_SYSTEM 
-    src/Popeye/System/EventSystem.h
-    src/Popeye/System/EventSystem.cpp
     src/Popeye/System/RenderingSystem.h
     src/Popeye/System/RenderingSystem.cpp
-    src/Popeye/System/FileSystem.h
-    src/Popeye/System/FileSystem.cpp)
+    )
 
 add_library(popeye SHARED
     ${POPEYE_SRC}

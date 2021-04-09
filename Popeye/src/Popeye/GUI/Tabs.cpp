@@ -7,28 +7,29 @@
 #include "../Manager/ComponentManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/ResourceManager.h"
-#include "../System/FileSystem.h"
+#include "../FileIO.h"
 
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 
 #include "../Component/RenderingComponents.h"
-#include "../Resource/Texture.h"
-#include "../Resource/Mesh.h"
 
 namespace Popeye{
-	extern ImFont	*g_Icon;
-	extern FileSystem *g_fileSystem;
-	extern ResourceManager *g_ResourceManager;
 
-	extern unsigned int g_SceneView;
-	extern unsigned int g_GameView;
+	extern ResourceManager	*g_ResourceManager;
+	extern ImFont			*g_Icon;
+	extern FileIO			*g_fileIO;
+		
+	extern int				g_eventMod;
+	extern unsigned int		g_SceneView;
+	extern unsigned int		g_GameView;
 
-	static GameObject *selectedGameObject;
-	static Scene *scene;
+	static Scene			*scene;
+	static GameObject		*selectedGameObject;
+
 
 	//Tab 
-	void Tab::SetTab(const char* _name, EventMod _eventmod)
+	void Tab::SetTab(const char* _name, int _eventmod)
 	{
 		name = _name;
 		eventmod = _eventmod;
@@ -36,12 +37,9 @@ namespace Popeye{
 
 	void Tab::CheckHover()
 	{
-		if (EventManager::GetInstance()->GetState() != eventmod)
+		if (ImGui::IsWindowHovered())
 		{
-			if (ImGui::IsWindowHovered())
-			{
-				EventManager::GetInstance()->SetState(eventmod);
-			}
+			g_eventMod = eventmod;
 		}
 	}
 
@@ -127,9 +125,9 @@ namespace Popeye{
 		{
 			if (ImGui::CollapsingHeader("Transform"))
 			{
-				ImGui::DragFloat3("position", (float*)&selectedGameObject->transform.position);
-				ImGui::DragFloat3("rotation", (float*)&selectedGameObject->transform.rotation);
-				ImGui::DragFloat3("scale", (float*)&selectedGameObject->transform.scale);
+				ImGui::DragFloat3("position",	(float*)&selectedGameObject->transform.position);
+				ImGui::DragFloat3("rotation",	(float*)&selectedGameObject->transform.rotation);
+				ImGui::DragFloat3("scale",		(float*)&selectedGameObject->transform.scale);
 			}
 
 			/*Show all Component*/
@@ -244,7 +242,7 @@ namespace Popeye{
 			}
 			if (ImGui::TreeNode("Material"))
 			{
-				Material& material = MeshRenderer::materials[meshRenderer.materialIndex];
+				Material& material = g_ResourceManager->materials[meshRenderer.materialID];
 
 				ImGui::Text("texture");
 				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
@@ -260,8 +258,6 @@ namespace Popeye{
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE"))
 					{
 						int id = *(const int*)payload->Data;
-
-						//POPEYE_CORE_INFO("received id : {0}", id);
 
 						material.textureID = id;
 					}
@@ -318,15 +314,15 @@ namespace Popeye{
 				ImGui::DragFloat("outerCutOff", &light.outercutoff);
 			}
 			
-			ImGui::DragFloat("constant", &light.constant);
-			ImGui::DragFloat("linear", &light.linear);
-			ImGui::DragFloat("quadratic", &light.quadratic);
+			ImGui::DragFloat("constant",	&light.constant);
+			ImGui::DragFloat("linear",		&light.linear);
+			ImGui::DragFloat("quadratic",	&light.quadratic);
 
 			ImGui::ColorEdit3("light color", (float*)&light.color);
 	
-			ImGui::DragFloat("ambient", &light.ambient);
-			ImGui::DragFloat("diffuse", &light.diffuse);
-			ImGui::DragFloat("specular",&light.specular);
+			ImGui::DragFloat("ambient",		&light.ambient);
+			ImGui::DragFloat("diffuse",		&light.diffuse);
+			ImGui::DragFloat("specular",	&light.specular);
 		}
 	}
 
@@ -359,7 +355,7 @@ namespace Popeye{
 				{
 					if (ImGui::IsMouseDoubleClicked(0))
 					{
-						g_fileSystem->curr_focused_path = fs::current_path() / "Root";
+						g_fileIO->curr_focused_path = fs::current_path() / "Root";
 					}
 				}
 
@@ -371,9 +367,9 @@ namespace Popeye{
 
 						fs::path path = str;
 
-						if (fs::equivalent(path, g_fileSystem->curr_focused_path))
+						if (fs::equivalent(path, g_fileIO->curr_focused_path))
 						{
-							g_fileSystem->curr_focused_path = (currpath / path.filename());
+							g_fileIO->curr_focused_path = (currpath / path.filename());
 						}
 
 						fs::rename(path, (currpath / path.filename()).string());
@@ -402,7 +398,7 @@ namespace Popeye{
 			ImGui::BeginChild("Files", ImVec2(0, 0), true);
 
 			std::vector<FileData> dirs, files;
-			int totalFileNum = g_fileSystem->ShowFilesAtDir(dirs, files, g_fileSystem->curr_focused_path);
+			int totalFileNum = g_fileIO->ShowFilesAtDir(dirs, files, g_fileIO->curr_focused_path);
 
 			int i = 0,  fi = 0, di = 0;
 			while(i != totalFileNum)
@@ -420,7 +416,7 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0))
 						{
-							g_fileSystem->curr_focused_path = filedata.path;
+							g_fileIO->curr_focused_path = filedata.path;
 						}
 					}
 					
@@ -457,7 +453,7 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0))
 						{
-							g_fileSystem->ReadFile(filedata);
+							//g_fileIO->ReadFile(filedata);
 						}
 					}
 					fi++;
@@ -517,7 +513,7 @@ namespace Popeye{
 		ImGui::PushID(id);
 
 		std::vector<DirectoryData> dirs;
-		int dircount = g_fileSystem->ShowDirAtDir(dirs, directory);
+		int dircount = g_fileIO->ShowDirAtDir(dirs, directory);
 		
 		ImGui::AlignTextToFramePadding();
 		for (int i = 0; i < dircount; i++)
@@ -545,7 +541,7 @@ namespace Popeye{
 			{
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
-					g_fileSystem->curr_focused_path = currDir;
+					g_fileIO->curr_focused_path = currDir;
 				}
 			}
 
@@ -571,11 +567,14 @@ namespace Popeye{
 
 					if (!fs::equivalent(path, currDir))
 					{
-						if (fs::equivalent(path, g_fileSystem->curr_focused_path))
+						if (fs::equivalent(path, g_fileIO->curr_focused_path))
 						{
-							g_fileSystem->curr_focused_path = currDir / path.filename();
+							g_fileIO->curr_focused_path = currDir / path.filename();
 						}
-						fs::rename(path, currDir / path.filename());
+						else
+						{
+							fs::rename(path, currDir / path.filename());
+						}
 					}
 					
 				}
@@ -663,19 +662,12 @@ namespace Popeye{
 						const ImVec2 p0 = ImGui::GetItemRectMin();
 						const ImVec2 p1 = ImGui::GetItemRectMax();
 
-
-						//draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
-
-
 						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 						{
 							ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
 
-							//ImGui::Text("model : {0}", mesh);
-
 							ImGui::EndDragDropSource();
 						}
-
 
 						ImGui::PopID();
 
@@ -705,12 +697,12 @@ namespace Popeye{
 
 					if (path.extension() == ".jpg" || path.extension() == ".png")
 					{
-						g_fileSystem->WriteDataToFile("Textures.dat", "Texturestable.dat", path);
+						g_fileIO->WriteDataToFile("Textures.dat", "Texturestable.dat", path);
 					}
 
 					if (path.extension() == ".fbx" || path.extension() == ".obj")
 					{
-						g_fileSystem->WriteDataToFile("Models.dat", "Modelstable.dat", path);
+						g_fileIO->WriteDataToFile("Models.dat", "Modelstable.dat", path);
 					}
 				}
 				ImGui::EndDragDropTarget();

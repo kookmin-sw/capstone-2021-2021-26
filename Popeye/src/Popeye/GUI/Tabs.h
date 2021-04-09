@@ -1,5 +1,5 @@
 #pragma once
-#include "../Events/EventManager.h"
+#include "../Event/EventHandler.h"
 
 namespace Popeye{
 	namespace fs = std::filesystem;
@@ -11,8 +11,8 @@ namespace Popeye{
 	struct Tab
 	{
 		const char* name;
-		EventMod eventmod;
-		void SetTab(const char*, EventMod = EventMod::ONGUI);
+		int eventmod;
+		void SetTab(const char*, int = 1);
 		void ShowTab();
 		void CheckHover();
 		virtual void ShowContents();

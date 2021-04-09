@@ -5,9 +5,10 @@
 #include "Manager/ComponentManager.h"
 #include "Manager/ResourceManager.h"
 
-#include "System/FileSystem.h"
+#include "FileIO.h"
+#include "Event/EventHandler.h"
+
 #include "System/RenderingSystem.h"
-#include "System/EventSystem.h"
 
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
@@ -15,7 +16,8 @@
 #include "Component/RenderingComponents.h"
 
 namespace Popeye {
-	FileSystem* g_fileSystem;
+	FileIO* g_fileIO;
+	
 	ResourceManager* g_ResourceManager;
 
 
@@ -45,25 +47,25 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		g_fileSystem = new FileSystem();
-
-		g_ResourceManager = new ResourceManager();
+		EventHandler* eventHandler = new EventHandler();
+		eventHandler->SetEventCallbacks(window);
 
 		GUIManager* guiManager = new GUIManager();
+		guiManager->OnSet(window);
+
+		g_fileIO = new FileIO();
+		g_fileIO->Init();
+
+		g_ResourceManager = new ResourceManager();
 
 		SceneManager::GetInstance()->currentScene = new Scene();
 
 		RenderingSystem *renderingSystem = new RenderingSystem();
+		renderingSystem->SystemInit();
 		
-		EventSystem *eventSystem = new EventSystem();
 
 		ComponentManager::GetInstance()->InitComponents();
 
-		g_fileSystem->Init();
-
-		renderingSystem->SystemInit();
-		eventSystem->SetEventCallbacks(window);
-		guiManager->OnSet(window);
 
 
 		Scene* scene = SceneManager::GetInstance()->currentScene;
@@ -90,20 +92,19 @@ namespace Popeye {
 		scene->gameObjects[1]->SetName("Directional Light");
 		scene->gameObjects[1]->AddComponent<Light>();
 		scene->gameObjects[1]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMaterial(material_0);
 		scene->gameObjects[1]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
 		scene->gameObjects[1]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
 		scene->gameObjects[1]->transform.position = { 5.0f, 10.0f, 5.0f };
 
-		POPEYE_CORE_INFO("deededede");
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			
+
 			renderingSystem->SystemRunning();
 			
-			eventSystem->SystemRunning();
+			eventHandler->HandleEvent();
 
 			guiManager->OnRun();
 
@@ -121,9 +122,9 @@ namespace Popeye {
 		guiManager->OnClosed();
 		delete(guiManager);
 
-		delete(g_fileSystem);
+		delete(g_fileIO);
 
-		delete(eventSystem);
+		delete(eventHandler);
 		delete(renderingSystem);
 
 	}

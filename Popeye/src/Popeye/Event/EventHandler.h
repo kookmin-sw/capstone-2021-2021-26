@@ -1,12 +1,12 @@
 #pragma once
-#include "../Events/EventManager.h"
-#include "../Events/Events.h"
+#include "Events.h"
 
 namespace Popeye {
-	class EventSystem
+	
+	class EventHandler
 	{
 	private:
-		EventMod		eventstate;
+		int				eventstate;
 		KeyboardEvent	keyevent;
 		MouseEvent		mouseevent;
 	private:
@@ -20,7 +20,7 @@ namespace Popeye {
 		void ExecuteGameInput();
 	public:
 		void SetEventCallbacks(GLFWwindow*);
-		void SystemRunning();
+		void HandleEvent();
 	};
 
 }

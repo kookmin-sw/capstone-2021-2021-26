@@ -115,19 +115,6 @@ namespace Popeye {
 		texture_ID = -1;
 	}*/
 
-	/**************Material**************/
-
-	Material::Material()
-	{
-		color = glm::vec3(1.0f);
-		textureID = -1;
-		amb_diff_spec[0] = 0.8f; //ambient
-		amb_diff_spec[1] = 0.4f; //diffuse
-		amb_diff_spec[2] = 0.1f; //specular
-		shininess	= 32.0f;
-	}
-
-
 	/**************Light**************/
 	int Light::pointLightCounter		= 0;
 	int Light::directionalLightCounter	= 0;
@@ -154,9 +141,9 @@ namespace Popeye {
 	
 	void Light::ChangeLightType(LightType changeType)
 	{
-		if (type == LightType::POINT)			{ pointLightCounter--; }
-		else if (type == LightType::DIRECTION)	{ directionalLightCounter--; }
-		else if (type == LightType::SPOT)		{ spotLightCounter--; }
+		if (type == LightType::POINT)					{ pointLightCounter--; }
+		else if (type == LightType::DIRECTION)			{ directionalLightCounter--; }
+		else if (type == LightType::SPOT)				{ spotLightCounter--; }
 
 		if (changeType == LightType::POINT)				{ pointLightCounter++; }
 		else if (changeType == LightType::DIRECTION)	{ directionalLightCounter++; }
@@ -171,29 +158,11 @@ namespace Popeye {
 	}
 
 
-
 	/**************MeshRenderer component**************/
 	MeshRenderer::MeshRenderer() 
 	{
-		meshID = 0;
-		isEmpty = true;
-	}
-
-	std::vector<Material>	MeshRenderer::materials;
-
-	void MeshRenderer::SetMaterial(Material& material) 
-	{
-		int material_size = g_ResourceManager->materials.size();
-		for (int i = 0; i < material_size; i++)
-		{
-			if (materials[i].id == material.id)
-			{
-				materialIndex = i;
-				return;
-			}
-		}
-
-		materials.push_back(material);
-		materialIndex = materials.size() - 1;
+		meshID		= 0;
+		materialID	= 0;
+		isEmpty		= true;
 	}
 }

@@ -226,8 +226,10 @@ namespace Popeye {
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
 				if (!meshrenderer.isEmpty)
 				{
-					int id = meshrenderer.meshID;
-					Material material = MeshRenderer::materials[meshrenderer.materialIndex];
+					int meshID = meshrenderer.meshID;
+					int materialID = meshrenderer.materialID;
+
+					Material material = g_ResourceManager->materials[materialID];
 
 					model = glm::mat4(1.0f);
 					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
@@ -248,14 +250,14 @@ namespace Popeye {
 						glBindTexture(GL_TEXTURE_2D, material.textureID);
 					}
 
-					shader.setVec3("material.ambient", material.color * material.amb_diff_spec[0]);
-					shader.setVec3("material.diffuse", material.color * material.amb_diff_spec[1]);
+					shader.setVec3("material.ambient",	material.color * material.amb_diff_spec[0]);
+					shader.setVec3("material.diffuse",	material.color * material.amb_diff_spec[1]);
 					shader.setVec3("material.specular", material.color * material.amb_diff_spec[2]);
 
 					shader.setFloat("material.shininess", material.shininess);
 
-					glBindVertexArray(g_ResourceManager->meshes[id].VAO);
-					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[id].indices.size(), GL_UNSIGNED_INT, (void*)0);
+					glBindVertexArray(g_ResourceManager->meshes[meshID].VAO);
+					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
 					
 					glBindVertexArray(0);
 

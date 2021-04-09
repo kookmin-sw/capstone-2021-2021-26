@@ -1,8 +1,4 @@
-#include "FileSystem.h"
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>        
-#include <assimp/postprocess.h>
+#include "FileIO.h"
 
 namespace Popeye
 {
@@ -11,10 +7,10 @@ namespace Popeye
 
 	DirectoryData::DirectoryData(fs::path _path, bool _hasSubDir) : path(_path), hasSubDir(_hasSubDir) {}
 
-	FileSystem::FileSystem() { root = fs::current_path() / "Root"; resource = fs::current_path() / "Resource"; curr_focused_path = root; }
-	FileSystem::~FileSystem() {}
+	FileIO::FileIO() { root = fs::current_path() / "Root"; resource = fs::current_path() / "Resource"; curr_focused_path = root; }
+	FileIO::~FileIO() {}
 
-	void FileSystem::Init()
+	void FileIO::Init()
 	{
 		if (!fs::exists(resource / "Models.dat"))			{ std::ofstream out(resource / "Models.dat");			out.close();}
 		if (!fs::exists(resource / "Modelstable.dat"))		{ std::ofstream out(resource / "Modelstable.dat");		out.close();}
@@ -25,7 +21,7 @@ namespace Popeye
 	}
 
 	//scan all files locate current dir return size
-	int FileSystem::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
+	int FileIO::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
 	{
 		int size = 0;
 		for (const auto& file : fs::directory_iterator(currPath))
@@ -63,7 +59,7 @@ namespace Popeye
 	}
 
 	//dir scan, return size
-	int FileSystem::ShowDirAtDir(std::vector<DirectoryData>& dirDats, fs::path currPath)
+	int FileIO::ShowDirAtDir(std::vector<DirectoryData>& dirDats, fs::path currPath)
 	{
 		int size = 0;
 		for (const auto& file : fs::directory_iterator(currPath))
@@ -78,7 +74,7 @@ namespace Popeye
 		return size;
 	}
 	
-	bool FileSystem::HaveSubDir(fs::path _path)
+	bool FileIO::HaveSubDir(fs::path _path)
 	{
 		for (const auto& file : fs::directory_iterator(_path))
 		{
@@ -90,41 +86,41 @@ namespace Popeye
 		return false;
 	}
 
-	void FileSystem::ReadModel(fs::path _path)
-	{
-		/*Assimp::Importer importer;
-		std::string path = _path.string();
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	//void FileIO::ReadModel(fs::path _path)
+	//{
+	//	/*Assimp::Importer importer;
+	//	std::string path = _path.string();
+	//	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-		for (int i = 0; i < scene->mNumMeshes; i++)
-		{
-			POPEYE_CORE_INFO("Current Model Number {0}. Name : {1}", i, scene->mMeshes[i]->mName.C_Str());
-		}*/
+	//	for (int i = 0; i < scene->mNumMeshes; i++)
+	//	{
+	//		POPEYE_CORE_INFO("Current Model Number {0}. Name : {1}", i, scene->mMeshes[i]->mName.C_Str());
+	//	}*/
 
-		t.detach();
-	}
+	//	t.detach();
+	//}
 
-	void FileSystem::ReadImage(fs::path _path)
-	{
+	//void FileIO::ReadImage(fs::path _path)
+	//{
 
 
-		t.detach();
-	}
+	//	t.detach();
+	//}
 
-	void FileSystem::ReadFile(FileData filedata)
-	{
-		//static std::thread t;
-		if (filedata.type == FileType::MODEL)
-		{
-			t = std::thread(&FileSystem::ReadModel, this, filedata.path);
-		}
-		else if (filedata.type == FileType::IMAGE)
-		{
-			t = std::thread(&FileSystem::ReadImage, this, filedata.path);
-		}
-	}
+	//void FileIO::ReadFile(FileData filedata)
+	//{
+	//	//static std::thread t;
+	//	if (filedata.type == FileType::MODEL)
+	//	{
+	//		//t = std::thread(&FileIO::ReadModel, this, filedata.path);
+	//	}
+	//	else if (filedata.type == FileType::IMAGE)
+	//	{
+	//		//t = std::thread(&FileIO::ReadImage, this, filedata.path);
+	//	}
+	//}
 
-	void FileSystem::WriteDataToFile(std::string datfile, std::string dattablefile, fs::path filepath)
+	void FileIO::WriteDataToFile(std::string datfile, std::string dattablefile, fs::path filepath)
 	{
 		std::ifstream data(filepath, std::ifstream::binary);
 		std::ifstream checkaddress(resource / datfile, std::ifstream::binary);
@@ -162,11 +158,8 @@ namespace Popeye
 			}
 
 
-
 			free(buffer);
 		}
-
-
 	}
 
 }
