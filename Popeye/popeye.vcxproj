@@ -485,6 +485,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\Release\cmake_pch.hxx" />
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\MinSizeRel\cmake_pch.hxx" />
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\RelWithDebInfo\cmake_pch.hxx" />
+    <ClInclude Include="src\Popeye\Component\ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\ZERO_CHECK.vcxproj">

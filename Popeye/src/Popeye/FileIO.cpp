@@ -12,15 +12,10 @@ namespace Popeye
 
 	void FileIO::Init()
 	{
-		if (!fs::exists(resource / "Models.dat"))			{ std::ofstream out(resource / "Models.dat");			out.close();}
-		if (!fs::exists(resource / "Modelstable.dat"))		{ std::ofstream out(resource / "Modelstable.dat");		out.close();}
-		if (!fs::exists(resource / "Textures.dat"))			{ std::ofstream out(resource / "Textures.dat");			out.close();}
-		if (!fs::exists(resource / "Texturestable.dat"))	{ std::ofstream out(resource / "Texturestable.dat");	out.close();}
-		if (!fs::exists(resource / "Materials.dat"))		{ std::ofstream out(resource / "Materials.dat");		out.close();}
-		if (!fs::exists(resource / "Materialstable.dat"))	{ std::ofstream out(resource / "Materialstable.dat");	out.close();}
+		if (!fs::exists(resource / "Resource.dat"))			{ std::ofstream out(resource / "Resource.dat");			out.close();}
+		if (!fs::exists(resource / "ResourceTable.dat"))	{ std::ofstream out(resource / "ResourceTable.dat");	out.close();}
 	}
 
-	//scan all files locate current dir return size
 	int FileIO::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
 	{
 		int size = 0;
@@ -120,9 +115,9 @@ namespace Popeye
 	//	}
 	//}
 
-	void FileIO::WriteDataToFile(std::string datfile, std::string dattablefile, fs::path filepath)
+	void FileIO::WriteDataToFile(std::string datfile, std::string dattablefile, FileData filedata)
 	{
-		std::ifstream data(filepath, std::ifstream::binary);
+		std::ifstream data(filedata.path, std::ifstream::binary);
 		std::ifstream checkaddress(resource / datfile, std::ifstream::binary);
 		if (data)
 		{
@@ -130,12 +125,10 @@ namespace Popeye
 			unsigned int address = (unsigned int)checkaddress.tellg();
 			
 			checkaddress.seekg(0, checkaddress.beg);
-			POPEYE_CORE_INFO("address : {0}", address);
 			
 			data.seekg(0, data.end);
 			unsigned int length = (unsigned int)data.tellg();
 			data.seekg(0, data.beg);
-			POPEYE_CORE_INFO(length);
 			unsigned char* buffer = (unsigned char*)malloc(length);
 
 			data.read((char*)buffer, length);
@@ -153,10 +146,10 @@ namespace Popeye
 
 			writedata.open(resource / dattablefile, std::ios::app | std::ios::binary);
 			{
+				writedata.write((char*)&filedata.type, sizeof(int));
 				writedata.write((char*)&address, sizeof(address));
 				writedata.close();
 			}
-
 
 			free(buffer);
 		}

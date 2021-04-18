@@ -6,11 +6,11 @@ namespace Popeye {
 
 	enum class FileType 
 	{ 
-		DIR,	//	directory(folder)
-		SOURCE,	//	.cpp, .h, .hpp
-		IMAGE,	//	.png, .jpg ...
-		MODEL,	//	.fbx, .obj ...
-		TEXT,	//	or else just text
+		DIR		=	0,	//	directory(folder)
+		SOURCE	=	1,	//	.cpp, .h, .hpp
+		IMAGE	=	2,	//	.png, .jpg ...
+		MODEL	=	3,	//	.fbx, .obj ...
+		TEXT	=	4	//	or else just text
 	};
 
 	struct FileData
@@ -47,7 +47,7 @@ namespace Popeye {
 		int ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath = fs::current_path() / "Root");
 		int ShowDirAtDir(std::vector<DirectoryData>& dirDats, fs::path currPath = fs::current_path() / "Root");
 
-		void WriteDataToFile(std::string datfile, std::string dattablefile, fs::path filepath);
+		void WriteDataToFile(std::string datfile, std::string dattablefile, FileData filedata);
 	};
 }
 

@@ -16,8 +16,8 @@ namespace Popeye {
 		~ResourceManager();
 
 		void SetResources();
-		void SetTextureResources();
-		void Set3DModelResources();
+		void SetTexture();
+		void Set3DModel();
 
 	};
 }

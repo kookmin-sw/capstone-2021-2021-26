@@ -633,7 +633,6 @@ namespace Popeye{
 
 							ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(int), ImGuiCond_Once);
 
-
 							ImGui::Text("texture : {0}", id);
 
 							ImGui::EndDragDropSource();
@@ -691,19 +690,20 @@ namespace Popeye{
 				{
 					std::string str(static_cast<char*>(payload->Data), payload->DataSize);
 
-					fs::path path = str;
-
-					POPEYE_CORE_INFO(path.filename().string());
-
-					if (path.extension() == ".jpg" || path.extension() == ".png")
+					FileData filedata;
+					filedata.path = str;
+					
+					if (filedata.path.extension() == ".jpg" || filedata.path.extension() == ".png")
 					{
-						g_fileIO->WriteDataToFile("Textures.dat", "Texturestable.dat", path);
+						filedata.type = FileType::IMAGE;
 					}
 
-					if (path.extension() == ".fbx" || path.extension() == ".obj")
+					if (filedata.path.extension() == ".fbx" || filedata.path.extension() == ".obj")
 					{
-						g_fileIO->WriteDataToFile("Models.dat", "Modelstable.dat", path);
+						filedata.type = FileType::MODEL;
 					}
+
+					g_fileIO->WriteDataToFile("Resource.dat", "ResourceTable.dat", filedata);
 				}
 				ImGui::EndDragDropTarget();
 			}
