@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Application.h"
 #include "Mainframe.h"
 
@@ -16,17 +15,17 @@ namespace Popeye {
 		Popeye::Log::Init();
 		Popeye::Mainframe* mainframe = new Mainframe();
 
-		if (!mainframe->init_Display())
+		if (!mainframe->Init())
 		{
 			delete(mainframe);
-			POPEYE_CORE_ERROR("Renderer Initialize fail.");
+			POPEYE_CORE_ERROR("Fail to Initialze.");
 			return;
 		}
 
-		mainframe->run_Display();
+		mainframe->Run();
 
 
-		mainframe->close_Display();
+		mainframe->Close();
 		delete mainframe;
 		return;
 	}

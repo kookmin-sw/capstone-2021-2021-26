@@ -1,19 +1,30 @@
-#include "pch.h"
 #include "Mainframe.h"
-#include "GUI/GUIManager.h"
+
+#include "Manager/GUIManager.h"
+#include "Manager/SceneManager.h"
+#include "Manager/ComponentManager.h"
+#include "Manager/ResourceManager.h"
+
+#include "FileIO.h"
+#include "Event/EventHandler.h"
+
 #include "System/RenderingSystem.h"
-#include "System/EventSystem.h"
-#include "Scene/SceneManger.h"
+
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
+
 #include "Component/RenderingComponents.h"
-#include "Component/Camera.h"
 
 namespace Popeye {
+	FileIO* g_fileIO;
+	
+	ResourceManager* g_ResourceManager;
+
+
 	Mainframe::Mainframe(){}
 	Mainframe::~Mainframe(){}
 
-	bool Mainframe::init_Display()
+	bool Mainframe::Init()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -30,79 +41,54 @@ namespace Popeye {
 		{
 			return false;
 		}
+		
 		return true;
 	}
 
+<<<<<<< HEAD
 	void Mainframe::run_Display()
 	{
 		Scene* scene = new Scene();
 		SceneManager::GetInstance()->currentScene = scene;
+=======
+	void Mainframe::Run()
+	{
+		EventHandler* eventHandler = new EventHandler();
+		eventHandler->SetEventCallbacks(window);
+
+		GUIManager* guiManager = new GUIManager();
+		guiManager->OnSet(window);
+
+		g_fileIO = new FileIO();
+		g_fileIO->Init();
+
+		g_ResourceManager = new ResourceManager();
+
+		SceneManager::GetInstance()->currentScene = new Scene();
+
+		RenderingSystem *renderingSystem = new RenderingSystem();
+		renderingSystem->SystemInit();
+		
+
+		ComponentManager::GetInstance()->InitComponents();
+
+
+
+		Scene* scene = SceneManager::GetInstance()->currentScene;
+>>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 		scene->SetName("example");
 
-		static GUIManager* guimanager = new GUIManager();
-
-		EventSystem* eventsystem = new EventSystem();
-		eventsystem->SetEventCallbacks(window);
-		guimanager->OnSet(window);
-
-		float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 3,
-			1, 2, 3
-		};
-		RenderingSystem* renderer = new RenderingSystem();
-		Popeye::Mesh object;
-		object.id = GET_NAME(object);
-		object.vertsize = sizeof(vertices);
-		object.vertices = vertices;
-		object.indicies = indices;
-		object.indsize = sizeof(indices);
+		Popeye::Material material_0;
+		material_0.id = GET_NAME(material_0);
+		material_0.color = glm::vec3(1.0f, 0.5f, 0.5f);
+		
+		Popeye::Material material_1;
+		material_1.id = GET_NAME(material_1);
+		material_1.color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		scene->CreateGameObject();
 		scene->CreateGameObject();
+<<<<<<< HEAD
 		scene->CreateGameObject();
 		scene->CreateGameObject();
 		scene->CreateGameObject();
@@ -133,60 +119,57 @@ namespace Popeye {
 		scene->gameObjects[4]->transform.SetPosition({ 1.0f, 4.0f, 5.0f });
 		scene->gameObjects[4]->transform.SetScale({ 6.0f, 2.0f, 6.0f });
 		scene->gameObjects[4]->SetName("gameObject4");
+=======
+>>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 		
-		/*Popeye::GameObject* gameObject = new GameObject();
-		gameObject->AddComponent<Transform>();
-		gameObject->AddComponent<MeshRenderer>();
-		gameObject->GetComponent<MeshRenderer>().SetMesh(gameObject->GetID(), object);
-		gameObject->GetComponent<Transform>().Set_pos(gameObject->GetID(), { 0.0f, 0.0f, 0.0f });
-		gameObject->GetComponent<Transform>().Set_scale(gameObject->GetID(), { 1.0f, 10.0f, 1.0f });
 
-		Popeye::GameObject* gameObject2 = new GameObject();
-		gameObject2->AddComponent<Transform>();
-		gameObject2->AddComponent<MeshRenderer>();
-		gameObject2->GetComponent<MeshRenderer>().SetMesh(gameObject2->GetID(), object);
-		gameObject2->GetComponent<Transform>().Set_pos(gameObject2->GetID(), { 2.0f, 3.0f, 3.0f });
-		gameObject2->GetComponent<Transform>().Set_scale(gameObject2->GetID(), { 1.0f, 1.0f, 1.0f });
+		scene->gameObjects[0]->SetName("Camera");
+		scene->gameObjects[0]->AddComponent<Camera>();
+		scene->mainCameraID = scene->gameObjects[0]->GetID();
+		scene->gameObjects[0]->transform.position = { 8.0f, 8.0f, 8.0f };
+		scene->gameObjects[0]->transform.rotation = { -30.0f, 45.0f, 0.0f };
 
-		Popeye::GameObject* gameObject3 = new GameObject();
-		gameObject3->AddComponent<Transform>();
-		gameObject3->AddComponent<MeshRenderer>();
-		gameObject3->GetComponent<MeshRenderer>().SetMesh(gameObject3->GetID(), object);
-		gameObject3->GetComponent<Transform>().Set_pos(gameObject3->GetID(), { 2.0f, 0.0f, -1.0f });
-		gameObject3->GetComponent<Transform>().Set_scale(gameObject3->GetID(), { 1.0f, 2.0f, 1.0f });
-
-		Popeye::GameObject* gameObject6 = new GameObject();
-		gameObject6->AddComponent<Transform>();
-		gameObject6->AddComponent<MeshRenderer>();
-		gameObject6->GetComponent<MeshRenderer>().SetMesh(gameObject6->GetID(), object);
-		gameObject6->GetComponent<Transform>().Set_pos(gameObject6->GetID(), { 1.0f, 1.0f, 1.0f });
-		gameObject6->GetComponent<Transform>().Set_scale(gameObject6->GetID(), { 1.0f, 1.0f, 1.0f });
-		gameObject6->GetComponent<Transform>().Set_rotation(gameObject6->GetID(), { 0.0f, 0.0f, 150.0f });
-
-		Popeye::GameObject* gameObject4 = new GameObject();
-		gameObject4->AddComponent<Transform>();
-		gameObject4->GetComponent<Transform>().Set_pos(gameObject4->GetID(), { 5.0f, 5.0f, 5.0f });
-		gameObject4->AddComponent<Camera>();*/
+		scene->gameObjects[1]->SetName("Directional Light");
+		scene->gameObjects[1]->AddComponent<Light>();
+		scene->gameObjects[1]->GetComponent<Light>().ChangeLightType(LightType::DIRECTION);
+		scene->gameObjects[1]->transform.scale	  =	{ 0.5f, 0.5f , 0.5f };
+		scene->gameObjects[1]->transform.rotation =	{ -90.0f, -30.0f , 0.0f };
+		scene->gameObjects[1]->transform.position = { 5.0f, 10.0f, 5.0f };
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
-			renderer->SystemRunning();
 			
-			eventsystem->SystemRunning();
 
-			guimanager->OnRun();
+			renderingSystem->SystemRunning();
+			
+			eventHandler->HandleEvent();
+
+			guiManager->OnRun();
 
 			glfwSwapBuffers(window);
 		}
+		
+		//TODO:: fix destructor more fancy way later..
 
-		guimanager->OnClosed();
-		delete(guimanager);
-		delete(renderer);
+		//free managers
+		SceneManager::GetInstance()->UnloadScene();
+		SceneManager::GetInstance()->DestroyInstance();
+
+		ComponentManager::GetInstance()->DestroyInstance();
+
+		guiManager->OnClosed();
+		delete(guiManager);
+
+		delete(g_fileIO);
+
+		delete(eventHandler);
+		delete(renderingSystem);
+
 	}
 
-	void Mainframe::close_Display()
+	void Mainframe::Close()
 	{
 		glfwTerminate();
 	}

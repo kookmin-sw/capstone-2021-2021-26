@@ -1,33 +1,35 @@
-#include "pch.h"
 #include "GameObject.h"
 
 namespace Popeye {
 	
-	GameObject::GameObject()
+	GameObject::GameObject(int _id)
 	{
-		ID = (int)&*this;
+		id = _id;
+	}
+
+	GameObject::~GameObject()
+	{
 	}
 
 	void GameObject::AddChild(GameObject* child)
 	{
+<<<<<<< HEAD
+=======
 		childs.push_back(child);
+>>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 	}
 
-	GameObject::~GameObject() 
+	std::string GameObject::GetName()
 	{
+		return name;
 	}
-
-	char* GameObject::GetName()
-	{
-		return this->name;
-	}
-	void GameObject::SetName(char* _name)
+	void GameObject::SetName(std::string _name)
 	{
 		this->name = _name;
 	}
 
 	int GameObject::GetID()
 	{
-		return this->ID;
+		return this->id;
 	}
 }

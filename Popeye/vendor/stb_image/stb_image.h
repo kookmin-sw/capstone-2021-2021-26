@@ -105,7 +105,6 @@ RECENT REVISION HISTORY:
     Christian Floisand      Kevin Schmidt      JR Smith           github:darealshinji
     Blazej Dariusz Roszkowski                                     github:Michaelangel007
 */
-
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STBI_INCLUDE_STB_IMAGE_H
 

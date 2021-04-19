@@ -1,11 +1,15 @@
-#include "pch.h"
 #include "RenderingComponents.h"
+#include "../Manager/ResourceManager.h"
+
 #include "stb_image.h"
 
 namespace Popeye {
+	extern ResourceManager* g_ResourceManager;
 
-	/**************Shader define**************/
-	Shader::Shader(const GLchar* vertexPath , const GLchar* fragmentPath)
+	/**************Shader**************/
+	Shader::Shader(){}
+
+	void Shader::Init(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		std::string vertexCode;
 		std::string fragmentCode;
@@ -14,12 +18,12 @@ namespace Popeye {
 
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-		try 
+		try
 		{
 			vShaderFile.open(vertexPath);
 			fShaderFile.open(fragmentPath);
 			std::stringstream vShaderStream, fShaderStream;
-			
+
 			vShaderStream << vShaderFile.rdbuf();
 			fShaderStream << fShaderFile.rdbuf();
 
@@ -29,7 +33,7 @@ namespace Popeye {
 			vertexCode = vShaderStream.str();
 			fragmentCode = fShaderStream.str();
 		}
-		catch(std::ifstream::failure e)
+		catch (std::ifstream::failure e)
 		{
 			POPEYE_CORE_ERROR("Can't load shader.");
 		}
@@ -93,7 +97,11 @@ namespace Popeye {
 	}
 	void Shader::setFloat(const std::string& name, float value) const
 	{
-		glUniform1i(glGetUniformLocation(shader_ID, name.c_str()), value);
+		glUniform1f(glGetUniformLocation(shader_ID, name.c_str()), value);
+	}
+	void Shader::setVec3(const std::string& name, glm::vec3 value) const
+	{
+		glUniform3fv(glGetUniformLocation(shader_ID, name.c_str()), 1, &value[0]);
 	}
 	void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	{
@@ -101,79 +109,60 @@ namespace Popeye {
 	}
 
 
-	/**************Texture define**************/
-	Texture::Texture() {};
-
-	void Texture::InitTexture(const char* imgPath)
+	/*void Texture::DeleteTexture()
 	{
-		glGenTextures(1, &texture_ID);
-		glBindTexture(GL_TEXTURE_2D, texture_ID);
+		glDeleteTextures(1, &texture_ID);
+		texture_ID = -1;
+	}*/
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	/**************Light**************/
+	int Light::pointLightCounter		= 0;
+	int Light::directionalLightCounter	= 0;
+	int Light::spotLightCounter			= 0;
 
-		unsigned char* data = stbi_load(imgPath, &width, &height, &nrChannel, 0);
-		if (data)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			POPEYE_CORE_ERROR("Failed to load texture");
-		}
+	Light::Light()
+	{
+		type		= LightType::POINT;
+		pointLightCounter++;
 
-		stbi_image_free(data);
+		color		= glm::vec3(1.0f);
+		
+		ambient		= 0.8f;
+		diffuse		= 0.7f;
+		specular	= 0.1f;
+
+		constant	= 1.0f;
+		linear		= 0.09f;
+		quadratic	= 0.032f;
+
+		cutoff		= 12.5f;
+		outercutoff = 17.5f;
 	}
-
-	void Texture::drawTexture()
+	
+	void Light::ChangeLightType(LightType changeType)
 	{
-		glActiveTexture(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, this->texture_ID);
+		if (type == LightType::POINT)					{ pointLightCounter--; }
+		else if (type == LightType::DIRECTION)			{ directionalLightCounter--; }
+		else if (type == LightType::SPOT)				{ spotLightCounter--; }
+
+		if (changeType == LightType::POINT)				{ pointLightCounter++; }
+		else if (changeType == LightType::DIRECTION)	{ directionalLightCounter++; }
+		else if (changeType == LightType::SPOT)			{ spotLightCounter++; }
+
+		type = changeType;
+	}
+	
+	LightType Light::ShowLightType()
+	{
+		return type;
 	}
 
 
 	/**************MeshRenderer component**************/
-	MeshRenderer::MeshRenderer() {}
-
-	std::vector<Mesh> MeshRenderer::meshes;
-	std::vector<Material> MeshRenderer::materials;
-	std::unordered_map<int, std::pair< int, int>> MeshRenderer::renderables;
-
-	void MeshRenderer::ComponentAdded(int id)
+	MeshRenderer::MeshRenderer() 
 	{
-		renderables[id] = {-1, -1};
+		meshID		= 0;
+		materialID	= 0;
+		isEmpty		= true;
 	}
-
-	void MeshRenderer::SetMesh(int id, Mesh& mesh)
-	{
-		for (int i = 0; i < meshes.size(); i++)
-		{
-			if (meshes[i].id == mesh.id)
-			{
-				//std::cout << mesh.id << std::endl;
-				renderables[id].first = i;
-				return;
-			}
-		}
-		meshes.push_back(mesh);
-		renderables[id].first = meshes.size() - 1;
-	}
-
-	void MeshRenderer::SetMaterial(int id, Material& material)
-	{
-		for (int i = 0; i < materials.size(); i++)
-		{
-			if (materials[i].id == material.id)
-			{
-				renderables[id].second = i;
-				return;
-			}
-		}
-		materials.push_back(material);
-		renderables[id].second = meshes.size() - 1;
-	}
-
 }
