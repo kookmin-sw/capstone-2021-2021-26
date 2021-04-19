@@ -1,9 +1,6 @@
-[submodule "GameEngine/vendor/spdlog"]
+[submodule "Popeye/vendor/spdlog"]
 	path = Popeye/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "GameEngine/vendor/GLFW"]
-	path = Popeye/vendor/GLFW
-	url = https://github.com/TheCherno/glfw.git
 [submodule "Popeye/vendor/glm"]
 	path = Popeye/vendor/glm
 	url = https://github.com/g-truc/glm.git
@@ -14,3 +11,6 @@
 [submodule "Popeye/vendor/assimp"]
 	path = Popeye/vendor/assimp
 	url = https://github.com/astone30/assimp.git
+[submodule "Popeye/vendor/GLFW"]
+	path = Popeye/vendor/GLFW
+	url = https://github.com/astone30/glfw.git
