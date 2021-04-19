@@ -13,10 +13,6 @@ namespace Popeye {
 
 	void GameObject::AddChild(GameObject* child)
 	{
-<<<<<<< HEAD
-=======
-		childs.push_back(child);
->>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 	}
 
 	std::string GameObject::GetName()

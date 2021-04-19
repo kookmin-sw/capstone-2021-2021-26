@@ -265,21 +265,4 @@ namespace Popeye {
 			}
 		}
 	}
-<<<<<<< HEAD
-
-	// On play -> init -> update -> on exit....
-	void RenderingSystem::Init()
-	{
-	}
-
-	void RenderingSystem::OnUpdate()
-	{
-	}
-
-	void RenderingSystem::OnExit()
-	{
-	}
-
-=======
->>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 }

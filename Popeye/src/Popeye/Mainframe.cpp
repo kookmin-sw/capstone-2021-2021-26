@@ -45,12 +45,7 @@ namespace Popeye {
 		return true;
 	}
 
-<<<<<<< HEAD
-	void Mainframe::run_Display()
-	{
-		Scene* scene = new Scene();
-		SceneManager::GetInstance()->currentScene = scene;
-=======
+
 	void Mainframe::Run()
 	{
 		EventHandler* eventHandler = new EventHandler();
@@ -72,56 +67,11 @@ namespace Popeye {
 
 		ComponentManager::GetInstance()->InitComponents();
 
-
-
 		Scene* scene = SceneManager::GetInstance()->currentScene;
->>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
 		scene->SetName("example");
 
-		Popeye::Material material_0;
-		material_0.id = GET_NAME(material_0);
-		material_0.color = glm::vec3(1.0f, 0.5f, 0.5f);
-		
-		Popeye::Material material_1;
-		material_1.id = GET_NAME(material_1);
-		material_1.color = glm::vec3(1.0f, 1.0f, 1.0f);
-
 		scene->CreateGameObject();
 		scene->CreateGameObject();
-<<<<<<< HEAD
-		scene->CreateGameObject();
-		scene->CreateGameObject();
-		scene->CreateGameObject();
-
-		scene->gameObjects[0]->AddComponent<MeshRenderer>();
-		scene->gameObjects[0]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[0]->GetID(), object);
-		scene->gameObjects[0]->transform.SetPosition({ 0.0f, 0.0f, 0.0f });
-		scene->gameObjects[0]->transform.SetScale({ 1.0f, 2.0f, 1.0f });
-		scene->gameObjects[0]->SetName("gameObject1");
-
-		scene->gameObjects[1]->AddComponent<MeshRenderer>();
-		scene->gameObjects[1]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[1]->GetID(), object);
-		scene->gameObjects[1]->transform.SetPosition({ 2.0f, 3.0f, 3.0f });
-		scene->gameObjects[1]->SetName("gameObject2");
-
-		scene->gameObjects[2]->AddComponent<MeshRenderer>();
-		scene->gameObjects[2]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[2]->GetID(), object);
-		scene->gameObjects[2]->transform.SetPosition({ 2.0f, 0.0f, -1.0f });
-		scene->gameObjects[2]->transform.SetScale({ 1.0f, 2.0f, 1.0f });
-		scene->gameObjects[2]->SetName("gameObject3");
-
-		scene->gameObjects[3]->transform.SetPosition( {5.0f, 5.0f, 5.0f} );
-		scene->gameObjects[3]->AddComponent<Camera>();
-		scene->gameObjects[3]->SetName("Camera");
-
-		scene->gameObjects[4]->AddComponent<MeshRenderer>();
-		scene->gameObjects[4]->GetComponent<MeshRenderer>().SetMesh(scene->gameObjects[4]->GetID(), object);
-		scene->gameObjects[4]->transform.SetPosition({ 1.0f, 4.0f, 5.0f });
-		scene->gameObjects[4]->transform.SetScale({ 6.0f, 2.0f, 6.0f });
-		scene->gameObjects[4]->SetName("gameObject4");
-=======
->>>>>>> d3fea4472f4c492ecb6f3e9bd38da674be1267f9
-		
 
 		scene->gameObjects[0]->SetName("Camera");
 		scene->gameObjects[0]->AddComponent<Camera>();
