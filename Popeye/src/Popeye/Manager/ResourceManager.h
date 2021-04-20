@@ -1,8 +1,7 @@
 #pragma once
 #include "../Resource/Mesh.h"
-#include "../Resource/Material.h"
 #include "../Resource/Texture.h"
-
+#include "../Resource/Material.h"
 namespace Popeye {
 
 	class ResourceManager

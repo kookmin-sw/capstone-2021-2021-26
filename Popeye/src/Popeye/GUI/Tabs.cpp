@@ -1,7 +1,7 @@
 #include "Tabs.h"
 
-#include "../GUI/IconsForkAwesome.h"
-#include "../GUI/IconsForkAwesomeLargeIcon.h"
+#include "IconsForkAwesome.h"
+#include "IconsForkAwesomeLargeIcon.h"
 
 #include "../Manager/GUIManager.h"
 #include "../Manager/ComponentManager.h"
@@ -102,7 +102,7 @@ namespace Popeye{
 			ImGui::EndPopup();
 		}
 
-		if (ImGui::CollapsingHeader(scene->GetName()))
+		if (ImGui::CollapsingHeader(scene->GetName().c_str()))
 		{
 			for (int i = 0; i < scene->gameObjects.size(); i++)
 			{
@@ -166,12 +166,7 @@ namespace Popeye{
 					if (filter.PassFilter(components[i]))
 						if (ImGui::Selectable(components[i]))
 						{
-							if (i == 0)
-								selectedGameObject->AddComponent<Camera>();
-							else if (i == 1)
-								selectedGameObject->AddComponent<MeshRenderer>();
-							else if (i == 2)
-								selectedGameObject->AddComponent<Light>();
+							selectedGameObject->AddComponentByName(components[i]);
 						}
 				}
 
@@ -214,11 +209,9 @@ namespace Popeye{
 		{
 			if (ImGui::TreeNode("Mesh"))
 			{
-				//Mesh& mesh = MeshRenderer::meshes[meshRenderer.meshIndex];
 				ImGui::Text("Mesh");
 				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
 
-				//ImGui::Selectable(mesh.id.c_str());
 				if (ImGui::IsItemHovered())
 				{
 					if (ImGui::IsKeyDown(261))

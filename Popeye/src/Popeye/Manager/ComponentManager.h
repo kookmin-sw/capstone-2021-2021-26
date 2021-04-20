@@ -44,6 +44,7 @@ namespace Popeye {
 
 	public:
 		void InitComponents();
+		void AddDataOfComponentByName(const char* component, const char*& type, int& index);
 
 		template<typename component>
 		void RegistComponent()

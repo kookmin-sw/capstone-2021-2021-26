@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "../Manager/SceneManager.h"
+#include "Scene.h"
 
 namespace Popeye {
 	
@@ -27,5 +29,10 @@ namespace Popeye {
 	int GameObject::GetID()
 	{
 		return this->id;
+	}
+
+	void GameObject::AddComponentByName(const char* component)
+	{
+		SceneManager::GetInstance()->currentScene->AddDataByName(id, component);
 	}
 }

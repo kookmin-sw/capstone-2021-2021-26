@@ -1,7 +1,8 @@
 #include "RenderingSystem.h"
 #include "../Manager/SceneManager.h"
-#include "../Manager/ComponentManager.h"
 #include "../Manager/ResourceManager.h"
+#include "../Manager/ComponentManager.h"
+
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
@@ -245,7 +246,6 @@ namespace Popeye {
 						shader.setBool("material.text", true);
 						shader.setInt("material.texture", 1);
 
-
 						glActiveTexture(GL_TEXTURE1);
 						glBindTexture(GL_TEXTURE_2D, material.textureID);
 					}
@@ -260,7 +260,6 @@ namespace Popeye {
 					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
 					
 					glBindVertexArray(0);
-
 				}
 			}
 		}

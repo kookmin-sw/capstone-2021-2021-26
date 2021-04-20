@@ -131,25 +131,25 @@ namespace Popeye
 			ImGui::EndMenuBar();
 		}
 
-		float width = ImGui::GetWindowWidth();
+		//float width = ImGui::GetWindowWidth();
 
-		ImGui::Columns(3, "menu2", false);
-		ImGui::Separator();
-		ImGui::Button(ICON_FK_HAND_POINTER_O, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
-		ImGui::Button(ICON_FK_ARROWS, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
-		ImGui::Button(ICON_FK_SQUARE, ImVec2(25.0f, 25.0f));
-		ImGui::NextColumn();
-		ImGui::SameLine((ImGui::GetColumnWidth() / 2) - 26.0f);
-		ImGui::Button(ICON_FK_PLAY, ImVec2(25.0f, 25.0f)); ImGui::SameLine(ImGui::GetColumnWidth() / 2);
-		ImGui::Button(ICON_FK_STOP, ImVec2(25.0f, 25.0f)); ImGui::SameLine((ImGui::GetColumnWidth() / 2) + 26.0f);
-		ImGui::Button(ICON_FK_FORWARD, ImVec2(25.0f, 25.0f));
-		ImGui::NextColumn();
-		/*TODO*/
-		ImGui::NextColumn();
-		ImGui::Columns(1);
-		ImGui::Spacing();
+		//ImGui::Columns(3, "menu2", false);
+		//ImGui::Separator();
+		//ImGui::Button(ICON_FK_HAND_POINTER_O, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
+		//ImGui::Button(ICON_FK_ARROWS, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
+		//ImGui::Button(ICON_FK_SQUARE, ImVec2(25.0f, 25.0f));
+		//ImGui::NextColumn();
+		//ImGui::SameLine((ImGui::GetColumnWidth() / 2) - 26.0f);
+		//ImGui::Button(ICON_FK_PLAY, ImVec2(25.0f, 25.0f)); ImGui::SameLine(ImGui::GetColumnWidth() / 2);
+		//ImGui::Button(ICON_FK_STOP, ImVec2(25.0f, 25.0f)); ImGui::SameLine((ImGui::GetColumnWidth() / 2) + 26.0f);
+		//ImGui::Button(ICON_FK_FORWARD, ImVec2(25.0f, 25.0f));
+		//ImGui::NextColumn();
+		///*TODO*/
+		//ImGui::NextColumn();
+		//ImGui::Columns(1);
+		//ImGui::Spacing();
 
-		//ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO& io = ImGui::GetIO();
 		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 
 		if (initialized == 0)

@@ -4,8 +4,6 @@
 #include <assimp/scene.h>        
 #include <assimp/postprocess.h>
 
-#include "../Resource/Mesh.h"
-#include "../Resource/Texture.h"
 #include "stb_image.h"
 
 
@@ -29,16 +27,16 @@ namespace Popeye
 		std::vector<unsigned int> resource_type;
 		if (writedata.is_open())
 		{
-			unsigned int n = 0;
+			unsigned int address = 0;
 			int type = 0;
 			while (true)
 			{
 				writedata.read((char*)&type, sizeof(int));
-				writedata.read((char*)&n, sizeof(int));
+				writedata.read((char*)&address, sizeof(int));
 				if (writedata.eof())
 					break;
 
-				resource_address.push_back(n);
+				resource_address.push_back(address);
 				resource_type.push_back(type);
 			}
 			writedata.close();
@@ -60,6 +58,7 @@ namespace Popeye
 			for (int i = 0; i < resource_size; i++)
 			{
 				unsigned int len = i + 1 == resource_size ? sizeof(char) * length - resource_address[i] : resource_address[i + 1] - resource_address[i];
+				//images
 				if (resource_type[i] == 2)
 				{
 					Texture texture;
@@ -79,6 +78,7 @@ namespace Popeye
 					
 					stbi_image_free(data);
 				}
+				//models
 				else if (resource_type[i] == 3)
 				{
 					Assimp::Importer importer;
@@ -96,7 +96,6 @@ namespace Popeye
 						std::vector<float> vert;
 						for (unsigned int j = 0; j < vertNum; j++)
 						{
-
 							aiVector3D vertex = aimesh->mVertices[j];
 							vert.push_back(vertex.x); vert.push_back(vertex.y); vert.push_back(vertex.z);
 
@@ -119,7 +118,6 @@ namespace Popeye
 							{
 								vert.push_back(0); vert.push_back(0);
 							}
-
 						}
 
 						for (unsigned int j = 0; j < faceNum; j++)

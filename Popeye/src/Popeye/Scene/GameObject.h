@@ -1,6 +1,5 @@
 #pragma once
 namespace Popeye {
-	class Scene;
 
 	struct Transform
 	{
@@ -39,6 +38,8 @@ namespace Popeye {
 		{
 			SceneManager::GetInstance()->currentScene->AddData<component>(id);
 		}
+
+		void AddComponentByName(const char* component);
 
 		template<class component>
 		component& GetComponent()
