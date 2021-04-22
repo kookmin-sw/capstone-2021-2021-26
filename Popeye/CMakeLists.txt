@@ -22,7 +22,14 @@ set(POPEYE_SRC
 
 set(POPEYE_COMPONENT
     src/Popeye/Component/RenderingComponents.h
-    src/Popeye/Component/RenderingComponents.cpp)
+    src/Popeye/Component/RenderingComponents.cpp
+    src/Popeye/Component/PhysicsComponents.h
+    src/Popeye/Component/PhysicsComponents.cpp
+    src/Popeye/Component/UIComponents.h
+    src/Popeye/Component/UIComponents.cpp
+    src/Popeye/Component/UIComponents.h
+    src/Popeye/Component/ScriptComponents.h
+    )
 
 set(POPEYE_MANAGER
     src/Popeye/Manager/ComponentManager.h

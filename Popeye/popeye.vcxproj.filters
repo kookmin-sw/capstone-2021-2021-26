@@ -34,6 +34,12 @@
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\RenderingComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\PhysicsComponents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\UIComponents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\EventHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,6 +106,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\RenderingComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\PhysicsComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\UIComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\ScriptComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\KeyCode.h">

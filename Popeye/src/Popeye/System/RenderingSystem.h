@@ -13,7 +13,9 @@ namespace Popeye {
 		RenderState renderstate;
 		unsigned int sceneViewFBO, gameViewFBO;
 	private :
-		void Rendering();
+		void RenderSceneView();
+		// gizmo
+		void RenderGameView();
 	public:
 		void SystemInit();
 		void SystemRunning();

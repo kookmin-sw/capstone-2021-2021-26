@@ -84,7 +84,7 @@ namespace Popeye {
 			// ------------------------------
 
 			// ------------------------------
-			// TODO :: Run physic system here
+			// TODO :: Run Script system here
 			// ------------------------------
 
 
