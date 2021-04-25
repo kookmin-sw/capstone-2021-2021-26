@@ -131,24 +131,6 @@ namespace Popeye
 			ImGui::EndMenuBar();
 		}
 
-		//float width = ImGui::GetWindowWidth();
-
-		//ImGui::Columns(3, "menu2", false);
-		//ImGui::Separator();
-		//ImGui::Button(ICON_FK_HAND_POINTER_O, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
-		//ImGui::Button(ICON_FK_ARROWS, ImVec2(25.0f, 25.0f)); ImGui::SameLine();
-		//ImGui::Button(ICON_FK_SQUARE, ImVec2(25.0f, 25.0f));
-		//ImGui::NextColumn();
-		//ImGui::SameLine((ImGui::GetColumnWidth() / 2) - 26.0f);
-		//ImGui::Button(ICON_FK_PLAY, ImVec2(25.0f, 25.0f)); ImGui::SameLine(ImGui::GetColumnWidth() / 2);
-		//ImGui::Button(ICON_FK_STOP, ImVec2(25.0f, 25.0f)); ImGui::SameLine((ImGui::GetColumnWidth() / 2) + 26.0f);
-		//ImGui::Button(ICON_FK_FORWARD, ImVec2(25.0f, 25.0f));
-		//ImGui::NextColumn();
-		///*TODO*/
-		//ImGui::NextColumn();
-		//ImGui::Columns(1);
-		//ImGui::Spacing();
-
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 
@@ -162,7 +144,7 @@ namespace Popeye
 			ImGuiID dock_main_id = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
 			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.3f, NULL, &dock_main_id);
 			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.3f, NULL, &dock_main_id);
-			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 1.0f, NULL, &dock_main_id);
+			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);

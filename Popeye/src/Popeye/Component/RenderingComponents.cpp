@@ -11,10 +11,8 @@ namespace Popeye {
 
 	void Shader::Init(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
-		std::string vertexCode;
-		std::string fragmentCode;
-		std::ifstream vShaderFile;
-		std::ifstream fShaderFile;
+		std::string vertexCode, fragmentCode;
+		std::ifstream vShaderFile, fShaderFile;
 
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -79,6 +77,94 @@ namespace Popeye {
 		}
 
 		glDeleteShader(vertex);
+		glDeleteShader(fragment);
+	}
+
+	void Shader::Init(const GLchar* vertexPath, const GLchar* geometryPath, const GLchar* fragmentPath)
+	{
+		std::string vertexCode, geometryCode, fragmentCode;
+		std::ifstream vShaderFile, gShaderFile, fShaderFile;
+
+		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		gShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		try
+		{
+			vShaderFile.open(vertexPath);
+			fShaderFile.open(fragmentPath);
+			gShaderFile.open(geometryPath);
+			std::stringstream vShaderStream, gShaderStream, fShaderStream;
+
+			vShaderStream << vShaderFile.rdbuf();
+			gShaderStream << gShaderFile.rdbuf();
+			fShaderStream << fShaderFile.rdbuf();
+
+			vShaderFile.close();
+			gShaderFile.close();
+			fShaderFile.close();
+
+			vertexCode = vShaderStream.str();
+			geometryCode = gShaderStream.str();
+			fragmentCode = fShaderStream.str();
+		}
+		catch (std::ifstream::failure e)
+		{
+			POPEYE_CORE_ERROR("Can't load shader.");
+		}
+
+		const char* vShaderCode = vertexCode.c_str();
+		const char* gShaderCode = geometryCode.c_str();
+		const char* fShaderCode = fragmentCode.c_str();
+
+		unsigned int vertex, geometry, fragment;
+		int success;
+		char infoLog[512];
+
+		vertex = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertex, 1, &vShaderCode, NULL);
+		glCompileShader(vertex);
+		glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		}
+
+		fragment = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragment, 1, &fShaderCode, NULL);
+		glCompileShader(fragment);
+		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+		}
+
+		geometry = glCreateShader(GL_GEOMETRY_SHADER);
+		glShaderSource(geometry, 1, &gShaderCode, NULL);
+		glCompileShader(geometry);
+		glGetShaderiv(geometry, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\n" << infoLog << std::endl;
+		}
+
+		shader_ID = glCreateProgram();
+		glAttachShader(shader_ID, vertex);
+		glAttachShader(shader_ID, fragment);
+		glAttachShader(shader_ID, geometry);
+		glLinkProgram(shader_ID);
+
+		glGetProgramiv(shader_ID, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			glGetProgramInfoLog(shader_ID, 512, NULL, infoLog);
+			POPEYE_CORE_ERROR("program link fail");
+		}
+
+		glDeleteShader(vertex);
+		glDeleteShader(geometry);
 		glDeleteShader(fragment);
 	}
 

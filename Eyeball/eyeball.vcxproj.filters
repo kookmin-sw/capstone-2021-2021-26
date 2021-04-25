@@ -13,4 +13,9 @@
       <UniqueIdentifier>{97678390-FB37-386D-B23F-3FF29A7A91C3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shader\scenefrag.glsl" />
+    <None Include="shader\scenevert.glsl" />
+    <None Include="shader\gridgeo.glsl" />
+  </ItemGroup>
 </Project>
