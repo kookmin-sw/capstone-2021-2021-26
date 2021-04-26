@@ -1,0 +1,7 @@
+﻿  App.cpp
+C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\spdlog\include\spdlog\details\circular_q.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.h(18,54): warning C4251: 'Popeye::Log::s_CoreLogger': class 'std::shared_ptr<spdlog::logger>'에서는 class 'Popeye::Log'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\spdlog\include\spdlog\details\registry.h(34): message : 'std::shared_ptr<spdlog::logger>' 선언을 참조하십시오.
+C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.h(19,56): warning C4251: 'Popeye::Log::s_ClientLogger': class 'std::shared_ptr<spdlog::logger>'에서는 class 'Popeye::Log'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\spdlog\include\spdlog\details\registry.h(34): message : 'std::shared_ptr<spdlog::logger>' 선언을 참조하십시오.
+  Eyeball.vcxproj -> C:\Users\aston\Documents\PopeyeEngine\bin\Debug-windows-x86_64\Eyeball\Eyeball.exe

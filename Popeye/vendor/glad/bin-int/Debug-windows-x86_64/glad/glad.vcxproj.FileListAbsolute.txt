@@ -1,0 +1,2 @@
+C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\glad\bin\Debug-windows-x86_64\glad\glad.pdb
+C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\glad\bin-int\Debug-windows-x86_64\glad\glad.pdb
