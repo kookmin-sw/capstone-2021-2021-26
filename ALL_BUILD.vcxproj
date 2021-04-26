@@ -22,7 +22,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{98410805-AEE8-3E7F-8B64-212ABB57A79A}</ProjectGuid>
+    <ProjectGuid>{D105F29E-FBC2-3495-8DE4-5B91F5D2D66D}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
@@ -105,11 +105,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26\CMakeLists.txt">
+    <CustomBuild Include="C:\Users\aston\Documents\PopeyeEngine\CMakeLists.txt">
       <StdOutEncoding>UTF-8</StdOutEncoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/aston/Documents/PopeyeEngine/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26 -BC:/Users/aston/Documents/capstone-2021-26 --check-stamp-file C:/Users/aston/Documents/capstone-2021-26/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/PopeyeEngine -BC:/Users/aston/Documents/PopeyeEngine --check-stamp-file C:/Users/aston/Documents/PopeyeEngine/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -117,12 +117,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/aston/Documents/PopeyeEngine/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26 -BC:/Users/aston/Documents/capstone-2021-26 --check-stamp-file C:/Users/aston/Documents/capstone-2021-26/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/PopeyeEngine -BC:/Users/aston/Documents/PopeyeEngine --check-stamp-file C:/Users/aston/Documents/PopeyeEngine/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -130,12 +130,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/aston/Documents/PopeyeEngine/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26 -BC:/Users/aston/Documents/capstone-2021-26 --check-stamp-file C:/Users/aston/Documents/capstone-2021-26/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/PopeyeEngine -BC:/Users/aston/Documents/PopeyeEngine --check-stamp-file C:/Users/aston/Documents/PopeyeEngine/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -143,12 +143,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/aston/Documents/capstone-2021-26/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/aston/Documents/PopeyeEngine/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/capstone-2021-26 -BC:/Users/aston/Documents/capstone-2021-26 --check-stamp-file C:/Users/aston/Documents/capstone-2021-26/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aston/Documents/PopeyeEngine -BC:/Users/aston/Documents/PopeyeEngine --check-stamp-file C:/Users/aston/Documents/PopeyeEngine/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -156,46 +156,46 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeCXXCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeRCCompiler.cmake;C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\3.20.0-rc4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\ZERO_CHECK.vcxproj">
-      <Project>{E4200099-5A95-3854-A373-ABB7248049B0}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\ZERO_CHECK.vcxproj">
+      <Project>{67178D10-A5E6-38AF-8FFD-52F97E29C311}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\code\assimp.vcxproj">
-      <Project>{DDA78F3A-AA40-358E-BDE0-97FDB3E81848}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\assimp\code\assimp.vcxproj">
+      <Project>{11807D44-83C0-3CA5-BFB3-A822BFD1C1C2}</Project>
       <Name>assimp</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Eyeball\eyeball.vcxproj">
-      <Project>{81DDDD4C-52D1-3ACC-87A2-DBA129391FEC}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Eyeball\eyeball.vcxproj">
+      <Project>{48818904-4924-3D4D-BCCC-9EDF0D195998}</Project>
       <Name>eyeball</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\glad\glad.vcxproj">
-      <Project>{EAC96FC8-7DE1-3AB6-B691-DA7D9407D25E}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\glad\glad.vcxproj">
+      <Project>{B7FCAEFE-64A3-3297-8D0E-87F2DDAFFF35}</Project>
       <Name>glad</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\GLFW\src\glfw.vcxproj">
-      <Project>{ED2DB873-C7E3-3C27-B82D-CF0016293216}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\GLFW\src\glfw.vcxproj">
+      <Project>{2D7764D6-6200-3E3E-9BE7-14DC42F91C76}</Project>
       <Name>glfw</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\imgui\imgui.vcxproj">
-      <Project>{4C1CBDA4-35C3-35CF-A4B1-DD44AFCF8260}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\imgui\imgui.vcxproj">
+      <Project>{6222B1CD-A4EE-3D9F-94C4-D083BD522727}</Project>
       <Name>imgui</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\popeye.vcxproj">
-      <Project>{982167D6-626D-3F70-AEDC-ABE7385FABE6}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\popeye.vcxproj">
+      <Project>{A179B05F-8A4C-3EC6-86CA-9010660B5D97}</Project>
       <Name>popeye</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\vendor\assimp\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{F441E892-0F24-394D-B7C1-AC55C99D96FF}</Project>
+    <ProjectReference Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\vendor\assimp\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{762DA40B-852A-357C-A554-495822468249}</Project>
       <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>
