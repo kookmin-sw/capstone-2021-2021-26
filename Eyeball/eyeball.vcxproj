@@ -343,11 +343,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shader\gridgeo.glsl" />
-    <None Include="shader\scenefrag.glsl" />
-    <None Include="shader\scenevert.glsl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
