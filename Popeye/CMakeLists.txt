@@ -20,9 +20,27 @@ set(POPEYE_SRC
     src/Popeye/stb_img.cpp
 )
 
-set(POPEYE_COMPONENT 
+set(POPEYE_COMPONENT
     src/Popeye/Component/RenderingComponents.h
-    src/Popeye/Component/RenderingComponents.cpp)
+    src/Popeye/Component/RenderingComponents.cpp
+    src/Popeye/Component/PhysicsComponents.h
+    src/Popeye/Component/PhysicsComponents.cpp
+    src/Popeye/Component/UIComponents.h
+    src/Popeye/Component/UIComponents.cpp
+    src/Popeye/Component/UIComponents.h
+    src/Popeye/Component/ScriptComponents.h
+    )
+
+set(POPEYE_MANAGER
+    src/Popeye/Manager/ComponentManager.h
+    src/Popeye/Manager/ComponentManager.cpp
+    src/Popeye/Manager/GUIManager.h
+    src/Popeye/Manager/GUIManager.cpp
+    src/Popeye/Manager/ResourceManager.h
+    src/Popeye/Manager/ResourceManager.cpp
+    src/Popeye/Manager/SceneManager.h
+    src/Popeye/Manager/SceneManager.cpp
+    )
 
 set(POPEYE_EVENT 
     src/Popeye/Event/KeyCode.h
@@ -41,24 +59,14 @@ set(POPEYE_GUI
     src/Popeye/GUI/Tabs.h
     src/Popeye/GUI/Tabs.cpp)
 
-set(POPEYE_MANAGER
-    src/Popeye/Manager/GUIManager.h
-    src/Popeye/Manager/GUIManager.cpp
-    src/Popeye/Manager/ResourceManager.h
-    src/Popeye/Manager/ResourceManager.cpp
-    src/Popeye/Manager/SceneManager.h
-    src/Popeye/Manager/SceneManager.cpp
-    src/Popeye/Manager/ComponentManager.h
-    src/Popeye/Manager/ComponentManager.cpp)
-
-set(POPEYE_RESOURCE 
+set(POPEYE_RESOURCE
     src/Popeye/Resource/Texture.h
     src/Popeye/Resource/Mesh.h
     src/Popeye/Resource/Mesh.cpp
     src/Popeye/Resource/Material.h
     src/Popeye/Resource/Material.cpp)
 
-set(POPEYE_SCENE 
+set(POPEYE_SCENE
     src/Popeye/Scene/GameObject.h
     src/Popeye/Scene/GameObject.cpp
     src/Popeye/Scene/Scene.h
@@ -71,10 +79,10 @@ set(POPEYE_SYSTEM
 
 add_library(popeye SHARED
     ${POPEYE_SRC}
+    ${POPEYE_MANAGER}
     ${POPEYE_COMPONENT}
     ${POPEYE_EVENT}
     ${POPEYE_GUI}
-    ${POPEYE_MANAGER}
     ${POPEYE_RESOURCE}
     ${POPEYE_SCENE}
     ${POPEYE_SYSTEM})

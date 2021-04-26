@@ -17,10 +17,10 @@ namespace Popeye {
 	{
 	private:
 		int	sceneID;
-		char* sceneName;
-		int gameObjectID = 0;
-		std::queue<int> reusableIDs;
-		std::vector<std::vector<Accessor>> keysToAccessComponent;
+		std::string sceneName;
+		int gameObjectID;
+		std::queue	<int> reusableIDs;
+		std::vector <std::vector<Accessor>> keysToAccessComponent;
 		std::vector <int> gameObjectIDs;
 	
 	public:
@@ -31,7 +31,7 @@ namespace Popeye {
 		void ResetAccessor(int id);
 	
 	public:
-		Scene();
+		Scene(std::string name = "Scene");
 		~Scene();
 		
 		void CreateGameObject(std::string name = "GameObject");
@@ -44,6 +44,9 @@ namespace Popeye {
 			ComponentManager::GetInstance()->AddDataOfComponent<component>(accessor.componentType, accessor.dataIndex);
 			keysToAccessComponent[_id].push_back(accessor);
 		}
+
+		void AddDataByName(int _id, const char* component);
+
 		
 		template<class component>
 		component& GetData(int _id) // gameobject's data
@@ -80,7 +83,7 @@ namespace Popeye {
 
 		std::vector<Accessor> GetAllAddressOfID(int _id);
 
-		char* GetName();
+		std::string GetName();
 		void SetName(char* );
 
 	};

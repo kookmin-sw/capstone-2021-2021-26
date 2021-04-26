@@ -33,10 +33,10 @@ namespace Popeye {
 		instance = nullptr;
 	}
 
-	int SceneManager::SceneCreated(Scene& scene)
+	void SceneManager::CreateScene()
 	{
-		//this->scene_IDs.push_back((int)&scene);
-		return (int)&scene;
+		if (currentScene == nullptr)
+			currentScene = new Scene("Scene");
 	}
 
 	void SceneManager::UnloadScene()

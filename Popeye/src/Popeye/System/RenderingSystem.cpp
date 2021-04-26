@@ -1,7 +1,8 @@
 #include "RenderingSystem.h"
 #include "../Manager/SceneManager.h"
-#include "../Manager/ComponentManager.h"
 #include "../Manager/ResourceManager.h"
+#include "../Manager/ComponentManager.h"
+
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
@@ -69,7 +70,7 @@ namespace Popeye {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			//render
-			Rendering();
+			RenderSceneView();
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -77,7 +78,7 @@ namespace Popeye {
 			g_ScreenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_SceneView);
 
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			renderstate = RenderState::RENDERGAMEVIEW;
 		}
@@ -88,7 +89,7 @@ namespace Popeye {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			//render
-			Rendering();
+			RenderGameView();
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -96,18 +97,18 @@ namespace Popeye {
 			g_ScreenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_GameView);
 
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			renderstate = RenderState::RENDERSCENEVIEW;
 		}		
 	}
 
-	void RenderingSystem::Rendering()
+	void RenderingSystem::RenderGameView()
 	{
 		static Shader shader; // temp 
 		static Camera camera;
 		static int init = 0;
-		if (!init) { shader.Init(); init++; }
+		if (!init) { shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl"); init++; }
 
 		int pointLightCount = 0;
 		int dirLightCount = 0;
@@ -123,36 +124,30 @@ namespace Popeye {
 		shader.setInt("dirlightCount", Light::directionalLightCounter);
 		shader.setInt("spotlightCount", Light::spotLightCounter);
 
-		//camera
-		if (renderstate == RenderState::RENDERGAMEVIEW)
-		{
-			int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
-			GameObject* cameraObject = SceneManager::GetInstance()->currentScene->gameObjects[currentCameraID];
-			glm::vec3 position = cameraObject->transform.position;
-			glm::vec3 rotation	= glm::radians(cameraObject->transform.rotation);
-			glm::vec3 scale		= cameraObject->transform.scale;
-			camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(currentCameraID);
+		int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
+		GameObject* cameraObject = SceneManager::GetInstance()->currentScene->gameObjects[currentCameraID];
 		
-			view = glm::translate(view, position) * glm::toMat4(glm::quat(rotation));
-			view = glm::inverse(view);
+		glm::vec3 position = cameraObject->transform.position;
+		glm::vec3 rotation = glm::radians(cameraObject->transform.rotation);
+		glm::vec3 scale = cameraObject->transform.scale;
+		
+		camera = SceneManager::GetInstance()->currentScene->GetData<Camera>(currentCameraID);
 
-			if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
-			{
-				projection = glm::perspective(camera.fov, camera.offsetX / camera.offsetY, camera.nearView, camera.farView);
-			}
-			else if (camera.mod == Projection::ORTHOGRAPHIC) //Projection :: orthographic
-			{
-				projection = glm::ortho(
-					-(camera.width) * 0.5f, (camera.width) * 0.5f,
-					-(camera.height) * 0.5f, (camera.height) * 0.5f,
-					camera.nearView, camera.farView);
-			}
-		}
-		else
+		view = glm::translate(view, position) * glm::toMat4(glm::quat(rotation));
+		view = glm::inverse(view);
+
+		if (camera.mod == Projection::PERSPECTIVE) //Projection :: peripective mod
 		{
-			view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
-			projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+			projection = glm::perspective(camera.fov, camera.offsetX / camera.offsetY, camera.nearView, camera.farView);
 		}
+		else if (camera.mod == Projection::ORTHOGRAPHIC) //Projection :: orthographic
+		{
+			projection = glm::ortho(
+				-(camera.width) * 0.5f, (camera.width) * 0.5f,
+				-(camera.height) * 0.5f, (camera.height) * 0.5f,
+				camera.nearView, camera.farView);
+		}
+
 		shader.setVec3("ViewPos", view[3]);
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
@@ -245,7 +240,6 @@ namespace Popeye {
 						shader.setBool("material.text", true);
 						shader.setInt("material.texture", 1);
 
-
 						glActiveTexture(GL_TEXTURE1);
 						glBindTexture(GL_TEXTURE_2D, material.textureID);
 					}
@@ -255,12 +249,203 @@ namespace Popeye {
 					shader.setVec3("material.specular", material.color * material.amb_diff_spec[2]);
 
 					shader.setFloat("material.shininess", material.shininess);
-
+					
 					glBindVertexArray(g_ResourceManager->meshes[meshID].VAO);
 					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
 					
 					glBindVertexArray(0);
+				}
+			}
+		}
+	}
 
+	void RenderingSystem::RenderSceneView()
+	{
+		static Shader shader, gridShader; // temp 
+		static unsigned int gridVAO,length;
+		static int init = 0;
+
+		static std::vector<glm::vec3> vertices;
+		static std::vector<glm::uvec4> indices;
+
+		if (!init) {
+			shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl");
+			gridShader.Init("shader/gridvert.glsl", "shader/gridfrag.glsl");
+
+			//init grid
+			for (int j = -5; j <= 5; ++j) {
+				for (int i = -5; i <= 5; ++i) {
+					float x = (float)i;
+					float y = 0;
+					float z = (float)j;
+					vertices.push_back(glm::vec3(x, y, z));
+				}
+			}
+
+			for (int j = 0; j < 10; ++j) {
+				for (int i = 0; i < 10; ++i) {
+
+					int row1 = j * (10 + 1);
+					int row2 = (j + 1) * (10 + 1);
+
+					indices.push_back(glm::uvec4(row1 + i, row1 + i + 1, row1 + i + 1, row2 + i + 1));
+					indices.push_back(glm::uvec4(row2 + i + 1, row2 + i, row2 + i, row1 + i));
+				}
+			}
+
+			glGenVertexArrays(1, &gridVAO);
+			glBindVertexArray(gridVAO);
+
+			unsigned int vbo;
+			glGenBuffers(1, &vbo);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+			unsigned int ibo;
+			glGenBuffers(1, &ibo);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec4), glm::value_ptr(indices[0]), GL_STATIC_DRAW);
+
+			glBindVertexArray(0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			length = indices.size() * 4;
+			init++;
+		}
+
+		int pointLightCount = 0;
+		int dirLightCount = 0;
+		int spotLightCount = 0;
+
+		glm::mat4 model = glm::mat4(1.0f);
+		glm::mat4 view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+
+		{
+			gridShader.use();
+			gridShader.setMat4("view", view);
+			gridShader.setMat4("proj", projection);
+			glBindVertexArray(gridVAO);
+			glDrawElements(GL_LINES, length, GL_UNSIGNED_INT, NULL);
+			glBindVertexArray(0);
+		}
+
+
+		shader.use();
+
+		shader.setInt("pointlightCount", Light::pointLightCounter);
+		shader.setInt("dirlightCount", Light::directionalLightCounter);
+		shader.setInt("spotlightCount", Light::spotLightCounter);
+
+		shader.setVec3("ViewPos", view[3]);
+		shader.setMat4("view", view);
+		shader.setMat4("projection", projection);
+
+		for (GameObject* gameObject : SceneManager::GetInstance()->currentScene->gameObjects)
+		{
+			int id = gameObject->GetID();
+			glm::vec3 position = gameObject->transform.position;
+			glm::vec3 rotation = glm::radians(gameObject->transform.rotation);
+			glm::vec3 scale = gameObject->transform.scale;
+
+			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<Light>(id))
+			{
+				Light light = SceneManager::GetInstance()->currentScene->GetData<Light>(id);
+				LightType type = light.ShowLightType();
+				std::string str;
+
+				if (type == LightType::POINT)
+				{
+					str = "pointLights[" + std::to_string(pointLightCount) + "]";
+
+					shader.setVec3(str + ".position", position);
+
+					pointLightCount++;
+				}
+				else if (type == LightType::DIRECTION)
+				{
+					str = "dirLights[" + std::to_string(dirLightCount) + "]";
+
+					glm::vec3 direction = glm::vec3(0.0f);
+
+					direction.x = cos(-90.0f - rotation.y) * cos(rotation.x);
+					direction.y = sin(rotation.x);
+					direction.z = sin(-90.0f - rotation.y) * cos(rotation.x);
+
+					shader.setVec3(str + ".direction", glm::normalize(direction));
+
+					dirLightCount++;
+				}
+				else if (type == LightType::SPOT)
+				{
+					str = "spotLights[" + std::to_string(spotLightCount) + "]";
+
+					glm::vec3 direction = glm::vec3(0.0f);
+
+					direction.x = cos(-90.0f - rotation.y) * cos(rotation.x);
+					direction.y = sin(rotation.x);
+					direction.z = sin(-90.0f - rotation.y) * cos(rotation.x);
+
+					shader.setVec3(str + ".direction", glm::normalize(direction));
+
+					shader.setVec3(str + ".position", position);
+
+					shader.setFloat(str + ".cutOff", glm::cos(glm::radians(light.cutoff)));
+					shader.setFloat(str + ".outerCutOff", glm::cos(glm::radians(light.outercutoff)));
+
+					spotLightCount++;
+				}
+
+				shader.setFloat(str + ".constant", light.constant);
+				shader.setFloat(str + ".linear", light.linear);
+				shader.setFloat(str + ".quadratic", light.quadratic);
+
+				shader.setVec3(str + ".ambient", light.color * light.ambient);
+				shader.setVec3(str + ".diffuse", light.color * light.diffuse);
+				shader.setVec3(str + ".specular", light.color * light.specular);
+			}
+
+			if (SceneManager::GetInstance()->currentScene->CheckIfThereIsData<MeshRenderer>(id))
+			{
+				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
+				if (!meshrenderer.isEmpty)
+				{
+					int meshID = meshrenderer.meshID;
+					int materialID = meshrenderer.materialID;
+
+					Material material = g_ResourceManager->materials[materialID];
+
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
+
+					shader.setMat4("model", model);
+
+					if (material.textureID == -1)
+					{
+						shader.setBool("material.text", false);
+					}
+					else
+					{
+						shader.setBool("material.text", true);
+						shader.setInt("material.texture", 1);
+
+						glActiveTexture(GL_TEXTURE1);
+						glBindTexture(GL_TEXTURE_2D, material.textureID);
+					}
+
+					shader.setVec3("material.ambient", material.color * material.amb_diff_spec[0]);
+					shader.setVec3("material.diffuse", material.color * material.amb_diff_spec[1]);
+					shader.setVec3("material.specular", material.color * material.amb_diff_spec[2]);
+
+					shader.setFloat("material.shininess", material.shininess);
+
+					glBindVertexArray(g_ResourceManager->meshes[meshID].VAO);
+					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
+
+					glBindVertexArray(0);
 				}
 			}
 		}

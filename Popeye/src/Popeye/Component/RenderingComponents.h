@@ -8,7 +8,8 @@ namespace Popeye {
 		unsigned int shader_ID;
 		
 		Shader();
-		void Init(const GLchar* vertexPath = "shader/vertexShader.glsl", const GLchar* fragmentPath = "shader/fragmentShader.glsl");
+		void Init(const GLchar* vertexPath, const GLchar* fragmentPath);
+		void Init(const GLchar* vertexPath, const GLchar* geometryPath, const GLchar* fragmentPath);
 		void use();
 		void setBool(const std::string &name, bool value) const;
 		void setInt(const std::string& name, int value) const;

@@ -7,13 +7,21 @@ namespace Popeye
 
 	DirectoryData::DirectoryData(fs::path _path, bool _hasSubDir) : path(_path), hasSubDir(_hasSubDir) {}
 
-	FileIO::FileIO() { root = fs::current_path() / "Root"; resource = fs::current_path() / "Resource"; curr_focused_path = root; }
+	FileIO::FileIO() {}
 	FileIO::~FileIO() {}
 
 	void FileIO::Init()
 	{
+		//set path
+		root = fs::current_path() / "Root"; resource = fs::current_path() / "Resource"; curr_focused_path = root;
+
+		//make resource data folder if there isn't one
 		if (!fs::exists(resource / "Resource.dat"))			{ std::ofstream out(resource / "Resource.dat");			out.close();}
 		if (!fs::exists(resource / "ResourceTable.dat"))	{ std::ofstream out(resource / "ResourceTable.dat");	out.close();}
+		
+		//check all directory
+
+
 	}
 
 	int FileIO::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
@@ -81,40 +89,6 @@ namespace Popeye
 		return false;
 	}
 
-	//void FileIO::ReadModel(fs::path _path)
-	//{
-	//	/*Assimp::Importer importer;
-	//	std::string path = _path.string();
-	//	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
-	//	for (int i = 0; i < scene->mNumMeshes; i++)
-	//	{
-	//		POPEYE_CORE_INFO("Current Model Number {0}. Name : {1}", i, scene->mMeshes[i]->mName.C_Str());
-	//	}*/
-
-	//	t.detach();
-	//}
-
-	//void FileIO::ReadImage(fs::path _path)
-	//{
-
-
-	//	t.detach();
-	//}
-
-	//void FileIO::ReadFile(FileData filedata)
-	//{
-	//	//static std::thread t;
-	//	if (filedata.type == FileType::MODEL)
-	//	{
-	//		//t = std::thread(&FileIO::ReadModel, this, filedata.path);
-	//	}
-	//	else if (filedata.type == FileType::IMAGE)
-	//	{
-	//		//t = std::thread(&FileIO::ReadImage, this, filedata.path);
-	//	}
-	//}
-
 	void FileIO::WriteDataToFile(std::string datfile, std::string dattablefile, FileData filedata)
 	{
 		std::ifstream data(filedata.path, std::ifstream::binary);
@@ -156,29 +130,3 @@ namespace Popeye
 	}
 
 }
-
-
-
-/*std::ifstream data("texture/test.jpg", std::ifstream::binary);
-		if (data)
-		{
-			data.seekg(0, data.end);
-			int length = (int)data.tellg();
-			data.seekg(0, data.beg);
-
-			unsigned char* buffer = (unsigned char*)malloc(length);
-
-			data.read((char*)buffer, length);
-			data.close();
-
-
-			std::ofstream writedata;
-			writedata.open("data.dat", std::ios::out | std::ios::binary);
-
-			if (writedata.is_open())
-			{
-				writedata.write((const char*)buffer, length);
-				writedata.close();
-			}
-
-		}*/

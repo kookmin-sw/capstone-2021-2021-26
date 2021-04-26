@@ -4,8 +4,6 @@
 #include <assimp/scene.h>        
 #include <assimp/postprocess.h>
 
-#include "../Resource/Mesh.h"
-#include "../Resource/Texture.h"
 #include "stb_image.h"
 
 
@@ -29,16 +27,16 @@ namespace Popeye
 		std::vector<unsigned int> resource_type;
 		if (writedata.is_open())
 		{
-			unsigned int n = 0;
+			unsigned int address = 0;
 			int type = 0;
 			while (true)
 			{
 				writedata.read((char*)&type, sizeof(int));
-				writedata.read((char*)&n, sizeof(int));
+				writedata.read((char*)&address, sizeof(int));
 				if (writedata.eof())
 					break;
 
-				resource_address.push_back(n);
+				resource_address.push_back(address);
 				resource_type.push_back(type);
 			}
 			writedata.close();
@@ -60,6 +58,7 @@ namespace Popeye
 			for (int i = 0; i < resource_size; i++)
 			{
 				unsigned int len = i + 1 == resource_size ? sizeof(char) * length - resource_address[i] : resource_address[i + 1] - resource_address[i];
+				//images
 				if (resource_type[i] == 2)
 				{
 					Texture texture;
@@ -79,6 +78,7 @@ namespace Popeye
 					
 					stbi_image_free(data);
 				}
+				//models
 				else if (resource_type[i] == 3)
 				{
 					Assimp::Importer importer;
@@ -91,12 +91,23 @@ namespace Popeye
 						std::string meshName	= aimesh->mName.C_Str();
 						unsigned int vertNum	= aimesh->mNumVertices;
 						unsigned int faceNum	= aimesh->mNumFaces;
-
+						aiVector3D temp = aimesh->mVertices[0];
 						std::vector<unsigned int> indices;
 						std::vector<float> vert;
+						
+						BoundBox _bounbox;
+						_bounbox.maxX = temp.x;
+						_bounbox.minX = temp.x;
+
+						_bounbox.maxY = temp.y;
+						_bounbox.minY = temp.y;
+
+						_bounbox.maxZ = temp.z;
+						_bounbox.minZ = temp.z;
+
+
 						for (unsigned int j = 0; j < vertNum; j++)
 						{
-
 							aiVector3D vertex = aimesh->mVertices[j];
 							vert.push_back(vertex.x); vert.push_back(vertex.y); vert.push_back(vertex.z);
 
@@ -120,6 +131,21 @@ namespace Popeye
 								vert.push_back(0); vert.push_back(0);
 							}
 
+							if (_bounbox.maxX < vertex.x)
+								_bounbox.maxX = vertex.x;
+							if (_bounbox.minX > vertex.x)
+								_bounbox.minX = vertex.x;
+
+							if (_bounbox.maxY < vertex.y)
+								_bounbox.maxY = vertex.y;
+							if (_bounbox.minY > vertex.y)
+								_bounbox.minY = vertex.y;
+							
+							if (_bounbox.maxZ < vertex.z)
+								_bounbox.maxZ = vertex.z;
+							if (_bounbox.minZ > vertex.z)
+								_bounbox.minZ = vertex.z;
+
 						}
 
 						for (unsigned int j = 0; j < faceNum; j++)
@@ -132,6 +158,8 @@ namespace Popeye
 						}
 						Mesh mesh(vert, indices);
 						mesh.name = meshName;
+						mesh.boundbox = _bounbox;
+						POPEYE_CORE_INFO("bound size x : {0}, bound size y : {1}, bound size z : {2}", _bounbox.maxX - _bounbox.minX, _bounbox.maxY - _bounbox.minY, _bounbox.maxZ - _bounbox.minZ );
 						meshes.push_back(mesh);
 					}
 
