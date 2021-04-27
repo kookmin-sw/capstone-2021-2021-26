@@ -95,15 +95,15 @@ namespace Popeye
 						std::vector<unsigned int> indices;
 						std::vector<float> vert;
 						
-						BoundBox _bounbox;
-						_bounbox.maxX = temp.x;
-						_bounbox.minX = temp.x;
+						BoundBox bounbox;
+						bounbox.maxX = temp.x;
+						bounbox.minX = temp.x;
 
-						_bounbox.maxY = temp.y;
-						_bounbox.minY = temp.y;
+						bounbox.maxY = temp.y;
+						bounbox.minY = temp.y;
 
-						_bounbox.maxZ = temp.z;
-						_bounbox.minZ = temp.z;
+						bounbox.maxZ = temp.z;
+						bounbox.minZ = temp.z;
 
 
 						for (unsigned int j = 0; j < vertNum; j++)
@@ -131,20 +131,20 @@ namespace Popeye
 								vert.push_back(0); vert.push_back(0);
 							}
 
-							if (_bounbox.maxX < vertex.x)
-								_bounbox.maxX = vertex.x;
-							if (_bounbox.minX > vertex.x)
-								_bounbox.minX = vertex.x;
+							if (bounbox.maxX < vertex.x)
+								bounbox.maxX = vertex.x;
+							if (bounbox.minX > vertex.x)
+								bounbox.minX = vertex.x;
 
-							if (_bounbox.maxY < vertex.y)
-								_bounbox.maxY = vertex.y;
-							if (_bounbox.minY > vertex.y)
-								_bounbox.minY = vertex.y;
+							if (bounbox.maxY < vertex.y)
+								bounbox.maxY = vertex.y;
+							if (bounbox.minY > vertex.y)
+								bounbox.minY = vertex.y;
 							
-							if (_bounbox.maxZ < vertex.z)
-								_bounbox.maxZ = vertex.z;
-							if (_bounbox.minZ > vertex.z)
-								_bounbox.minZ = vertex.z;
+							if (bounbox.maxZ < vertex.z)
+								bounbox.maxZ = vertex.z;
+							if (bounbox.minZ > vertex.z)
+								bounbox.minZ = vertex.z;
 
 						}
 
@@ -156,10 +156,8 @@ namespace Popeye
 								indices.push_back(aiface.mIndices[k]);
 							}
 						}
-						Mesh mesh(vert, indices);
+						Mesh mesh(vert, indices, bounbox);
 						mesh.name = meshName;
-						mesh.boundbox = _bounbox;
-						POPEYE_CORE_INFO("bound size x : {0}, bound size y : {1}, bound size z : {2}", _bounbox.maxX - _bounbox.minX, _bounbox.maxY - _bounbox.minY, _bounbox.maxZ - _bounbox.minZ );
 						meshes.push_back(mesh);
 					}
 

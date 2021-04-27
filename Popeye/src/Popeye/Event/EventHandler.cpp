@@ -65,8 +65,33 @@ namespace Popeye
 		//mouse
 		if (mouseevent.IsMousePressed(Mouse::ButtonLeft))//drag and drop
 		{
+			if (!leftM)
+			{
+				leftM = true;
+				lastPos.x = (float)mouseevent.xPos / (1200.0f * 0.5f) - 1.0f;
+				lastPos.y = (float)mouseevent.yPos / (600.0f * 0.5f) - 1.0f;
+				POPEYE_CORE_INFO(" x : {0}, y : {1}", lastPos.x, lastPos.y);
 
+				glm::mat4 pMv = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f) * glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+				glm::mat4 unproject = glm::inverse(pMv);
+
+
+				glm::vec4 screenPos = glm::vec4(lastPos.x, -lastPos.y, 1.0f, 1.0f);
+				glm::vec4 worldPos = unproject * screenPos;
+
+				glm::vec3 dir = glm::normalize(glm::vec3(worldPos));
+
+
+				glm::vec3 rayendPos = g_sceneViewPosition + dir * 10.0f;
+
+				POPEYE_CORE_INFO(" x : {0}, y : {1}, z : {2}", rayendPos.x, rayendPos.y, rayendPos.z);
+			}
 		}
+		else
+		{
+			leftM = false;
+		}
+
 		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
 		{
 

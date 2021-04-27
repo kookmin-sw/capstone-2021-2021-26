@@ -2,11 +2,6 @@
 
 namespace Popeye 
 {
-	/*struct Vertex
-	{
-		float pos_norm_Tex[8] = { 0, };
-	};*/
-
 	struct BoundBox
 	{
 		float maxX, minX,
@@ -22,8 +17,9 @@ namespace Popeye
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
 
-		Mesh(std::vector<float> _vertices, std::vector<unsigned int> _indices);
+		Mesh(std::vector<float> _vertices, std::vector<unsigned int> _indices, BoundBox _boundbox);
 		void SetMesh();
+		void DrawMesh();
 	};
 
 	struct Model

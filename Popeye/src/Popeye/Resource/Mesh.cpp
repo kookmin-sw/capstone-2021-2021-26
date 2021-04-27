@@ -2,11 +2,11 @@
 
 namespace Popeye
 {
-	Mesh::Mesh(std::vector<float> _vertices, std::vector<unsigned int> _indices)
+	Mesh::Mesh(std::vector<float> _vertices, std::vector<unsigned int> _indices, BoundBox _boundbox)
 	{
 		vertices = _vertices;
 		indices = _indices;
-
+		boundbox = _boundbox;
 		SetMesh();
 	}
 
@@ -34,6 +34,12 @@ namespace Popeye
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(6 * sizeof(float)));
 
 		glBindVertexArray(0);
+	}
 
+	void Mesh::DrawMesh()
+	{
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
+		glBindVertexArray(0);
 	}
 }

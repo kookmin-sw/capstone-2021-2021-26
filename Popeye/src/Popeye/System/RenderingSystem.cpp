@@ -6,6 +6,7 @@
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
+#include "../Gizmo.h"
 
 namespace Popeye {
 	extern ResourceManager* g_ResourceManager;
@@ -78,7 +79,7 @@ namespace Popeye {
 			g_ScreenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_SceneView);
 
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			renderstate = RenderState::RENDERGAMEVIEW;
 		}
@@ -97,7 +98,7 @@ namespace Popeye {
 			g_ScreenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_GameView);
 
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			renderstate = RenderState::RENDERSCENEVIEW;
 		}		
@@ -262,7 +263,7 @@ namespace Popeye {
 	void RenderingSystem::RenderSceneView()
 	{
 		static Shader shader, gridShader; // temp 
-		static unsigned int gridVAO,length;
+		static Gizmo gizmo;
 		static int init = 0;
 
 		static std::vector<glm::vec3> vertices;
@@ -272,47 +273,7 @@ namespace Popeye {
 			shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl");
 			gridShader.Init("shader/gridvert.glsl", "shader/gridfrag.glsl");
 
-			//init grid
-			for (int j = -5; j <= 5; ++j) {
-				for (int i = -5; i <= 5; ++i) {
-					float x = (float)i;
-					float y = 0;
-					float z = (float)j;
-					vertices.push_back(glm::vec3(x, y, z));
-				}
-			}
-
-			for (int j = 0; j < 10; ++j) {
-				for (int i = 0; i < 10; ++i) {
-
-					int row1 = j * (10 + 1);
-					int row2 = (j + 1) * (10 + 1);
-
-					indices.push_back(glm::uvec4(row1 + i, row1 + i + 1, row1 + i + 1, row2 + i + 1));
-					indices.push_back(glm::uvec4(row2 + i + 1, row2 + i, row2 + i, row1 + i));
-				}
-			}
-
-			glGenVertexArrays(1, &gridVAO);
-			glBindVertexArray(gridVAO);
-
-			unsigned int vbo;
-			glGenBuffers(1, &vbo);
-			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
-			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-			unsigned int ibo;
-			glGenBuffers(1, &ibo);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec4), glm::value_ptr(indices[0]), GL_STATIC_DRAW);
-
-			glBindVertexArray(0);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-			length = indices.size() * 4;
+			gizmo.Init();
 			init++;
 		}
 
@@ -323,16 +284,6 @@ namespace Popeye {
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-
-		{
-			gridShader.use();
-			gridShader.setMat4("view", view);
-			gridShader.setMat4("proj", projection);
-			glBindVertexArray(gridVAO);
-			glDrawElements(GL_LINES, length, GL_UNSIGNED_INT, NULL);
-			glBindVertexArray(0);
-		}
-
 
 		shader.use();
 
@@ -442,12 +393,25 @@ namespace Popeye {
 
 					shader.setFloat("material.shininess", material.shininess);
 
-					glBindVertexArray(g_ResourceManager->meshes[meshID].VAO);
-					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
+					g_ResourceManager->meshes[meshID].DrawMesh();
 
-					glBindVertexArray(0);
+					//temp
+					BoundBox boundbox = g_ResourceManager->meshes[meshID].boundbox;
+					scale *= glm::vec3((boundbox.maxX - boundbox.minX), (boundbox.maxY - boundbox.minY) , (boundbox.maxZ - boundbox.minZ));
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
+					shader.setMat4("model", model);
+					gizmo.DrawWireCube();
 				}
 			}
+		}
+
+		{
+			gridShader.use();
+			gridShader.setMat4("view", view);
+			gridShader.setMat4("proj", projection);
+			gizmo.DrawGrid();
+			//gizmo.DrawWireCube();
 		}
 	}
 }
