@@ -14,7 +14,6 @@ namespace Popeye {
 		unsigned int sceneViewFBO, gameViewFBO;
 	private :
 		void RenderSceneView();
-		// gizmo
 		void RenderGameView();
 	public:
 		void SystemInit();

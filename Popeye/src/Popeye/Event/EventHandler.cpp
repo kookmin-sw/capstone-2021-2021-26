@@ -1,8 +1,13 @@
 #include "EventHandler.h"
+#include "../Manager/SceneManager.h"
+#include "../Scene/Scene.h"
+#include "../Scene/GameObject.h"
 
 namespace Popeye
 {
 	int g_eventMod;
+	glm::vec2 g_scenePosition;
+	glm::vec2 g_sceneSize;
 	
 	extern glm::vec3 g_sceneViewPosition;
 	extern glm::vec3 g_sceneViewDirection;
@@ -61,30 +66,28 @@ namespace Popeye
 		static glm::vec2 lastPos = glm::vec2(0.0f, 0.0f);
 		static float yaw = -90.0f;
 		static float pitch = 0.0f;
-
+		
 		//mouse
 		if (mouseevent.IsMousePressed(Mouse::ButtonLeft))//drag and drop
 		{
 			if (!leftM)
 			{
 				leftM = true;
-				lastPos.x = (float)mouseevent.xPos / (1200.0f * 0.5f) - 1.0f;
-				lastPos.y = (float)mouseevent.yPos / (600.0f * 0.5f) - 1.0f;
-				POPEYE_CORE_INFO(" x : {0}, y : {1}", lastPos.x, lastPos.y);
-
+				glm::vec2 mousePos = glm::vec2(0.0f, 0.0f);
+				glm::vec2 screepos = g_scenePosition;
+				glm::vec2 screensize = g_sceneSize;
+				mousePos.x = ((float)mouseevent.xPos - screepos.x) / (screensize.x * 0.5f) - 1.0f;
+				mousePos.y = ((float)mouseevent.yPos - screepos.y) / (screensize.y * 0.5f) - 1.0f;
+				//printf(" x : %f, y : %f \n", mousePos.x, mousePos.y);
 				glm::mat4 pMv = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f) * glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
 				glm::mat4 unproject = glm::inverse(pMv);
 
 
-				glm::vec4 screenPos = glm::vec4(lastPos.x, -lastPos.y, 1.0f, 1.0f);
+				glm::vec4 screenPos = glm::vec4(mousePos.x, -mousePos.y, 1.0f, 1.0f);
 				glm::vec4 worldPos = unproject * screenPos;
 
 				glm::vec3 dir = glm::normalize(glm::vec3(worldPos));
-
-
 				glm::vec3 rayendPos = g_sceneViewPosition + dir * 10.0f;
-
-				POPEYE_CORE_INFO(" x : {0}, y : {1}, z : {2}", rayendPos.x, rayendPos.y, rayendPos.z);
 			}
 		}
 		else

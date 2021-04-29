@@ -411,7 +411,6 @@ namespace Popeye {
 			gridShader.setMat4("view", view);
 			gridShader.setMat4("proj", projection);
 			gizmo.DrawGrid();
-			//gizmo.DrawWireCube();
 		}
 	}
 }

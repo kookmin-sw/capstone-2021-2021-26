@@ -9,7 +9,7 @@ namespace Popeye {
 	{
 		sceneName		= name;
 		gameObjectID	= 0;
-		mainCameraID = 0;
+		mainCameraID	= 0;
 
 		CreateGameObject();
 		CreateGameObject();
@@ -20,8 +20,6 @@ namespace Popeye {
 		gameObjects[0]->transform.rotation = { -30.0f, 45.0f, 0.0f };
 		gameObjects[0]->SetName("Main Camera");
 		gameObjects[1]->SetName("Light");
-
-
 	}
 	
 	Scene::~Scene(){ for (int i = 0; i < gameObjects.size(); i++) { delete gameObjects[i];} }
