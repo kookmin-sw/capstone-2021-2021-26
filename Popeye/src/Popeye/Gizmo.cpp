@@ -92,10 +92,49 @@ namespace Popeye {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		
+		axis.vertices = {
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(1.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 1.0f)
+		};
+
+		axis.indices = {
+			glm::uvec4(0, 1, 0, 2),
+			glm::uvec4(0, 3, 0, 1),
+		};
+
+		glGenVertexArrays(1, &axis.VAO);
+		glBindVertexArray(axis.VAO);
+
+		unsigned int axisvbo;
+		glGenBuffers(1, &axisvbo);
+		glBindBuffer(GL_ARRAY_BUFFER, axisvbo);
+		glBufferData(GL_ARRAY_BUFFER, axis.vertices.size() * sizeof(glm::vec3), glm::value_ptr(axis.vertices[0]), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+		unsigned int axisibo;
+		glGenBuffers(1, &axisibo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, axisibo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, axis.indices.size() * sizeof(glm::uvec4), glm::value_ptr(axis.indices[0]), GL_STATIC_DRAW);
+
+		glBindVertexArray(0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		
 
 		//length = indices.size() * 4;
 	}
 
+	void Gizmo::DrawAxis()
+	{
+		glBindVertexArray(axis.VAO);
+		glLineWidth(1.0f);
+		glDrawElements(GL_LINES, axis.indices.size() * 4, GL_UNSIGNED_INT, NULL);
+		glBindVertexArray(0);
+	}
 
 	void Gizmo::DrawGrid()
 	{

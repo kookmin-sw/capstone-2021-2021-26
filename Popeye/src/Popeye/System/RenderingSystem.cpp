@@ -24,7 +24,7 @@ namespace Popeye {
 
 	static Shader g_ScreenShader;
 
-	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, float& intersection_distance);
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale, float& intersection_distance);
 
 	void RenderingSystem::SystemInit()
 	{
@@ -404,17 +404,30 @@ namespace Popeye {
 
 					//temp
 					BoundBox boundbox = g_ResourceManager->meshes[meshID].boundbox;
-					scale *= glm::vec3((boundbox.maxX - boundbox.minX), (boundbox.maxY - boundbox.minY) , (boundbox.maxZ - boundbox.minZ));
+					glm::vec3 boxscale = glm::vec3((boundbox.maxX - boundbox.minX), (boundbox.maxY - boundbox.minY), (boundbox.maxZ - boundbox.minZ));
+					//scale *= boxscale;
+
+					{
+						boundbox.maxX *= scale.x;
+						boundbox.minX *= scale.x;
+
+						boundbox.maxY *= scale.y;
+						boundbox.minY *= scale.y;
+
+						boundbox.maxZ *= scale.z;
+						boundbox.minZ *= scale.z;
+					}
+
 					model = glm::mat4(1.0f);
-					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
+					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale * boxscale);
 					shader.setMat4("model", model);
 					gizmo.DrawWireCube();
-
 					if (g_sendRay)
 					{
 						float intersection_distance = 100.0f;
-						if (RayOBBIntersection(g_Rayorigin, g_Raydirection, boundbox, model, intersection_distance))
+						if (RayOBBIntersection(g_Rayorigin, g_Raydirection, boundbox, model, scale ,intersection_distance))
 						{
+							gizmo.DrawAxis();
 							POPEYE_INFO(g_ResourceManager->meshes[meshID].name);
 						}
 					}
@@ -431,7 +444,7 @@ namespace Popeye {
 	}
 
 
-	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, float& intersection_distance)
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale, float& intersection_distance)
 	{
 		float tMin = 0.0f;
 		float tMax = 100000.0f;
@@ -439,8 +452,8 @@ namespace Popeye {
 		glm::vec3 OBBposition_worldspace(model[3].x, model[3].y, model[3].z);
 		glm::vec3 delta = OBBposition_worldspace - ray_origin;
 
-		glm::vec3 minvec = glm::vec3(boundbox.minX, boundbox.minY, boundbox.minZ);
-		glm::vec3 maxvec = glm::vec3(boundbox.maxX, boundbox.maxY, boundbox.maxZ);
+		glm::vec3 minvec = glm::vec3(boundbox.minX, boundbox.minY, boundbox.minZ) * scale;
+		glm::vec3 maxvec = glm::vec3(boundbox.maxX, boundbox.maxY, boundbox.maxZ) * scale;
 
 
 		glm::vec3 xaxis(model[0].x, model[0].y, model[0].z);
