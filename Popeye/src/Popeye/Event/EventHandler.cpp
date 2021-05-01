@@ -8,6 +8,10 @@ namespace Popeye
 	int g_eventMod;
 	glm::vec2 g_scenePosition;
 	glm::vec2 g_sceneSize;
+
+	glm::vec3 g_Rayorigin;
+	glm::vec3 g_Raydirection;
+	bool g_sendRay = false;
 	
 	extern glm::vec3 g_sceneViewPosition;
 	extern glm::vec3 g_sceneViewDirection;
@@ -88,12 +92,16 @@ namespace Popeye
 
 				glm::vec3 dir = glm::normalize(glm::vec3(worldPos));
 				glm::vec3 rayendPos = g_sceneViewPosition + dir * 10.0f;
+
+				g_Rayorigin = g_sceneViewPosition;
+				g_Raydirection = dir;
 			}
 		}
 		else
 		{
 			leftM = false;
 		}
+		g_sendRay = leftM;
 
 		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
 		{

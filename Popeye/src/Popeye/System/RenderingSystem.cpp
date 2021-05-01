@@ -11,13 +11,20 @@
 namespace Popeye {
 	extern ResourceManager* g_ResourceManager;
 
+	extern glm::vec3 g_Rayorigin;
+	extern glm::vec3 g_Raydirection;
+	extern bool g_sendRay;
+
 	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
 	glm::vec3 g_sceneViewDirection = glm::vec3(0.0f, 0.0f, 1.0f);
+
 
 	unsigned int g_GameView;
 	unsigned int g_SceneView;
 
 	static Shader g_ScreenShader;
+
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, float& intersection_distance);
 
 	void RenderingSystem::SystemInit()
 	{
@@ -402,6 +409,15 @@ namespace Popeye {
 					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale);
 					shader.setMat4("model", model);
 					gizmo.DrawWireCube();
+
+					if (g_sendRay)
+					{
+						float intersection_distance = 100.0f;
+						if (RayOBBIntersection(g_Rayorigin, g_Raydirection, boundbox, model, intersection_distance))
+						{
+							POPEYE_INFO(g_ResourceManager->meshes[meshID].name);
+						}
+					}
 				}
 			}
 		}
@@ -412,5 +428,72 @@ namespace Popeye {
 			gridShader.setMat4("proj", projection);
 			gizmo.DrawGrid();
 		}
+	}
+
+
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, float& intersection_distance)
+	{
+		float tMin = 0.0f;
+		float tMax = 100000.0f;
+
+		glm::vec3 OBBposition_worldspace(model[3].x, model[3].y, model[3].z);
+		glm::vec3 delta = OBBposition_worldspace - ray_origin;
+
+		glm::vec3 minvec = glm::vec3(boundbox.minX, boundbox.minY, boundbox.minZ);
+		glm::vec3 maxvec = glm::vec3(boundbox.maxX, boundbox.maxY, boundbox.maxZ);
+
+
+		glm::vec3 xaxis(model[0].x, model[0].y, model[0].z);
+		glm::vec3 yaxis(model[1].x, model[1].y, model[1].z);
+		glm::vec3 zaxis(model[2].x, model[2].y, model[2].z);
+
+		float e = glm::dot(xaxis, delta);
+		float f = glm::dot(ray_direction, xaxis);
+
+		float t1 = (e + minvec.x) / f;
+		float t2 = (e + maxvec.x) / f;
+
+		if (t1 > t2) {
+			float w = t1; t1 = t2; t2 = w;
+		}
+		if (t2 < tMax) tMax = t2;
+		if (t1 > tMin) tMin = t1;
+
+		if (tMax < tMin)
+			return false;
+
+		
+		e = glm::dot(yaxis, delta);
+		f = glm::dot(ray_direction, yaxis);
+
+		t1 = (e + minvec.y) / f;
+		t2 = (e + maxvec.y) / f;
+
+		if (t1 > t2) {
+			float w = t1; t1 = t2; t2 = w;
+		}
+		if (t2 < tMax) tMax = t2;
+		if (t1 > tMin) tMin = t1;
+
+		if (tMax < tMin)
+			return false;
+
+		e = glm::dot(zaxis, delta);
+		f = glm::dot(ray_direction, zaxis);
+
+		t1 = (e + minvec.z) / f;
+		t2 = (e + maxvec.z) / f;
+
+		if (t1 > t2) {
+			float w = t1; t1 = t2; t2 = w;
+		}
+		if (t2 < tMax) tMax = t2;
+		if (t1 > tMin) tMin = t1;
+
+		if (tMax < tMin)
+			return false;
+
+
+		return true;
 	}
 }
