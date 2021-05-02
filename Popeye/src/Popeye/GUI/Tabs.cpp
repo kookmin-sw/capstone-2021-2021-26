@@ -27,8 +27,8 @@ namespace Popeye{
 	extern glm::vec2		g_scenePosition;
 	extern glm::vec2		g_sceneSize;
 
-	static Scene			*scene;
-	static GameObject		*selectedGameObject;
+	Scene		*scene;
+	GameObject	*selectedGameObject;
 
 
 	//Tab 

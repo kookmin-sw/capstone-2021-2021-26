@@ -1,7 +1,4 @@
 #include "EventHandler.h"
-#include "../Manager/SceneManager.h"
-#include "../Scene/Scene.h"
-#include "../Scene/GameObject.h"
 
 namespace Popeye
 {
@@ -15,6 +12,13 @@ namespace Popeye
 	
 	extern glm::vec3 g_sceneViewPosition;
 	extern glm::vec3 g_sceneViewDirection;
+
+	EventHandler::EventHandler() {
+		sendEditRay = false;
+		sceneViewPos = glm::vec3(2.0f, 2.0f, 2.0f);;
+		sceneViewDir = glm::vec3(0.0f, 0.0f, 1.0f);
+	};
+	EventHandler::~EventHandler() {};
 
 	void EventHandler::SetEventCallbacks(GLFWwindow* window)
 	{
@@ -83,7 +87,7 @@ namespace Popeye
 				mousePos.x = ((float)mouseevent.xPos - screepos.x) / (screensize.x * 0.5f) - 1.0f;
 				mousePos.y = ((float)mouseevent.yPos - screepos.y) / (screensize.y * 0.5f) - 1.0f;
 				//printf(" x : %f, y : %f \n", mousePos.x, mousePos.y);
-				glm::mat4 pMv = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f) * glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+				glm::mat4 pMv = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f) * glm::lookAt(sceneViewPos, sceneViewPos + sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f));
 				glm::mat4 unproject = glm::inverse(pMv);
 
 
@@ -91,17 +95,18 @@ namespace Popeye
 				glm::vec4 worldPos = unproject * screenPos;
 
 				glm::vec3 dir = glm::normalize(glm::vec3(worldPos));
-				glm::vec3 rayendPos = g_sceneViewPosition + dir * 10.0f;
-
-				g_Rayorigin = g_sceneViewPosition;
-				g_Raydirection = dir;
+				glm::vec3 rayendPos = sceneViewPos + dir * 10.0f;
+				
+				screenToMousePos = sceneViewPos;
+				screenToMouseDir = dir;
+				if(!sendEditRay)
+					sendEditRay = true;
 			}
 		}
 		else
 		{
 			leftM = false;
 		}
-		g_sendRay = leftM;
 
 		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
 		{
@@ -138,7 +143,7 @@ namespace Popeye
 				front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 				front.y = sin(glm::radians(pitch));
 				front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-				g_sceneViewDirection = glm::normalize(front);
+				sceneViewDir = glm::normalize(front);
 			}
 		}
 		else
@@ -148,12 +153,12 @@ namespace Popeye
 
 		
 		//keyboard
-		if (keyevent.IsKeyPressed(Keyboard::W)) { g_sceneViewPosition += 0.1f * g_sceneViewDirection; }
-		if (keyevent.IsKeyPressed(Keyboard::S)) { g_sceneViewPosition -= 0.1f * g_sceneViewDirection; }
-		if (keyevent.IsKeyPressed(Keyboard::A)) { g_sceneViewPosition -= 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
-		if (keyevent.IsKeyPressed(Keyboard::D)) { g_sceneViewPosition += 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
-		if (keyevent.IsKeyPressed(Keyboard::Q)) { g_sceneViewPosition -= glm::vec3(0.0f, 0.1f, 0.0f); }
-		if (keyevent.IsKeyPressed(Keyboard::E)) { g_sceneViewPosition += glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::W)) { sceneViewPos += 0.1f * sceneViewDir; }
+		if (keyevent.IsKeyPressed(Keyboard::S)) { sceneViewPos -= 0.1f * sceneViewDir; }
+		if (keyevent.IsKeyPressed(Keyboard::A)) { sceneViewPos -= 0.1f * glm::normalize(glm::cross(sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::D)) { sceneViewPos += 0.1f * glm::normalize(glm::cross(sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::Q)) { sceneViewPos -= glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::E)) { sceneViewPos += glm::vec3(0.0f, 0.1f, 0.0f); }
 		
 	}
 

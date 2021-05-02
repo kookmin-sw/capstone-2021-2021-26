@@ -9,26 +9,19 @@
 #include "../Gizmo.h"
 
 namespace Popeye {
-	extern ResourceManager* g_ResourceManager;
+	extern ResourceManager	*g_ResourceManager;;
 
-	extern glm::vec3 g_Rayorigin;
-	extern glm::vec3 g_Raydirection;
-	extern bool g_sendRay;
+	extern GameObject		*selectedGameObject;
 
-	glm::vec3 g_sceneViewPosition = glm::vec3(2.0f, 2.0f, 2.0f);
-	glm::vec3 g_sceneViewDirection = glm::vec3(0.0f, 0.0f, 1.0f);
-
-
+	static Shader screenShader;
 	unsigned int g_GameView;
 	unsigned int g_SceneView;
-
-	static Shader g_ScreenShader;
 
 	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale, float& intersection_distance);
 
 	void RenderingSystem::SystemInit()
 	{
-		g_ScreenShader.Init("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
+		screenShader.Init("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
 
 		unsigned int rbo;
 
@@ -83,7 +76,7 @@ namespace Popeye {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 			glDisable(GL_DEPTH_TEST);
-			g_ScreenShader.use();
+			screenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_SceneView);
 
 			glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -102,7 +95,7 @@ namespace Popeye {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 			glDisable(GL_DEPTH_TEST);
-			g_ScreenShader.use();
+			screenShader.use();
 			glBindTexture(GL_TEXTURE_2D, g_GameView);
 
 			glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -285,12 +278,12 @@ namespace Popeye {
 			init++;
 		}
 
-		int pointLightCount = 0;
-		int dirLightCount = 0;
-		int spotLightCount = 0;
+		unsigned int pointLightCount = 0;
+		unsigned int dirLightCount = 0;
+		unsigned int spotLightCount = 0;
 
 		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::lookAt(g_sceneViewPosition, g_sceneViewPosition + g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 view = glm::lookAt(sceneViewPos[0], sceneViewPos[0] + sceneViewDir[0], glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 projection = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
 
 		shader.use();
@@ -372,8 +365,8 @@ namespace Popeye {
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
 				if (!meshrenderer.isEmpty)
 				{
-					int meshID = meshrenderer.meshID;
-					int materialID = meshrenderer.materialID;
+					unsigned int meshID = meshrenderer.meshID;
+					unsigned int materialID = meshrenderer.materialID;
 
 					Material material = g_ResourceManager->materials[materialID];
 
@@ -422,7 +415,8 @@ namespace Popeye {
 			}
 		}
 
-		{
+		
+		{	//gizmo
 			gridShader.use();
 			gridShader.setMat4("view", view);
 			gridShader.setMat4("proj", projection);
@@ -437,22 +431,24 @@ namespace Popeye {
 				model = glm::mat4(1.0f);
 				Transform bound_trans = selectable_gameobjects[i]->transform;
 				glm::vec3 boxscale = glm::vec3((sized_boundbox[i].maxX - sized_boundbox[i].minX), (sized_boundbox[i].maxY - sized_boundbox[i].minY), (sized_boundbox[i].maxZ - sized_boundbox[i].minZ));
-				bound_trans.scale;
 
-				model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation)) * glm::scale(model, bound_trans.scale);
+				model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation)) * glm::scale(model, boxscale);
 				gridShader.setMat4("model", model);
 				gizmo.DrawWireCube();
 
-				if (g_sendRay)
+				if (sendEditRay[0])
 				{
 					float intersection_distance = 100.0f;
-					if (RayOBBIntersection(g_Rayorigin, g_Raydirection, sized_boundbox[i], model, bound_trans.scale, intersection_distance))
+					if (RayOBBIntersection(screenToMousePos[0], screenToMouseDir[0], sized_boundbox[i], model, bound_trans.scale, intersection_distance))
 					{
-						POPEYE_CORE_INFO(selectable_gameobjects[i]->GetName());
+						selectedGameObject = selectable_gameobjects[i];
+						//POPEYE_CORE_INFO(selectable_gameobjects[i]->GetName());
+						model = glm::mat4(1.0f);
 						model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation));
 						gridShader.setMat4("model", model);
 						gizmo.DrawAxis();
 					}
+					sendEditRay[0] = false;
 				}
 			}
 		}

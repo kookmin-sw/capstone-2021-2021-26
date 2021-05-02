@@ -63,6 +63,13 @@ namespace Popeye {
 
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();
+		{
+			renderingSystem->sceneViewDir		= &eventHandler->sceneViewDir;
+			renderingSystem->sceneViewPos		= &eventHandler->sceneViewPos;
+			renderingSystem->screenToMouseDir	= &eventHandler->screenToMouseDir;
+			renderingSystem->screenToMousePos	= &eventHandler->screenToMousePos;
+			renderingSystem->sendEditRay		= &eventHandler->sendEditRay;
+		}
 
 		ScriptingSystem* scriptingSystem = new ScriptingSystem();
 		scriptingSystem->SystemInit();

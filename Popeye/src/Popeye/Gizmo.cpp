@@ -139,7 +139,7 @@ namespace Popeye {
 	void Gizmo::DrawAxis()
 	{
 		glBindVertexArray(axis.VAO);
-		glLineWidth(1.0f);
+		glLineWidth(3.0f);
 		glDrawElements(GL_LINES, axis.indices.size() * 2, GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
 	}
