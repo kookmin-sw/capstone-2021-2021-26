@@ -273,8 +273,9 @@ namespace Popeye {
 		static Gizmo gizmo;
 		static int init = 0;
 
-		static std::vector<glm::vec3> vertices;
-		static std::vector<glm::uvec4> indices;
+		std::vector<GameObject*> selectable_gameobjects;
+		std::vector<BoundBox> sized_boundbox;
+
 
 		if (!init) {
 			shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl");
@@ -405,32 +406,18 @@ namespace Popeye {
 					//temp
 					BoundBox boundbox = g_ResourceManager->meshes[meshID].boundbox;
 					glm::vec3 boxscale = glm::vec3((boundbox.maxX - boundbox.minX), (boundbox.maxY - boundbox.minY), (boundbox.maxZ - boundbox.minZ));
-					//scale *= boxscale;
 
-					{
-						boundbox.maxX *= scale.x;
-						boundbox.minX *= scale.x;
+					boundbox.maxX *= scale.x;
+					boundbox.minX *= scale.x;
 
-						boundbox.maxY *= scale.y;
-						boundbox.minY *= scale.y;
+					boundbox.maxY *= scale.y;
+					boundbox.minY *= scale.y;
 
-						boundbox.maxZ *= scale.z;
-						boundbox.minZ *= scale.z;
-					}
+					boundbox.maxZ *= scale.z;
+					boundbox.minZ *= scale.z;
 
-					model = glm::mat4(1.0f);
-					model = glm::translate(model, position) * glm::toMat4(glm::quat(rotation)) * glm::scale(model, scale * boxscale);
-					shader.setMat4("model", model);
-					gizmo.DrawWireCube();
-					if (g_sendRay)
-					{
-						float intersection_distance = 100.0f;
-						if (RayOBBIntersection(g_Rayorigin, g_Raydirection, boundbox, model, scale ,intersection_distance))
-						{
-							gizmo.DrawAxis();
-							POPEYE_INFO(g_ResourceManager->meshes[meshID].name);
-						}
-					}
+					selectable_gameobjects.push_back(gameObject);
+					sized_boundbox.push_back(boundbox);
 				}
 			}
 		}
@@ -439,7 +426,35 @@ namespace Popeye {
 			gridShader.use();
 			gridShader.setMat4("view", view);
 			gridShader.setMat4("proj", projection);
+			
+			model = glm::mat4(1.0f);
+			gridShader.setMat4("model", model);
 			gizmo.DrawGrid();
+
+			int size = selectable_gameobjects.size();
+			for (int i = 0; i < size; i++)
+			{
+				model = glm::mat4(1.0f);
+				Transform bound_trans = selectable_gameobjects[i]->transform;
+				glm::vec3 boxscale = glm::vec3((sized_boundbox[i].maxX - sized_boundbox[i].minX), (sized_boundbox[i].maxY - sized_boundbox[i].minY), (sized_boundbox[i].maxZ - sized_boundbox[i].minZ));
+				bound_trans.scale;
+
+				model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation)) * glm::scale(model, bound_trans.scale);
+				gridShader.setMat4("model", model);
+				gizmo.DrawWireCube();
+
+				if (g_sendRay)
+				{
+					float intersection_distance = 100.0f;
+					if (RayOBBIntersection(g_Rayorigin, g_Raydirection, sized_boundbox[i], model, bound_trans.scale, intersection_distance))
+					{
+						POPEYE_CORE_INFO(selectable_gameobjects[i]->GetName());
+						model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation));
+						gridShader.setMat4("model", model);
+						gizmo.DrawAxis();
+					}
+				}
+			}
 		}
 	}
 

@@ -6,7 +6,7 @@ namespace Popeye{
 	{
 		unsigned int VAO;
 		std::vector<glm::vec3> vertices;
-		std::vector<glm::uvec4> indices;
+		std::vector<glm::uvec2> indices;
 	};
 
 	class Gizmo 

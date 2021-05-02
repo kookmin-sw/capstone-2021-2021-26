@@ -9,6 +9,7 @@
 #include "Event/EventHandler.h"
 
 #include "System/RenderingSystem.h"
+#include "System/ScriptingSystem.h"
 
 
 namespace Popeye {
@@ -63,6 +64,9 @@ namespace Popeye {
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();
 
+		ScriptingSystem* scriptingSystem = new ScriptingSystem();
+		scriptingSystem->SystemInit();
+
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
@@ -83,9 +87,8 @@ namespace Popeye {
 			// TODO :: Run Audio system here
 			// ------------------------------
 
-			// ------------------------------
-			// TODO :: Run Script system here
-			// ------------------------------
+			// Scripting system
+			scriptingSystem->SystemRunning();
 
 
 			eventHandler->HandleEvent();
@@ -111,6 +114,7 @@ namespace Popeye {
 
 		delete(eventHandler);
 		delete(renderingSystem);
+		delete(scriptingSystem);
 
 	}
 

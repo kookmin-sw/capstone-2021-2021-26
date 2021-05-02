@@ -31,6 +31,7 @@ set(POPEYE_COMPONENT
     src/Popeye/Component/UIComponents.cpp
     src/Popeye/Component/UIComponents.h
     src/Popeye/Component/ScriptComponents.h
+    src/Popeye/Component/ScriptComponents.cpp
     )
 
 set(POPEYE_MANAGER
@@ -77,6 +78,8 @@ set(POPEYE_SCENE
 set(POPEYE_SYSTEM 
     src/Popeye/System/RenderingSystem.h
     src/Popeye/System/RenderingSystem.cpp
+    src/Popeye/System/ScriptingSystem.h
+    src/Popeye/System/ScriptingSystem.cpp
     )
 
 add_library(popeye SHARED

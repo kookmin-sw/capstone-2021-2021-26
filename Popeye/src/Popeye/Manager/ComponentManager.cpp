@@ -1,5 +1,6 @@
 #include "ComponentManager.h"
 #include "../Component/RenderingComponents.h"
+#include "../Component/ScriptComponents.h"
 
 namespace Popeye
 {
@@ -17,6 +18,9 @@ namespace Popeye
 		//UI Components
 		//RegistComponent<Frame>();
 		//RegistComponent<Button>();
+
+		//Script Component
+		RegistComponent<ScriptComponent>();
 	}
 
 	ComponentManager::ComponentManager()

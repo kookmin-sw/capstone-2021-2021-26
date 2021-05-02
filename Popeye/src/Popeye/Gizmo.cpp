@@ -23,8 +23,11 @@ namespace Popeye {
 				int row1 = j * (10 + 1);
 				int row2 = (j + 1) * (10 + 1);
 
-				grid.indices.push_back(glm::uvec4(row1 + i, row1 + i + 1, row1 + i + 1, row2 + i + 1));
-				grid.indices.push_back(glm::uvec4(row2 + i + 1, row2 + i, row2 + i, row1 + i));
+				grid.indices.push_back(glm::uvec2(row1 + i, row1 + i + 1));
+				grid.indices.push_back(glm::uvec2(row1 + i + 1, row2 + i + 1));
+				grid.indices.push_back(glm::uvec2(row2 + i + 1, row2 + i));
+				grid.indices.push_back(glm::uvec2(row2 + i, row1 + i));
+
 			}
 		}
 
@@ -41,7 +44,7 @@ namespace Popeye {
 		unsigned int gridibo;
 		glGenBuffers(1, &gridibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gridibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, grid.indices.size() * sizeof(glm::uvec4), glm::value_ptr(grid.indices[0]), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, grid.indices.size() * sizeof(glm::uvec2), glm::value_ptr(grid.indices[0]), GL_STATIC_DRAW);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -62,14 +65,20 @@ namespace Popeye {
 		};
 
 		wirecube.indices = {
-			glm::uvec4(0, 1, 1, 2),
-			glm::uvec4(2, 3, 3, 0),
+			glm::uvec2(0, 1),
+			glm::uvec2(1, 2),
+			glm::uvec2(2, 3),
+			glm::uvec2(3, 0),
 
-			glm::uvec4(0, 4, 1, 5),
-			glm::uvec4(2, 6, 3, 7),
+			glm::uvec2(0, 4),
+			glm::uvec2(1, 5),
+			glm::uvec2(2, 6),
+			glm::uvec2(3, 7),
 
-			glm::uvec4(4, 5, 5, 6),
-			glm::uvec4(6, 7, 7, 4)
+			glm::uvec2(4, 5),
+			glm::uvec2(5, 6),
+			glm::uvec2(6, 7),
+			glm::uvec2(7, 4)
 		};
 
 		glGenVertexArrays(1, &wirecube.VAO);
@@ -85,7 +94,7 @@ namespace Popeye {
 		unsigned int cubeibo;
 		glGenBuffers(1, &cubeibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, wirecube.indices.size() * sizeof(glm::uvec4), glm::value_ptr(wirecube.indices[0]), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, wirecube.indices.size() * sizeof(glm::uvec2), glm::value_ptr(wirecube.indices[0]), GL_STATIC_DRAW);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -100,8 +109,10 @@ namespace Popeye {
 		};
 
 		axis.indices = {
-			glm::uvec4(0, 1, 0, 2),
-			glm::uvec4(0, 3, 0, 1),
+			glm::uvec2(0, 1),
+			glm::uvec2(0, 2),
+			glm::uvec2(0, 3),
+			glm::uvec2(0, 1)
 		};
 
 		glGenVertexArrays(1, &axis.VAO);
@@ -117,22 +128,19 @@ namespace Popeye {
 		unsigned int axisibo;
 		glGenBuffers(1, &axisibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, axisibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, axis.indices.size() * sizeof(glm::uvec4), glm::value_ptr(axis.indices[0]), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, axis.indices.size() * sizeof(glm::uvec2), glm::value_ptr(axis.indices[0]), GL_STATIC_DRAW);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		
-
-		//length = indices.size() * 4;
 	}
 
 	void Gizmo::DrawAxis()
 	{
 		glBindVertexArray(axis.VAO);
 		glLineWidth(1.0f);
-		glDrawElements(GL_LINES, axis.indices.size() * 4, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_LINES, axis.indices.size() * 2, GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
 	}
 
@@ -140,15 +148,15 @@ namespace Popeye {
 	{
 		glBindVertexArray(grid.VAO);
 		glLineWidth(1.5f);
-		glDrawElements(GL_LINES, grid.indices.size() * 4, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_LINES, grid.indices.size() * 2, GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
 	}
 
 	void Gizmo::DrawWireCube()
 	{
 		glBindVertexArray(wirecube.VAO);
-		glLineWidth(1.0f);
-		glDrawElements(GL_LINES, wirecube.indices.size() * 4, GL_UNSIGNED_INT, NULL);
+		glLineWidth(0.5f);
+		glDrawElements(GL_LINES, wirecube.indices.size() * 2, GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
 	}
 }
