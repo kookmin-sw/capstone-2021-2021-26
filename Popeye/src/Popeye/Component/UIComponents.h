@@ -2,31 +2,22 @@
 
 namespace Popeye
 
-typedef struct {
+struct Point{
 	double x;
 	double y;
-} Point;
+};
 
-typedef struct {
+struct UIFrame{
 	Point leftTop;
 	Point rightBot;
-} UIFrame;
+};
 
-//-------------------------------------------
-//TODO :: Text
-//-------------------------------------------
-
-typedef struct {
+struct Text{
 	Point leftTop;
 	Point rightBot;
-} Text;
+};
 
-//-------------------------------------------
-//TODO :: Button
-//-------------------------------------------
-
-
-typedef struct {
+struct Button{
 	Point leftTop;
 	Point rightBot;
-} Button;
+};
