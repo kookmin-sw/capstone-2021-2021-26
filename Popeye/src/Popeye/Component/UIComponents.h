@@ -24,7 +24,7 @@ void Point::PointSet(int x, int y, int z, int w)
 	zpos = z;
 	wpos = w;
 	Point UI2;
-	UI2.PointSet = (x, y);
+	UI2.PointSet = (z, w);
 }
 
 void Point::UIFrame(int UI1, int UI2)
