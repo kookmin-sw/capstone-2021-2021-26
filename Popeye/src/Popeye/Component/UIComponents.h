@@ -1,23 +1,23 @@
 #pragma once
 
-namespace Popeye
+namespace Popeye{
 
-struct Point{
-	float x;
-	float y;
-};
+	glm::vec2
 
-struct UIFrame{
-	Point leftTop;
-	Point rightBot;
-};
+	struct UIFrame{
+		Point leftTop;
+		Point rightBot;
+	};
 
-struct Text{
-	Point leftTop;
-	Point rightBot;
-};
+	struct Text{
+		std::string contents
+		Point leftTop;
+		Point rightBot;
+	};
 
-struct Button{
-	Point leftTop;
-	Point rightBot;
-};
+	struct Button{
+		Point leftTop;
+		Point rightBot;
+	};
+
+}
