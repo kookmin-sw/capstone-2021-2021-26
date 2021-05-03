@@ -17,7 +17,8 @@ namespace Popeye {
 	unsigned int g_GameView;
 	unsigned int g_SceneView;
 
-	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale, float& intersection_distance);
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale);
+	bool RayLineSegIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, glm::vec3 pos, glm::vec3 dir);
 
 	void RenderingSystem::SystemInit()
 	{
@@ -430,6 +431,7 @@ namespace Popeye {
 			{
 				model = glm::mat4(1.0f);
 				Transform bound_trans = selectable_gameobjects[i]->transform;
+				bound_trans.rotation = glm::radians(selectable_gameobjects[i]->transform.rotation);
 				glm::vec3 boxscale = glm::vec3((sized_boundbox[i].maxX - sized_boundbox[i].minX), (sized_boundbox[i].maxY - sized_boundbox[i].minY), (sized_boundbox[i].maxZ - sized_boundbox[i].minZ));
 
 				model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation)) * glm::scale(model, boxscale);
@@ -439,23 +441,71 @@ namespace Popeye {
 				if (sendEditRay[0])
 				{
 					float intersection_distance = 100.0f;
-					if (RayOBBIntersection(screenToMousePos[0], screenToMouseDir[0], sized_boundbox[i], model, bound_trans.scale, intersection_distance))
+					if (RayOBBIntersection(screenToMousePos[0], screenToMouseDir[0], sized_boundbox[i], model, bound_trans.scale))
 					{
 						selectedGameObject = selectable_gameobjects[i];
-						//POPEYE_CORE_INFO(selectable_gameobjects[i]->GetName());
-						model = glm::mat4(1.0f);
-						model = glm::translate(model, bound_trans.position) * glm::toMat4(glm::quat(bound_trans.rotation));
-						gridShader.setMat4("model", model);
-						gizmo.DrawAxis();
 					}
 					sendEditRay[0] = false;
 				}
 			}
+
+			if (selectedGameObject != nullptr)
+			{
+				model = glm::mat4(1.0f);
+				glm::vec3 rot = glm::radians(selectedGameObject->transform.rotation);
+				model = glm::translate(model, selectedGameObject->transform.position) * glm::toMat4(glm::quat(rot));
+				glm::vec3 pos(model[3]);
+
+				if (RayLineSegIntersection(screenToMousePos[0], screenToMouseDir[0], pos, model[0]))
+				{
+					POPEYE_CORE_INFO("xaxis");
+				}
+				if (RayLineSegIntersection(screenToMousePos[0], screenToMouseDir[0], pos, model[1]))
+				{
+					POPEYE_CORE_INFO("yaxis");
+				}
+				if (RayLineSegIntersection(screenToMousePos[0], screenToMouseDir[0], pos, model[2]))
+				{
+					POPEYE_CORE_INFO("zaxis");
+				}
+				gridShader.setMat4("model", model);
+				gizmo.DrawAxis();
+			}
 		}
 	}
 
+	bool RayLineSegIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, glm::vec3 _pos , glm::vec3 _dir)
+	{
+		glm::vec3 raystartPos = ray_origin;
+		glm::vec3 raydir = ray_direction;
 
-	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale, float& intersection_distance)
+		glm::vec3 dir(_dir);
+		glm::vec3 pos(_pos);
+
+		glm::vec3 posraydir = raystartPos - pos;
+
+		float a = glm::dot(raydir,	raydir);
+		float b = glm::dot(raydir,	dir);
+		float c = glm::dot(dir,		dir);
+		float d = glm::dot(raydir,	posraydir);
+		float e = glm::dot(dir,		posraydir);
+
+		float dd = a * c - b * b;
+		float tt = (b * e - c * d) / dd;
+		float uu = (a * e - b * d) / dd;
+
+		glm::vec3 p = raystartPos + tt * raydir;
+		glm::vec3 q = pos + uu * dir;
+
+		float dist = glm::distance(p, q);
+		if (dist <= 0.1f)
+			return true;
+
+
+		return false;
+	}
+
+	bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, BoundBox boundbox, glm::mat4 model, glm::vec3 scale)
 	{
 		float tMin = 0.0f;
 		float tMax = 100000.0f;

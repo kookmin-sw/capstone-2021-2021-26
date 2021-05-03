@@ -28,7 +28,7 @@ namespace Popeye{
 	extern glm::vec2		g_sceneSize;
 
 	Scene		*scene;
-	GameObject	*selectedGameObject;
+	GameObject	*selectedGameObject = nullptr;
 
 
 	//Tab 

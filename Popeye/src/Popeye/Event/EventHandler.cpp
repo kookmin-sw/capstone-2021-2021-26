@@ -155,10 +155,10 @@ namespace Popeye
 		//keyboard
 		if (keyevent.IsKeyPressed(Keyboard::W)) { sceneViewPos += 0.1f * sceneViewDir; }
 		if (keyevent.IsKeyPressed(Keyboard::S)) { sceneViewPos -= 0.1f * sceneViewDir; }
-		if (keyevent.IsKeyPressed(Keyboard::A)) { sceneViewPos -= 0.1f * glm::normalize(glm::cross(sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f))); }
 		if (keyevent.IsKeyPressed(Keyboard::D)) { sceneViewPos += 0.1f * glm::normalize(glm::cross(sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f))); }
-		if (keyevent.IsKeyPressed(Keyboard::Q)) { sceneViewPos -= glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::A)) { sceneViewPos -= 0.1f * glm::normalize(glm::cross(sceneViewDir, glm::vec3(0.0f, 1.0f, 0.0f))); }
 		if (keyevent.IsKeyPressed(Keyboard::E)) { sceneViewPos += glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::Q)) { sceneViewPos -= glm::vec3(0.0f, 0.1f, 0.0f); }
 		
 	}
 
