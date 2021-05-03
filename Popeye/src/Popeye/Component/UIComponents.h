@@ -3,8 +3,8 @@
 namespace Popeye
 
 struct Point{
-	double x;
-	double y;
+	float x;
+	float y;
 };
 
 struct UIFrame{
