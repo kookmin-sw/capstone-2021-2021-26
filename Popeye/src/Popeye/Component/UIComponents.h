@@ -5,29 +5,29 @@ namespace Popeye
 class Point
 {
 	private:
-		int xpos;
-		int ypos;
+		float xpos;
+		float ypos;
 
 	public:
- 		void TopLeft(int x, int y);
-		void BottomRight(int x, int y);
-		void UIFrame(int x, int y);
-		void Text(int x, int y);
+ 		void TopLeft(float x, float y);
+		void BottomRight(float x, float y);
+		void UIFrame(float x, float y);
+		void Text(float x, float y);
 };
 
-void Point::TopLeft(int x, int y)
+void Point::TopLeft(float x, float y)
 {
 	xpos = x;
 	ypos = y;
 }
 
-void Point::BottomRight(int x, int y)
+void Point::BottomRight(float x, float y)
 {
 	xpos = x;
 	ypos = y;
 }
 
-void Point::UIFrame(int x, int y)
+void Point::UIFrame(float x, float y)
 {
 	
 }
@@ -36,7 +36,7 @@ void Point::UIFrame(int x, int y)
 //TODO :: Text
 //-------------------------------------------
 
-void Point::Text(int x, int y)
+void Point::Text(float x, float y)
 {
 	
 }
@@ -49,4 +49,3 @@ int main()
 {
 	return 0;
 }
-
