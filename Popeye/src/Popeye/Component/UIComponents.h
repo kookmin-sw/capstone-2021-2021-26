@@ -11,8 +11,8 @@ class Point
 	public:
  		void TopLeft(int x, int y);
 		void BottomRight(int x, int y);
-		void UIFrame(int UI1, int UI2);
-		void Text(int UI1, int UI2);
+		void UIFrame(int x, int y);
+		void Text(int x, int y);
 };
 
 void Point::TopLeft(int x, int y)
@@ -27,7 +27,7 @@ void Point::BottomRight(int x, int y)
 	ypos = y;
 }
 
-void Point::UIFrame(int UI1, int UI2)
+void Point::UIFrame(int x, int y)
 {
 	
 }
@@ -36,7 +36,7 @@ void Point::UIFrame(int UI1, int UI2)
 //TODO :: Text
 //-------------------------------------------
 
-void Point::Text(int UI1, int UI2)
+void Point::Text(int x, int y)
 {
 	
 }
