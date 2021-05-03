@@ -11,20 +11,21 @@ class Point
 		int wpos;
 
 	public:
- 		void PointSet(int x, int y);
+ 		void TopLeft(int x, int y);
+		void BottomRight(int x, int y);
 		void UIFrame(int UI1, int UI2);
 };
 
-void Point::PointSet(int x, int y)
+void Point::TopLeft(int x, int y)
 {
 	xpos = x;
 	ypos = y;
-	Point UI1;
-	UI2.PointSet = (x, y);
+}
+
+void Point::BottomRight(int x, int y)
+{
 	zpos = x;
 	wpos = y;
-	Point UI2;
-	UI2.PointSet = (x, y);
 }
 
 void Point::UIFrame(int UI1, int UI2)
