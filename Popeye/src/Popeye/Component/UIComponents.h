@@ -7,8 +7,6 @@ class Point
 	private:
 		int xpos;
 		int ypos;
-    		int zpos;
-		int wpos;
 
 	public:
  		void TopLeft(int x, int y);
@@ -24,8 +22,8 @@ void Point::TopLeft(int x, int y)
 
 void Point::BottomRight(int x, int y)
 {
-	zpos = x;
-	wpos = y;
+	xpos = x;
+	ypos = y;
 }
 
 void Point::UIFrame(int UI1, int UI2)
