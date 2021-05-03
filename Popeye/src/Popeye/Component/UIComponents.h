@@ -2,22 +2,25 @@
 
 namespace Popeye{
 
-	glm::vec2
+	struct Point{
+		float x;
+		float y;
+	};
 
 	struct UIFrame{
-		Point leftTop;
-		Point rightBot;
+		glm::vec2 leftTop;
+		glm::vec2 rightBot;
 	};
 
 	struct Text{
-		std::string contents
-		Point leftTop;
-		Point rightBot;
+		std::string contents;
+		glm::vec2 leftTop;
+		glm::vec2 rightBot;
 	};
 
 	struct Button{
-		Point leftTop;
-		Point rightBot;
+		glm::vec2 leftTop;
+		glm::vec2 rightBot;
 	};
 
 }
