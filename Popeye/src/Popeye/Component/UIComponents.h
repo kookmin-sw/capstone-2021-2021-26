@@ -5,21 +5,24 @@ namespace Popeye
 class Point
 {
 	private:
-		int x1, y1;
-    		int x2, y2;
+		int xpos;
+		int ypos;
+    		int zpos;
+		int wpos;
 
 	public:
- 		void PointSet(int x, int y);
+ 		void PointSet(int x, int y, int z, int w);
+		void UIFrame(int UI1, int UI2);
 };
 
-void Point::PointSet(int x, int y)
+void Point::PointSet(int x, int y, int z, int w)
 {
-	x1 = x;
-	y1 = y;
+	xpos = x;
+	ypos = y;
 	Point UI1;
-	UI1.PointSet = (x, y);
-	x2 = x;
-	y2 = y;
+	UI2.PointSet = (x, y);
+	zpos = z;
+	wpos = w;
 	Point UI2;
 	UI2.PointSet = (x, y);
 }
