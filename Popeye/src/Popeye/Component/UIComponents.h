@@ -12,6 +12,7 @@ class Point
  		void TopLeft(int x, int y);
 		void BottomRight(int x, int y);
 		void UIFrame(int UI1, int UI2);
+		void Text(int UI1, int UI2);
 };
 
 void Point::TopLeft(int x, int y)
