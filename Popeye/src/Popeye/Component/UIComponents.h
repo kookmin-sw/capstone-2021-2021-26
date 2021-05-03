@@ -2,50 +2,31 @@
 
 namespace Popeye
 
-class Point
-{
-	private:
-		float xpos;
-		float ypos;
+typedef struct {
+	double x;
+	double y;
+} Point;
 
-	public:
- 		void TopLeft(float x, float y);
-		void BottomRight(float x, float y);
-		void UIFrame(float x, float y);
-		void Text(float x, float y);
-};
-
-void Point::TopLeft(float x, float y)
-{
-	xpos = x;
-	ypos = y;
-}
-
-void Point::BottomRight(float x, float y)
-{
-	xpos = x;
-	ypos = y;
-}
-
-void Point::UIFrame(float x, float y)
-{
-	
-}
+typedef struct {
+	Point leftTop;
+	Point rightBot;
+} UIFrame;
 
 //-------------------------------------------
 //TODO :: Text
 //-------------------------------------------
 
-void Point::Text(float x, float y)
-{
-	
-}
+typedef struct {
+	Point leftTop;
+	Point rightBot;
+} Text;
 
 //-------------------------------------------
 //TODO :: Button
 //-------------------------------------------
 
-int main()
-{
-	return 0;
-}
+
+typedef struct {
+	Point leftTop;
+	Point rightBot;
+} Button;
