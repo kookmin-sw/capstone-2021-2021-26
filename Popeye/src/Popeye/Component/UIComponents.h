@@ -17,11 +17,11 @@ void Point::PointSet(int x, int y)
 	x1 = x;
 	y1 = y;
 	Point UI1;
-	UI1.UIFrame = (x, y);
+	UI1.PointSet = (x, y);
 	x2 = x;
 	y2 = y;
 	Point UI2;
-	UI2.UIFrame = (x, y);
+	UI2.PointSet = (x, y);
 }
 
 void Point::UIFrame(int UI1, int UI2)
