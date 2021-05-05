@@ -4,9 +4,8 @@ namespace Popeye
 {
 	struct BoundBox
 	{
-		float maxX, minX,
-			maxY, minY,
-			maxZ, minZ;
+		glm::vec3 maxPos;
+		glm::vec3 minPos;
 	};
 
 	struct Mesh 

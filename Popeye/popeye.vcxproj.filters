@@ -13,7 +13,7 @@
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Gizmo.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.cpp">
@@ -99,7 +99,7 @@
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Gizmo.h">
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.h">

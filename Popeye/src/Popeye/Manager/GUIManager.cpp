@@ -166,7 +166,6 @@ namespace Popeye
 
 		ImGui::End();
 		ImGui::PopStyleVar();
-
 	}
 
 	void GUIManager::OnClosed()

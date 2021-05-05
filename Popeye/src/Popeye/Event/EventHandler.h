@@ -2,7 +2,6 @@
 #include "Events.h"
 
 namespace Popeye {
-	
 	class EventHandler
 	{
 	private:
@@ -11,11 +10,9 @@ namespace Popeye {
 		MouseEvent		mouseevent;
 	public:
 		//screenCam pos, dir
-		glm::vec3 sceneViewPos;
-		glm::vec3 sceneViewDir;
+		glm::vec3 *sceneViewPos, *sceneViewDir;
 		//ray
-		bool sendEditRay;
-		glm::vec3 screenToMousePos;
+		glm::vec3 screenToMouseStartPos;
 		glm::vec3 screenToMouseDir;
 	private:
 		void KeyPressCallback(int, int, int, int);	//key scancode action mods

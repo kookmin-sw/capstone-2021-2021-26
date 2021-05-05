@@ -96,14 +96,8 @@ namespace Popeye
 						std::vector<float> vert;
 						
 						BoundBox bounbox;
-						bounbox.maxX = temp.x;
-						bounbox.minX = temp.x;
-
-						bounbox.maxY = temp.y;
-						bounbox.minY = temp.y;
-
-						bounbox.maxZ = temp.z;
-						bounbox.minZ = temp.z;
+						bounbox.maxPos = glm::vec3(temp.x, temp.y, temp.z);
+						bounbox.minPos = glm::vec3(temp.x, temp.y, temp.z);
 
 
 						for (unsigned int j = 0; j < vertNum; j++)
@@ -131,20 +125,20 @@ namespace Popeye
 								vert.push_back(0); vert.push_back(0);
 							}
 
-							if (bounbox.maxX < vertex.x)
-								bounbox.maxX = vertex.x;
-							if (bounbox.minX > vertex.x)
-								bounbox.minX = vertex.x;
+							if (bounbox.maxPos.x < vertex.x)
+								bounbox.maxPos.x = vertex.x;
+							if (bounbox.minPos.x > vertex.x)
+								bounbox.minPos.x = vertex.x;
 
-							if (bounbox.maxY < vertex.y)
-								bounbox.maxY = vertex.y;
-							if (bounbox.minY > vertex.y)
-								bounbox.minY = vertex.y;
+							if (bounbox.maxPos.y < vertex.y)
+								bounbox.maxPos.y = vertex.y;
+							if (bounbox.minPos.y > vertex.y)
+								bounbox.minPos.y = vertex.y;
 							
-							if (bounbox.maxZ < vertex.z)
-								bounbox.maxZ = vertex.z;
-							if (bounbox.minZ > vertex.z)
-								bounbox.minZ = vertex.z;
+							if (bounbox.maxPos.z < vertex.z)
+								bounbox.maxPos.z = vertex.z;
+							if (bounbox.minPos.z > vertex.z)
+								bounbox.minPos.z = vertex.z;
 
 						}
 

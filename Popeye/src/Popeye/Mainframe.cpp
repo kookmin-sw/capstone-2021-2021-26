@@ -5,6 +5,8 @@
 #include "Manager/ResourceManager.h"
 #include "Manager/SceneManager.h"
 
+#include "Editor.h"
+
 #include "FileIO.h"
 #include "Event/EventHandler.h"
 
@@ -48,8 +50,20 @@ namespace Popeye {
 		EventHandler* eventHandler = new EventHandler();
 		eventHandler->SetEventCallbacks(window);
 
-		GUIManager* guiManager = new GUIManager();
+		// ------------------------------
+		// On Engine 
+		// ------------------------------
+		Editor* editor = new Editor();
+		editor->Init();
+		{
+			eventHandler->sceneViewPos = &editor->editorCamPos;
+			eventHandler->sceneViewDir = &editor->editorCamDir;
+		}
+
+		GUIManager *guiManager = new GUIManager();
 		guiManager->OnSet(window);
+		// ------------------------------
+		// ------------------------------
 
 		g_fileIO = new FileIO();
 		g_fileIO->Init();
@@ -63,13 +77,6 @@ namespace Popeye {
 
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();
-		{
-			renderingSystem->sceneViewDir		= &eventHandler->sceneViewDir;
-			renderingSystem->sceneViewPos		= &eventHandler->sceneViewPos;
-			renderingSystem->screenToMouseDir	= &eventHandler->screenToMouseDir;
-			renderingSystem->screenToMousePos	= &eventHandler->screenToMousePos;
-			renderingSystem->sendEditRay		= &eventHandler->sendEditRay;
-		}
 
 		ScriptingSystem* scriptingSystem = new ScriptingSystem();
 		scriptingSystem->SystemInit();
@@ -100,7 +107,14 @@ namespace Popeye {
 
 			eventHandler->HandleEvent();
 
+			// ------------------------------
+			// On Game Engine
+			// ------------------------------
+			editor->OnRun();
+
 			guiManager->OnRun();
+			// ------------------------------
+			// ------------------------------
 
 			glfwSwapBuffers(window);
 		}

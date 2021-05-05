@@ -15,8 +15,8 @@ set(POPEYE_SRC
     src/Popeye/FileIO.cpp
     src/Popeye/Log.h
     src/Popeye/Log.cpp
-    src/Popeye/Gizmo.h
-    src/Popeye/Gizmo.cpp
+    src/Popeye/Editor.h
+    src/Popeye/Editor.cpp
     src/Popeye/Mainframe.h
     src/Popeye/Mainframe.cpp
     src/Popeye/stb_img.cpp
