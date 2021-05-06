@@ -18,6 +18,8 @@ namespace Popeye {
 
 	extern bool g_sendRay;
 
+	extern bool g_draggin;
+
 	extern glm::vec2 g_MousePos;
 
 	extern glm::vec2 g_scenePosition;
@@ -33,8 +35,8 @@ namespace Popeye {
 	//-------------------------------------------
 	Editor::Editor() 
 	{
-		editorCamPos = glm::vec3(0.0f, 0.0f, 0.0f);
-		editorCamDir = glm::vec3(0.0f, 0.0f, 0.0f);
+		editorCamPos = glm::vec3(2.0f, 2.0f, 2.0f);
+		editorCamDir = glm::vec3(0.0f, 0.0f, 1.0f);
 	}
 	Editor::~Editor() {}
 
@@ -87,7 +89,6 @@ namespace Popeye {
 	{
 		static Shader shader, gizmoShader; // temp 
 		static int init = 0;
-
 		std::vector<GameObject*> selectable_gameobjects;
 		std::vector<BoundBox> sized_boundbox;
 
@@ -256,7 +257,6 @@ namespace Popeye {
 
 				if (g_sendRay)
 				{
-					POPEYE_CORE_INFO("ss");
 					glm::vec3 screenToMouseStartPos, screenToMouseDir;
 					ScreenToWorldPos(g_MousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
 
@@ -273,55 +273,79 @@ namespace Popeye {
 
 			if (selectedGameObject != nullptr)
 			{
-				model = glm::mat4(1.0f);
-				glm::vec3 rot = glm::radians(selectedGameObject->transform.rotation);
-				model = glm::translate(model, selectedGameObject->transform.position) * glm::toMat4(glm::quat(rot));
-				glm::vec3 pos(model[3]);
-
+				glm::vec3 screenToMouseStartPos(0.0f), screenToMouseDir(0.0f);
 				if (g_sendRay)
 				{
-					glm::vec3 screenToMouseStartPos, screenToMouseDir;
 					ScreenToWorldPos(g_MousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
-
-					{
-						BoundBox axisboundbox;
-						axisboundbox.minPos = glm::vec3(0.1f, -1.0f, -1.0f);
-						axisboundbox.maxPos = glm::vec3(1.0f, 0.1f, 0.1f);
-
-						if (RayOBBIntersection(screenToMouseStartPos, screenToMouseDir, axisboundbox, model))
-						{
-							POPEYE_CORE_INFO("xaxis");
-						}
-					}
-
-					{
-						BoundBox axisboundbox;
-						axisboundbox.minPos = glm::vec3(-0.1f, 0.1f, -0.1f);
-						axisboundbox.maxPos = glm::vec3(0.1f, 1.0f, 0.1f);
-
-						if (RayOBBIntersection(screenToMouseStartPos, screenToMouseDir, axisboundbox, model))
-						{
-							POPEYE_CORE_INFO("yaxis");
-						}
-					}
-
-					{
-						BoundBox axisboundbox;
-						axisboundbox.minPos = glm::vec3(-0.1f, -0.1f, 0.1f);
-						axisboundbox.maxPos = glm::vec3(0.1f, 0.1f, 1.0f);
-
-						if (RayOBBIntersection(screenToMouseStartPos, screenToMouseDir, axisboundbox, model))
-						{
-							POPEYE_CORE_INFO("zaxis");
-						}
-					}
-
-					g_sendRay = false;
 				}
+				model = EditTransform(selectedGameObject, screenToMouseStartPos, screenToMouseDir);
+				
 				gizmoShader.setMat4("model", model);
 				gizmo.DrawAxis();
 			}
 		}
+	}
+
+	glm::mat4 Editor::EditTransform(GameObject* selected_gameObject, glm::vec3 mouse_pos, glm::vec3 mouse_dir)
+	{
+		static int axis = 0;
+		static bool axisSelected = false;
+		
+		glm::mat4 model = glm::mat4(1.0f);
+		glm::vec3 pos = selectedGameObject->transform.position;
+		glm::vec3 rot = glm::radians(selectedGameObject->transform.rotation);
+		glm::vec3 scl = selectedGameObject->transform.scale;
+
+		model = glm::translate(model, pos) * glm::toMat4(glm::quat(rot));
+
+		if (g_sendRay)
+		{
+			// check x axis
+			if (!axisSelected)
+			{
+				BoundBox axisboundbox;
+				axisboundbox.minPos = glm::vec3(0.1f, -1.0f, -1.0f);
+				axisboundbox.maxPos = glm::vec3(1.0f, 0.1f, 0.1f);
+
+				axisSelected = RayOBBIntersection(mouse_pos, mouse_dir, axisboundbox, model);
+				axis = 0;
+			}
+
+			// check y axis
+			if (!axisSelected)
+			{
+				BoundBox axisboundbox;
+				axisboundbox.minPos = glm::vec3(-0.1f, 0.1f, -0.1f);
+				axisboundbox.maxPos = glm::vec3(0.1f, 1.0f, 0.1f);
+
+				axisSelected = RayOBBIntersection(mouse_pos, mouse_dir, axisboundbox, model);
+				axis = 1;
+			}
+
+			// check z axis
+			if (!axisSelected)
+			{
+				BoundBox axisboundbox;
+				axisboundbox.minPos = glm::vec3(-0.1f, -0.1f, 0.1f);
+				axisboundbox.maxPos = glm::vec3(0.1f, 0.1f, 1.0f);
+
+				axisSelected = RayOBBIntersection(mouse_pos, mouse_dir, axisboundbox, model);
+				axis = 2;
+			}
+
+			if (axisSelected && g_draggin)
+			{
+				// transform
+				float distance = glm::distance(mouse_pos, pos);
+				glm::vec3 cal = ShortestPosint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
+				selectedGameObject->transform.position = cal;
+			}
+		}
+
+		if (!g_draggin)
+			axisSelected = false;
+
+		return model;
 	}
 
 	bool Editor::RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_end, BoundBox boundbox, const glm::mat4& model)
@@ -452,11 +476,18 @@ namespace Popeye {
 
 		screenToMouseStartPos = glm::vec3(lRayStart_world);
 		screenToMouseDir = glm::normalize(glm::vec3(lRayDir_world));
-
-		POPEYE_CORE_INFO("{0}, {1}, {2}", screenToMouseStartPos.x, screenToMouseStartPos.y, screenToMouseStartPos.z);
 	}
 
+	glm::vec3 Editor::ShortestPosint(glm::vec3 ray_end, glm::vec3 startPos, glm::vec3 endPos)
+	{
+		glm::vec3 p;
 
+		float t = -glm::dot((startPos - ray_end), (endPos - startPos));
+
+		p = startPos + (endPos - startPos) * t;
+
+		return p;
+	}
 
 
 	//-------------------------------------------

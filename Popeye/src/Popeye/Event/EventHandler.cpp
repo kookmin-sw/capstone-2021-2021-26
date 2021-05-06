@@ -7,6 +7,7 @@ namespace Popeye
 	glm::vec2 g_sceneSize;
 	
 	bool g_sendRay = false;
+	bool g_draggin = false;
 	glm::vec2 g_MousePos = glm::vec2(1.0f);
 
 	extern glm::vec3 g_sceneViewPosition;
@@ -73,31 +74,28 @@ namespace Popeye
 		//mouse
 		if (mouseevent.IsMousePressed(Mouse::ButtonLeft))//drag and drop
 		{
+			g_MousePos.x = (float)mouseevent.xPos;
+			g_MousePos.y = (float)mouseevent.yPos;
+
+			if (!g_sendRay)
+				g_sendRay = true;
+
 			if (!leftM)
 			{
 				leftM = true;
-				glm::vec2 screepos = g_scenePosition;
-				glm::vec2 screensize = g_sceneSize;
-				g_MousePos.x = (float)mouseevent.xPos;
-				g_MousePos.y = (float)mouseevent.yPos;
-
-				if (!g_sendRay)
-					g_sendRay = true;
 			}
-			if (leftM)
+			else 
 			{
+				g_draggin = true;
 			}
 
 		}
 		else
 		{
 			leftM = false;
+			g_draggin = false;
 		}
 
-		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
-		{
-
-		}
 		if (mouseevent.IsMousePressed(Mouse::ButtonRight))	
 		{
 			if (!rightM)
@@ -145,6 +143,11 @@ namespace Popeye
 		if (keyevent.IsKeyPressed(Keyboard::A)) { sceneViewPos[0] -= 0.1f * glm::normalize(glm::cross(sceneViewDir[0], glm::vec3(0.0f, 1.0f, 0.0f))); }
 		if (keyevent.IsKeyPressed(Keyboard::E)) { sceneViewPos[0] += glm::vec3(0.0f, 0.1f, 0.0f); }
 		if (keyevent.IsKeyPressed(Keyboard::Q)) { sceneViewPos[0] -= glm::vec3(0.0f, 0.1f, 0.0f); }
+
+		if (keyevent.IsKeyPressed(Keyboard::D1)) {}
+		else if (keyevent.IsKeyPressed(Keyboard::D2)) {}
+		else if (keyevent.IsKeyPressed(Keyboard::D3)) {}
+
 		
 	}
 
