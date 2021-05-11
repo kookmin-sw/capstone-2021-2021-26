@@ -144,11 +144,9 @@ namespace Popeye
 		if (keyevent.IsKeyPressed(Keyboard::E)) { sceneViewPos[0] += glm::vec3(0.0f, 0.1f, 0.0f); }
 		if (keyevent.IsKeyPressed(Keyboard::Q)) { sceneViewPos[0] -= glm::vec3(0.0f, 0.1f, 0.0f); }
 
-		if (keyevent.IsKeyPressed(Keyboard::D1)) {}
-		else if (keyevent.IsKeyPressed(Keyboard::D2)) {}
-		else if (keyevent.IsKeyPressed(Keyboard::D3)) {}
-
-		
+		if (keyevent.IsKeyPressed(Keyboard::D1)) { POPEYE_CORE_INFO("translate"); }
+		else if (keyevent.IsKeyPressed(Keyboard::D2)) { POPEYE_CORE_INFO("rotation"); }
+		else if (keyevent.IsKeyPressed(Keyboard::D3)) { POPEYE_CORE_INFO("scale"); }
 	}
 
 	void EventHandler::ExecuteGameInput() // input class handle on play

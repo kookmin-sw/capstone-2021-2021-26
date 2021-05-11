@@ -44,13 +44,8 @@ namespace Popeye{
 		bool RayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_end, BoundBox boundbox, const glm::mat4& model);
 
 		glm::mat4 EditTransform(GameObject* selected_gameObject, glm::vec3 mouse_pos, glm::vec3 mouse_dir);
-		void EditPosition();
-		void EditRotation();
-		void EditScale();
-		//transform
-		glm::vec3 ShortestPosint(glm::vec3 ray_end, glm::vec3 pos, glm::vec3 dir);
-
-
+		glm::vec3 ShortestPoint(glm::vec3 ray_end, glm::vec3 pos, glm::vec3 dir);
+		glm::vec3 HitPointOfSphere(glm::vec3 ray_origin, glm::vec3 ray_end, glm::vec3 pos);
 	public:
 		glm::vec3 editorCamPos;
 		glm::vec3 editorCamDir;

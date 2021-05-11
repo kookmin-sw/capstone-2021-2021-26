@@ -267,7 +267,6 @@ namespace Popeye {
 						selectedGameObject = selectable_gameobjects[i];
 						POPEYE_CORE_INFO("{0}", selectedGameObject->GetName());
 					}
-					g_sendRay = false;
 				}
 			}
 
@@ -335,10 +334,26 @@ namespace Popeye {
 
 			if (axisSelected && g_draggin)
 			{
-				// transform
-				float distance = glm::distance(mouse_pos, pos);
-				glm::vec3 cal = ShortestPosint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
-				selectedGameObject->transform.position = cal;
+				// position
+				/*float distance = glm::distance(mouse_pos, pos);
+				glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
+				selectedGameObject->transform.position = cal;*/
+
+				// rotation
+				/*glm::vec3 cal = HitPointOfSphere(mouse_pos, mouse_dir, pos);
+				glm::vec3 sphere_cord = glm::normalize(cal - pos);
+				
+				float phi = glm::degrees(glm::atan(sphere_cord.x, sphere_cord.z));
+				float theta = glm::degrees(glm::acos(sphere_cord.y));
+
+				selectedGameObject->transform.rotation.y = phi;
+				selectedGameObject->transform.rotation.x = theta - 90.0f;*/
+				
+				// scale
+				/*float distance = glm::distance(mouse_pos, pos);
+				glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
+				selectedGameObject->transform.scale[axis] = cal[axis];*/
+
 			}
 		}
 
@@ -358,8 +373,8 @@ namespace Popeye {
 		glm::vec3 pos(model[3].x, model[3].y, model[3].z);
 		glm::vec3 delta = pos - rayPos;
 
-		glm::vec3 minvec = glm::vec3(boundbox.minPos);
-		glm::vec3 maxvec = glm::vec3(boundbox.maxPos);
+		glm::vec3 minvec(boundbox.minPos);
+		glm::vec3 maxvec(boundbox.maxPos);
 
 		{
 			glm::vec3 xaxis(model[0].x, model[0].y, model[0].z);
@@ -478,13 +493,36 @@ namespace Popeye {
 		screenToMouseDir = glm::normalize(glm::vec3(lRayDir_world));
 	}
 
-	glm::vec3 Editor::ShortestPosint(glm::vec3 ray_end, glm::vec3 startPos, glm::vec3 endPos)
+	glm::vec3 Editor::ShortestPoint(glm::vec3 ray_end, glm::vec3 startPos, glm::vec3 endPos)
 	{
 		glm::vec3 p;
 
 		float t = -glm::dot((startPos - ray_end), (endPos - startPos));
 
 		p = startPos + (endPos - startPos) * t;
+
+		return p;
+	}
+
+	glm::vec3 Editor::HitPointOfSphere(glm::vec3 ray_origin, glm::vec3 ray_end, glm::vec3 pos)
+	{
+		glm::vec3 p;
+		
+		float t_ca = glm::dot((ray_end), (pos - ray_origin));
+		float l = glm::distance2(pos , ray_origin);
+		float d2 = l - t_ca * t_ca;
+		if (d2 > 1.0f)
+		{
+			float max_t = glm::sqrt(l - 1.0f);
+			p = ray_origin + max_t * (ray_end);
+			return p;
+		}
+		
+		float t_hc = glm::sqrt(1.0f - d2);
+		float t = t_ca + t_hc;
+
+
+		p = ray_origin + t * (ray_end);
 
 		return p;
 	}
