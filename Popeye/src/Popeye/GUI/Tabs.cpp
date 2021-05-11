@@ -63,6 +63,12 @@ namespace Popeye{
 		ImGui::BeginChild("Scene Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
+		g_sceneSize.x = wsize.x;
+		g_sceneSize.y = wsize.y;
+
+		ImVec2 wpos = ImGui::GetWindowPos();
+		g_scenePosition.x = wpos.x;
+		g_scenePosition.y = wpos.y;
 
 		ImGui::Image((ImTextureID)g_SceneView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
@@ -77,12 +83,6 @@ namespace Popeye{
 		ImGui::BeginChild("Game Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
-		g_sceneSize.x = wsize.x;
-		g_sceneSize.y = wsize.y;
-
-		ImVec2 wpos = ImGui::GetWindowPos();
-		g_scenePosition.x = wpos.x;
-		g_scenePosition.y = wpos.y;
 
 		ImGui::Image((ImTextureID)g_GameView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 

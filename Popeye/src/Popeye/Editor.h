@@ -36,7 +36,6 @@ namespace Popeye{
 		unsigned int editorFBO;
 		
 		Gizmo gizmo;
-		EditorMod mod;
 	private:
 		void RenderView();
 		
@@ -47,8 +46,11 @@ namespace Popeye{
 		glm::vec3 ShortestPoint(glm::vec3 ray_end, glm::vec3 pos, glm::vec3 dir);
 		glm::vec3 HitPointOfSphere(glm::vec3 ray_origin, glm::vec3 ray_end, glm::vec3 pos);
 	public:
+		EditorMod mod;
 		glm::vec3 editorCamPos;
 		glm::vec3 editorCamDir;
+		glm::vec2 mousePos;
+		bool sendRay;
 	public:
 		Editor();
 		~Editor();

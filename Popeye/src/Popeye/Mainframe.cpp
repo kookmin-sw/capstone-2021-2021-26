@@ -56,8 +56,7 @@ namespace Popeye {
 		Editor* editor = new Editor();
 		editor->Init();
 		{
-			eventHandler->sceneViewPos = &editor->editorCamPos;
-			eventHandler->sceneViewDir = &editor->editorCamDir;
+			eventHandler->editor = editor;
 		}
 
 		GUIManager *guiManager = new GUIManager();

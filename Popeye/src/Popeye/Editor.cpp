@@ -16,11 +16,7 @@ namespace Popeye {
 	
 	extern GameObject* selectedGameObject;
 
-	extern bool g_sendRay;
-
 	extern bool g_draggin;
-
-	extern glm::vec2 g_MousePos;
 
 	extern glm::vec2 g_scenePosition;
 
@@ -255,10 +251,10 @@ namespace Popeye {
 
 				gizmo.DrawWireCube();
 
-				if (g_sendRay)
+				if (sendRay)
 				{
 					glm::vec3 screenToMouseStartPos, screenToMouseDir;
-					ScreenToWorldPos(g_MousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
+					ScreenToWorldPos(mousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
 
 					sized_boundbox[i].minPos *= bound_trans.scale;
 					sized_boundbox[i].maxPos *= bound_trans.scale;
@@ -273,9 +269,9 @@ namespace Popeye {
 			if (selectedGameObject != nullptr)
 			{
 				glm::vec3 screenToMouseStartPos(0.0f), screenToMouseDir(0.0f);
-				if (g_sendRay)
+				if (sendRay)
 				{
-					ScreenToWorldPos(g_MousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
+					ScreenToWorldPos(mousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
 				}
 				model = EditTransform(selectedGameObject, screenToMouseStartPos, screenToMouseDir);
 				
@@ -297,7 +293,7 @@ namespace Popeye {
 
 		model = glm::translate(model, pos) * glm::toMat4(glm::quat(rot));
 
-		if (g_sendRay)
+		if (sendRay)
 		{
 			// check x axis
 			if (!axisSelected)
@@ -334,26 +330,37 @@ namespace Popeye {
 
 			if (axisSelected && g_draggin)
 			{
-				// position
-				/*float distance = glm::distance(mouse_pos, pos);
-				glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
-				selectedGameObject->transform.position = cal;*/
+				switch (mod)
+				{
+				case Popeye::EditorMod::TRANSLATE:
+				{
+					float distance = glm::distance(mouse_pos, pos);
+					glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
+					selectedGameObject->transform.position = cal;
+				}
+					break;
+				case Popeye::EditorMod::ROTATE:
+				{
+					glm::vec3 cal = HitPointOfSphere(mouse_pos, mouse_dir, pos);
+					glm::vec3 sphere_cord = glm::normalize(cal - pos);
 
-				// rotation
-				/*glm::vec3 cal = HitPointOfSphere(mouse_pos, mouse_dir, pos);
-				glm::vec3 sphere_cord = glm::normalize(cal - pos);
-				
-				float phi = glm::degrees(glm::atan(sphere_cord.x, sphere_cord.z));
-				float theta = glm::degrees(glm::acos(sphere_cord.y));
+					float phi = glm::degrees(glm::atan(sphere_cord.x, sphere_cord.z));
+					float theta = glm::degrees(glm::acos(sphere_cord.y));
 
-				selectedGameObject->transform.rotation.y = phi;
-				selectedGameObject->transform.rotation.x = theta - 90.0f;*/
-				
-				// scale
-				/*float distance = glm::distance(mouse_pos, pos);
-				glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
-				selectedGameObject->transform.scale[axis] = cal[axis];*/
-
+					selectedGameObject->transform.rotation.y = phi;
+					selectedGameObject->transform.rotation.x = theta - 90.0f;
+				}
+					break;
+				case Popeye::EditorMod::SCALE:
+				{
+					float distance = glm::distance(mouse_pos, pos);
+					glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
+					selectedGameObject->transform.scale[axis] = cal[axis];
+				}
+					break;
+				default:
+					break;
+				}
 			}
 		}
 
