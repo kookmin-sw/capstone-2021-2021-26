@@ -18,7 +18,7 @@ namespace Popeye {
 	public:
 		Transform transform;
 	public:
-		GameObject(int);
+		GameObject(int _id);
 		~GameObject();
 
 		std::string GetName();

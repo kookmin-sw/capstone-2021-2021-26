@@ -26,6 +26,11 @@ namespace Popeye {
 
 			return componentDatatable.size() - 1;
 		}
+
+		std::vector<component> GetAllData()
+		{
+			return componentDatatable;
+		}
 		
 	};
 
@@ -49,7 +54,7 @@ namespace Popeye {
 		template<typename component>
 		void RegistComponent()
 		{
-			const char* componentType = typeid(component).name();
+			const char* componentType = typeid(component).name() + 15;
 			if (componentDatas.find(componentType) == componentDatas.end())
 			{
 				componentDatas[componentType] = new ComponentDatatable<component>();
@@ -59,7 +64,7 @@ namespace Popeye {
 		template<typename component>
 		void AddDataOfComponent(const char*& type, int& index)
 		{
-			const char* componentType = typeid(component).name();
+			const char* componentType = typeid(component).name() + 15;
 			if (componentDatas.find(componentType) != componentDatas.end())
 			{
 				type = componentType;
@@ -71,6 +76,17 @@ namespace Popeye {
 		component& GetDataOfComponent(const const char*& type, const int& index)
 		{
 			return AccessComponent<component>(componentDatas[type])->GetData(index);
+		}
+
+		template<typename component>
+		std::pair<const char*, std::vector<component>> GetAllDataOfComponent()
+		{
+			const char* componentType = typeid(component).name() + 15;
+			std::vector<component> components= AccessComponent<component>(componentDatas[componentType])->GetAllData();
+			
+			std::pair<const char*, std::vector<component>> compNname = std::make_pair(componentType, components);
+
+			return compNname;
 		}
 	
 	private:

@@ -1,6 +1,7 @@
 #pragma once
 
 namespace Popeye {
+	class GUIManager;
 	class ComponentManager;
 	class GameObject;
 
@@ -21,10 +22,9 @@ namespace Popeye {
 		int gameObjectID;
 		std::queue	<int> reusableIDs;
 		std::vector <std::vector<Accessor>> keysToAccessComponent;
-		std::vector <int> gameObjectIDs;
 	
 	public:
-		int mainCameraID;
+		int focusedCamID;
 		std::vector <GameObject*> gameObjects;		// root gameobjects at scene
 
 	private:
@@ -44,14 +44,11 @@ namespace Popeye {
 			ComponentManager::GetInstance()->AddDataOfComponent<component>(accessor.componentType, accessor.dataIndex);
 			keysToAccessComponent[_id].push_back(accessor);
 		}
-
-		void AddDataByName(int _id, const char* component);
-
 		
 		template<class component>
 		component& GetData(int _id) // gameobject's data
 		{
-			const char* componentType = typeid(component).name();
+			const char* componentType = typeid(component).name() + 15;
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -67,7 +64,7 @@ namespace Popeye {
 		template<class component>
 		bool CheckIfThereIsData(int _id)
 		{
-			const char* componentType = typeid(component).name();
+			const char* componentType = typeid(component).name() + 15;
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -78,13 +75,21 @@ namespace Popeye {
 			return false;
 		}
 
+		void AddDataByName(int _id, const char* component);
 
 		std::vector<const char*> GetAllComponents(int _id);
 
 		std::vector<Accessor> GetAllAddressOfID(int _id);
 
 		std::string GetName();
+		int GetNextID();
+		std::queue<int> GetReusableQueue();
+		std::vector<std::vector<Accessor>> GetAccessors();
+
 		void SetName(char* );
+
+		void SaveScene();
+
 
 	};
 }

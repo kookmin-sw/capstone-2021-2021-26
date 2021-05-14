@@ -33,6 +33,7 @@ namespace Popeye {
 	{
 		editorCamPos = glm::vec3(2.0f, 2.0f, 2.0f);
 		editorCamDir = glm::vec3(0.0f, 0.0f, 1.0f);
+		mod = EditorMod::TRANSLATE;
 	}
 	Editor::~Editor() {}
 
@@ -261,7 +262,6 @@ namespace Popeye {
 					if (RayOBBIntersection(screenToMouseStartPos, screenToMouseDir, sized_boundbox[i], model))
 					{
 						selectedGameObject = selectable_gameobjects[i];
-						POPEYE_CORE_INFO("{0}", selectedGameObject->GetName());
 					}
 				}
 			}

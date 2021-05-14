@@ -6,9 +6,16 @@
 #include "../GUI/IconsForkAwesomeLargeIcon.h"
 
 #include "../GUI/Tabs.h"
+
+#include "../FileIO.h"
+#include "./SceneManager.h"
+#include "../Scene/Scene.h"
+
 namespace Popeye
 {
 	ImFont *g_Icon;
+
+	extern FileIO* g_fileIO;
 
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() { for (int i = 0; i < tabs.size(); i++) { delete(tabs[i]); } }
@@ -162,6 +169,20 @@ namespace Popeye
 			{
 				tabs[i]->ShowTab();
 			}
+		}
+
+
+		if (ImGui::IsKeyDown(341) && ImGui::IsKeyDown(83))
+		{
+			if (!save_project)
+			{
+				save_project = true;
+				g_fileIO->SaveScene(SceneManager::GetInstance()->currentScene);
+			}
+		}
+		else if(save_project)
+		{
+			save_project = false;
 		}
 
 		ImGui::End();

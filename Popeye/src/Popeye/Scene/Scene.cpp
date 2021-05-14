@@ -9,11 +9,12 @@ namespace Popeye {
 	{
 		sceneName		= name;
 		gameObjectID	= 0;
-		mainCameraID	= 0;
+		focusedCamID	= 0;
 
 		CreateGameObject();
-		CreateGameObject();
 		AddDataByName(0, "Camera");
+
+		CreateGameObject();
 		AddDataByName(1, "Light");
 
 		gameObjects[0]->transform.position = { 8.0f,8.0f, 8.0f };
@@ -64,10 +65,10 @@ namespace Popeye {
 		sceneName = name;
 	}
 
-	std::string Scene::GetName()
-	{
-		return sceneName;
-	}
+	std::string Scene::GetName(){return sceneName;}
+	int Scene::GetNextID(){return gameObjectID;}
+	std::queue<int> Scene::GetReusableQueue(){return reusableIDs;}
+	std::vector<std::vector<Accessor>> Scene::GetAccessors(){return keysToAccessComponent;}
 
 	void Scene::ResetAccessor(int id)
 	{
@@ -98,5 +99,34 @@ namespace Popeye {
 		Accessor accessor;
 		ComponentManager::GetInstance()->AddDataOfComponentByName(component, accessor.componentType, accessor.dataIndex);
 		keysToAccessComponent[_id].push_back(accessor);
+	}
+
+	void Scene::SaveScene()
+	{
+		std::cout << "Scene name : " << sceneName << " \n";
+		std::cout << "gameobjects : \n";
+		for (int i = 0; i < gameObjects.size(); i++)
+		{
+			std::cout << gameObjects[i]->GetID() << ", " << gameObjects[i]->GetName() << " ";
+		}
+		std::cout << " \n";
+
+		std::vector<int> reuseables;
+		while (!reusableIDs.empty())
+		{
+			reuseables.push_back(reusableIDs.front());
+			reusableIDs.pop();
+		}
+
+		std::cout << "accessor : \n";
+		for (int i = 0; i < keysToAccessComponent.size(); i++)
+		{
+			for (int j = 0; j < keysToAccessComponent[i].size(); j++)
+			{
+				std::cout << keysToAccessComponent[i][j].componentType << ", ";
+				std::cout << keysToAccessComponent[i][j].dataIndex << " ";
+			}
+			std::cout << ' \n';
+		}
 	}
 }

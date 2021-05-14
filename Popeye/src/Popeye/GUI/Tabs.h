@@ -1,5 +1,4 @@
 #pragma once
-#include "../Event/EventHandler.h"
 
 namespace Popeye{
 	namespace fs = std::filesystem;

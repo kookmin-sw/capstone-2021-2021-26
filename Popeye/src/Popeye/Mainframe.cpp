@@ -47,13 +47,17 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		EventHandler* eventHandler = new EventHandler();
+		g_fileIO = new FileIO();
+		g_fileIO->Init();
+		//unsigned char* buffer = g_fileIO->FileDataBuffer(fs::current_path() / "popeye.info");
+
+		EventHandler *eventHandler = new EventHandler();
 		eventHandler->SetEventCallbacks(window);
 
 		// ------------------------------
 		// On Engine 
 		// ------------------------------
-		Editor* editor = new Editor();
+		Editor *editor = new Editor();
 		editor->Init();
 		{
 			eventHandler->editor = editor;
@@ -62,17 +66,13 @@ namespace Popeye {
 		GUIManager *guiManager = new GUIManager();
 		guiManager->OnSet(window);
 		// ------------------------------
-		// ------------------------------
-
-		g_fileIO = new FileIO();
-		g_fileIO->Init();
 
 		g_ResourceManager = new ResourceManager();
-		
 
 		ComponentManager::GetInstance()->InitComponents();
 
 		SceneManager::GetInstance()->CreateScene();
+
 
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();

@@ -8,12 +8,7 @@ namespace Popeye
 	glm::vec2 g_scenePosition;
 	glm::vec2 g_sceneSize;
 	
-	bool g_sendRay = false;
 	bool g_draggin = false;
-	glm::vec2 g_MousePos = glm::vec2(1.0f);
-
-	extern glm::vec3 g_sceneViewPosition;
-	extern glm::vec3 g_sceneViewDirection;
 
 	EventHandler::EventHandler() {};
 	EventHandler::~EventHandler() {};

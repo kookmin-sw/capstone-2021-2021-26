@@ -147,15 +147,15 @@ namespace Popeye{
 			{
 				if (accessor[i].componentType != nullptr)
 				{
-					if (accessor[i].componentType == typeid(Camera).name())
+					if (accessor[i].componentType == typeid(Camera).name() + 15)
 					{
 						ShowComponent(selectedGameObject->GetComponent<Camera>());
 					}
-					if (accessor[i].componentType == typeid(MeshRenderer).name())
+					if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
 					{
 						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>());
 					}
-					if (accessor[i].componentType == typeid(Light).name())
+					if (accessor[i].componentType == typeid(Light).name() + 15)
 					{
 						ShowComponent(selectedGameObject->GetComponent<Light>());
 					}
@@ -453,9 +453,13 @@ namespace Popeye{
 					filedata = files[fi];
 					if (ImGui::IsItemHovered())
 					{
-						if (ImGui::IsMouseDoubleClicked(0))
+						if (ImGui::IsMouseDoubleClicked(0) && filedata.type == FileType::SCENE)
 						{
-							//g_fileIO->ReadFile(filedata);
+							unsigned char* buffer = g_fileIO->FileDataBuffer(filedata.path);
+							
+							// scene load
+
+							free(buffer);
 						}
 					}
 					fi++;

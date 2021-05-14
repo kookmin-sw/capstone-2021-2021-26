@@ -82,7 +82,7 @@ namespace Popeye {
 		shader.setInt("dirlightCount", Light::directionalLightCounter);
 		shader.setInt("spotlightCount", Light::spotLightCounter);
 
-		int currentCameraID = SceneManager::GetInstance()->currentScene->mainCameraID;
+		int currentCameraID = SceneManager::GetInstance()->currentScene->focusedCamID;
 		GameObject* cameraObject = SceneManager::GetInstance()->currentScene->gameObjects[currentCameraID];
 		
 		glm::vec3 position = cameraObject->transform.position;
@@ -208,10 +208,7 @@ namespace Popeye {
 
 					shader.setFloat("material.shininess", material.shininess);
 					
-					glBindVertexArray(g_ResourceManager->meshes[meshID].VAO);
-					glDrawElements(GL_TRIANGLES, g_ResourceManager->meshes[meshID].indices.size(), GL_UNSIGNED_INT, (void*)0);
-					
-					glBindVertexArray(0);
+					g_ResourceManager->meshes[meshID].DrawMesh();
 				}
 			}
 		}
