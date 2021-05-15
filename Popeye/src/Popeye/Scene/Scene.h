@@ -44,6 +44,20 @@ namespace Popeye {
 			ComponentManager::GetInstance()->AddDataOfComponent<component>(accessor.componentType, accessor.dataIndex);
 			keysToAccessComponent[_id].push_back(accessor);
 		}
+
+		template<class component>
+		void RemoveData(int _id)
+		{
+			const char* componentType = typeid(component).name() + 15;
+			int address_size = keysToAccessComponent[_id].size();
+			for (int i = 0; i < )
+			{
+				if (keysToAccessComponent[_id][i].componentType[0] == componentType[0])
+				{
+					ComponentManager::GetInstance()->RemoveDataOfComponent(componentType, keysToAccessComponent[_id][i].dataIndex);
+				}
+			}
+		}
 		
 		template<class component>
 		component& GetData(int _id) // gameobject's data
@@ -87,9 +101,5 @@ namespace Popeye {
 		std::vector<std::vector<Accessor>> GetAccessors();
 
 		void SetName(char* );
-
-		void SaveScene();
-
-
 	};
 }

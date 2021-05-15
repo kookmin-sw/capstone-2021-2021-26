@@ -13,9 +13,9 @@ namespace Popeye {
 	{
 	}
 
-	void GameObject::AddChild(GameObject* child)
+	/*void GameObject::AddChild(GameObject* child)
 	{
-	}
+	}*/
 
 	std::string GameObject::GetName()
 	{

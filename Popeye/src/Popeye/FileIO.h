@@ -60,8 +60,8 @@ namespace Popeye {
 		void WriteDataToFile(std::string datfile, std::string dattablefile, FileData filedata);
 		unsigned char* FileDataBuffer(fs::path path);
 		void InitProject(fs::path path);
-		void ReadSceneFile(fs::path path);
-		void SaveScene(Scene *scene);
+		void ReadScene(fs::path path);
+		void SaveScene();
 		
 		// TODO :: Change it (use Boost or make reflection)
 		std::string WriteScene(std::string name);

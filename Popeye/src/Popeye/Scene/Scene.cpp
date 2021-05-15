@@ -58,6 +58,7 @@ namespace Popeye {
 	void Scene::DeleteGameObject(int _id)
 	{
 		reusableIDs.push(_id);
+		ResetAccessor(_id);
 	}
 
 	void Scene::SetName(char* name)
@@ -99,34 +100,5 @@ namespace Popeye {
 		Accessor accessor;
 		ComponentManager::GetInstance()->AddDataOfComponentByName(component, accessor.componentType, accessor.dataIndex);
 		keysToAccessComponent[_id].push_back(accessor);
-	}
-
-	void Scene::SaveScene()
-	{
-		std::cout << "Scene name : " << sceneName << " \n";
-		std::cout << "gameobjects : \n";
-		for (int i = 0; i < gameObjects.size(); i++)
-		{
-			std::cout << gameObjects[i]->GetID() << ", " << gameObjects[i]->GetName() << " ";
-		}
-		std::cout << " \n";
-
-		std::vector<int> reuseables;
-		while (!reusableIDs.empty())
-		{
-			reuseables.push_back(reusableIDs.front());
-			reusableIDs.pop();
-		}
-
-		std::cout << "accessor : \n";
-		for (int i = 0; i < keysToAccessComponent.size(); i++)
-		{
-			for (int j = 0; j < keysToAccessComponent[i].size(); j++)
-			{
-				std::cout << keysToAccessComponent[i][j].componentType << ", ";
-				std::cout << keysToAccessComponent[i][j].dataIndex << " ";
-			}
-			std::cout << ' \n';
-		}
 	}
 }

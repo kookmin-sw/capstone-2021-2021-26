@@ -13,8 +13,8 @@ namespace Popeye {
 	private:
 		int id;
 		std::string name;
-		GameObject* parent;
-		std::vector<GameObject*> childs;
+		/*GameObject* parent;
+		std::vector<GameObject*> childs;*/
 	public:
 		Transform transform;
 	public:
@@ -24,12 +24,12 @@ namespace Popeye {
 		std::string GetName();
 		void SetName(std::string);
 
-		GameObject* GetParent();
+		/*GameObject* GetParent();
 		void SetParent(GameObject*);
 
 		GameObject* Getchild();
 		std::vector<GameObject*> Getchildren();
-		void AddChild(GameObject*);
+		void AddChild(GameObject*);*/
 
 		int GetID();
 		

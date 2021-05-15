@@ -3,6 +3,7 @@
 #include "./Scene/Scene.h"
 #include "./Scene/GameObject.h"
 
+#include "./Manager/SceneManager.h"
 #include "./Manager/ComponentManager.h"
 #include "./Component/RenderingComponents.h"
 namespace Popeye
@@ -199,7 +200,7 @@ namespace Popeye
 
 	}
 	
-	void FileIO::ReadSceneFile(fs::path path)
+	void FileIO::ReadScene(fs::path path)
 	{
 		std::ifstream writedata;
 		writedata.open(path, std::ios::in | std::ios::binary);
@@ -207,6 +208,8 @@ namespace Popeye
 		{
 			while (true)
 			{
+
+
 
 				if (writedata.eof())
 					break;
@@ -216,9 +219,10 @@ namespace Popeye
 
 	}
 
-	void FileIO::SaveScene(Scene* scene)
+	void FileIO::SaveScene()
 	{
 		std::ofstream out;
+		Scene* scene = SceneManager::GetInstance()->currentScene;
 		std::string scenedata = WriteScene(scene->GetName(), scene->GetNextID(), scene->focusedCamID, scene->GetReusableQueue(), scene->GetAccessors(), scene->gameObjects);
 		
 		out.open(root / "scene" / "test.pop");
@@ -230,15 +234,17 @@ namespace Popeye
 	{
 		std::string scene;
 		char enter = '\n', space = ' ';
+		int gameObject_size = gameObjects.size();
 		scene =
 			name + enter
 			+ WriteComponents()
 			+ std::to_string(nextID) + enter
 			+ std::to_string(focusedCamID) + enter
 			+ WriteReusableIDs(reuseableID)
-			+ WriteAddressor(keysToAccessComponent);
+			+ WriteAddressor(keysToAccessComponent)
+			+ std::to_string(gameObject_size) + enter;
 
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (int i = 0; i < gameObject_size; i++)
 		{
 			scene += WriteGameObject(gameObjects[i]->GetID(), gameObjects[i]->GetName(), gameObjects[i]->transform.position, gameObjects[i]->transform.rotation, gameObjects[i]->transform.scale);
 		}
@@ -272,19 +278,22 @@ namespace Popeye
 			addressor += "[ ";
 			for (int j = 0; j < acc_siz; j++)
 			{
-				std::string type = keysToAccessComponent[i][j].componentType;
-				type += " ";
+				if(keysToAccessComponent[i][j].dataIndex != -1)
+				{
+					std::string type = keysToAccessComponent[i][j].componentType;
+					type += " ";
 
-				std::string index = std::to_string(keysToAccessComponent[i][j].dataIndex);
-				index += " ";
+					std::string index = std::to_string(keysToAccessComponent[i][j].dataIndex);
+					index += " ";
 
-				addressor += type + index;
+					addressor += type + index;
+				}
 			}
 			
 			if (i < size - 1)
-				addressor += " ]\n";
+				addressor += "]\n";
 			else
-				addressor += " ]";
+				addressor += "]";
 		}
 
 
@@ -315,7 +324,7 @@ namespace Popeye
 			+ name + enter
 			+ std::to_string(position.x) + space + std::to_string(position.y) + space + std::to_string(position.y) + enter
 			+ std::to_string(rotation.x) + space + std::to_string(rotation.y) + space + std::to_string(rotation.y) + enter
-			+ std::to_string(scale.x) + space + std::to_string(scale.y) + space + std::to_string(scale.y) + enter;
+			+ std::to_string(scale.x)	 + space + std::to_string(scale.y)	  + space + std::to_string(scale.y)	   + enter;
 
 		return gameObject;
 	}
@@ -330,13 +339,13 @@ namespace Popeye
 		std::pair<const char*, std::vector<Light>> lights = ComponentManager::GetInstance()->GetAllDataOfComponent<Light>();
 
 		std::string cam = cameras.first;
-		cam += " [ " + WriteCameraComponent(cameras.second) + " ]\n";
+		cam += " [ " + WriteCameraComponent(cameras.second) + "]\n";
 
 		std::string mesh = meshrenderers.first;
-		mesh += " [ " + WriteMeshRendererComponent(meshrenderers.second) + " ]\n";
+		mesh += " [ " + WriteMeshRendererComponent(meshrenderers.second) + "]\n";
 
 		std::string light = lights.first;
-		light += " [ " + WriteLightComponent(lights.second) + " ]";
+		light += " [ " + WriteLightComponent(lights.second) + "]";
 
 		std::string components = "[ ";
 		components += cam + mesh + light + " ]\n";
@@ -347,7 +356,7 @@ namespace Popeye
 	std::string FileIO::WriteCameraComponent(std::vector<Camera>& cameras) 
 	{
 		std::string camera;
-		char enter = '\n', space = ' ';
+		char space = ' ';
 
 		int size = cameras.size();
 		for (int i = 0; i < size; i++)
@@ -372,9 +381,10 @@ namespace Popeye
 	std::string FileIO::WriteLightComponent(std::vector<Light>& lights)
 	{
 		std::string light;
-		char enter = '\n', space = ' ';
+		char space = ' ';
 
 		int size = lights.size();
+		int type = 0;
 		for (int i = 0; i < size; i++)
 		{
 			if (i == 0)
@@ -384,8 +394,22 @@ namespace Popeye
 					+ std::to_string(lights[i].spotLightCounter) + space;
 			}
 
+			switch (lights[i].ShowLightType())
+			{
+			case LightType::POINT:
+				type = 0;
+				break;
+			case LightType::DIRECTION:
+				type = 1;
+				break;
+			case LightType::SPOT:
+				type = 2;
+				break;
+			}
+
 			light +=
-				std::to_string(lights[i].color.x) + space + std::to_string(lights[i].color.y) + space + std::to_string(lights[i].color.z) + space
+				std::to_string(type) + space
+				+ std::to_string(lights[i].color.x) + space + std::to_string(lights[i].color.y) + space + std::to_string(lights[i].color.z) + space
 				+ std::to_string(lights[i].ambient) + space
 				+ std::to_string(lights[i].diffuse) + space
 				+ std::to_string(lights[i].specular) + space
@@ -402,7 +426,7 @@ namespace Popeye
 	std::string FileIO::WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers)
 	{
 		std::string meshrenderer;
-		char enter = '\n', space = ' ';
+		char space = ' ';
 
 		int size = meshRenderers.size();
 		for (int i = 0; i < size; i++)

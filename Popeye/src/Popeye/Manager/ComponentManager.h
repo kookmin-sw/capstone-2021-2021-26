@@ -13,23 +13,57 @@ namespace Popeye {
 	{
 	private:
 		std::vector<component> componentDatatable;
+		std::queue<int> reusableIndex;
 	public:
-		component& GetData(int key)
+		component& GetData(int index)
 		{
-			return componentDatatable[key];
+			return componentDatatable[index];
 		}
 
 		int AddData()
 		{
-			component data;
-			componentDatatable.push_back(data);
+			int index = 0;
+			if (reusableIndex.empty())
+			{
+				component data;
+				componentDatatable.push_back(data);
+				index = componentDatatable.size() - 1;
+			}
+			else
+			{
+				index = reusableIndex.front();
+				reusableIndex.pop();
+			}
 
-			return componentDatatable.size() - 1;
+			return index;
+		}
+
+		void RemoveData(int index)
+		{
+			reusableIndex.push(index);
+			componentDatatable[index].SetValue();
 		}
 
 		std::vector<component> GetAllData()
 		{
 			return componentDatatable;
+		}
+
+		void SetAllData(std::vector<component> &components)
+		{
+			int comp_size = components.size(), curr_size = componentDatatable.size();
+			for (int i = 0; i < comp_size; i++)
+			{
+				if (i < curr_size)
+				{
+					componentDatatable[i] = components[i];
+				}
+				else
+				{
+					componentDatatable.push_back(components[i]);
+				}
+
+			}
 		}
 		
 	};
@@ -69,6 +103,15 @@ namespace Popeye {
 			{
 				type = componentType;
 				index = AccessComponent<component>(componentDatas[componentType])->AddData();
+			}
+		}
+
+		template<typename component>
+		void RemoveDataOfComponent(const char* type, int index)
+		{
+			if (componentDatas.find(type) != componentDatas.end())
+			{
+				AccessComponent<component>(componentDatas[type])->RemoveData(index);
 			}
 		}
 

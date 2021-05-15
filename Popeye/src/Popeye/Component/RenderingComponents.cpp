@@ -208,21 +208,9 @@ namespace Popeye {
 
 	Light::Light()
 	{
-		type		= LightType::POINT;
 		pointLightCounter++;
 
-		color		= glm::vec3(1.0f);
-		
-		ambient		= 0.8f;
-		diffuse		= 0.7f;
-		specular	= 0.1f;
-
-		constant	= 1.0f;
-		linear		= 0.09f;
-		quadratic	= 0.032f;
-
-		cutoff		= 12.5f;
-		outercutoff = 17.5f;
+		SetValue();
 	}
 	
 	void Light::ChangeLightType(LightType changeType)
@@ -243,12 +231,53 @@ namespace Popeye {
 		return type;
 	}
 
+	void Light::SetValue()
+	{
+		type = LightType::POINT;
+
+		color = glm::vec3(1.0f);
+
+		ambient = 0.8f;
+		diffuse = 0.7f;
+		specular = 0.1f;
+
+		constant = 1.0f;
+		linear = 0.09f;
+		quadratic = 0.032f;
+
+		cutoff = 12.5f;
+		outercutoff = 17.5f;
+	}
+
 
 	/**************MeshRenderer component**************/
 	MeshRenderer::MeshRenderer() 
 	{
-		meshID		= 0;
-		materialID	= 0;
-		isEmpty		= true;
+		SetValue();
+	}
+	
+	void MeshRenderer::SetValue()
+	{
+		meshID = 0;
+		materialID = 0;
+		isEmpty = true;
+	}
+
+
+	/*****************Camera component*****************/
+	Camera::Camera()
+	{
+		SetValue();
+	}
+
+	void Camera::SetValue()
+	{
+		mod = Projection::PERSPECTIVE;
+		fov = 45.0f;
+		offsetX = 800.0f, offsetY = 600.0f;
+
+		nearView = 0.1f, farView = 100.0f;
+
+		width = 5.0f, height = 5.0f;
 	}
 }
