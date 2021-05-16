@@ -60,20 +60,24 @@ namespace Popeye {
 		void WriteDataToFile(std::string datfile, std::string dattablefile, FileData filedata);
 		unsigned char* FileDataBuffer(fs::path path);
 		void InitProject(fs::path path);
-		void ReadScene(fs::path path);
+		void LoadScene(fs::path path);
 		void SaveScene();
 		
 		// TODO :: Change it (use Boost or make reflection)
+		// -------------------- Save -----------------------
 		std::string WriteScene(std::string name);
 		std::string WriteScene(std::string name, int nextID, int focusedCamID, std::queue<int>& reuseableID, std::vector <std::vector<Accessor>>& keysToAccessComponent, std::vector <GameObject*>& gameObjects);
 		std::string WriteAddressor(std::vector <std::vector<Accessor>>& keysToAccessComponent);
-		std::string WriteReusableIDs(std::queue<int> reuseableID);
+		std::string WriteRecycleQ(std::queue<int> reuseableID);
 		std::string WriteGameObject(int id, std::string name, glm::vec3 position = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
 
 		std::string WriteComponents();
 		std::string WriteCameraComponent(std::vector<Camera>& cameras);
 		std::string WriteLightComponent(std::vector<Light>& lights);
 		std::string WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers);
+
+		// -------------------- Load -----------------------
+
 
 	};
 }

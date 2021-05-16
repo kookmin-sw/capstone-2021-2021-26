@@ -183,14 +183,14 @@ namespace Popeye
 	{
 		std::ifstream writedata;
 		writedata.open(path, std::ios::in | std::ios::binary);
-		std::string str;
-		glm::vec3 dd;
+		std::string strReader;
+		glm::vec3 vecReader;
 		if (writedata.is_open())
 		{
 			while (true)
 			{
-				writedata >> str >> dd.x >> dd.y >> dd.z;
-				std::cout << str << '\n';
+				writedata >> strReader >> vecReader.x >> vecReader.y >> vecReader.z;
+				std::cout << strReader << '\n';
 
 				if (writedata.eof())
 					break;
@@ -200,20 +200,137 @@ namespace Popeye
 
 	}
 	
-	void FileIO::ReadScene(fs::path path)
-	{
+	void FileIO::LoadScene(fs::path path)
+	{	
+		// Readers for each datatype
+		int				intReader;
+		bool			boolReader;
+		char			charReader;
+		float			floatReader;
+		std::string		strReader;
+		glm::vec3		vecReader;
+
+		Transform		tReader;
+		Camera			cReader;
+		MeshRenderer	mReader;
+		Light			lReader;
+
 		std::ifstream writedata;
+
 		writedata.open(path, std::ios::in | std::ios::binary);
 		if (writedata.is_open())
 		{
-			while (true)
+			// Component data for the scene
+			writedata >> strReader >> intReader;
 			{
+				std::vector<Camera> camDatas;
+				std::queue<int> recycleQ;
+				for (int i = 0; i < intReader; i++)
+				{
+					writedata >> intReader;
+					if (intReader == 0)
+						cReader.mod = Projection::PERSPECTIVE;
+					else
+						cReader.mod = Projection::ORTHOGRAPHIC;
+					writedata >> cReader.fov
+						>> cReader.offsetX >> cReader.offsetY
+						>> cReader.nearView >> cReader.farView
+						>> cReader.width >> cReader.height;
 
-
-
-				if (writedata.eof())
-					break;
+					camDatas.push_back(cReader);
+				}
+				writedata >> intReader;
+				for (int i = 0; i < intReader; i++)
+				{
+					writedata >> intReader;
+					recycleQ.push(intReader);
+				}
 			}
+
+			writedata >> strReader >> intReader;
+			{
+				std::vector<MeshRenderer> camDatas;
+				std::queue<int> recycleQ;
+				for (int i = 0; i < intReader; i++)
+				{
+					writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
+				}
+
+				writedata >> intReader;
+				for (int i = 0; i < intReader; i++)
+				{
+					writedata >> intReader;
+					recycleQ.push(intReader);
+				}
+			}
+
+			writedata >> strReader >> intReader;
+			{
+				std::vector<Light> camDatas;
+				std::queue<int> recycleQ;
+				for (int i = 0; i < intReader; i++)
+				{
+					if (i == 0)
+					{
+						writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
+					}
+
+					writedata >> intReader;
+					LightType lighttype;
+					switch (intReader)
+					{
+					case 0:
+						lReader.type = LightType::POINT;
+						break;
+					case 1:
+						lReader.type = LightType::DIRECTION;
+						break;
+					case 2:
+						lReader.type = LightType::SPOT;
+						break;
+					}
+
+					writedata >> lReader.color.x >> lReader.color.y >> lReader.color.z
+						>> lReader.ambient >> lReader.diffuse >> lReader.specular
+						>> lReader.constant >> lReader.linear >> lReader.quadratic 
+						>> lReader.cutoff >> lReader.outercutoff;
+
+					camDatas.push_back(lReader);
+				}
+
+				writedata >> intReader;
+				for (int i = 0; i < intReader; i++)
+				{
+					writedata >> intReader;
+					recycleQ.push(intReader);
+				}
+			}
+			
+
+			// Scene
+			writedata >> strReader;
+			POPEYE_CORE_INFO(strReader);
+			writedata >> intReader;
+
+			writedata >> intReader;
+
+			// q
+			writedata >> intReader;
+			{}
+			//writedata >> intReader;
+			
+			// addressor size
+			writedata >> intReader;
+			{}
+
+			// gameobject size
+			writedata >> intReader;
+			{
+				// id
+				// name
+				// ..
+			}
+
 			writedata.close();
 		}
 
@@ -223,7 +340,7 @@ namespace Popeye
 	{
 		std::ofstream out;
 		Scene* scene = SceneManager::GetInstance()->currentScene;
-		std::string scenedata = WriteScene(scene->GetName(), scene->GetNextID(), scene->focusedCamID, scene->GetReusableQueue(), scene->GetAccessors(), scene->gameObjects);
+		std::string scenedata = WriteScene(scene->GetName(), scene->GetNextID(), scene->focusedCamID, scene->GetRecycleQueue(), scene->GetAccessors(), scene->gameObjects);
 		
 		out.open(root / "scene" / "test.pop");
 		out << scenedata;
@@ -236,11 +353,11 @@ namespace Popeye
 		char enter = '\n', space = ' ';
 		int gameObject_size = gameObjects.size();
 		scene =
-			name + enter
-			+ WriteComponents()
+			WriteComponents()
+			+ name + enter
 			+ std::to_string(nextID) + enter
 			+ std::to_string(focusedCamID) + enter
-			+ WriteReusableIDs(reuseableID)
+			+ WriteRecycleQ(reuseableID)
 			+ WriteAddressor(keysToAccessComponent)
 			+ std::to_string(gameObject_size) + enter;
 
@@ -262,7 +379,7 @@ namespace Popeye
 			+ std::to_string(0) + enter // focused cam ID
 			+ "[ ]\n"					// reusable queue
 			+ "[ ]\n"					// addressor					
-			+ WriteGameObject(0, "Main Camera", glm::vec3(8.0f), glm::vec3(-30.0f, 45.0f, 0.0f))
+			+ WriteGameObject(0, "Main_Camera", glm::vec3(8.0f), glm::vec3(-30.0f, 45.0f, 0.0f))
 			+ WriteGameObject(1, "Light");
 
 		return scene;
@@ -270,12 +387,12 @@ namespace Popeye
 
 	std::string FileIO::WriteAddressor(std::vector <std::vector<Accessor>>& keysToAccessComponent)
 	{
-		std::string addressor = "[ ";
 		int size = keysToAccessComponent.size();
+		std::string addressor = std::to_string(size) + "\n";
 		for (int i = 0; i < size; i++)
 		{
 			int acc_siz = keysToAccessComponent[i].size();
-			addressor += "[ ";
+			addressor += std::to_string(acc_siz) + " ";
 			for (int j = 0; j < acc_siz; j++)
 			{
 				if(keysToAccessComponent[i][j].dataIndex != -1)
@@ -291,26 +408,26 @@ namespace Popeye
 			}
 			
 			if (i < size - 1)
-				addressor += "]\n";
+				addressor += "\n";
 			else
-				addressor += "]";
+				addressor += " ";
 		}
 
 
-		addressor += " ]\n";
+		addressor += " \n";
 
 		return addressor;
 	}
 
-	std::string FileIO::WriteReusableIDs(std::queue<int> reuseableID)
+	std::string FileIO::WriteRecycleQ(std::queue<int> reuseableID)
 	{
-		char space = ' ';
-		std::string reusable = "[ ";
+		std::string reusable = std::to_string(reuseableID.size()) + " ";
 		while (!reuseableID.empty())
 		{
 			reusable += std::to_string(reuseableID.front()) + " ";
+			reuseableID.pop();
 		}
-		reusable += "]\n";
+		reusable += "\n";
 
 		return reusable;
 	}
@@ -333,32 +450,34 @@ namespace Popeye
 
 	std::string FileIO::WriteComponents()
 	{
+		std::pair<std::vector<Camera>, std::queue<int>> cameras = ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>();
+		std::pair<std::vector<MeshRenderer>, std::queue<int>> meshrenderers = ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>();
+		std::pair<std::vector<Light>, std::queue<int>> lights = ComponentManager::GetInstance()->GetAllDataOfComponent<Light>();
 
-		std::pair<const char*, std::vector<Camera>> cameras = ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>();
-		std::pair<const char*, std::vector<MeshRenderer>> meshrenderers = ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>();
-		std::pair<const char*, std::vector<Light>> lights = ComponentManager::GetInstance()->GetAllDataOfComponent<Light>();
+		std::string cam = typeid(Camera).name() + 15;
+		cam += WriteCameraComponent(cameras.first) + "\n";
+		cam += WriteRecycleQ(cameras.second);
 
-		std::string cam = cameras.first;
-		cam += " [ " + WriteCameraComponent(cameras.second) + "]\n";
+		std::string mesh = typeid(MeshRenderer).name() +15;
+		mesh += WriteMeshRendererComponent(meshrenderers.first) + "\n";
+		mesh += WriteRecycleQ(meshrenderers.second);
 
-		std::string mesh = meshrenderers.first;
-		mesh += " [ " + WriteMeshRendererComponent(meshrenderers.second) + "]\n";
+		std::string light = typeid(Light).name() + 15;
+		light += WriteLightComponent(lights.first) + "\n";
+		light +=  WriteRecycleQ(lights.second) ;
 
-		std::string light = lights.first;
-		light += " [ " + WriteLightComponent(lights.second) + "]";
-
-		std::string components = "[ ";
-		components += cam + mesh + light + " ]\n";
+		std::string components = "\n";
+		components += cam + mesh + light + " \n";
 
 		return components;
 	}
 
 	std::string FileIO::WriteCameraComponent(std::vector<Camera>& cameras) 
 	{
-		std::string camera;
+		int size = cameras.size();
+		std::string camera = " " + std::to_string(size) + " ";
 		char space = ' ';
 
-		int size = cameras.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (cameras[i].mod == Projection::PERSPECTIVE)
@@ -380,10 +499,10 @@ namespace Popeye
 	
 	std::string FileIO::WriteLightComponent(std::vector<Light>& lights)
 	{
-		std::string light;
-		char space = ' ';
-
 		int size = lights.size();
+		std::string light = " " + std::to_string(size) + " ";
+		char space = ' ';
+		
 		int type = 0;
 		for (int i = 0; i < size; i++)
 		{
@@ -425,10 +544,10 @@ namespace Popeye
 	
 	std::string FileIO::WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers)
 	{
-		std::string meshrenderer;
+		int size = meshRenderers.size();
+		std::string meshrenderer = " " + std::to_string(size) + " ";
 		char space = ' ';
 
-		int size = meshRenderers.size();
 		for (int i = 0; i < size; i++)
 		{
 			meshrenderer +=

@@ -21,6 +21,8 @@ namespace Popeye {
 		GameObject(int _id);
 		~GameObject();
 
+		void SetValue(int _id);
+
 		std::string GetName();
 		void SetName(std::string);
 
@@ -37,6 +39,12 @@ namespace Popeye {
 		void AddComponent()
 		{
 			SceneManager::GetInstance()->currentScene->AddData<component>(id);
+		}
+
+		template<class component>
+		void DeleteComponent()
+		{
+			SceneManager::GetInstance()->currentScene->RemoveData<component>(id);
 		}
 
 		void AddComponentByName(const char* component);

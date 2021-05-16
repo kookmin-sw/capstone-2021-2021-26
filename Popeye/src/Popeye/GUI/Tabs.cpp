@@ -113,13 +113,28 @@ namespace Popeye{
 
 		if (ImGui::CollapsingHeader(scene->GetName().c_str()))
 		{
-			for (int i = 0; i < scene->gameObjects.size(); i++)
+			int size = scene->gameObjects.size();
+			for (int i = 0; i < size; i++)
 			{
-				if (ImGui::Selectable(scene->gameObjects[i]->GetName().c_str()))
+				if (scene->gameObjects[i] != nullptr)
 				{
-					selectedGameObject = scene->gameObjects[i];
+					if (ImGui::Selectable(scene->gameObjects[i]->GetName().c_str()))
+					{
+						selectedGameObject = scene->gameObjects[i];
+					}
 				}
 			}
+		}
+
+		if (selectedGameObject != nullptr && ImGui::IsKeyDown(261))
+		{
+			int idToDelete = selectedGameObject->GetID();
+			selectedGameObject->DeleteComponent<Camera>();
+			selectedGameObject->DeleteComponent<MeshRenderer>();
+			selectedGameObject->DeleteComponent<Light>();
+			selectedGameObject = nullptr;
+
+			scene->DeleteGameObject(idToDelete);
 		}
 	}
 
@@ -142,22 +157,34 @@ namespace Popeye{
 			/*Show all Component*/
 			int id = selectedGameObject->GetID();
 			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id); // TODO::Make copy once.
-
+			bool componentExist = true;
 			for (int i = 0; i < accessor.size(); i++)
 			{
 				if (accessor[i].componentType != nullptr)
 				{
 					if (accessor[i].componentType == typeid(Camera).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<Camera>());
+						ShowComponent(selectedGameObject->GetComponent<Camera>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Camera>();
+						}
 					}
-					if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
+					else if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>());
+						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<MeshRenderer>();
+						}
 					}
-					if (accessor[i].componentType == typeid(Light).name() + 15)
+					else if (accessor[i].componentType == typeid(Light).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<Light>());
+						ShowComponent(selectedGameObject->GetComponent<Light>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Light>();
+						}
 					}
 				}
 			}
@@ -184,7 +211,7 @@ namespace Popeye{
 	}
 
 
-	void Inspector::ShowComponent(Camera& camera)
+	void Inspector::ShowComponent(Camera& camera, bool& closeBtn)
 	{
 		const char* camMod[] = { "Perspective", "Otrhomatric" };
 
@@ -192,7 +219,7 @@ namespace Popeye{
 		if (camera.mod == Projection::PERSPECTIVE) { cameraMod = 0; }
 		if (camera.mod == Projection::ORTHOGRAPHIC) { cameraMod = 1; }
 
-		if (ImGui::CollapsingHeader("Camera"))
+		if (ImGui::CollapsingHeader("Camera", &closeBtn))
 		{
 			ImGui::Combo("Projection", &cameraMod, camMod, IM_ARRAYSIZE(camMod), IM_ARRAYSIZE(camMod)); // TODO::Make look pretty.
 			if (cameraMod == 0) {
@@ -212,9 +239,9 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowComponent(MeshRenderer& meshRenderer)
+	void Inspector::ShowComponent(MeshRenderer& meshRenderer, bool& closeBtn)
 	{
-		if (ImGui::CollapsingHeader("MeshRenderer"))
+		if (ImGui::CollapsingHeader("MeshRenderer", &closeBtn))
 		{
 			if (ImGui::TreeNode("Mesh"))
 			{
@@ -289,7 +316,7 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowComponent(Light& light)
+	void Inspector::ShowComponent(Light& light, bool& closeBtn)
 	{
 		const char* lighttype[] = { "Point", "Direction", "Spot" };
 
@@ -300,7 +327,7 @@ namespace Popeye{
 		else if (type == LightType::DIRECTION) { lightMod = 1; }
 		else if (type == LightType::SPOT) { lightMod = 2; }
 
-		if (ImGui::CollapsingHeader("Light"))
+		if (ImGui::CollapsingHeader("Light", &closeBtn))
 		{
 			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
 			if (lightMod == 0)		{ 
@@ -455,11 +482,12 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0) && filedata.type == FileType::SCENE)
 						{
-							unsigned char* buffer = g_fileIO->FileDataBuffer(filedata.path);
+							//unsigned char* buffer = g_fileIO->FileDataBuffer(filedata.path);
 							
+							g_fileIO->LoadScene(filedata.path);
 							// scene load
 
-							free(buffer);
+							//free(buffer);
 						}
 					}
 					fi++;

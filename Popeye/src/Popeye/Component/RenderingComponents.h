@@ -33,6 +33,7 @@ namespace Popeye {
 		static int directionalLightCounter;
 		static int spotLightCounter;
 
+		LightType type;
 		glm::vec3 color;
 		
 		float ambient;
@@ -53,8 +54,6 @@ namespace Popeye {
 
 		void ChangeLightType(LightType);
 		LightType ShowLightType();
-	private:
-		LightType type;
 	};
 
 	/*MeshRenderer*/

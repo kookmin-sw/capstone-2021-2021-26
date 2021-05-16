@@ -13,7 +13,7 @@ namespace Popeye {
 	{
 	private:
 		std::vector<component> componentDatatable;
-		std::queue<int> reusableIndex;
+		std::queue<int> recycleIndex;
 	public:
 		component& GetData(int index)
 		{
@@ -23,7 +23,7 @@ namespace Popeye {
 		int AddData()
 		{
 			int index = 0;
-			if (reusableIndex.empty())
+			if (recycleIndex.empty())
 			{
 				component data;
 				componentDatatable.push_back(data);
@@ -31,8 +31,8 @@ namespace Popeye {
 			}
 			else
 			{
-				index = reusableIndex.front();
-				reusableIndex.pop();
+				index = recycleIndex.front();
+				recycleIndex.pop();
 			}
 
 			return index;
@@ -40,14 +40,13 @@ namespace Popeye {
 
 		void RemoveData(int index)
 		{
-			reusableIndex.push(index);
+			recycleIndex.push(index);
 			componentDatatable[index].SetValue();
 		}
 
-		std::vector<component> GetAllData()
-		{
-			return componentDatatable;
-		}
+		std::vector<component> GetAllData(){return componentDatatable;}
+
+		std::queue<int> GetRecycleQ(){return recycleIndex;}
 
 		void SetAllData(std::vector<component> &components)
 		{
@@ -63,6 +62,19 @@ namespace Popeye {
 					componentDatatable.push_back(components[i]);
 				}
 
+			}
+		}
+
+		void SetRecycleQ(std::queue<int> &q)
+		{
+			while (!recycleIndex.empty())
+			{
+				recycleIndex.pop();
+			}
+			while (!q.empty())
+			{
+				recycleIndex.push(q.front());
+				q.pop();
 			}
 		}
 		
@@ -122,12 +134,13 @@ namespace Popeye {
 		}
 
 		template<typename component>
-		std::pair<const char*, std::vector<component>> GetAllDataOfComponent()
+		std::pair<std::vector<component>, std::queue<int>> GetAllDataOfComponent()
 		{
 			const char* componentType = typeid(component).name() + 15;
 			std::vector<component> components= AccessComponent<component>(componentDatas[componentType])->GetAllData();
-			
-			std::pair<const char*, std::vector<component>> compNname = std::make_pair(componentType, components);
+			std::queue<int> recycleIndexQ = AccessComponent<component>(componentDatas[componentType])->GetRecycleQ();
+
+			std::pair<std::vector<component>, std::queue<int>> compNname = std::make_pair(components, recycleIndexQ);
 
 			return compNname;
 		}

@@ -6,7 +6,7 @@ namespace Popeye {
 	
 	GameObject::GameObject(int _id)
 	{
-		id = _id;
+		SetValue(_id);
 	}
 
 	GameObject::~GameObject()
@@ -16,6 +16,12 @@ namespace Popeye {
 	/*void GameObject::AddChild(GameObject* child)
 	{
 	}*/
+
+	void GameObject::SetValue(int _id)
+	{
+		id = _id;
+		transform = Transform();
+	}
 
 	std::string GameObject::GetName()
 	{

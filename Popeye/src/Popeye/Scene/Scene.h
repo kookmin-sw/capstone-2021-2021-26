@@ -20,7 +20,7 @@ namespace Popeye {
 		int	sceneID;
 		std::string sceneName;
 		int gameObjectID;
-		std::queue	<int> reusableIDs;
+		std::queue	<int> idRecycleQ;
 		std::vector <std::vector<Accessor>> keysToAccessComponent;
 	
 	public:
@@ -35,7 +35,7 @@ namespace Popeye {
 		~Scene();
 		
 		void CreateGameObject(std::string name = "GameObject");
-		void DeleteGameObject(int id);
+		void DeleteGameObject(int _id);
 
 		template<class component>
 		void AddData(int _id)
@@ -50,11 +50,14 @@ namespace Popeye {
 		{
 			const char* componentType = typeid(component).name() + 15;
 			int address_size = keysToAccessComponent[_id].size();
-			for (int i = 0; i < )
+			for (int i = 0; i < address_size; i++)
 			{
-				if (keysToAccessComponent[_id][i].componentType[0] == componentType[0])
+				if (keysToAccessComponent[_id][i].componentType != nullptr && keysToAccessComponent[_id][i].componentType[0] == componentType[0])
 				{
-					ComponentManager::GetInstance()->RemoveDataOfComponent(componentType, keysToAccessComponent[_id][i].dataIndex);
+					POPEYE_CORE_INFO("dd");
+					ComponentManager::GetInstance()->RemoveDataOfComponent<component>(componentType, keysToAccessComponent[_id][i].dataIndex);
+					keysToAccessComponent[_id][i].Reset();
+					return;
 				}
 			}
 		}
@@ -97,7 +100,7 @@ namespace Popeye {
 
 		std::string GetName();
 		int GetNextID();
-		std::queue<int> GetReusableQueue();
+		std::queue<int> GetRecycleQueue();
 		std::vector<std::vector<Accessor>> GetAccessors();
 
 		void SetName(char* );

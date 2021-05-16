@@ -26,9 +26,9 @@ namespace Popeye{
 	{
 		virtual void ShowContents();
 		
-		void ShowComponent(Camera&);
-		void ShowComponent(MeshRenderer&);
-		void ShowComponent(Light&);
+		void ShowComponent(Camera&, bool&);
+		void ShowComponent(MeshRenderer&, bool&);
+		void ShowComponent(Light&, bool&);
 	};
 
 	struct SceneView : public Tab
