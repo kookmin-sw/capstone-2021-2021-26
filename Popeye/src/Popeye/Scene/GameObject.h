@@ -19,9 +19,11 @@ namespace Popeye {
 		Transform transform;
 	public:
 		GameObject(int _id);
+		GameObject(int _id, std::string _name, Transform _transform);
 		~GameObject();
 
 		void SetValue(int _id);
+		void SetValue(int _id, std::string _name, Transform _transform);
 
 		std::string GetName();
 		void SetName(std::string);

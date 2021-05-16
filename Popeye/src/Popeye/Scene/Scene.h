@@ -4,6 +4,7 @@ namespace Popeye {
 	class GUIManager;
 	class ComponentManager;
 	class GameObject;
+	struct Transform;
 
 	struct Accessor 
 	{
@@ -35,6 +36,7 @@ namespace Popeye {
 		~Scene();
 		
 		void CreateGameObject(std::string name = "GameObject");
+		void CreateGameObject(int id, std::string name, Transform transform);
 		void DeleteGameObject(int _id);
 
 		template<class component>
@@ -103,6 +105,10 @@ namespace Popeye {
 		std::queue<int> GetRecycleQueue();
 		std::vector<std::vector<Accessor>> GetAccessors();
 
-		void SetName(char* );
+		void SetName(std::string _name);
+		void SetNextID(int _nextID);
+		void SetRecycleQueue(std::queue<int>& _idRecycleQ);
+		void SetAccessors(const std::vector<std::vector<Accessor>>& _accessors);
+		void SetGameObjects(std::vector <GameObject>& _gameObjects);
 	};
 }

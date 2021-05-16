@@ -29,13 +29,16 @@ namespace Popeye {
 	{
 		int newID = 0;
 		if (!idRecycleQ.empty()){
+			
 			newID = idRecycleQ.front();
 			idRecycleQ.pop();
 		}
-		else{
+		else
+		{	
 			newID = gameObjectID;
 			gameObjectID++;
 		}
+
 		GameObject* gameobject = new GameObject(newID);
 		
 		std::string idstr = std::to_string(newID);
@@ -53,6 +56,22 @@ namespace Popeye {
 			keysToAccessComponent.push_back(newAccessor);
 		}
 
+	}
+
+	void Scene::CreateGameObject(int id, std::string name, Transform transform)
+	{
+		GameObject* gameobject = new GameObject(id, name, transform);
+		gameObjects.push_back(gameobject);
+
+		if (id + 1 <= keysToAccessComponent.size())
+		{
+			ResetAccessor(id);
+		}
+		else
+		{
+			std::vector<Accessor> newAccessor;
+			keysToAccessComponent.push_back(newAccessor);
+		}
 	}
 
 	void Scene::DeleteGameObject(int _id)
@@ -73,16 +92,6 @@ namespace Popeye {
 			}
 		}
 	}
-
-	void Scene::SetName(char* name)
-	{
-		sceneName = name;
-	}
-
-	int Scene::GetNextID()										{ return gameObjectID; }
-	std::string Scene::GetName()								{ return sceneName;}
-	std::queue<int> Scene::GetRecycleQueue()					{ return idRecycleQ;}
-	std::vector<std::vector<Accessor>> Scene::GetAccessors()	{ return keysToAccessComponent;}
 
 	void Scene::ResetAccessor(int id)
 	{
@@ -114,4 +123,101 @@ namespace Popeye {
 		ComponentManager::GetInstance()->AddDataOfComponentByName(component, accessor.componentType, accessor.dataIndex);
 		keysToAccessComponent[_id].push_back(accessor);
 	}
+
+
+	int Scene::GetNextID() { return gameObjectID; }
+	std::string Scene::GetName() { return sceneName; }
+	std::queue<int> Scene::GetRecycleQueue() { return idRecycleQ; }
+	std::vector<std::vector<Accessor>> Scene::GetAccessors()
+	{
+		std::vector<std::vector<Accessor>> keysTodata;
+
+		int size = keysToAccessComponent.size();
+		for (int i = 0; i < size; i++)
+		{
+			std::vector < Accessor> datas;
+
+			int arr_size = keysToAccessComponent[i].size();
+			for (int j = 0; j < arr_size; j++)
+			{
+				if (keysToAccessComponent[i][j].componentType != nullptr)
+				{
+					datas.push_back(keysToAccessComponent[i][j]);
+				}
+			}
+
+			keysTodata.push_back(datas);
+		}
+
+		return keysTodata;
+	}
+
+	void Scene::SetName(std::string _name)
+	{
+		sceneName = _name;
+	}
+	
+	void Scene::SetNextID(int _nextID)
+	{
+		gameObjectID = _nextID;
+	}
+	
+	void Scene::SetRecycleQueue(std::queue<int>& _idRecycleQ)
+	{
+		while (!idRecycleQ.empty())
+		{
+			idRecycleQ.pop();
+		}
+		
+		while (!_idRecycleQ.empty())
+		{
+			idRecycleQ.push(_idRecycleQ.front());
+			_idRecycleQ.pop();
+		}
+	}
+
+	void Scene::SetAccessors(const std::vector<std::vector<Accessor>>& accessors)
+	{
+		//keysToAccessComponent = accessors;
+		int size = keysToAccessComponent.size();
+		for (int i = 0; i < size; i++)
+		{
+			std::vector<Accessor>().swap(keysToAccessComponent[i]);
+		}
+		std::vector<std::vector<Accessor>>().swap(keysToAccessComponent);
+
+		size = accessors.size();
+		for (int i = 0; i < size; i++)
+		{
+			int sszize = accessors[i].size();
+			std::vector<Accessor> acc;
+			for (int j = 0; j < sszize; j++)
+			{
+				acc.push_back(accessors[i][j]);
+			}
+			keysToAccessComponent.push_back(acc);
+		}
+
+	}
+
+	void Scene::SetGameObjects(std::vector <GameObject>& _gameObjects)
+	{
+		int size = gameObjects.size();
+		int ssize = _gameObjects.size();
+		for (int i = 0; i < ssize; i++)
+		{
+			if (i < size)
+			{
+				gameObjects[i]->SetValue(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
+			}
+			else
+			{
+				// crash when there is gameObject with same ID if size > ssize
+				GameObject* gameobject = new GameObject(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
+				gameObjects.push_back(gameobject);
+				//CreateGameObject(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
+			}
+		}
+	}
+
 }

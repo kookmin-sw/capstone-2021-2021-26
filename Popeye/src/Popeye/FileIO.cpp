@@ -202,6 +202,7 @@ namespace Popeye
 	
 	void FileIO::LoadScene(fs::path path)
 	{	
+		Scene* scene = SceneManager::GetInstance()->currentScene;
 		// Readers for each datatype
 		int				intReader;
 		bool			boolReader;
@@ -221,114 +222,166 @@ namespace Popeye
 		if (writedata.is_open())
 		{
 			// Component data for the scene
-			writedata >> strReader >> intReader;
 			{
-				std::vector<Camera> camDatas;
-				std::queue<int> recycleQ;
-				for (int i = 0; i < intReader; i++)
+				writedata >> strReader >> intReader;
 				{
-					writedata >> intReader;
-					if (intReader == 0)
-						cReader.mod = Projection::PERSPECTIVE;
-					else
-						cReader.mod = Projection::ORTHOGRAPHIC;
-					writedata >> cReader.fov
-						>> cReader.offsetX >> cReader.offsetY
-						>> cReader.nearView >> cReader.farView
-						>> cReader.width >> cReader.height;
-
-					camDatas.push_back(cReader);
-				}
-				writedata >> intReader;
-				for (int i = 0; i < intReader; i++)
-				{
-					writedata >> intReader;
-					recycleQ.push(intReader);
-				}
-			}
-
-			writedata >> strReader >> intReader;
-			{
-				std::vector<MeshRenderer> camDatas;
-				std::queue<int> recycleQ;
-				for (int i = 0; i < intReader; i++)
-				{
-					writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
-				}
-
-				writedata >> intReader;
-				for (int i = 0; i < intReader; i++)
-				{
-					writedata >> intReader;
-					recycleQ.push(intReader);
-				}
-			}
-
-			writedata >> strReader >> intReader;
-			{
-				std::vector<Light> camDatas;
-				std::queue<int> recycleQ;
-				for (int i = 0; i < intReader; i++)
-				{
-					if (i == 0)
+					std::vector<Camera> camDatas;
+					std::queue<int> recycleQ;
+					for (int i = 0; i < intReader; i++)
 					{
-						writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
+						writedata >> intReader;
+						if (intReader == 0)
+							cReader.mod = Projection::PERSPECTIVE;
+						else
+							cReader.mod = Projection::ORTHOGRAPHIC;
+						writedata >> cReader.fov
+							>> cReader.offsetX >> cReader.offsetY
+							>> cReader.nearView >> cReader.farView
+							>> cReader.width >> cReader.height;
+
+						camDatas.push_back(cReader);
+					}
+					writedata >> intReader;
+					for (int i = 0; i < intReader; i++)
+					{
+						writedata >> intReader;
+						recycleQ.push(intReader);
+					}
+				}
+
+				writedata >> strReader >> intReader;
+				{
+					std::vector<MeshRenderer> camDatas;
+					std::queue<int> recycleQ;
+					for (int i = 0; i < intReader; i++)
+					{
+						writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
 					}
 
 					writedata >> intReader;
-					LightType lighttype;
-					switch (intReader)
+					for (int i = 0; i < intReader; i++)
 					{
-					case 0:
-						lReader.type = LightType::POINT;
-						break;
-					case 1:
-						lReader.type = LightType::DIRECTION;
-						break;
-					case 2:
-						lReader.type = LightType::SPOT;
-						break;
+						writedata >> intReader;
+						recycleQ.push(intReader);
+					}
+				}
+
+				writedata >> strReader >> intReader;
+				{
+					std::vector<Light> camDatas;
+					std::queue<int> recycleQ;
+					for (int i = 0; i < intReader; i++)
+					{
+						if (i == 0)
+						{
+							writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
+						}
+
+						writedata >> intReader;
+						LightType lighttype;
+						switch (intReader)
+						{
+						case 0:
+							lReader.type = LightType::POINT;
+							break;
+						case 1:
+							lReader.type = LightType::DIRECTION;
+							break;
+						case 2:
+							lReader.type = LightType::SPOT;
+							break;
+						}
+
+						writedata >> lReader.color.x >> lReader.color.y >> lReader.color.z
+							>> lReader.ambient >> lReader.diffuse >> lReader.specular
+							>> lReader.constant >> lReader.linear >> lReader.quadratic
+							>> lReader.cutoff >> lReader.outercutoff;
+
+						camDatas.push_back(lReader);
 					}
 
-					writedata >> lReader.color.x >> lReader.color.y >> lReader.color.z
-						>> lReader.ambient >> lReader.diffuse >> lReader.specular
-						>> lReader.constant >> lReader.linear >> lReader.quadratic 
-						>> lReader.cutoff >> lReader.outercutoff;
-
-					camDatas.push_back(lReader);
-				}
-
-				writedata >> intReader;
-				for (int i = 0; i < intReader; i++)
-				{
 					writedata >> intReader;
-					recycleQ.push(intReader);
+					for (int i = 0; i < intReader; i++)
+					{
+						writedata >> intReader;
+						recycleQ.push(intReader);
+					}
 				}
 			}
-			
 
 			// Scene
-			writedata >> strReader;
-			POPEYE_CORE_INFO(strReader);
-			writedata >> intReader;
-
-			writedata >> intReader;
-
-			// q
-			writedata >> intReader;
-			{}
-			//writedata >> intReader;
-			
-			// addressor size
-			writedata >> intReader;
-			{}
-
-			// gameobject size
-			writedata >> intReader;
 			{
-				// id
-				// name
-				// ..
+				writedata >> strReader;			// name
+				//POPEYE_CORE_INFO("scene name : {0}", strReader);
+				scene->SetName(strReader);
+				
+				writedata >> intReader;			// next gameobject
+				//POPEYE_CORE_INFO("nextid : {0}", intReader);
+				scene->SetNextID(intReader);
+				
+				writedata >> intReader;			// current camera id
+				//POPEYE_CORE_INFO("camID : {0}", intReader);
+				scene->focusedCamID = intReader;
+				// q
+				writedata >> intReader;
+				//POPEYE_CORE_INFO("Q size : {0}", intReader);
+				{
+					std::queue<int> recycleQ;
+					int qsize = intReader;
+					for (int i = 0; i < intReader; i++)
+					{
+						writedata >> intReader;
+						recycleQ.push(intReader);
+					}
+					scene->SetRecycleQueue(recycleQ);
+				}
+
+				// addressor size
+				writedata >> intReader;
+				//POPEYE_CORE_INFO("add size : {0}", intReader);
+				{
+					int size = intReader;
+					std::vector<std::vector<Accessor>> keysToaccess;
+					for (int i = 0; i < size; i++)
+					{
+						std::vector<Accessor> accessor_arr;
+						writedata >> intReader;
+						int ssize = intReader;
+						//POPEYE_CORE_INFO("size : {0}", intReader);
+						for (int i = 0; i < intReader; i++)
+						{
+							Accessor accesor;
+							writedata >> strReader >> intReader;
+							//POPEYE_CORE_INFO("{0}, {1}", strReader, intReader);
+							accesor.componentType = strReader.c_str();
+							accesor.dataIndex = intReader;
+
+							accessor_arr.push_back(accesor);
+						}
+						keysToaccess.push_back(accessor_arr);
+					}
+					scene->SetAccessors(keysToaccess);
+				}
+
+				// gameobject size
+				writedata >> intReader;
+				//POPEYE_CORE_INFO("{0}", intReader);
+				{
+					std::vector<GameObject> gameobjects;
+					int size = intReader;
+					for (int i = 0; i < size; i++)
+					{
+						//GameObject gameobject;
+						writedata >> intReader >> strReader
+							>> tReader.position.x >> tReader.position.y >> tReader.position.z
+							>> tReader.rotation.x >> tReader.rotation.y >> tReader.rotation.z
+							>> tReader.scale.x >> tReader.scale.z >> tReader.scale.z;
+						GameObject gameobject(intReader, strReader, tReader);
+						gameobjects.push_back(gameobject);
+					}
+
+					scene->SetGameObjects(gameobjects);
+				}
 			}
 
 			writedata.close();
