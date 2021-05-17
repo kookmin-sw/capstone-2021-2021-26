@@ -8,11 +8,11 @@ namespace Popeye {
 
 	struct Accessor 
 	{
-		const char* componentType;
+		std::string componentType;
 		int dataIndex;
 		
-		Accessor() : componentType(nullptr), dataIndex(-1) {};
-		void Reset() { componentType = nullptr; dataIndex = -1; }
+		Accessor() : componentType(""), dataIndex(-1) {};
+		void Reset() { componentType = ""; dataIndex = -1; }
 	};
 	
 	class Scene //got gameobjects ID lists, if gameobject create, regist id. if gameobject deleted, 
@@ -50,11 +50,11 @@ namespace Popeye {
 		template<class component>
 		void RemoveData(int _id)
 		{
-			const char* componentType = typeid(component).name() + 15;
+			std::string componentType = ComponentManager::GetInstance()->ComponentTypeName<component>();
 			int address_size = keysToAccessComponent[_id].size();
 			for (int i = 0; i < address_size; i++)
 			{
-				if (keysToAccessComponent[_id][i].componentType != nullptr && keysToAccessComponent[_id][i].componentType[0] == componentType[0])
+				if (keysToAccessComponent[_id][i].componentType != "" && keysToAccessComponent[_id][i].componentType[0] == componentType[0])
 				{
 					POPEYE_CORE_INFO("dd");
 					ComponentManager::GetInstance()->RemoveDataOfComponent<component>(componentType, keysToAccessComponent[_id][i].dataIndex);
@@ -67,7 +67,7 @@ namespace Popeye {
 		template<class component>
 		component& GetData(int _id) // gameobject's data
 		{
-			const char* componentType = typeid(component).name() + 15;
+			std::string componentType = ComponentManager::GetInstance()->ComponentTypeName<component>();
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -83,7 +83,8 @@ namespace Popeye {
 		template<class component>
 		bool CheckIfThereIsData(int _id)
 		{
-			const char* componentType = typeid(component).name() + 15;
+			std::string componentType = ComponentManager::GetInstance()->ComponentTypeName<component>();
+
 			for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 			{
 				if (keysToAccessComponent[_id][i].componentType == componentType)
@@ -96,7 +97,7 @@ namespace Popeye {
 
 		void AddDataByName(int _id, const char* component);
 
-		std::vector<const char*> GetAllComponents(int _id);
+		std::vector<std::string> GetAllComponents(int _id);
 
 		std::vector<Accessor> GetAllAddressOfID(int _id);
 

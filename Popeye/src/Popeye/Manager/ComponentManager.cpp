@@ -51,7 +51,7 @@ namespace Popeye
 	}
 
 	// terrible way to find component fix it later
-	void ComponentManager::AddDataOfComponentByName(const char* component, const char*& type, int& index)
+	void ComponentManager::AddDataOfComponentByName(std::string component, std::string& type, int& index)
 	{
 		if (component[0] == (typeid(Camera).name())[15])
 		{

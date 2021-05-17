@@ -160,7 +160,7 @@ namespace Popeye{
 			bool componentExist = true;
 			for (int i = 0; i < accessor.size(); i++)
 			{
-				if (accessor[i].componentType != nullptr)
+				if (accessor[i].componentType != "")
 				{
 					if (accessor[i].componentType == typeid(Camera).name() + 15)
 					{

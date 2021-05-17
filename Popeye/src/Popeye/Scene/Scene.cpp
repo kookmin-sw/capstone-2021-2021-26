@@ -101,9 +101,9 @@ namespace Popeye {
 		}
 	}
 	
-	std::vector<const char*> Scene::GetAllComponents(int _id)
+	std::vector<std::string> Scene::GetAllComponents(int _id)
 	{
-		std::vector<const char*> components;
+		std::vector<std::string> components;
 
 		for (int i = 0; i < keysToAccessComponent[_id].size(); i++)
 		{
@@ -140,7 +140,7 @@ namespace Popeye {
 			int arr_size = keysToAccessComponent[i].size();
 			for (int j = 0; j < arr_size; j++)
 			{
-				if (keysToAccessComponent[i][j].componentType != nullptr)
+				if (keysToAccessComponent[i][j].componentType != "")
 				{
 					datas.push_back(keysToAccessComponent[i][j]);
 				}
@@ -202,11 +202,25 @@ namespace Popeye {
 
 	void Scene::SetGameObjects(std::vector <GameObject>& _gameObjects)
 	{
-		int size = gameObjects.size();
-		int ssize = _gameObjects.size();
-		for (int i = 0; i < ssize; i++)
+		int curr_size	= gameObjects.size();
+		int load_size	= _gameObjects.size();
+		int delstart	= 0;
+		
+		if (curr_size > load_size)
 		{
-			if (i < size)
+			for (int i = load_size; i < curr_size; i++)
+			{
+				GameObject* targetObject = gameObjects[i];
+				gameObjects[i] = nullptr;
+				delete(targetObject);
+			}
+			gameObjects.erase(gameObjects.begin() + load_size, gameObjects.end());
+			gameObjects.shrink_to_fit();
+		}
+
+		for (int i = 0; i < load_size; i++)
+		{
+			if (i < curr_size)
 			{
 				gameObjects[i]->SetValue(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
 			}
@@ -215,9 +229,9 @@ namespace Popeye {
 				// crash when there is gameObject with same ID if size > ssize
 				GameObject* gameobject = new GameObject(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
 				gameObjects.push_back(gameobject);
-				//CreateGameObject(_gameObjects[i].GetID(), _gameObjects[i].GetName(), _gameObjects[i].transform);
 			}
 		}
+
 	}
 
 }

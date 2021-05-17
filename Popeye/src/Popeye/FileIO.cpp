@@ -235,9 +235,9 @@ namespace Popeye
 						else
 							cReader.mod = Projection::ORTHOGRAPHIC;
 						writedata >> cReader.fov
-							>> cReader.offsetX >> cReader.offsetY
+							>> cReader.offsetX	>> cReader.offsetY
 							>> cReader.nearView >> cReader.farView
-							>> cReader.width >> cReader.height;
+							>> cReader.width	>> cReader.height;
 
 						camDatas.push_back(cReader);
 					}
@@ -247,15 +247,18 @@ namespace Popeye
 						writedata >> intReader;
 						recycleQ.push(intReader);
 					}
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>(camDatas, recycleQ);
 				}
 
 				writedata >> strReader >> intReader;
 				{
-					std::vector<MeshRenderer> camDatas;
+					std::vector<MeshRenderer> mshDatas;
 					std::queue<int> recycleQ;
 					for (int i = 0; i < intReader; i++)
 					{
 						writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
+						mshDatas.push_back(mReader);
 					}
 
 					writedata >> intReader;
@@ -264,11 +267,13 @@ namespace Popeye
 						writedata >> intReader;
 						recycleQ.push(intReader);
 					}
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>(mshDatas, recycleQ);
 				}
 
 				writedata >> strReader >> intReader;
 				{
-					std::vector<Light> camDatas;
+					std::vector<Light> lihtDatas;
 					std::queue<int> recycleQ;
 					for (int i = 0; i < intReader; i++)
 					{
@@ -297,7 +302,7 @@ namespace Popeye
 							>> lReader.constant >> lReader.linear >> lReader.quadratic
 							>> lReader.cutoff >> lReader.outercutoff;
 
-						camDatas.push_back(lReader);
+						lihtDatas.push_back(lReader);
 					}
 
 					writedata >> intReader;
@@ -306,25 +311,23 @@ namespace Popeye
 						writedata >> intReader;
 						recycleQ.push(intReader);
 					}
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Light>(lihtDatas, recycleQ);
 				}
 			}
 
 			// Scene
 			{
 				writedata >> strReader;			// name
-				//POPEYE_CORE_INFO("scene name : {0}", strReader);
 				scene->SetName(strReader);
 				
 				writedata >> intReader;			// next gameobject
-				//POPEYE_CORE_INFO("nextid : {0}", intReader);
 				scene->SetNextID(intReader);
 				
 				writedata >> intReader;			// current camera id
-				//POPEYE_CORE_INFO("camID : {0}", intReader);
 				scene->focusedCamID = intReader;
 				// q
 				writedata >> intReader;
-				//POPEYE_CORE_INFO("Q size : {0}", intReader);
 				{
 					std::queue<int> recycleQ;
 					int qsize = intReader;
@@ -338,7 +341,6 @@ namespace Popeye
 
 				// addressor size
 				writedata >> intReader;
-				//POPEYE_CORE_INFO("add size : {0}", intReader);
 				{
 					int size = intReader;
 					std::vector<std::vector<Accessor>> keysToaccess;
@@ -346,14 +348,15 @@ namespace Popeye
 					{
 						std::vector<Accessor> accessor_arr;
 						writedata >> intReader;
+						
 						int ssize = intReader;
-						//POPEYE_CORE_INFO("size : {0}", intReader);
-						for (int i = 0; i < intReader; i++)
+						for (int i = 0; i < ssize; i++)
 						{
 							Accessor accesor;
 							writedata >> strReader >> intReader;
-							//POPEYE_CORE_INFO("{0}, {1}", strReader, intReader);
-							accesor.componentType = strReader.c_str();
+							
+							std::string str = strReader;
+							accesor.componentType = str.c_str();
 							accesor.dataIndex = intReader;
 
 							accessor_arr.push_back(accesor);
@@ -365,7 +368,6 @@ namespace Popeye
 
 				// gameobject size
 				writedata >> intReader;
-				//POPEYE_CORE_INFO("{0}", intReader);
 				{
 					std::vector<GameObject> gameobjects;
 					int size = intReader;
