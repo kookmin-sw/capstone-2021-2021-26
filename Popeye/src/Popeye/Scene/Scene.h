@@ -56,7 +56,6 @@ namespace Popeye {
 			{
 				if (keysToAccessComponent[_id][i].componentType != "" && keysToAccessComponent[_id][i].componentType[0] == componentType[0])
 				{
-					POPEYE_CORE_INFO("dd");
 					ComponentManager::GetInstance()->RemoveDataOfComponent<component>(componentType, keysToAccessComponent[_id][i].dataIndex);
 					keysToAccessComponent[_id][i].Reset();
 					return;

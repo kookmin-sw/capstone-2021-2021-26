@@ -49,7 +49,6 @@ namespace Popeye {
 	{
 		g_fileIO = new FileIO();
 		g_fileIO->Init();
-		//unsigned char* buffer = g_fileIO->FileDataBuffer(fs::current_path() / "popeye.info");
 
 		EventHandler *eventHandler = new EventHandler();
 		eventHandler->SetEventCallbacks(window);

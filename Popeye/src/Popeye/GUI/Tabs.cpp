@@ -143,16 +143,52 @@ namespace Popeye{
 	{
 		static ImGuiTextFilter filter;
 		static bool addcomponentCall = false;
+		static bool renamePressed = false;
 
 		CheckHover();
 		if (selectedGameObject) // transform info first
 		{
-			if (ImGui::CollapsingHeader("Transform"))
+			char nameBuff[128] = "";
+
+			std::string name = selectedGameObject->GetName();
+			int size = name.size();
+
+			for (int i = 0; i < 128; i++)
 			{
-				ImGui::DragFloat3("position",	(float*)&selectedGameObject->transform.position);
-				ImGui::DragFloat3("rotation",	(float*)&selectedGameObject->transform.rotation);
-				ImGui::DragFloat3("scale",		(float*)&selectedGameObject->transform.scale);
+				if (i < size)
+					nameBuff[i] = name[i];
+				else
+					break;
 			}
+
+			ImGui::InputText("##name", nameBuff, sizeof(char) * 128);
+			if (ImGui::IsKeyDown(257))
+			{
+				int i = 0;
+				std::string name = "";
+				for (int i = 0; i < 128; i++)
+				{
+					if (nameBuff[i] != 0)
+						name += nameBuff[i];
+					else
+						break;
+				}
+				
+				selectedGameObject->SetName(name);
+			}
+
+			ImGui::Text("position");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##pos", (float*)&selectedGameObject->transform.position);
+
+			//ImGui::PushID(2);
+			ImGui::Text("rotation");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##rot", (float*)&selectedGameObject->transform.rotation);
+
+			ImGui::Text("scale   ");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##scl", (float*)&selectedGameObject->transform.scale);
 
 			/*Show all Component*/
 			int id = selectedGameObject->GetID();
@@ -203,6 +239,7 @@ namespace Popeye{
 						if (ImGui::Selectable(components[i]))
 						{
 							selectedGameObject->AddComponentByName(components[i]);
+							addcomponentCall = false;
 						}
 				}
 
@@ -482,12 +519,8 @@ namespace Popeye{
 					{
 						if (ImGui::IsMouseDoubleClicked(0) && filedata.type == FileType::SCENE)
 						{
-							//unsigned char* buffer = g_fileIO->FileDataBuffer(filedata.path);
-							
+							selectedGameObject = nullptr;
 							g_fileIO->LoadScene(filedata.path);
-							// scene load
-
-							//free(buffer);
 						}
 					}
 					fi++;

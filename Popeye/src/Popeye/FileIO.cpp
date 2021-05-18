@@ -3,11 +3,14 @@
 #include "./Scene/Scene.h"
 #include "./Scene/GameObject.h"
 
+#include "./Manager/ResourceManager.h"
 #include "./Manager/SceneManager.h"
 #include "./Manager/ComponentManager.h"
 #include "./Component/RenderingComponents.h"
 namespace Popeye
 {
+	//extern GameObject* selectedGameObject;
+
 	FileData::FileData() {}
 	FileData::FileData(FileType _type, fs::path _path) : type(_type), path(_path) {}
 
@@ -183,209 +186,19 @@ namespace Popeye
 	{
 		std::ifstream writedata;
 		writedata.open(path, std::ios::in | std::ios::binary);
+		int intReader;
 		std::string strReader;
 		glm::vec3 vecReader;
 		if (writedata.is_open())
 		{
-			while (true)
-			{
-				writedata >> strReader >> vecReader.x >> vecReader.y >> vecReader.z;
-				std::cout << strReader << '\n';
+			writedata >> strReader; // current focused Scene
 
-				if (writedata.eof())
-					break;
-			}
-			writedata.close();
-		}
+			writedata >> vecReader.x >> vecReader.y >> vecReader.z; // editor cam pos
 
-	}
-	
-	void FileIO::LoadScene(fs::path path)
-	{	
-		Scene* scene = SceneManager::GetInstance()->currentScene;
-		// Readers for each datatype
-		int				intReader;
-		bool			boolReader;
-		char			charReader;
-		float			floatReader;
-		std::string		strReader;
-		glm::vec3		vecReader;
+			writedata >> vecReader.x >> vecReader.y >> vecReader.z; // editor cam rot
 
-		Transform		tReader;
-		Camera			cReader;
-		MeshRenderer	mReader;
-		Light			lReader;
-
-		std::ifstream writedata;
-
-		writedata.open(path, std::ios::in | std::ios::binary);
-		if (writedata.is_open())
-		{
-			// Component data for the scene
-			{
-				writedata >> strReader >> intReader;
-				{
-					std::vector<Camera> camDatas;
-					std::queue<int> recycleQ;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> intReader;
-						if (intReader == 0)
-							cReader.mod = Projection::PERSPECTIVE;
-						else
-							cReader.mod = Projection::ORTHOGRAPHIC;
-						writedata >> cReader.fov
-							>> cReader.offsetX	>> cReader.offsetY
-							>> cReader.nearView >> cReader.farView
-							>> cReader.width	>> cReader.height;
-
-						camDatas.push_back(cReader);
-					}
-					writedata >> intReader;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> intReader;
-						recycleQ.push(intReader);
-					}
-
-					ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>(camDatas, recycleQ);
-				}
-
-				writedata >> strReader >> intReader;
-				{
-					std::vector<MeshRenderer> mshDatas;
-					std::queue<int> recycleQ;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
-						mshDatas.push_back(mReader);
-					}
-
-					writedata >> intReader;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> intReader;
-						recycleQ.push(intReader);
-					}
-
-					ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>(mshDatas, recycleQ);
-				}
-
-				writedata >> strReader >> intReader;
-				{
-					std::vector<Light> lihtDatas;
-					std::queue<int> recycleQ;
-					for (int i = 0; i < intReader; i++)
-					{
-						if (i == 0)
-						{
-							writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
-						}
-
-						writedata >> intReader;
-						LightType lighttype;
-						switch (intReader)
-						{
-						case 0:
-							lReader.type = LightType::POINT;
-							break;
-						case 1:
-							lReader.type = LightType::DIRECTION;
-							break;
-						case 2:
-							lReader.type = LightType::SPOT;
-							break;
-						}
-
-						writedata >> lReader.color.x >> lReader.color.y >> lReader.color.z
-							>> lReader.ambient >> lReader.diffuse >> lReader.specular
-							>> lReader.constant >> lReader.linear >> lReader.quadratic
-							>> lReader.cutoff >> lReader.outercutoff;
-
-						lihtDatas.push_back(lReader);
-					}
-
-					writedata >> intReader;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> intReader;
-						recycleQ.push(intReader);
-					}
-
-					ComponentManager::GetInstance()->GetAllDataOfComponent<Light>(lihtDatas, recycleQ);
-				}
-			}
-
-			// Scene
-			{
-				writedata >> strReader;			// name
-				scene->SetName(strReader);
-				
-				writedata >> intReader;			// next gameobject
-				scene->SetNextID(intReader);
-				
-				writedata >> intReader;			// current camera id
-				scene->focusedCamID = intReader;
-				// q
-				writedata >> intReader;
-				{
-					std::queue<int> recycleQ;
-					int qsize = intReader;
-					for (int i = 0; i < intReader; i++)
-					{
-						writedata >> intReader;
-						recycleQ.push(intReader);
-					}
-					scene->SetRecycleQueue(recycleQ);
-				}
-
-				// addressor size
-				writedata >> intReader;
-				{
-					int size = intReader;
-					std::vector<std::vector<Accessor>> keysToaccess;
-					for (int i = 0; i < size; i++)
-					{
-						std::vector<Accessor> accessor_arr;
-						writedata >> intReader;
-						
-						int ssize = intReader;
-						for (int i = 0; i < ssize; i++)
-						{
-							Accessor accesor;
-							writedata >> strReader >> intReader;
-							
-							std::string str = strReader;
-							accesor.componentType = str.c_str();
-							accesor.dataIndex = intReader;
-
-							accessor_arr.push_back(accesor);
-						}
-						keysToaccess.push_back(accessor_arr);
-					}
-					scene->SetAccessors(keysToaccess);
-				}
-
-				// gameobject size
-				writedata >> intReader;
-				{
-					std::vector<GameObject> gameobjects;
-					int size = intReader;
-					for (int i = 0; i < size; i++)
-					{
-						//GameObject gameobject;
-						writedata >> intReader >> strReader
-							>> tReader.position.x >> tReader.position.y >> tReader.position.z
-							>> tReader.rotation.x >> tReader.rotation.y >> tReader.rotation.z
-							>> tReader.scale.x >> tReader.scale.z >> tReader.scale.z;
-						GameObject gameobject(intReader, strReader, tReader);
-						gameobjects.push_back(gameobject);
-					}
-
-					scene->SetGameObjects(gameobjects);
-				}
-			}
-
+			writedata >> intReader;									// editor cam mod
+			
 			writedata.close();
 		}
 
@@ -501,8 +314,6 @@ namespace Popeye
 		return gameObject;
 	}
 
-
-
 	std::string FileIO::WriteComponents()
 	{
 		std::pair<std::vector<Camera>, std::queue<int>> cameras = ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>();
@@ -613,5 +424,226 @@ namespace Popeye
 
 		return meshrenderer;
 	}
+
+	
+	
+	void FileIO::LoadScene(fs::path path)
+	{
+		Scene* scene = SceneManager::GetInstance()->currentScene;
+		// Readers for each datatype
+		int				intReader;
+		std::string		strReader;
+
+		std::ifstream writedata;
+
+		writedata.open(path, std::ios::in | std::ios::binary);
+		if (writedata.is_open())
+		{
+			// Component data for the scene
+			{
+				{	// Component Camera
+					std::vector<Camera>			camDatas = ReadCameraComponent(writedata);
+					std::queue<int>				recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>(camDatas, recycleQ);
+				}
+
+				{	// Component MeshRenderer
+					std::vector<MeshRenderer>	mshDatas = ReadMeshRendererComponent(writedata);
+					std::queue<int>				recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>(mshDatas, recycleQ);
+				}
+
+				{	// Component Light
+					std::vector<Light> lihtDatas = ReadLightComponent(writedata);
+					std::queue<int> recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Light>(lihtDatas, recycleQ);
+				}
+			}
+
+			// Scene
+			{
+				writedata >> strReader;			// name
+				scene->SetName(strReader);
+
+				writedata >> intReader;			// next gameobject
+				scene->SetNextID(intReader);
+
+				writedata >> intReader;			// current camera id
+				scene->focusedCamID = intReader;
+
+				std::queue<int> recycleQ = ReadRecycleQ(writedata);
+				scene->SetRecycleQueue(recycleQ);
+
+				std::vector<std::vector<Accessor>> adressor = ReadAddressor(writedata);
+				scene->SetAccessors(adressor);
+
+				std::vector<GameObject> gmaeObjects = ReadGameObjects(writedata);
+				scene->SetGameObjects(gmaeObjects);
+			}
+
+			writedata.close();
+		}
+
+	}
+
+	std::queue<int>	FileIO::ReadRecycleQ(std::ifstream& writedata)
+	{
+		int intReader;
+		std::queue<int> recycleQ;
+		writedata >> intReader;
+
+		int qsize = intReader;
+		for (int i = 0; i < qsize; i++)
+		{
+			writedata >> intReader;
+			recycleQ.push(intReader);
+		}
+
+		return recycleQ;
+	}
+	
+	std::vector<GameObject>	FileIO::ReadGameObjects(std::ifstream& writedata)
+	{
+		std::vector<GameObject> gameobjects;
+		int intReader;
+		std::string strReader;
+		Transform tReader;
+		writedata >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> intReader >> strReader
+				>> tReader.position.x >> tReader.position.y >> tReader.position.z
+				>> tReader.rotation.x >> tReader.rotation.y >> tReader.rotation.z
+				>> tReader.scale.x >> tReader.scale.z >> tReader.scale.z;
+			GameObject gameobject(intReader, strReader, tReader);
+			gameobjects.push_back(gameobject);
+		}
+
+		return gameobjects;
+	}
+	
+	std::vector<std::vector<Accessor>>	FileIO::ReadAddressor(std::ifstream& writedata)
+	{
+		int intReader;
+		std::string strReader;
+		std::vector<std::vector<Accessor>> keysToaccess;
+
+		writedata >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			std::vector<Accessor> accessor_arr;
+			
+			writedata >> intReader;
+			int ssize = intReader;
+			for (int i = 0; i < ssize; i++)
+			{
+				Accessor accesor;
+				writedata >> strReader >> intReader;
+
+				std::string str = strReader;
+				accesor.componentType = str.c_str();
+				accesor.dataIndex = intReader;
+
+				accessor_arr.push_back(accesor);
+			}
+			keysToaccess.push_back(accessor_arr);
+		}
+
+		return keysToaccess;
+	}
+
+	std::vector<Camera> FileIO::ReadCameraComponent(std::ifstream& writedata)
+	{
+		std::vector<Camera> camDatas;
+		int intReader;
+		std::string strReader;
+		Camera cReader;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> intReader;
+			if (intReader == 0)
+				cReader.mod = Projection::PERSPECTIVE;
+			else
+				cReader.mod = Projection::ORTHOGRAPHIC;
+			writedata >> cReader.fov
+				>> cReader.offsetX >> cReader.offsetY
+				>> cReader.nearView >> cReader.farView
+				>> cReader.width >> cReader.height;
+
+			camDatas.push_back(cReader);
+		}
+		
+		return camDatas;
+	}
+	
+	std::vector<Light> FileIO::ReadLightComponent(std::ifstream& writedata)
+	{
+		std::vector<Light> lihtDatas;
+		int intReader;
+		std::string strReader;
+		Light lReader;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			if (i == 0)
+			{
+				writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
+			}
+
+			writedata >> intReader;
+			LightType lighttype;
+			switch (intReader)
+			{
+			case 0:
+				lReader.type = LightType::POINT;
+				break;
+			case 1:
+				lReader.type = LightType::DIRECTION;
+				break;
+			case 2:
+				lReader.type = LightType::SPOT;
+				break;
+			}
+
+			writedata >> lReader.color.x >> lReader.color.y >> lReader.color.z
+				>> lReader.ambient >> lReader.diffuse >> lReader.specular
+				>> lReader.constant >> lReader.linear >> lReader.quadratic
+				>> lReader.cutoff >> lReader.outercutoff;
+
+			lihtDatas.push_back(lReader);
+		}
+
+
+		return lihtDatas;
+	}
+	
+	std::vector<MeshRenderer> FileIO::ReadMeshRendererComponent(std::ifstream& writedata)
+	{
+		std::vector<MeshRenderer> mshDatas;
+		int intReader;
+		std::string strReader;
+		MeshRenderer mReader;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
+			mshDatas.push_back(mReader);
+		}
+
+		return mshDatas;
+	}
+
 
 }

@@ -127,9 +127,10 @@ namespace Popeye
 				ImGui::MenuItem("load project", NULL, &load_project);
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("gameobject"))
+			if (ImGui::BeginMenu("entity"))
 			{
-				ImGui::MenuItem("create entity", NULL, &create_entity);
+				ImGui::MenuItem("create scene", NULL, &new_project);
+				ImGui::MenuItem("create gameobject", NULL, &create_entity);
 				ImGui::EndMenu();
 			}
 
@@ -170,16 +171,18 @@ namespace Popeye
 		}
 
 
-		if (ImGui::IsKeyDown(341) && ImGui::IsKeyDown(83))
+
+
+		if (!save_project)
 		{
-			if (!save_project)
+			if (ImGui::IsKeyDown(341) && ImGui::IsKeyDown(83))
 			{
 				save_project = true;
-				g_fileIO->SaveScene();
 			}
 		}
-		else if(save_project)
+		else if (save_project)
 		{
+			g_fileIO->SaveScene();
 			save_project = false;
 		}
 

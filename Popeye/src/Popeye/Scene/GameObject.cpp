@@ -39,7 +39,7 @@ namespace Popeye {
 	}
 	void GameObject::SetName(std::string _name)
 	{
-		this->name = _name;
+		std::swap(name, _name);
 	}
 
 	int GameObject::GetID()
