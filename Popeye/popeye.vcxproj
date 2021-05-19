@@ -509,6 +509,20 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.h" />
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.h" />
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.h" />
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/aston/Documents/PopeyeEngine/Popeye/CMakeFiles/popeye.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>

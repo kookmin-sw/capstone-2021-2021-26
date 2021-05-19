@@ -7,9 +7,10 @@
 #include "./Manager/SceneManager.h"
 #include "./Manager/ComponentManager.h"
 #include "./Component/RenderingComponents.h"
+
 namespace Popeye
 {
-	//extern GameObject* selectedGameObject;
+	extern ResourceManager* g_ResourceManager;
 
 	FileData::FileData() {}
 	FileData::FileData(FileType _type, fs::path _path) : type(_type), path(_path) {}
@@ -28,11 +29,11 @@ namespace Popeye
 		if (!fs::exists(resource / "Resource.dat"))			{ std::ofstream out(resource / "Resource.dat");			out.close();}
 		if (!fs::exists(resource / "ResourceTable.dat"))	{ std::ofstream out(resource / "ResourceTable.dat");	out.close();}
 
+		if (!fs::exists(resource / "Material.dat")) { std::ofstream out(resource / "Material.dat");	out.close(); }
+
 		if (!fs::exists(fs::current_path() / "popeye.info")) { 
 			DefaultSetting(); 
 		}
-
-		InitProject(fs::current_path() / "popeye.info");
 	}
 
 	int FileIO::ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath)
@@ -59,6 +60,10 @@ namespace Popeye
 				else if (!extension.compare(".pop"))
 				{
 					type = FileType::SCENE;
+				}
+				else if (!extension.compare(".dat"))
+				{
+					type = FileType::RESRC;
 				}
 				else
 				{
@@ -144,6 +149,7 @@ namespace Popeye
 		}
 	}
 
+
 	unsigned char* FileIO::FileDataBuffer(fs::path path)
 	{
 		unsigned char *buffer = nullptr;
@@ -171,6 +177,10 @@ namespace Popeye
 		fs::create_directories(root / "scene");
 		fs::create_directories(root / "resource");
 		out.open(root / "scene" / "test.pop");
+		out << "Camera 1 0 45.000000 800.000000 600.000000 0.100000 100.000000 5.000000 5.000000 \n0\n"
+			<< "MeshRenderer 0  \n0\n"
+			<< "Light 1 0 1 0 1 1.000000 1.000000 1.000000 0.800000 0.700000 0.100000 1.000000 0.090000 0.032000 12.500000 17.500000 \n0\n"
+			<< '\n';
 		out << WriteScene("test");
 		out.close();
 
@@ -192,6 +202,8 @@ namespace Popeye
 		if (writedata.is_open())
 		{
 			writedata >> strReader; // current focused Scene
+			LoadScene(strReader);
+
 
 			writedata >> vecReader.x >> vecReader.y >> vecReader.z; // editor cam pos
 
@@ -199,6 +211,59 @@ namespace Popeye
 
 			writedata >> intReader;									// editor cam mod
 			
+			writedata.close();
+		}
+
+		LoadMaterial();
+
+	}
+
+	void FileIO::SaveMaterial()
+	{
+		std::ofstream out;
+		Material material;
+		int size = g_ResourceManager->materials.size();
+		out.open(resource / "Material.dat");
+		out << size;
+		for (int i = 1; i < size; i++)
+		{
+			material = g_ResourceManager->materials[i];
+			out << material.id << ' '
+				<< material.textureID << ' '
+				<< material.shininess << ' '
+				<< material.color.x << ' ' << material.color.y << ' ' << material.color.z << ' '
+				<< material.amb_diff_spec.x << ' ' << material.amb_diff_spec.y << ' ' << material.amb_diff_spec.z << ' ';
+		}
+
+
+		out.close();
+	}
+
+	void  FileIO::LoadMaterial()
+	{
+		std::ifstream writedata;
+		writedata.open(resource / "Material.dat", std::ios::in | std::ios::binary);
+		int size;
+		std::vector<Material> materials;
+		if (writedata.is_open())
+		{
+			writedata >> size;
+			for (int i = 0; i < size; i++)
+			{
+				Material material;
+
+				writedata >> material.id 
+					>> material.textureID
+					>> material.shininess 
+					>> material.color.x >> material.color.y  >> material.color.z 
+					>> material.amb_diff_spec.x >> material.amb_diff_spec.y  >> material.amb_diff_spec.z;
+
+
+				materials.push_back(material);
+			}
+
+			g_ResourceManager->materials.swap(materials);
+
 			writedata.close();
 		}
 
@@ -213,6 +278,8 @@ namespace Popeye
 		out.open(root / "scene" / "test.pop");
 		out << scenedata;
 		out.close();
+
+		SaveMaterial();
 	}
 
 	std::string FileIO::WriteScene(std::string name, int nextID, int focusedCamID, std::queue<int>& reuseableID, std::vector <std::vector<Accessor>>& keysToAccessComponent, std::vector <GameObject*>& gameObjects)
@@ -245,8 +312,11 @@ namespace Popeye
 			name + enter
 			+ std::to_string(2) + enter	// next ID
 			+ std::to_string(0) + enter // focused cam ID
-			+ "[ ]\n"					// reusable queue
-			+ "[ ]\n"					// addressor					
+			+ std::to_string(0) + enter					
+			+ std::to_string(2) + enter
+			+ "1 Camera 0 " + enter
+			+ "1 Light 0 " + enter
+			+ std::to_string(2) + enter
 			+ WriteGameObject(0, "Main_Camera", glm::vec3(8.0f), glm::vec3(-30.0f, 45.0f, 0.0f))
 			+ WriteGameObject(1, "Light");
 
@@ -307,9 +377,9 @@ namespace Popeye
 		gameObject =
 			std::to_string(id) + enter
 			+ name + enter
-			+ std::to_string(position.x) + space + std::to_string(position.y) + space + std::to_string(position.y) + enter
-			+ std::to_string(rotation.x) + space + std::to_string(rotation.y) + space + std::to_string(rotation.y) + enter
-			+ std::to_string(scale.x)	 + space + std::to_string(scale.y)	  + space + std::to_string(scale.y)	   + enter;
+			+ std::to_string(position.x) + space + std::to_string(position.y) + space + std::to_string(position.z) + enter
+			+ std::to_string(rotation.x) + space + std::to_string(rotation.y) + space + std::to_string(rotation.z) + enter
+			+ std::to_string(scale.x)	 + space + std::to_string(scale.y)	  + space + std::to_string(scale.z)	   + enter;
 
 		return gameObject;
 	}
@@ -597,7 +667,12 @@ namespace Popeye
 		{
 			if (i == 0)
 			{
-				writedata >> lReader.pointLightCounter >> lReader.directionalLightCounter >> lReader.pointLightCounter;
+				writedata >> intReader;
+				Light::pointLightCounter = intReader;
+				writedata >> intReader;
+				Light::directionalLightCounter = intReader;
+				writedata >> intReader;
+				Light::spotLightCounter = intReader;
 			}
 
 			writedata >> intReader;
@@ -644,6 +719,5 @@ namespace Popeye
 
 		return mshDatas;
 	}
-
 
 }

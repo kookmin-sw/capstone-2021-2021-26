@@ -18,8 +18,9 @@ namespace Popeye {
 		SOURCE	=	1,	//	.cpp, .h, .hpp
 		IMAGE	=	2,	//	.png, .jpg ...
 		MODEL	=	3,	//	.fbx, .obj ...
-		SCENE	=	4,
-		TEXT	=	5	//	or else just text
+		SCENE	=	4,	// .pop
+		RESRC	=	5,
+		TEXT	=	6	//	or else just text
 	};
 
 	struct FileData
@@ -43,6 +44,28 @@ namespace Popeye {
 	{
 	private:
 		bool HaveSubDir(fs::path _path);
+
+		// -------------------- Save Scene -----------------------
+		std::string WriteScene(std::string name);
+		std::string WriteScene(std::string name, int nextID, int focusedCamID, std::queue<int>& reuseableID, std::vector <std::vector<Accessor>>& keysToAccessComponent, std::vector <GameObject*>& gameObjects);
+		std::string WriteAddressor(std::vector <std::vector<Accessor>>& keysToAccessComponent);
+		std::string WriteRecycleQ(std::queue<int> reuseableID);
+		std::string WriteGameObject(int id, std::string name, glm::vec3 position = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
+
+		std::string WriteComponents();
+		std::string WriteCameraComponent(std::vector<Camera>& cameras);
+		std::string WriteLightComponent(std::vector<Light>& lights);
+		std::string WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers);
+
+		// -------------------- Load Scene -----------------------
+		std::queue<int>						ReadRecycleQ(std::ifstream& in);
+		std::vector<GameObject>				ReadGameObjects(std::ifstream& in);
+		std::vector<std::vector<Accessor>>	ReadAddressor(std::ifstream& in);
+
+		std::vector<Camera>					ReadCameraComponent(std::ifstream& in);
+		std::vector<Light>					ReadLightComponent(std::ifstream& in);
+		std::vector<MeshRenderer>			ReadMeshRendererComponent(std::ifstream& in);
+
 	public:
 		fs::path root;
 		fs::path resource;
@@ -62,30 +85,12 @@ namespace Popeye {
 		void InitProject(fs::path path);
 		
 		// TODO :: Change it (use Boost or make reflection)
-		// -------------------- Save -----------------------
 		void SaveScene();
+		// TODO :: Change it too
+		void SaveMaterial();
+		void LoadMaterial();
 
-		std::string WriteScene(std::string name);
-		std::string WriteScene(std::string name, int nextID, int focusedCamID, std::queue<int>& reuseableID, std::vector <std::vector<Accessor>>& keysToAccessComponent, std::vector <GameObject*>& gameObjects);
-		std::string WriteAddressor(std::vector <std::vector<Accessor>>& keysToAccessComponent);
-		std::string WriteRecycleQ(std::queue<int> reuseableID);
-		std::string WriteGameObject(int id, std::string name, glm::vec3 position = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
-
-		std::string WriteComponents();
-		std::string WriteCameraComponent(std::vector<Camera>& cameras);
-		std::string WriteLightComponent(std::vector<Light>& lights);
-		std::string WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers);
-
-		// -------------------- Load -----------------------
 		void LoadScene(fs::path path);
-		
-		std::queue<int>						ReadRecycleQ(std::ifstream& in);
-		std::vector<GameObject>				ReadGameObjects(std::ifstream& in);
-		std::vector<std::vector<Accessor>>	ReadAddressor(std::ifstream& in);
-
-		std::vector<Camera>					ReadCameraComponent(std::ifstream& in);
-		std::vector<Light>					ReadLightComponent(std::ifstream& in);
-		std::vector<MeshRenderer>			ReadMeshRendererComponent(std::ifstream& in);
 	};
 }
 

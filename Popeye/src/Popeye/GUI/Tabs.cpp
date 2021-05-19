@@ -181,7 +181,6 @@ namespace Popeye{
 			ImGui::SameLine();
 			ImGui::DragFloat3("##pos", (float*)&selectedGameObject->transform.position);
 
-			//ImGui::PushID(2);
 			ImGui::Text("rotation");
 			ImGui::SameLine();
 			ImGui::DragFloat3("##rot", (float*)&selectedGameObject->transform.rotation);
@@ -204,6 +203,7 @@ namespace Popeye{
 						if (!componentExist)
 						{
 							selectedGameObject->DeleteComponent<Camera>();
+							componentExist = true;
 						}
 					}
 					else if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
@@ -212,6 +212,7 @@ namespace Popeye{
 						if (!componentExist)
 						{
 							selectedGameObject->DeleteComponent<MeshRenderer>();
+							componentExist = true;
 						}
 					}
 					else if (accessor[i].componentType == typeid(Light).name() + 15)
@@ -220,6 +221,7 @@ namespace Popeye{
 						if (!componentExist)
 						{
 							selectedGameObject->DeleteComponent<Light>();
+							componentExist = true;
 						}
 					}
 				}
@@ -280,36 +282,51 @@ namespace Popeye{
 	{
 		if (ImGui::CollapsingHeader("MeshRenderer", &closeBtn))
 		{
-			if (ImGui::TreeNode("Mesh"))
+
+			ImGui::Text("Mesh");
+			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(100.0f, 20.0f));
+
+			if (ImGui::IsItemHovered())
 			{
-				ImGui::Text("Mesh");
-				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
-
-				if (ImGui::IsItemHovered())
+				if (ImGui::IsKeyDown(261))
 				{
-					if (ImGui::IsKeyDown(261))
-					{
-						meshRenderer.meshID = 0;
-						meshRenderer.isEmpty = true;
-					}
+					meshRenderer.meshID = 0;
+					meshRenderer.isEmpty = true;
 				}
-				if (ImGui::BeginDragDropTarget())
-				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
-					{
-						meshRenderer.meshID = *(unsigned int*)payload->Data;
-						meshRenderer.isEmpty = false;
-					}
-
-					ImGui::EndDragDropTarget();
-				}
-
-				ImGui::TreePop();
 			}
-			if (ImGui::TreeNode("Material"))
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
+				{
+					meshRenderer.meshID = *(unsigned int*)payload->Data;
+					meshRenderer.isEmpty = false;
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+
+			ImGui::Text("Material");
+			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(100.0f, 20.0f));
+
+			if (ImGui::IsItemHovered())
+			{
+				if (ImGui::IsKeyDown(261))
+				{
+					meshRenderer.materialID = 0;
+				}
+			}
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MATERIAL"))
+				{
+					meshRenderer.materialID = *(unsigned int*)payload->Data;
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+			if (meshRenderer.materialID != 0 && ImGui::TreeNode("Material"))
 			{
 				Material& material = g_ResourceManager->materials[meshRenderer.materialID];
-
 				ImGui::Text("texture");
 				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
 				if (ImGui::IsItemHovered())
@@ -674,42 +691,39 @@ namespace Popeye{
 
 	void Resource::ShowContents()
 	{
-		static bool image_show = false;
+		CheckHover();
 		if (ImGui::BeginTabBar("ResourceManager"))
 		{
 			if (ImGui::BeginTabItem("Texture"))
 			{
-				if (image_show)
+				for (int i = 0; i < g_ResourceManager->textures.size(); i++)
 				{
-					for (int i = 0; i < g_ResourceManager->textures.size(); i++)
+					ImGui::PushID(i);
+					ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+
+					draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
+
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						ImGui::PushID(i);
-						ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
-						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+						unsigned int id = g_ResourceManager->textures[i].id;
 
-						const ImVec2 p0 = ImGui::GetItemRectMin();
-						const ImVec2 p1 = ImGui::GetItemRectMax();
+						ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(unsigned int), ImGuiCond_Once);
 
+						ImGui::Text("texture : {0}", id);
 
-						draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
-
-
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							unsigned int id = g_ResourceManager->textures[i].id;
-
-							ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(int), ImGuiCond_Once);
-
-							ImGui::Text("texture : {0}", id);
-
-							ImGui::EndDragDropSource();
-						}
-
-
-						ImGui::PopID();
-
-						ImGui::SameLine();
+						ImGui::EndDragDropSource();
 					}
+
+
+					ImGui::PopID();
+
+					ImGui::SameLine();
 				}
 
 				ImGui::EndTabItem();
@@ -717,39 +731,71 @@ namespace Popeye{
 
 			if (ImGui::BeginTabItem("Model"))
 			{
-				if (image_show)
+				for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
 				{
-					for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
+					ImGui::PushID(i);
+					ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						ImGui::PushID(i);
-						ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
-						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+						ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
 
-						const ImVec2 p0 = ImGui::GetItemRectMin();
-						const ImVec2 p1 = ImGui::GetItemRectMax();
-
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
-
-							ImGui::EndDragDropSource();
-						}
-
-						ImGui::PopID();
-
-						ImGui::SameLine();
+						ImGui::EndDragDropSource();
 					}
-				}
 
+					ImGui::PopID();
+
+					ImGui::SameLine();
+				}
+				
 				ImGui::EndTabItem();
 			}
 
 			if (ImGui::BeginTabItem("Material"))
 			{
+				if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
+				{
+					ImGui::OpenPopup("Material");
+					//popup
+				}
+				if (ImGui::BeginPopup("Material"))
+				{
+					if (ImGui::Selectable("Create Material"))
+					{
+						g_ResourceManager->AddMaterial();
+					}
+
+					ImGui::EndPopup();
+				}
+
+				for (int i = 1; i < g_ResourceManager->materials.size(); i++)
+				{
+					ImGui::PushID(i);
+					ImGui::Selectable(g_ResourceManager->materials[i].id.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					{
+						ImGui::SetDragDropPayload("MATERIAL", &i, sizeof(unsigned int), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+
+					ImGui::PopID();
+
+					ImGui::SameLine();
+				}
 
 				ImGui::EndTabItem();
 			}
-
+			
 			ImGui::InvisibleButton("##empty", ImGui::GetWindowSize());
 			if (ImGui::BeginDragDropTarget())
 			{
@@ -759,7 +805,7 @@ namespace Popeye{
 
 					FileData filedata;
 					filedata.path = str;
-					
+
 					if (filedata.path.extension() == ".jpg" || filedata.path.extension() == ".png")
 					{
 						filedata.type = FileType::IMAGE;
@@ -775,12 +821,11 @@ namespace Popeye{
 				ImGui::EndDragDropTarget();
 			}
 
-
 			if (ImGui::Button("Set Resource"))
-			{
 				g_ResourceManager->SetResources();
-				image_show = true;
-			}
+
+
+
 			ImGui::EndTabBar();
 		}
 

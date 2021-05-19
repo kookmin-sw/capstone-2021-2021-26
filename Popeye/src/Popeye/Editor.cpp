@@ -237,6 +237,12 @@ namespace Popeye {
 			gizmoShader.setMat4("model", model);
 			gizmo.DrawGrid();
 
+			glm::vec3 screenToMouseStartPos(0.0f), screenToMouseDir(0.0f);
+			if (sendRay)
+			{
+				ScreenToWorldPos(mousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
+			}
+
 			int size = selectable_gameobjects.size();
 			for (int i = 0; i < size; i++)
 			{
@@ -252,27 +258,20 @@ namespace Popeye {
 
 				gizmo.DrawWireCube();
 
-				if (sendRay)
+				if (sendRay && selectedGameObject == nullptr)
 				{
-					glm::vec3 screenToMouseStartPos, screenToMouseDir;
-					ScreenToWorldPos(mousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
-
 					sized_boundbox[i].minPos *= bound_trans.scale;
 					sized_boundbox[i].maxPos *= bound_trans.scale;
 					if (RayOBBIntersection(screenToMouseStartPos, screenToMouseDir, sized_boundbox[i], model))
 					{
 						selectedGameObject = selectable_gameobjects[i];
 					}
+					sendRay = false;
 				}
 			}
 
 			if (selectedGameObject != nullptr)
 			{
-				glm::vec3 screenToMouseStartPos(0.0f), screenToMouseDir(0.0f);
-				if (sendRay)
-				{
-					ScreenToWorldPos(mousePos, view, projection, screenToMouseStartPos, screenToMouseDir);
-				}
 				model = EditTransform(selectedGameObject, screenToMouseStartPos, screenToMouseDir);
 				
 				gizmoShader.setMat4("model", model);

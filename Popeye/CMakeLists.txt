@@ -50,7 +50,8 @@ set(POPEYE_EVENT
     src/Popeye/Event/MouseCode.h
     src/Popeye/Event/Events.h
     src/Popeye/Event/EventHandler.h
-    src/Popeye/Event/EventHandler.cpp)
+    src/Popeye/Event/EventHandler.cpp
+    )
 
 set(POPEYE_GUI
     src/Popeye/GUI/imgui_impl_glfw.h
@@ -60,24 +61,31 @@ set(POPEYE_GUI
     src/Popeye/GUI/imgui_custom_widgets.h
     src/Popeye/GUI/imgui_custom_widgets.cpp
     src/Popeye/GUI/Tabs.h
-    src/Popeye/GUI/Tabs.cpp)
+    src/Popeye/GUI/Tabs.cpp
+    )
 
 set(POPEYE_RESOURCE
     src/Popeye/Resource/Texture.h
     src/Popeye/Resource/Mesh.h
     src/Popeye/Resource/Mesh.cpp
     src/Popeye/Resource/Material.h
-    src/Popeye/Resource/Material.cpp)
+    src/Popeye/Resource/Material.cpp
+    )
 
-set(POPEYE_SCENE
+set(POPEYE_ENTITY
     src/Popeye/Scene/GameObject.h
     src/Popeye/Scene/GameObject.cpp
     src/Popeye/Scene/Scene.h
-    src/Popeye/Scene/Scene.cpp)
+    src/Popeye/Scene/Scene.cpp
+    )
 
 set(POPEYE_SYSTEM 
     src/Popeye/System/RenderingSystem.h
     src/Popeye/System/RenderingSystem.cpp
+    src/Popeye/System/PhysicsSystem.h
+    src/Popeye/System/PhysicsSystem.cpp
+    src/Popeye/System/UISystem.h
+    src/Popeye/System/UISystem.cpp
     src/Popeye/System/ScriptingSystem.h
     src/Popeye/System/ScriptingSystem.cpp
     )
@@ -89,7 +97,7 @@ add_library(popeye SHARED
     ${POPEYE_EVENT}
     ${POPEYE_GUI}
     ${POPEYE_RESOURCE}
-    ${POPEYE_SCENE}
+    ${POPEYE_ENTITY}
     ${POPEYE_SYSTEM})
 
 add_subdirectory(vendor/glm)

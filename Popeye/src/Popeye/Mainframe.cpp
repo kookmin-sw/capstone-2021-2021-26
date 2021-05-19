@@ -12,6 +12,8 @@
 
 #include "System/RenderingSystem.h"
 #include "System/ScriptingSystem.h"
+#include "System/PhysicsSystem.h"
+#include "System/UISystem.h"
 
 
 namespace Popeye {
@@ -72,34 +74,53 @@ namespace Popeye {
 
 		SceneManager::GetInstance()->CreateScene();
 
+		g_fileIO->InitProject(fs::current_path() / "popeye.info");
+		g_ResourceManager->SetResources();
 
+		// ------------------------------
+		// Systems for game
+		// ------------------------------
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();
 
 		ScriptingSystem* scriptingSystem = new ScriptingSystem();
 		scriptingSystem->SystemInit();
 
+		PhysicsSystem* physicsSystem = new PhysicsSystem();
+		physicsSystem->SystemInit();
+
+		UISystem* uiSystem = new UISystem();
+		uiSystem->SystemInit();
+
+		// ------------------------------
+
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			
-			// Rendering system
+			// ------------------------------
+			//  Run rendering system
+			// ------------------------------
 			renderingSystem->SystemRunning();
 
 			// ------------------------------
-			// TODO :: Run UI system here
+			//  Run UI system
 			// ------------------------------
+			uiSystem->SystemRunning();
 
 			// ------------------------------
-			// TODO :: Run Physic system here
+			//  Run physics system
 			// ------------------------------
+			physicsSystem->SystemRunning();
 
 			// ------------------------------
 			// TODO :: Run Audio system here
 			// ------------------------------
 
-			// Scripting system
+			// ------------------------------
+			//  Run script system
+			// ------------------------------
 			scriptingSystem->SystemRunning();
 
 
