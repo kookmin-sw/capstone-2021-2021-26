@@ -3,8 +3,9 @@
 namespace Popeye {
 	class PhysicsSystem
 	{
+		bool *onPlay;
 	public:
-		void SystemInit();
+		void SystemInit(bool *_onPlay);
 		void SystemRunning();
 	};
 }

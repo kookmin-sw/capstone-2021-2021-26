@@ -276,7 +276,8 @@ namespace Popeye
 		Scene* scene = SceneManager::GetInstance()->currentScene;
 		std::string scenedata = WriteScene(scene->GetName(), scene->GetNextID(), scene->focusedCamID, scene->GetRecycleQueue(), scene->GetAccessors(), scene->gameObjects);
 		
-		out.open(root / "scene" / "test.pop");
+		//out.open(root / "scene" / "test.pop");
+		out.open(SceneManager::GetInstance()->currentScenePath);
 		out << scenedata;
 		out.close();
 
@@ -500,6 +501,7 @@ namespace Popeye
 	
 	void FileIO::LoadScene(fs::path path)
 	{
+		SceneManager::GetInstance()->currentScenePath = path.string();
 		Scene* scene = SceneManager::GetInstance()->currentScene;
 		// Readers for each datatype
 		int				intReader;

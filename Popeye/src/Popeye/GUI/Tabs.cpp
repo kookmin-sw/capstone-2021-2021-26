@@ -16,6 +16,7 @@
 
 namespace Popeye{
 
+	extern bool				isPlay;
 	extern ResourceManager	*g_ResourceManager;
 	extern ImFont			*g_Icon;
 	extern FileIO			*g_fileIO;
@@ -88,6 +89,36 @@ namespace Popeye{
 
 		CheckHover();
 
+		if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
+		{
+			ImGui::OpenPopup("Play");
+			//popup
+		}
+		
+		if (ImGui::BeginPopup("Play"))
+		{
+			if (!isPlay)
+			{
+				if (ImGui::Selectable(ICON_FK_PLAY " play "))
+				{
+					POPEYE_CORE_INFO("play scene");
+					isPlay = true;
+					g_fileIO->SaveScene();
+				}
+			}
+			else
+			{
+				if (ImGui::Selectable(ICON_FK_STOP " stop "))
+				{
+					POPEYE_CORE_INFO("stop play");
+					isPlay = false;
+					g_fileIO->LoadScene(SceneManager::GetInstance()->currentScenePath);
+				}
+			}
+			ImGui::EndPopup();
+		}
+
+
 		ImGui::EndChild();
 	}
 
@@ -143,7 +174,6 @@ namespace Popeye{
 	{
 		static ImGuiTextFilter filter;
 		static bool addcomponentCall = false;
-		static bool renamePressed = false;
 
 		CheckHover();
 		if (selectedGameObject != nullptr) // transform info first

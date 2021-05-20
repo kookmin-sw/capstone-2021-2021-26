@@ -17,6 +17,9 @@
 
 
 namespace Popeye {
+	
+	bool isPlay = false;
+
 	FileIO* g_fileIO;
 	
 	ResourceManager* g_ResourceManager;
@@ -87,10 +90,10 @@ namespace Popeye {
 		scriptingSystem->SystemInit();
 
 		PhysicsSystem* physicsSystem = new PhysicsSystem();
-		physicsSystem->SystemInit();
+		physicsSystem->SystemInit(&isPlay);
 
 		UISystem* uiSystem = new UISystem();
-		uiSystem->SystemInit();
+		uiSystem->SystemInit(&isPlay);
 
 		// ------------------------------
 
@@ -153,9 +156,11 @@ namespace Popeye {
 		delete(g_fileIO);
 
 		delete(eventHandler);
+
 		delete(renderingSystem);
 		delete(scriptingSystem);
-
+		delete(physicsSystem);
+		delete(uiSystem);
 	}
 
 	void Mainframe::Close()

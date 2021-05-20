@@ -11,12 +11,11 @@ namespace Popeye {
 		~SceneManager();
 	public:
 		Scene* currentScene;
+		std::string currentScenePath;
 	public:
 		static SceneManager* GetInstance();
 		static void DestroyInstance();
 		void CreateScene();
 		void UnloadScene();
-		void LoadScene();
-		void SaveScene();
 	};
 }
