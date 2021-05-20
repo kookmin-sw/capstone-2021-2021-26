@@ -1,11 +1,17 @@
 #include "EventHandler.h"
 
+#include "../Editor.h"
+
 namespace Popeye
 {
 	int g_eventMod;
+	glm::vec2 g_scenePosition;
+	glm::vec2 g_sceneSize;
 	
-	extern glm::vec3 g_sceneViewPosition;
-	extern glm::vec3 g_sceneViewDirection;
+	bool g_draggin = false;
+
+	EventHandler::EventHandler() {};
+	EventHandler::~EventHandler() {};
 
 	void EventHandler::SetEventCallbacks(GLFWwindow* window)
 	{
@@ -50,7 +56,7 @@ namespace Popeye
 
 	void EventHandler::ExecuteGUIEvent() //For Dear imGUI events
 	{
-		static ImGuiIO& io = ImGui::GetIO();
+		//static ImGuiIO& io = ImGui::GetIO();
 	}
 
 	void EventHandler::ExecuteSceneEvent() // On game scene edit
@@ -62,15 +68,36 @@ namespace Popeye
 		static float yaw = -90.0f;
 		static float pitch = 0.0f;
 
+		glm::vec2 *editorMousePos = &editor->mousePos;
+		glm::vec3 *editorCamPos = &editor->editorCamPos;
+		glm::vec3 *editorCamDir = &editor->editorCamDir;
+		bool *sendRay = &editor->sendRay;
+		
 		//mouse
 		if (mouseevent.IsMousePressed(Mouse::ButtonLeft))//drag and drop
 		{
+			editorMousePos[0].x = (float)mouseevent.xPos;
+			editorMousePos[0].y = (float)mouseevent.yPos;
+
+			if (!sendRay[0])
+				sendRay[0] = true;
+
+			if (!leftM)
+			{
+				leftM = true;
+			}
+			else 
+			{
+				g_draggin = true;
+			}
 
 		}
-		if (mouseevent.IsMousePressed(Mouse::ButtonMiddle))
+		else
 		{
-
+			leftM = false;
+			g_draggin = false;
 		}
+
 		if (mouseevent.IsMousePressed(Mouse::ButtonRight))	
 		{
 			if (!rightM)
@@ -102,7 +129,7 @@ namespace Popeye
 				front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 				front.y = sin(glm::radians(pitch));
 				front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-				g_sceneViewDirection = glm::normalize(front);
+				editorCamDir[0] = glm::normalize(front);
 			}
 		}
 		else
@@ -112,13 +139,16 @@ namespace Popeye
 
 		
 		//keyboard
-		if (keyevent.IsKeyPressed(Keyboard::W)) { g_sceneViewPosition += 0.1f * g_sceneViewDirection; }
-		if (keyevent.IsKeyPressed(Keyboard::S)) { g_sceneViewPosition -= 0.1f * g_sceneViewDirection; }
-		if (keyevent.IsKeyPressed(Keyboard::A)) { g_sceneViewPosition -= 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
-		if (keyevent.IsKeyPressed(Keyboard::D)) { g_sceneViewPosition += 0.1f * glm::normalize(glm::cross(g_sceneViewDirection, glm::vec3(0.0f, 1.0f, 0.0f))); }
-		if (keyevent.IsKeyPressed(Keyboard::Q)) { g_sceneViewPosition -= glm::vec3(0.0f, 0.1f, 0.0f); }
-		if (keyevent.IsKeyPressed(Keyboard::E)) { g_sceneViewPosition += glm::vec3(0.0f, 0.1f, 0.0f); }
-		
+		if (keyevent.IsKeyPressed(Keyboard::W)) { editorCamPos[0] += 0.1f * editorCamDir[0]; }
+		if (keyevent.IsKeyPressed(Keyboard::S)) { editorCamPos[0] -= 0.1f * editorCamDir[0]; }
+		if (keyevent.IsKeyPressed(Keyboard::D)) { editorCamPos[0] += 0.1f * glm::normalize(glm::cross(editorCamDir[0], glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::A)) { editorCamPos[0] -= 0.1f * glm::normalize(glm::cross(editorCamDir[0], glm::vec3(0.0f, 1.0f, 0.0f))); }
+		if (keyevent.IsKeyPressed(Keyboard::E)) { editorCamPos[0] += glm::vec3(0.0f, 0.1f, 0.0f); }
+		if (keyevent.IsKeyPressed(Keyboard::Q)) { editorCamPos[0] -= glm::vec3(0.0f, 0.1f, 0.0f); }
+
+		if (keyevent.IsKeyPressed(Keyboard::D1)) { editor->mod = EditorMod::TRANSLATE; }
+		else if (keyevent.IsKeyPressed(Keyboard::D2)) { editor->mod = EditorMod::ROTATE; }
+		else if (keyevent.IsKeyPressed(Keyboard::D3)) { editor->mod = EditorMod::SCALE; }
 	}
 
 	void EventHandler::ExecuteGameInput() // input class handle on play

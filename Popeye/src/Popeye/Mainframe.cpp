@@ -5,13 +5,21 @@
 #include "Manager/ResourceManager.h"
 #include "Manager/SceneManager.h"
 
+#include "Editor.h"
+
 #include "FileIO.h"
 #include "Event/EventHandler.h"
 
 #include "System/RenderingSystem.h"
+#include "System/ScriptingSystem.h"
+#include "System/PhysicsSystem.h"
+#include "System/UISystem.h"
 
 
 namespace Popeye {
+	
+	bool isPlay = false;
+
 	FileIO* g_fileIO;
 	
 	ResourceManager* g_ResourceManager;
@@ -23,8 +31,8 @@ namespace Popeye {
 	bool Mainframe::Init()
 	{
 		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		this->window = glfwCreateWindow(1200, 600, "Popeye Engine", NULL, NULL);
@@ -44,53 +52,91 @@ namespace Popeye {
 
 	void Mainframe::Run()
 	{
-		EventHandler* eventHandler = new EventHandler();
-		eventHandler->SetEventCallbacks(window);
-
-		GUIManager* guiManager = new GUIManager();
-		guiManager->OnSet(window);
-
 		g_fileIO = new FileIO();
 		g_fileIO->Init();
 
+		EventHandler *eventHandler = new EventHandler();
+		eventHandler->SetEventCallbacks(window);
+
+		// ------------------------------
+		// On Engine 
+		// ------------------------------
+		Editor *editor = new Editor();
+		editor->Init();
+		{
+			eventHandler->editor = editor;
+		}
+
+		GUIManager *guiManager = new GUIManager();
+		guiManager->OnSet(window);
+		// ------------------------------
+
 		g_ResourceManager = new ResourceManager();
-		
 
 		ComponentManager::GetInstance()->InitComponents();
 
 		SceneManager::GetInstance()->CreateScene();
 
+		g_fileIO->InitProject(fs::current_path() / "popeye.info");
+		g_ResourceManager->SetResources();
+
+		// ------------------------------
+		// Systems for game
+		// ------------------------------
 		RenderingSystem* renderingSystem = new RenderingSystem();
 		renderingSystem->SystemInit();
+
+		ScriptingSystem* scriptingSystem = new ScriptingSystem();
+		scriptingSystem->SystemInit();
+
+		PhysicsSystem* physicsSystem = new PhysicsSystem();
+		physicsSystem->SystemInit(&isPlay);
+
+		UISystem* uiSystem = new UISystem();
+		uiSystem->SystemInit(&isPlay);
+
+		// ------------------------------
 
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			
-			// Rendering system
+			// ------------------------------
+			//  Run rendering system
+			// ------------------------------
 			renderingSystem->SystemRunning();
 
 			// ------------------------------
-			// TODO :: Run UI system here
+			//  Run UI system
 			// ------------------------------
+			uiSystem->SystemRunning();
 
 			// ------------------------------
-			// TODO :: Run Physic system here
+			//  Run physics system
 			// ------------------------------
+			physicsSystem->SystemRunning();
 
 			// ------------------------------
 			// TODO :: Run Audio system here
 			// ------------------------------
 
 			// ------------------------------
-			// TODO :: Run Script system here
+			//  Run script system
 			// ------------------------------
+			scriptingSystem->SystemRunning();
 
 
 			eventHandler->HandleEvent();
 
+			// ------------------------------
+			// On Game Engine
+			// ------------------------------
+			editor->OnRun();
+
 			guiManager->OnRun();
+			// ------------------------------
+			// ------------------------------
 
 			glfwSwapBuffers(window);
 		}
@@ -110,8 +156,11 @@ namespace Popeye {
 		delete(g_fileIO);
 
 		delete(eventHandler);
-		delete(renderingSystem);
 
+		delete(renderingSystem);
+		delete(scriptingSystem);
+		delete(physicsSystem);
+		delete(uiSystem);
 	}
 
 	void Mainframe::Close()

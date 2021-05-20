@@ -6,9 +6,15 @@
 #include "../GUI/IconsForkAwesomeLargeIcon.h"
 
 #include "../GUI/Tabs.h"
+
+#include "../FileIO.h"
+
 namespace Popeye
 {
 	ImFont *g_Icon;
+	
+	extern bool		isPlay;
+	extern FileIO	*g_fileIO;
 
 	GUIManager::GUIManager() {}
 	GUIManager::~GUIManager() { for (int i = 0; i < tabs.size(); i++) { delete(tabs[i]); } }
@@ -51,7 +57,7 @@ namespace Popeye
 		ImGui_ImplOpenGL3_Init("#version 330");
 
 		flags = ImGuiWindowFlags_MenuBar;
-		flags |= ImGuiWindowFlags_NoDocking;
+		//flags |= ImGuiWindowFlags_NoDocking;
 		flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
@@ -122,9 +128,10 @@ namespace Popeye
 				ImGui::MenuItem("load project", NULL, &load_project);
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("gameobject"))
+			if (ImGui::BeginMenu("entity"))
 			{
-				ImGui::MenuItem("create entity", NULL, &create_entity);
+				ImGui::MenuItem("create scene", NULL, &new_project);
+				ImGui::MenuItem("create gameobject", NULL, &create_entity);
 				ImGui::EndMenu();
 			}
 
@@ -142,12 +149,13 @@ namespace Popeye
 			ImGui::DockBuilderAddNode(dockspace_id, flags); // Add empty node
 
 			ImGuiID dock_main_id = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
-			ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.3f, NULL, &dock_main_id);
-			ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.3f, NULL, &dock_main_id);
-			ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
+			ImGuiID dock_id_right	=	ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, NULL, &dock_main_id);
+			ImGuiID dock_id_bottom	=	ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.25f, NULL, &dock_main_id);
+			ImGuiID dock_id_left	=	ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, NULL, &dock_main_id);
+			ImGuiID dock_id_center	=	ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.5f, NULL, &dock_main_id);
 
-			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
+			ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left);
 			ImGui::DockBuilderDockWindow("Scene", dock_main_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Debug", dock_id_bottom);
@@ -164,9 +172,24 @@ namespace Popeye
 			}
 		}
 
+
+
+
+		if (!save_project)
+		{
+			if (ImGui::IsKeyDown(341) && ImGui::IsKeyDown(83) && !isPlay)
+			{
+				save_project = true;
+			}
+		}
+		else if (save_project)
+		{
+			g_fileIO->SaveScene();
+			save_project = false;
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
-
 	}
 
 	void GUIManager::OnClosed()

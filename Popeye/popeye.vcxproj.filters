@@ -13,6 +13,9 @@
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\UIComponents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\ScriptComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\EventHandler.cpp">
@@ -70,6 +76,15 @@
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\RenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye.h">
@@ -88,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.h">
@@ -157,6 +175,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\RenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\Debug\cmake_pch.hxx">

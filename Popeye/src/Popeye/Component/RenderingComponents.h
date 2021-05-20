@@ -18,6 +18,13 @@ namespace Popeye {
 		void setMat4(const std::string& name, const glm::mat4& mat) const;
 	};
 
+	//---------------------------------------
+	//| Rendering Components
+	//---------------------------------------
+	//  All Component have own Constructor 
+	//  and function name SetValue().
+	// 
+
 	/*Light Component*/
 	enum class LightType { POINT, DIRECTION, SPOT };
 	struct Light
@@ -26,6 +33,7 @@ namespace Popeye {
 		static int directionalLightCounter;
 		static int spotLightCounter;
 
+		LightType type;
 		glm::vec3 color;
 		
 		float ambient;
@@ -42,10 +50,10 @@ namespace Popeye {
 		float outercutoff;
 
 		Light();
+		void SetValue();
+
 		void ChangeLightType(LightType);
 		LightType ShowLightType();
-	private:
-		LightType type;
 	};
 
 	/*MeshRenderer*/
@@ -56,6 +64,7 @@ namespace Popeye {
 		bool isEmpty;
 
 		MeshRenderer();
+		void SetValue();
 	};
 
 
@@ -63,15 +72,18 @@ namespace Popeye {
 	enum class Projection { PERSPECTIVE, ORTHOGRAPHIC };
 	struct Camera
 	{
-		Projection mod = Projection::PERSPECTIVE;
-		float fov = 45.0f;
-		float offsetX = 800.0f, offsetY = 600.0f;
+		Projection mod;
+		float fov;
+		float offsetX, offsetY;
 
 		/*Perspective view*/
-		float nearView = 0.1f, farView = 100.0f;
+		float nearView, farView;
 
 		/*ORTHOGRAPHIC*/
-		float width = 5.0f, height = 5.0f;
+		float width, height;
+
+		Camera();
+		void SetValue();
 	};
 }
 

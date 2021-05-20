@@ -16,6 +16,7 @@
 
 namespace Popeye{
 
+	extern bool				isPlay;
 	extern ResourceManager	*g_ResourceManager;
 	extern ImFont			*g_Icon;
 	extern FileIO			*g_fileIO;
@@ -23,9 +24,12 @@ namespace Popeye{
 	extern int				g_eventMod;
 	extern unsigned int		g_SceneView;
 	extern unsigned int		g_GameView;
+	
+	extern glm::vec2		g_scenePosition;
+	extern glm::vec2		g_sceneSize;
 
-	static Scene			*scene;
-	static GameObject		*selectedGameObject;
+	Scene		*scene;
+	GameObject	*selectedGameObject = nullptr;
 
 
 	//Tab 
@@ -60,6 +64,12 @@ namespace Popeye{
 		ImGui::BeginChild("Scene Viewer");
 
 		ImVec2 wsize = ImGui::GetWindowSize();
+		g_sceneSize.x = wsize.x;
+		g_sceneSize.y = wsize.y;
+
+		ImVec2 wpos = ImGui::GetWindowPos();
+		g_scenePosition.x = wpos.x;
+		g_scenePosition.y = wpos.y;
 
 		ImGui::Image((ImTextureID)g_SceneView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
@@ -78,6 +88,36 @@ namespace Popeye{
 		ImGui::Image((ImTextureID)g_GameView, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
 		CheckHover();
+
+		if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
+		{
+			ImGui::OpenPopup("Play");
+			//popup
+		}
+		
+		if (ImGui::BeginPopup("Play"))
+		{
+			if (!isPlay)
+			{
+				if (ImGui::Selectable(ICON_FK_PLAY " play "))
+				{
+					POPEYE_CORE_INFO("play scene");
+					isPlay = true;
+					g_fileIO->SaveScene();
+				}
+			}
+			else
+			{
+				if (ImGui::Selectable(ICON_FK_STOP " stop "))
+				{
+					POPEYE_CORE_INFO("stop play");
+					isPlay = false;
+					g_fileIO->LoadScene(SceneManager::GetInstance()->currentScenePath);
+				}
+			}
+			ImGui::EndPopup();
+		}
+
 
 		ImGui::EndChild();
 	}
@@ -104,13 +144,28 @@ namespace Popeye{
 
 		if (ImGui::CollapsingHeader(scene->GetName().c_str()))
 		{
-			for (int i = 0; i < scene->gameObjects.size(); i++)
+			int size = scene->gameObjects.size();
+			for (int i = 0; i < size; i++)
 			{
-				if (ImGui::Selectable(scene->gameObjects[i]->GetName().c_str()))
+				if (scene->gameObjects[i] != nullptr)
 				{
-					selectedGameObject = scene->gameObjects[i];
+					if (ImGui::Selectable(scene->gameObjects[i]->GetName().c_str()))
+					{
+						selectedGameObject = scene->gameObjects[i];
+					}
 				}
 			}
+		}
+
+		if (selectedGameObject != nullptr && ImGui::IsKeyDown(261))
+		{
+			int idToDelete = selectedGameObject->GetID();
+			selectedGameObject->DeleteComponent<Camera>();
+			selectedGameObject->DeleteComponent<MeshRenderer>();
+			selectedGameObject->DeleteComponent<Light>();
+			selectedGameObject = nullptr;
+
+			scene->DeleteGameObject(idToDelete);
 		}
 	}
 
@@ -121,34 +176,83 @@ namespace Popeye{
 		static bool addcomponentCall = false;
 
 		CheckHover();
-		if (selectedGameObject) // transform info first
+		if (selectedGameObject != nullptr) // transform info first
 		{
-			if (ImGui::CollapsingHeader("Transform"))
+			char nameBuff[128] = "";
+
+			std::string name = selectedGameObject->GetName();
+			int size = name.size();
+
+			for (int i = 0; i < 128; i++)
 			{
-				ImGui::DragFloat3("position",	(float*)&selectedGameObject->transform.position);
-				ImGui::DragFloat3("rotation",	(float*)&selectedGameObject->transform.rotation);
-				ImGui::DragFloat3("scale",		(float*)&selectedGameObject->transform.scale);
+				if (i < size)
+					nameBuff[i] = name[i];
+				else
+					break;
 			}
+
+			ImGui::InputText("##name", nameBuff, sizeof(char) * 128);
+			if (ImGui::IsKeyDown(257))
+			{
+				int i = 0;
+				std::string name = "";
+				for (int i = 0; i < 128; i++)
+				{
+					if (nameBuff[i] != 0)
+						name += nameBuff[i];
+					else
+						break;
+				}
+				
+				selectedGameObject->SetName(name);
+			}
+
+			ImGui::Text("position");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##pos", (float*)&selectedGameObject->transform.position);
+
+			ImGui::Text("rotation");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##rot", (float*)&selectedGameObject->transform.rotation);
+
+			ImGui::Text("scale   ");
+			ImGui::SameLine();
+			ImGui::DragFloat3("##scl", (float*)&selectedGameObject->transform.scale);
 
 			/*Show all Component*/
 			int id = selectedGameObject->GetID();
-			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id); // TODO::Make copy once.
-
+			std::vector<Accessor> accessor = SceneManager::GetInstance()->currentScene->GetAllAddressOfID(id); // TODO::Make copy once.
+			bool componentExist = true;
 			for (int i = 0; i < accessor.size(); i++)
 			{
-				if (accessor[i].componentType != nullptr)
+				if (accessor[i].componentType != "")
 				{
-					if (accessor[i].componentType == typeid(Camera).name())
+					if (accessor[i].componentType == typeid(Camera).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<Camera>());
+						ShowComponent(selectedGameObject->GetComponent<Camera>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Camera>();
+							componentExist = true;
+						}
 					}
-					if (accessor[i].componentType == typeid(MeshRenderer).name())
+					else if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>());
+						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<MeshRenderer>();
+							componentExist = true;
+						}
 					}
-					if (accessor[i].componentType == typeid(Light).name())
+					else if (accessor[i].componentType == typeid(Light).name() + 15)
 					{
-						ShowComponent(selectedGameObject->GetComponent<Light>());
+						ShowComponent(selectedGameObject->GetComponent<Light>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Light>();
+							componentExist = true;
+						}
 					}
 				}
 			}
@@ -167,6 +271,7 @@ namespace Popeye{
 						if (ImGui::Selectable(components[i]))
 						{
 							selectedGameObject->AddComponentByName(components[i]);
+							addcomponentCall = false;
 						}
 				}
 
@@ -175,7 +280,7 @@ namespace Popeye{
 	}
 
 
-	void Inspector::ShowComponent(Camera& camera)
+	void Inspector::ShowComponent(Camera& camera, bool& closeBtn)
 	{
 		const char* camMod[] = { "Perspective", "Otrhomatric" };
 
@@ -183,7 +288,7 @@ namespace Popeye{
 		if (camera.mod == Projection::PERSPECTIVE) { cameraMod = 0; }
 		if (camera.mod == Projection::ORTHOGRAPHIC) { cameraMod = 1; }
 
-		if (ImGui::CollapsingHeader("Camera"))
+		if (ImGui::CollapsingHeader("Camera", &closeBtn))
 		{
 			ImGui::Combo("Projection", &cameraMod, camMod, IM_ARRAYSIZE(camMod), IM_ARRAYSIZE(camMod)); // TODO::Make look pretty.
 			if (cameraMod == 0) {
@@ -203,40 +308,55 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowComponent(MeshRenderer& meshRenderer)
+	void Inspector::ShowComponent(MeshRenderer& meshRenderer, bool& closeBtn)
 	{
-		if (ImGui::CollapsingHeader("MeshRenderer"))
+		if (ImGui::CollapsingHeader("MeshRenderer", &closeBtn))
 		{
-			if (ImGui::TreeNode("Mesh"))
+
+			ImGui::Text("Mesh");
+			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(100.0f, 20.0f));
+
+			if (ImGui::IsItemHovered())
 			{
-				ImGui::Text("Mesh");
-				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
-
-				if (ImGui::IsItemHovered())
+				if (ImGui::IsKeyDown(261))
 				{
-					if (ImGui::IsKeyDown(261))
-					{
-						meshRenderer.meshID = 0;
-						meshRenderer.isEmpty = true;
-					}
+					meshRenderer.meshID = 0;
+					meshRenderer.isEmpty = true;
 				}
-				if (ImGui::BeginDragDropTarget())
-				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
-					{
-						meshRenderer.meshID = *(unsigned int*)payload->Data;
-						meshRenderer.isEmpty = false;
-					}
-
-					ImGui::EndDragDropTarget();
-				}
-
-				ImGui::TreePop();
 			}
-			if (ImGui::TreeNode("Material"))
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
+				{
+					meshRenderer.meshID = *(unsigned int*)payload->Data;
+					meshRenderer.isEmpty = false;
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+
+			ImGui::Text("Material");
+			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(100.0f, 20.0f));
+
+			if (ImGui::IsItemHovered())
+			{
+				if (ImGui::IsKeyDown(261))
+				{
+					meshRenderer.materialID = 0;
+				}
+			}
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MATERIAL"))
+				{
+					meshRenderer.materialID = *(unsigned int*)payload->Data;
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+			if (meshRenderer.materialID != 0 && ImGui::TreeNode("Material"))
 			{
 				Material& material = g_ResourceManager->materials[meshRenderer.materialID];
-
 				ImGui::Text("texture");
 				ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
 				if (ImGui::IsItemHovered())
@@ -280,7 +400,7 @@ namespace Popeye{
 		}
 	}
 
-	void Inspector::ShowComponent(Light& light)
+	void Inspector::ShowComponent(Light& light, bool& closeBtn)
 	{
 		const char* lighttype[] = { "Point", "Direction", "Spot" };
 
@@ -291,7 +411,7 @@ namespace Popeye{
 		else if (type == LightType::DIRECTION) { lightMod = 1; }
 		else if (type == LightType::SPOT) { lightMod = 2; }
 
-		if (ImGui::CollapsingHeader("Light"))
+		if (ImGui::CollapsingHeader("Light", &closeBtn))
 		{
 			ImGui::Combo("Light type", &lightMod, lighttype, IM_ARRAYSIZE(lighttype), IM_ARRAYSIZE(lighttype)); // TODO::Make look pretty.
 			if (lightMod == 0)		{ 
@@ -444,9 +564,10 @@ namespace Popeye{
 					filedata = files[fi];
 					if (ImGui::IsItemHovered())
 					{
-						if (ImGui::IsMouseDoubleClicked(0))
+						if (ImGui::IsMouseDoubleClicked(0) && filedata.type == FileType::SCENE)
 						{
-							//g_fileIO->ReadFile(filedata);
+							selectedGameObject = nullptr;
+							g_fileIO->LoadScene(filedata.path);
 						}
 					}
 					fi++;
@@ -600,42 +721,39 @@ namespace Popeye{
 
 	void Resource::ShowContents()
 	{
-		static bool image_show = false;
+		CheckHover();
 		if (ImGui::BeginTabBar("ResourceManager"))
 		{
 			if (ImGui::BeginTabItem("Texture"))
 			{
-				if (image_show)
+				for (int i = 0; i < g_ResourceManager->textures.size(); i++)
 				{
-					for (int i = 0; i < g_ResourceManager->textures.size(); i++)
+					ImGui::PushID(i);
+					ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+
+					draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
+
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						ImGui::PushID(i);
-						ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
-						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+						unsigned int id = g_ResourceManager->textures[i].id;
 
-						const ImVec2 p0 = ImGui::GetItemRectMin();
-						const ImVec2 p1 = ImGui::GetItemRectMax();
+						ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(unsigned int), ImGuiCond_Once);
 
+						ImGui::Text("texture : {0}", id);
 
-						draw_list->AddImage((ImTextureID)g_ResourceManager->textures[i].id, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
-
-
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							unsigned int id = g_ResourceManager->textures[i].id;
-
-							ImGui::SetDragDropPayload("TEXTURE", &id, sizeof(int), ImGuiCond_Once);
-
-							ImGui::Text("texture : {0}", id);
-
-							ImGui::EndDragDropSource();
-						}
-
-
-						ImGui::PopID();
-
-						ImGui::SameLine();
+						ImGui::EndDragDropSource();
 					}
+
+
+					ImGui::PopID();
+
+					ImGui::SameLine();
 				}
 
 				ImGui::EndTabItem();
@@ -643,39 +761,71 @@ namespace Popeye{
 
 			if (ImGui::BeginTabItem("Model"))
 			{
-				if (image_show)
+				for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
 				{
-					for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
+					ImGui::PushID(i);
+					ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						ImGui::PushID(i);
-						ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
-						ImDrawList* draw_list = ImGui::GetWindowDrawList();
+						ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
 
-						const ImVec2 p0 = ImGui::GetItemRectMin();
-						const ImVec2 p1 = ImGui::GetItemRectMax();
-
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
-
-							ImGui::EndDragDropSource();
-						}
-
-						ImGui::PopID();
-
-						ImGui::SameLine();
+						ImGui::EndDragDropSource();
 					}
-				}
 
+					ImGui::PopID();
+
+					ImGui::SameLine();
+				}
+				
 				ImGui::EndTabItem();
 			}
 
 			if (ImGui::BeginTabItem("Material"))
 			{
+				if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
+				{
+					ImGui::OpenPopup("Material");
+					//popup
+				}
+				if (ImGui::BeginPopup("Material"))
+				{
+					if (ImGui::Selectable("Create Material"))
+					{
+						g_ResourceManager->AddMaterial();
+					}
+
+					ImGui::EndPopup();
+				}
+
+				for (int i = 1; i < g_ResourceManager->materials.size(); i++)
+				{
+					ImGui::PushID(i);
+					ImGui::Selectable(g_ResourceManager->materials[i].id.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+					const ImVec2 p0 = ImGui::GetItemRectMin();
+					const ImVec2 p1 = ImGui::GetItemRectMax();
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					{
+						ImGui::SetDragDropPayload("MATERIAL", &i, sizeof(unsigned int), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+
+					ImGui::PopID();
+
+					ImGui::SameLine();
+				}
 
 				ImGui::EndTabItem();
 			}
-
+			
 			ImGui::InvisibleButton("##empty", ImGui::GetWindowSize());
 			if (ImGui::BeginDragDropTarget())
 			{
@@ -685,7 +835,7 @@ namespace Popeye{
 
 					FileData filedata;
 					filedata.path = str;
-					
+
 					if (filedata.path.extension() == ".jpg" || filedata.path.extension() == ".png")
 					{
 						filedata.type = FileType::IMAGE;
@@ -701,12 +851,11 @@ namespace Popeye{
 				ImGui::EndDragDropTarget();
 			}
 
-
 			if (ImGui::Button("Set Resource"))
-			{
 				g_ResourceManager->SetResources();
-				image_show = true;
-			}
+
+
+
 			ImGui::EndTabBar();
 		}
 

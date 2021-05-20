@@ -13,23 +13,27 @@ namespace Popeye {
 	private:
 		int id;
 		std::string name;
-		GameObject* parent;
-		std::vector<GameObject*> childs;
+		/*GameObject* parent;
+		std::vector<GameObject*> childs;*/
 	public:
 		Transform transform;
 	public:
-		GameObject(int);
+		GameObject(int _id);
+		GameObject(int _id, std::string _name, Transform _transform);
 		~GameObject();
+
+		void SetValue(int _id);
+		void SetValue(int _id, std::string _name, Transform _transform);
 
 		std::string GetName();
 		void SetName(std::string);
 
-		GameObject* GetParent();
+		/*GameObject* GetParent();
 		void SetParent(GameObject*);
 
 		GameObject* Getchild();
 		std::vector<GameObject*> Getchildren();
-		void AddChild(GameObject*);
+		void AddChild(GameObject*);*/
 
 		int GetID();
 		
@@ -37,6 +41,12 @@ namespace Popeye {
 		void AddComponent()
 		{
 			SceneManager::GetInstance()->currentScene->AddData<component>(id);
+		}
+
+		template<class component>
+		void DeleteComponent()
+		{
+			SceneManager::GetInstance()->currentScene->RemoveData<component>(id);
 		}
 
 		void AddComponentByName(const char* component);

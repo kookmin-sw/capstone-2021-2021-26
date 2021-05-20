@@ -10,5 +10,6 @@ namespace Popeye{
 		float shininess;
 
 		Material();
+		Material(std::string _id);
 	};
 }

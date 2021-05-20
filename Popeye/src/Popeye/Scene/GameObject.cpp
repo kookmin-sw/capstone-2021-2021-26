@@ -6,15 +6,31 @@ namespace Popeye {
 	
 	GameObject::GameObject(int _id)
 	{
+		SetValue(_id);
+	}
+
+	GameObject::GameObject(int _id, std::string _name, Transform _transform)
+	{
+		SetValue(_id, _name, _transform);
+	}
+
+	GameObject::~GameObject(){}
+
+	/*void GameObject::AddChild(GameObject* child)
+	{
+	}*/
+
+	void GameObject::SetValue(int _id)
+	{
 		id = _id;
+		transform = Transform();
 	}
 
-	GameObject::~GameObject()
+	void GameObject::SetValue(int _id, std::string _name, Transform _transform)
 	{
-	}
-
-	void GameObject::AddChild(GameObject* child)
-	{
+		id			= _id;
+		name		= _name;
+		transform	= _transform;
 	}
 
 	std::string GameObject::GetName()
@@ -23,7 +39,7 @@ namespace Popeye {
 	}
 	void GameObject::SetName(std::string _name)
 	{
-		this->name = _name;
+		std::swap(name, _name);
 	}
 
 	int GameObject::GetID()

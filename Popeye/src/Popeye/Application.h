@@ -9,7 +9,6 @@ namespace Popeye {
 		Application();
 		virtual ~Application();
 		void Run();
-		//struct* window;
 	};
 
 	Application* CreateApplication();

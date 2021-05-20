@@ -1,5 +1,6 @@
 #include "ComponentManager.h"
 #include "../Component/RenderingComponents.h"
+#include "../Component/ScriptComponents.h"
 
 namespace Popeye
 {
@@ -17,6 +18,9 @@ namespace Popeye
 		//UI Components
 		//RegistComponent<Frame>();
 		//RegistComponent<Button>();
+
+		//Script Component
+		RegistComponent<ScriptComponent>();
 	}
 
 	ComponentManager::ComponentManager()
@@ -47,21 +51,21 @@ namespace Popeye
 	}
 
 	// terrible way to find component fix it later
-	void ComponentManager::AddDataOfComponentByName(const char* component, const char*& type, int& index)
+	void ComponentManager::AddDataOfComponentByName(std::string component, std::string& type, int& index)
 	{
-		if (component[0] == (typeid(Camera).name() + 15)[0])
+		if (component[0] == (typeid(Camera).name())[15])
 		{
-			type = typeid(Camera).name();
+			type = typeid(Camera).name() + 15;
 			index = AccessComponent<Camera>(componentDatas[type])->AddData();
 		}
-		else if (component[0] == (typeid(MeshRenderer).name() + 15)[0])
+		else if (component[0] == (typeid(MeshRenderer).name())[15])
 		{
-			type = typeid(MeshRenderer).name();
+			type = typeid(MeshRenderer).name() + 15;
 			index = AccessComponent<MeshRenderer>(componentDatas[type])->AddData();
 		}
-		else if (component[0] == (typeid(Light).name() + 15)[0])
+		else if (component[0] == (typeid(Light).name())[15])
 		{
-			type = typeid(Light).name();
+			type = typeid(Light).name() + 15;
 			index = AccessComponent<Light>(componentDatas[type])->AddData();
 		}
 	}
