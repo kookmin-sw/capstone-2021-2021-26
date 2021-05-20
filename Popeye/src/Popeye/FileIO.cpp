@@ -224,7 +224,7 @@ namespace Popeye
 		Material material;
 		int size = g_ResourceManager->materials.size();
 		out.open(resource / "Material.dat");
-		out << size;
+		out << size - 1 << ' ';
 		for (int i = 1; i < size; i++)
 		{
 			material = g_ResourceManager->materials[i];
@@ -245,6 +245,7 @@ namespace Popeye
 		writedata.open(resource / "Material.dat", std::ios::in | std::ios::binary);
 		int size;
 		std::vector<Material> materials;
+		materials.push_back(g_ResourceManager->materials[0]);
 		if (writedata.is_open())
 		{
 			writedata >> size;

@@ -146,7 +146,7 @@ namespace Popeye{
 		static bool renamePressed = false;
 
 		CheckHover();
-		if (selectedGameObject) // transform info first
+		if (selectedGameObject != nullptr) // transform info first
 		{
 			char nameBuff[128] = "";
 
@@ -191,7 +191,7 @@ namespace Popeye{
 
 			/*Show all Component*/
 			int id = selectedGameObject->GetID();
-			std::vector<Accessor> accessor = scene->GetAllAddressOfID(id); // TODO::Make copy once.
+			std::vector<Accessor> accessor = SceneManager::GetInstance()->currentScene->GetAllAddressOfID(id); // TODO::Make copy once.
 			bool componentExist = true;
 			for (int i = 0; i < accessor.size(); i++)
 			{
