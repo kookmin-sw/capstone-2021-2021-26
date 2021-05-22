@@ -70,6 +70,7 @@ set(POPEYE_RESOURCE
     src/Popeye/Resource/Mesh.cpp
     src/Popeye/Resource/Material.h
     src/Popeye/Resource/Material.cpp
+    src/Popeye/Resource/shaders.cpp
     )
 
 set(POPEYE_ENTITY

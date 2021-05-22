@@ -17,7 +17,7 @@ namespace Popeye {
 
 	void RenderingSystem::SystemInit()
 	{
-		screenShader.Init("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
+		screenShader.Init("shader/vertexShaderfb.GLSL", "shader/fragmentShaderfb.GLSL");
 
 		unsigned int rbo;
 
@@ -65,7 +65,7 @@ namespace Popeye {
 		static Shader shader; // temp 
 		static Camera camera;
 		static int init = 0;
-		if (!init) { shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl"); init++; }
+		if (!init) { shader.Init("shader/vertexShader.GLSL", "shader/fragmentShader.GLSL"); init++; }
 
 		int pointLightCount = 0;
 		int dirLightCount = 0;

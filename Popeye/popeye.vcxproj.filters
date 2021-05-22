@@ -67,6 +67,9 @@
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\shaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Scene\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

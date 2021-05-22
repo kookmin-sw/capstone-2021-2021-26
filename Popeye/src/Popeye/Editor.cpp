@@ -39,7 +39,7 @@ namespace Popeye {
 
 	void Editor::Init()
 	{
-		screenShader.Init("shader/vertexShaderfb.glsl", "shader/fragmentShaderfb.glsl");
+		screenShader.Init("shader/vertexShaderfb.GLSL", "shader/fragmentShaderfb.GLSL");
 		gizmo.Init();
 
 		unsigned int rbo;
@@ -91,8 +91,8 @@ namespace Popeye {
 
 
 		if (!init) {
-			shader.Init("shader/vertexShader.glsl", "shader/fragmentShader.glsl");
-			gizmoShader.Init("shader/gridvert.glsl", "shader/gridfrag.glsl");
+			shader.Init("shader/vertexShader.GLSL", "shader/fragmentShader.GLSL");
+			gizmoShader.Init("shader/gridvert.GLSL", "shader/gridfrag.GLSL");
 			init++;
 		}
 

@@ -33,7 +33,7 @@ namespace Popeye
 					}
 				}
 			}
-			POPEYE_CORE_INFO("Popeye Physics");
+			//POPEYE_CORE_INFO("Popeye Physics");
 		}
 
 	}

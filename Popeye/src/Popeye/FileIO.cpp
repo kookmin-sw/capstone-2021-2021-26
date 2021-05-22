@@ -13,6 +13,12 @@
 namespace Popeye
 {
 	extern ResourceManager* g_ResourceManager;
+	extern const char* fragmentShader;
+	extern const char* vertexShader;
+	extern const char* gizmovertShder;
+	extern const char* gizmofragShder;
+	extern const char* screenvertShder;
+	extern const char* screenfragShder;
 
 	FileData::FileData() {}
 	FileData::FileData(FileType _type, fs::path _path) : type(_type), path(_path) {}
@@ -27,7 +33,12 @@ namespace Popeye
 		//set path
 		root = fs::current_path() / "Root"; resource = fs::current_path() / "Resource"; curr_focused_path = root;
 
-		//make resource data folder if there isn't one
+		fs::path shaderPath = fs::current_path() / "shader";
+		if (!fs::exists(shaderPath)) {
+			fs::create_directories(shaderPath);  InitShader(shaderPath);
+		}
+
+		if (!fs::exists(resource)) { fs::create_directories(resource); }
 		if (!fs::exists(resource / "Resource.dat"))			{ std::ofstream out(resource / "Resource.dat");			out.close();}
 		if (!fs::exists(resource / "ResourceTable.dat"))	{ std::ofstream out(resource / "ResourceTable.dat");	out.close();}
 
@@ -920,4 +931,34 @@ namespace Popeye
 		return texts;
 	}
 
+
+	void FileIO::InitShader(fs::path shaderpath)
+	{
+		std::ofstream out;
+		out.open(shaderpath / "vertexShader.GLSL");
+		out << vertexShader;
+		out.close();
+
+		out.open(shaderpath / "fragmentShader.GLSL");
+		out << fragmentShader;
+		out.close();
+
+		out.open(shaderpath / "gridfrag.GLSL");
+		out << gizmofragShder;
+		out.close();
+
+		out.open(shaderpath / "gridvert.GLSL");
+		out << gizmovertShder;
+		out.close();
+
+		out.open(shaderpath / "vertexShaderfb.GLSL");
+		out << screenvertShder;
+		out.close();
+
+		out.open(shaderpath / "fragmentShaderfb.GLSL");
+		out << screenfragShder;
+		out.close();
+		
+	//out.close();
+	}
 }

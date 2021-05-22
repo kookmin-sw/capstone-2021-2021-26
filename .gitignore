@@ -64,3 +64,8 @@ _deps
 bin/
 
 *.user
+*.info
+*.ini
+*.pop
+Eyeball/Root/
+Eyeball/Resource/

@@ -97,6 +97,8 @@ namespace Popeye {
 
 		// ------------------------------
 
+		POPEYE_CORE_INFO("Initialize Popeye Engine");
+
 		int display_w, display_h;
 		while (!glfwWindowShouldClose(window))
 		{

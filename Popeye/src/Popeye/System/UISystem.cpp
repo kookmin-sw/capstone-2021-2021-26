@@ -21,7 +21,7 @@ namespace Popeye
 
 		if (onPlay[0])
 		{
-			POPEYE_CORE_INFO("Popeye UI");
+			//POPEYE_CORE_INFO("Popeye UI");
 		}
 	}
 }

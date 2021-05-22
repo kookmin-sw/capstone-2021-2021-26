@@ -94,6 +94,7 @@ namespace Popeye {
 		~FileIO();
 		
 		void Init();
+		void InitShader(fs::path shaderpath);
 		void DefaultSetting();
 
 		int ShowFilesAtDir(std::vector<FileData>& dirs, std::vector<FileData>& files, fs::path currPath = fs::current_path() / "Root");
