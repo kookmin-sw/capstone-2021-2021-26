@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\aston\Documents\PopeyeEngine\CMakeFiles\b6aefe7891d0c38ddf6b1b974b7ab3d4\INSTALL_force.rule">
+    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26\CMakeFiles\f32032f724da56c8eb621ead74df7864\INSTALL_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{FF3A7CC0-5C0F-379E-B46D-542CDDEA8BA4}</UniqueIdentifier>
+      <UniqueIdentifier>{8BCB67D2-8915-31D7-A611-BFCCB9B7EA7D}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

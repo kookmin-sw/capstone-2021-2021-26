@@ -1,219 +1,219 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\cmake_pch.cxx">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\cmake_pch.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Application.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\FileIO.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\FileIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Mainframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\stb_img.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\stb_img.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\ComponentManager.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\GUIManager.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\GUIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\ResourceManager.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\SceneManager.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\RenderingComponents.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\RenderingComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\PhysicsComponents.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\PhysicsComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\UIComponents.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\UIComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\ScriptComponents.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\ScriptComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\EventHandler.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\EventHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_impl_glfw.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_impl_opengl3.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_custom_widgets.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_custom_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\Tabs.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\Tabs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Mesh.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Material.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\shaders.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Scene\GameObject.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Scene\Scene.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\RenderingSystem.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\RenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\PhysicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\UISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.cpp">
+    <ClCompile Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\ScriptingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Application.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Core.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\EntryPoint.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\FileIO.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\FileIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Log.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Editor.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Mainframe.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Mainframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\ComponentManager.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\GUIManager.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\GUIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\ResourceManager.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Manager\SceneManager.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Manager\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\RenderingComponents.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\RenderingComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\PhysicsComponents.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\PhysicsComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\UIComponents.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\UIComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Component\ScriptComponents.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Component\ScriptComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\KeyCode.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\KeyCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\MouseCode.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\MouseCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\Events.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\Events.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Event\EventHandler.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Event\EventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_impl_glfw.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_glfw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_impl_opengl3.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_impl_opengl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\imgui_custom_widgets.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\imgui_custom_widgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\GUI\Tabs.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\GUI\Tabs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Texture.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Mesh.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Resource\Material.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Resource\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Scene\GameObject.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\Scene\Scene.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\Scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\RenderingSystem.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\RenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\PhysicsSystem.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\PhysicsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\UISystem.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\UISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\src\Popeye\System\ScriptingSystem.h">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\src\Popeye\System\ScriptingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\Debug\cmake_pch.hxx">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\Release\cmake_pch.hxx">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\Release\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\MinSizeRel\cmake_pch.hxx">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\MinSizeRel\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeFiles\popeye.dir\RelWithDebInfo\cmake_pch.hxx">
+    <ClInclude Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeFiles\popeye.dir\RelWithDebInfo\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\aston\Documents\PopeyeEngine\Popeye\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\aston\Documents\capstone-2021-26\Popeye\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{AB1B6A86-E33F-3C57-9DD3-8EEE9BCFCBBB}</UniqueIdentifier>
+      <UniqueIdentifier>{710E6E72-826F-3977-A686-CB38475F57F7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
-      <UniqueIdentifier>{6F475BE1-BA4E-3BF9-8DCF-0B061EEA6DA3}</UniqueIdentifier>
+      <UniqueIdentifier>{9A133CC7-BF9F-31EE-B69D-09C34A98250D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{E5B1FA8D-9A65-3A02-AAF7-CA9F930C6C09}</UniqueIdentifier>
+      <UniqueIdentifier>{97678390-FB37-386D-B23F-3FF29A7A91C3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
