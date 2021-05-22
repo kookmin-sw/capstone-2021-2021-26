@@ -6,7 +6,6 @@
 #include "../Scene/Scene.h"
 #include "../Scene/GameObject.h"
 #include "../Component/RenderingComponents.h"
-#include "../Editor.h"
 
 namespace Popeye {
 	extern ResourceManager	*g_ResourceManager;;

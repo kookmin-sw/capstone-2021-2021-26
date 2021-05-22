@@ -7,6 +7,8 @@
 #include "./Manager/SceneManager.h"
 #include "./Manager/ComponentManager.h"
 #include "./Component/RenderingComponents.h"
+#include "./Component/PhysicsComponents.h"
+#include "./Component/UIComponents.h"
 
 namespace Popeye
 {
@@ -180,6 +182,10 @@ namespace Popeye
 		out << "Camera 1 0 45.000000 800.000000 600.000000 0.100000 100.000000 5.000000 5.000000 \n0\n"
 			<< "MeshRenderer 0  \n0\n"
 			<< "Light 1 0 1 0 1 1.000000 1.000000 1.000000 0.800000 0.700000 0.100000 1.000000 0.090000 0.032000 12.500000 17.500000 \n0\n"
+			<< "BoxCollider 0 \n0\n"
+			<< "Rigidbody 0 \n0\n"
+			<< "UIFrame 0 \n0\n"
+			<< "Text 0 \n0\n"
 			<< '\n';
 		out << WriteScene("test");
 		out.close();
@@ -391,6 +397,10 @@ namespace Popeye
 		std::pair<std::vector<Camera>, std::queue<int>> cameras = ComponentManager::GetInstance()->GetAllDataOfComponent<Camera>();
 		std::pair<std::vector<MeshRenderer>, std::queue<int>> meshrenderers = ComponentManager::GetInstance()->GetAllDataOfComponent<MeshRenderer>();
 		std::pair<std::vector<Light>, std::queue<int>> lights = ComponentManager::GetInstance()->GetAllDataOfComponent<Light>();
+		std::pair<std::vector<BoxCollider>, std::queue<int>> boxcolliders = ComponentManager::GetInstance()->GetAllDataOfComponent<BoxCollider>();
+		std::pair<std::vector<Rigidbody>, std::queue<int>> rigidbodies = ComponentManager::GetInstance()->GetAllDataOfComponent<Rigidbody>();
+		std::pair<std::vector<UIFrame>, std::queue<int>> uiFrames = ComponentManager::GetInstance()->GetAllDataOfComponent<UIFrame>();
+		std::pair<std::vector<Text>, std::queue<int>> texts = ComponentManager::GetInstance()->GetAllDataOfComponent<Text>();
 
 		std::string cam = typeid(Camera).name() + 15;
 		cam += WriteCameraComponent(cameras.first) + "\n";
@@ -404,8 +414,24 @@ namespace Popeye
 		light += WriteLightComponent(lights.first) + "\n";
 		light +=  WriteRecycleQ(lights.second) ;
 
+		std::string col = typeid(BoxCollider).name() + 15;
+		col += WriteBoxColliderComponent(boxcolliders.first) + "\n";
+		col += WriteRecycleQ(boxcolliders.second);
+		
+		std::string rig = typeid(Rigidbody).name() + 15;
+		rig += WriteRigidbodyComponent(rigidbodies.first) + "\n";
+		rig += WriteRecycleQ(rigidbodies.second);
+		
+		std::string uiframe = typeid(UIFrame).name() + 15;
+		uiframe += WriteUIFrameComponent(uiFrames.first) + "\n";
+		uiframe += WriteRecycleQ(uiFrames.second);
+
+		std::string text = typeid(Text).name() + 15;
+		text += WriteTextComponent(texts.first) + "\n";
+		text += WriteRecycleQ(texts.second);
+
 		std::string components = "\n";
-		components += cam + mesh + light + " \n";
+		components += cam + mesh + light + col + rig + uiframe + text + " \n";
 
 		return components;
 	}
@@ -497,6 +523,75 @@ namespace Popeye
 		return meshrenderer;
 	}
 
+	std::string	 FileIO::WriteBoxColliderComponent(std::vector<BoxCollider>& boxcols)
+	{
+		int size = boxcols.size();
+		std::string boxcollider = " " + std::to_string(size) + " ";
+		char space = ' ';
+
+		for (int i = 0; i < size; i++)
+		{
+			boxcollider +=
+				std::to_string(boxcols[i].width) + space
+				+ std::to_string(boxcols[i].length) + space
+				+ std::to_string(boxcols[i].height) + space;
+		
+		}
+
+		return boxcollider;
+	}
+
+	std::string	 FileIO::WriteRigidbodyComponent(std::vector<Rigidbody>& rigbodies)
+	{
+		int size = rigbodies.size();
+		std::string rigidbody = " " + std::to_string(size) + " ";
+		char space = ' ';
+
+		for (int i = 0; i < size; i++)
+		{
+			rigidbody +=
+				std::to_string(rigbodies[i].gravity) + space
+				+ std::to_string(rigbodies[i].weight) + space;
+		}
+
+		return rigidbody;
+	}
+
+	std::string	 FileIO::WriteUIFrameComponent(std::vector<UIFrame>& uiframes)
+	{
+		int size = uiframes.size();
+		std::string uiframe = " " + std::to_string(size) + " ";
+		char space = ' ';
+
+		for (int i = 0; i < size; i++)
+		{
+			uiframe +=
+				std::to_string(uiframes[i].textureID) + space
+				+ std::to_string(uiframes[i].leftTop.x) + space + std::to_string(uiframes[i].leftTop.y)
+				+ std::to_string(uiframes[i].rightBot.x) + space + std::to_string(uiframes[i].rightBot.y);
+
+		}
+
+		return uiframe;
+	}
+
+	std::string	 FileIO::WriteTextComponent(std::vector<Text>& texts)
+	{
+		int size = texts.size();
+		std::string text = " " + std::to_string(size) + " ";
+		char space = ' ';
+		
+		for (int i = 0; i < size; i++)
+		{
+			text +=
+				texts[i].contents + space
+				+ std::to_string(texts[i].leftTop.x) + space + std::to_string(texts[i].leftTop.y)
+				+ std::to_string(texts[i].rightBot.x) + space + std::to_string(texts[i].rightBot.y);
+		}
+
+		return text;
+	}
+
 	
 	
 	void FileIO::LoadScene(fs::path path)
@@ -533,6 +628,34 @@ namespace Popeye
 					std::queue<int> recycleQ = ReadRecycleQ(writedata);
 
 					ComponentManager::GetInstance()->GetAllDataOfComponent<Light>(lihtDatas, recycleQ);
+				}
+
+				{	// Component Light
+					std::vector<BoxCollider> lihtDatas = ReadBoxColliderComponent(writedata);
+					std::queue<int> recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<BoxCollider>(lihtDatas, recycleQ);
+				}
+
+				{	// Component Light
+					std::vector<Rigidbody> lihtDatas = ReadRigidbodyComponent(writedata);
+					std::queue<int> recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Rigidbody>(lihtDatas, recycleQ);
+				}
+
+				{	// Component Light
+					std::vector<UIFrame> lihtDatas = ReadUIFrameComponent(writedata);
+					std::queue<int> recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<UIFrame>(lihtDatas, recycleQ);
+				}
+
+				{	// Component Light
+					std::vector<Text> lihtDatas = ReadTextComponent(writedata);
+					std::queue<int> recycleQ = ReadRecycleQ(writedata);
+
+					ComponentManager::GetInstance()->GetAllDataOfComponent<Text>(lihtDatas, recycleQ);
 				}
 			}
 
@@ -666,20 +789,18 @@ namespace Popeye
 
 		writedata >> strReader >> intReader;
 		int size = intReader;
+		
+		writedata >> intReader;
+		Light::pointLightCounter = intReader;
+		writedata >> intReader;
+		Light::directionalLightCounter = intReader;
+		writedata >> intReader;
+		Light::spotLightCounter = intReader;
+		
 		for (int i = 0; i < size; i++)
 		{
-			if (i == 0)
-			{
-				writedata >> intReader;
-				Light::pointLightCounter = intReader;
-				writedata >> intReader;
-				Light::directionalLightCounter = intReader;
-				writedata >> intReader;
-				Light::spotLightCounter = intReader;
-			}
 
 			writedata >> intReader;
-			LightType lighttype;
 			switch (intReader)
 			{
 			case 0:
@@ -721,6 +842,82 @@ namespace Popeye
 		}
 
 		return mshDatas;
+	}
+
+	std::vector<BoxCollider> FileIO::ReadBoxColliderComponent(std::ifstream& writedata)
+	{
+		std::vector<BoxCollider> boxcolls;
+		int intReader;
+		std::string strReader;
+		BoxCollider coll;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> coll.width >> coll.length >> coll.height;
+
+			boxcolls.push_back(coll);
+		}
+		return boxcolls;
+	}
+	
+	std::vector<Rigidbody>	FileIO::ReadRigidbodyComponent(std::ifstream& writedata)
+	{
+		std::vector<Rigidbody> rigbodies;
+		int intReader;
+		std::string strReader;
+		Rigidbody rigid;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> rigid.gravity >> rigid.weight;
+			
+			rigbodies.push_back(rigid);
+		}
+		return rigbodies;
+	}
+
+	std::vector<UIFrame> FileIO::ReadUIFrameComponent(std::ifstream& writedata)
+	{
+		std::vector<UIFrame> uiFrames;
+		int intReader;
+		std::string strReader;
+		UIFrame frame;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> frame.textureID >>
+				frame.leftTop.x >> frame.leftTop.y
+				>> frame.rightBot.x >> frame.rightBot.y;
+
+			uiFrames.push_back(frame);
+		}
+		return uiFrames;
+	}
+	
+	std::vector<Text> FileIO::ReadTextComponent(std::ifstream& writedata)
+	{
+		std::vector<Text> texts;
+		int intReader;
+		std::string strReader;
+		Text text;
+
+		writedata >> strReader >> intReader;
+		int size = intReader;
+		for (int i = 0; i < size; i++)
+		{
+			writedata >> text.leftTop.x >> text.leftTop.y
+				>> text.rightBot.x >> text.rightBot.y;
+
+			texts.push_back(text);
+		}
+
+		return texts;
 	}
 
 }

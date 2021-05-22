@@ -13,6 +13,8 @@
 #include "../Scene/GameObject.h"
 
 #include "../Component/RenderingComponents.h"
+#include "../Component/physicsComponents.h"
+#include "../Component/UIComponents.h"
 
 namespace Popeye{
 
@@ -227,7 +229,7 @@ namespace Popeye{
 			{
 				if (accessor[i].componentType != "")
 				{
-					if (accessor[i].componentType == typeid(Camera).name() + 15)
+					if (accessor[i].componentType == "Camera")
 					{
 						ShowComponent(selectedGameObject->GetComponent<Camera>(), componentExist);
 						if (!componentExist)
@@ -236,7 +238,7 @@ namespace Popeye{
 							componentExist = true;
 						}
 					}
-					else if (accessor[i].componentType == typeid(MeshRenderer).name() + 15)
+					else if (accessor[i].componentType == "MeshRenderer")
 					{
 						ShowComponent(selectedGameObject->GetComponent<MeshRenderer>(), componentExist);
 						if (!componentExist)
@@ -245,12 +247,48 @@ namespace Popeye{
 							componentExist = true;
 						}
 					}
-					else if (accessor[i].componentType == typeid(Light).name() + 15)
+					else if (accessor[i].componentType == "Light")
 					{
 						ShowComponent(selectedGameObject->GetComponent<Light>(), componentExist);
 						if (!componentExist)
 						{
 							selectedGameObject->DeleteComponent<Light>();
+							componentExist = true;
+						}
+					}
+					else if (accessor[i].componentType == "BoxCollider")
+					{
+						ShowComponent(selectedGameObject->GetComponent<BoxCollider>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<BoxCollider>();
+							componentExist = true;
+						}
+					}
+					else if (accessor[i].componentType == "Rigidbody")
+					{
+						ShowComponent(selectedGameObject->GetComponent<Rigidbody>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Rigidbody>();
+							componentExist = true;
+						}
+					}
+					else if (accessor[i].componentType == "UIFrame")
+					{
+						ShowComponent(selectedGameObject->GetComponent<UIFrame>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<UIFrame>();
+							componentExist = true;
+						}
+					}
+					else if (accessor[i].componentType == "Text")
+					{
+						ShowComponent(selectedGameObject->GetComponent<Text>(), componentExist);
+						if (!componentExist)
+						{
+							selectedGameObject->DeleteComponent<Text>();
 							componentExist = true;
 						}
 					}
@@ -264,7 +302,8 @@ namespace Popeye{
 			if (addcomponentCall)
 			{
 				filter.Draw("search");
-				std::vector<const char*> components = {"Camera", "MeshRenderer", "Light"};
+				std::vector<const char*> components = {"Camera", "MeshRenderer", "Light", 
+					"BoxCollider", "Rigidbody", "UIFrame" , "Text"};
 				for (int i = 0; i < components.size(); i++)
 				{
 					if (filter.PassFilter(components[i]))
@@ -438,6 +477,70 @@ namespace Popeye{
 			ImGui::DragFloat("specular",	&light.specular);
 		}
 	}
+
+	void Inspector::ShowComponent(BoxCollider& colider, bool& closeBtn)
+	{
+		if (ImGui::CollapsingHeader("BoxCollider", &closeBtn))
+		{
+			ImGui::DragFloat("width", &colider.width);
+			ImGui::DragFloat("length", &colider.length);
+			ImGui::DragFloat("height", &colider.height);
+		}
+	}
+
+	void Inspector::ShowComponent(Rigidbody& rigidbody, bool& closeBtn)
+	{
+		if (ImGui::CollapsingHeader("Rigidbody", &closeBtn))
+		{
+			ImGui::Checkbox("gravity", &rigidbody.gravity);
+			ImGui::DragFloat("weight", &rigidbody.weight);
+		}
+	}
+
+	void Inspector::ShowComponent(UIFrame& uiframe, bool& closeBtn)
+	{
+		if (ImGui::CollapsingHeader("UIFrame", &closeBtn))
+		{
+			ImGui::DragFloat2("leftTop", (float*)&uiframe.leftTop);
+			ImGui::DragFloat2("leftTop", (float*)&uiframe.rightBot);
+
+			ImGui::Text("texture");
+			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(80.0f, 80.0f));
+			if (ImGui::IsItemHovered())
+			{
+				if (ImGui::IsKeyDown(261))
+				{
+					uiframe.textureID = -1;
+				}
+			}
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE"))
+				{
+					int id = *(const int*)payload->Data;
+
+					uiframe.textureID = id;
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+		}
+	}
+
+	void Inspector::ShowComponent(Text& text, bool& closeBtn)
+	{
+		if (ImGui::CollapsingHeader("Text", &closeBtn))
+		{
+		}
+	}
+
+	//void Inspector::ShowComponent(Button& btn, bool& closeBtn)
+	//{
+	//	if (ImGui::CollapsingHeader("Button", &closeBtn))
+	//	{
+	//	}
+	//}
+
 
 	//Tab::Debug
 	void Debug::ShowContents()

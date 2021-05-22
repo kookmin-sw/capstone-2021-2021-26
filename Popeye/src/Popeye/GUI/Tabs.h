@@ -7,6 +7,13 @@ namespace Popeye{
 	struct Camera;
 	struct Light;
 
+	struct BoxCollider;
+	struct Rigidbody;
+
+	struct UIFrame;
+	struct Text;
+	struct Button;
+
 	struct Tab
 	{
 		const char* name;
@@ -29,6 +36,11 @@ namespace Popeye{
 		void ShowComponent(Camera&, bool&);
 		void ShowComponent(MeshRenderer&, bool&);
 		void ShowComponent(Light&, bool&);
+		void ShowComponent(BoxCollider&, bool&);
+		void ShowComponent(Rigidbody&, bool&);
+		void ShowComponent(UIFrame&, bool&);
+		void ShowComponent(Text&, bool&);
+		//void ShowComponent(Button&, bool&);
 	};
 
 	struct SceneView : public Tab

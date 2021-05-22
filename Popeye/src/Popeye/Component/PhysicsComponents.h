@@ -1,13 +1,17 @@
 #pragma once
 namespace Popeye {
 	//-------------------------------------------
-	//TODO :: Cube Collider
+	// Physics Component : Box Collider 
 	//-------------------------------------------
-	struct Cube_Collider {
-		float W;
-		float L; 
-		float H;
-		float pos;
+	struct BoxCollider {
+		float width;
+		float length; 
+		float height;
+
+
+		BoxCollider();
+		void SetValue();
+		//float pos;
 
 		//Cube_Collider();
 
@@ -17,11 +21,14 @@ namespace Popeye {
 	};
 
 	//-------------------------------------------
-	//TODO :: Rigidbody
+	// Physics Component : Rigidbody
 	//-------------------------------------------
 	struct Rigidbody {
 		bool gravity;
 		float weight;
+
+		Rigidbody();
+		void SetValue();
 
 		//Rigidbody();
 

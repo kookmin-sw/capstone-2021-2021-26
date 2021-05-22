@@ -12,6 +12,13 @@ namespace Popeye {
 	struct MeshRenderer;
 	struct Light;
 
+	struct BoxCollider;
+	struct Rigidbody;
+
+	struct UIFrame;
+	struct Text;
+	struct Button;
+
 	enum class FileType 
 	{ 
 		DIR		=	0,	//	directory(folder)
@@ -57,6 +64,12 @@ namespace Popeye {
 		std::string WriteLightComponent(std::vector<Light>& lights);
 		std::string WriteMeshRendererComponent(std::vector<MeshRenderer>& meshRenderers);
 
+		std::string	WriteBoxColliderComponent(std::vector<BoxCollider>& boxcols);
+		std::string	WriteRigidbodyComponent(std::vector<Rigidbody>& rigbodies);
+
+		std::string	WriteUIFrameComponent(std::vector<UIFrame>& rigbodies);
+		std::string	WriteTextComponent(std::vector<Text>& rigbodies);
+
 		// -------------------- Load Scene -----------------------
 		std::queue<int>						ReadRecycleQ(std::ifstream& in);
 		std::vector<GameObject>				ReadGameObjects(std::ifstream& in);
@@ -65,7 +78,13 @@ namespace Popeye {
 		std::vector<Camera>					ReadCameraComponent(std::ifstream& in);
 		std::vector<Light>					ReadLightComponent(std::ifstream& in);
 		std::vector<MeshRenderer>			ReadMeshRendererComponent(std::ifstream& in);
+		
+		std::vector<BoxCollider>			ReadBoxColliderComponent(std::ifstream& in);
+		std::vector<Rigidbody>				ReadRigidbodyComponent(std::ifstream& in);
 
+		std::vector<UIFrame>				ReadUIFrameComponent(std::ifstream& in);
+		std::vector<Text>					ReadTextComponent(std::ifstream& in);
+		
 	public:
 		fs::path root;
 		fs::path resource;

@@ -1,5 +1,7 @@
 #include "ComponentManager.h"
 #include "../Component/RenderingComponents.h"
+#include "../Component/PhysicsComponents.h"
+#include "../Component/UIComponents.h"
 #include "../Component/ScriptComponents.h"
 
 namespace Popeye
@@ -12,11 +14,12 @@ namespace Popeye
 		RegistComponent<Light>();
 
 		//Physics Components
-		//RegistComponent<Collider>();
-		//RegistComponent<Rigidbody>();
+		RegistComponent<BoxCollider>();
+		RegistComponent<Rigidbody>();
 
 		//UI Components
-		//RegistComponent<Frame>();
+		RegistComponent<UIFrame>();
+		RegistComponent<Text>();
 		//RegistComponent<Button>();
 
 		//Script Component
@@ -53,20 +56,43 @@ namespace Popeye
 	// terrible way to find component fix it later
 	void ComponentManager::AddDataOfComponentByName(std::string component, std::string& type, int& index)
 	{
-		if (component[0] == (typeid(Camera).name())[15])
+		if (componentDatas.find(component) != componentDatas.end())
 		{
-			type = typeid(Camera).name() + 15;
-			index = AccessComponent<Camera>(componentDatas[type])->AddData();
-		}
-		else if (component[0] == (typeid(MeshRenderer).name())[15])
-		{
-			type = typeid(MeshRenderer).name() + 15;
-			index = AccessComponent<MeshRenderer>(componentDatas[type])->AddData();
-		}
-		else if (component[0] == (typeid(Light).name())[15])
-		{
-			type = typeid(Light).name() + 15;
-			index = AccessComponent<Light>(componentDatas[type])->AddData();
+			if (component == "Camera")
+			{
+				type = component;
+				index = AccessComponent<Camera>(componentDatas[type])->AddData();
+			}
+			else if (component == "MeshRenderer")
+			{
+				type = component;
+				index = AccessComponent<MeshRenderer>(componentDatas[type])->AddData();
+			}
+			else if (component == "Light")
+			{
+				type = component;
+				index = AccessComponent<Light>(componentDatas[type])->AddData();
+			}
+			else if (component == "BoxCollider")
+			{
+				type = component;
+				index = AccessComponent<BoxCollider>(componentDatas[type])->AddData();
+			}
+			else if (component == "Rigidbody")
+			{
+				type = component;
+				index = AccessComponent<Rigidbody>(componentDatas[type])->AddData();
+			}
+			else if (component == "UIFrame")
+			{
+				type = component;
+				index = AccessComponent<UIFrame>(componentDatas[type])->AddData();
+			}
+			else if (component == "Text")
+			{
+				type = component;
+				index = AccessComponent<Text>(componentDatas[type])->AddData();
+			}
 		}
 	}
 }
