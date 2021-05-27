@@ -178,7 +178,7 @@ namespace Popeye {
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
 				if (!meshrenderer.isEmpty)
 				{
-					int meshID = meshrenderer.meshID;
+					int modelID = meshrenderer.modelID;
 					int materialID = meshrenderer.materialID;
 
 					Material material = g_ResourceManager->materials[materialID];
@@ -207,7 +207,7 @@ namespace Popeye {
 
 					shader.setFloat("material.shininess", material.shininess);
 					
-					g_ResourceManager->meshes[meshID].DrawMesh();
+					g_ResourceManager->models[modelID].DrawModel();
 				}
 			}
 		}

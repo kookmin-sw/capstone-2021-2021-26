@@ -352,14 +352,14 @@ namespace Popeye{
 		if (ImGui::CollapsingHeader("MeshRenderer", &closeBtn))
 		{
 
-			ImGui::Text("Mesh");
+			ImGui::Text("Model");
 			ImGui::Selectable("##selectable", false, ImGuiSelectableFlags_SelectOnClick, ImVec2(100.0f, 20.0f));
 
 			if (ImGui::IsItemHovered())
 			{
 				if (ImGui::IsKeyDown(261))
 				{
-					meshRenderer.meshID = 0;
+					meshRenderer.modelID = 0;
 					meshRenderer.isEmpty = true;
 				}
 			}
@@ -367,7 +367,7 @@ namespace Popeye{
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MODEL"))
 				{
-					meshRenderer.meshID = *(unsigned int*)payload->Data;
+					meshRenderer.modelID = *(unsigned int*)payload->Data;
 					meshRenderer.isEmpty = false;
 				}
 
@@ -822,14 +822,19 @@ namespace Popeye{
 	}
 
 
+
 	void Resource::ShowContents()
 	{
 		CheckHover();
+
+		float window_visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
+		ImGuiStyle& style = ImGui::GetStyle();
 		if (ImGui::BeginTabBar("ResourceManager"))
 		{
 			if (ImGui::BeginTabItem("Texture"))
 			{
-				for (int i = 0; i < g_ResourceManager->textures.size(); i++)
+				int texture_size = g_ResourceManager->textures.size();
+				for (int i = 0; i < texture_size; i++)
 				{
 					ImGui::PushID(i);
 					ImGui::Selectable("##resource", false, 0, ImVec2(100.0f, 100.0f));
@@ -856,23 +861,59 @@ namespace Popeye{
 
 					ImGui::PopID();
 
-					ImGui::SameLine();
+					float last_button_x2 = p1.x;
+					float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+					if (i + 1 < texture_size && next_button_x2 < window_visible_x2)
+						ImGui::SameLine();
 				}
 
 				ImGui::EndTabItem();
 			}
 
+			//if (ImGui::BeginTabItem("Mesh"))
+			//{
+			//	int mesh_size = g_ResourceManager->meshes.size();
+			//	for (int i = 0; i < mesh_size; i++)
+			//	{
+			//		ImGui::PushID(i);
+			//		ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+			//		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+			//		const ImVec2 p0 = ImGui::GetItemRectMin();
+			//		const ImVec2 p1 = ImGui::GetItemRectMax();
+
+			//		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+			//		{
+			//			ImGui::SetDragDropPayload("MESH", &i, sizeof(unsigned int), ImGuiCond_Once);
+
+			//			ImGui::EndDragDropSource();
+			//		}
+
+			//		ImGui::PopID();
+
+			//		float last_button_x2 = p1.x;
+			//		float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+			//		if (i + 1 < mesh_size && next_button_x2 < window_visible_x2)
+			//			ImGui::SameLine();
+			//	}
+			//	
+			//	ImGui::EndTabItem();
+			//}
+
 			if (ImGui::BeginTabItem("Model"))
 			{
-				for (int i = 0; i < g_ResourceManager->meshes.size(); i++)
+				int model_size = g_ResourceManager->models.size();
+				for (int i = 0; i < model_size; i++)
 				{
 					ImGui::PushID(i);
-					ImGui::Selectable(g_ResourceManager->meshes[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					ImGui::Selectable(g_ResourceManager->models[i].name.c_str(), false, 0, ImVec2(100.0f, 100.0f));
+					//ImGui::Selectable((ImTextureID)preview, false, 0, ImVec2(100.0f, 100.0f));
 					ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 					const ImVec2 p0 = ImGui::GetItemRectMin();
 					const ImVec2 p1 = ImGui::GetItemRectMax();
-
+					//ShowPreview(i);
+					//draw_list->AddImage((ImTextureID)preview, ImVec2(p0.x + 2.0f, p0.y + 2.0f), ImVec2(p1.x - 2.0f, p1.y - 2.0f));
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
 						ImGui::SetDragDropPayload("MODEL", &i, sizeof(unsigned int), ImGuiCond_Once);
@@ -882,9 +923,12 @@ namespace Popeye{
 
 					ImGui::PopID();
 
-					ImGui::SameLine();
+					float last_button_x2 = p1.x;
+					float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+					if (i + 1 < model_size && next_button_x2 < window_visible_x2)
+						ImGui::SameLine();
 				}
-				
+
 				ImGui::EndTabItem();
 			}
 
@@ -904,8 +948,8 @@ namespace Popeye{
 
 					ImGui::EndPopup();
 				}
-
-				for (int i = 1; i < g_ResourceManager->materials.size(); i++)
+				int material_size = g_ResourceManager->materials.size();
+				for (int i = 1; i < material_size; i++)
 				{
 					ImGui::PushID(i);
 					ImGui::Selectable(g_ResourceManager->materials[i].id.c_str(), false, 0, ImVec2(100.0f, 100.0f));
@@ -923,7 +967,10 @@ namespace Popeye{
 
 					ImGui::PopID();
 
-					ImGui::SameLine();
+					float last_button_x2 = p1.x;
+					float next_button_x2 = last_button_x2 + style.ItemSpacing.x; // Expected position if next button was on same line
+					if (i + 1 < material_size && next_button_x2 < window_visible_x2)
+						ImGui::SameLine();
 				}
 
 				ImGui::EndTabItem();
@@ -963,5 +1010,65 @@ namespace Popeye{
 		}
 
 	}
+
+	//void Resource::ShowPreview(int index)
+	//{
+	//	static int init = 0;
+	//	static Shader previewShader, renderShader;
+	//	static glm::mat4 model, view, projection;
+
+	//	if (init = 0)
+	//	{
+	//		previewShader.Init("shader/vertexShaderfb.GLSL", "shader/fragmentShaderfb.GLSL");
+	//		renderShader.Init("shader/gridvert.GLSL", "shader/gridfrag.GLSL");
+	//		unsigned int rbo;
+
+	//		glGenFramebuffers(1, &previewFBO);
+	//		glBindFramebuffer(GL_FRAMEBUFFER, previewFBO);
+
+	//		glGenTextures(1, &preview);
+	//		glBindTexture(GL_TEXTURE_2D, preview);
+	//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 100, 100, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, preview, 0);
+
+	//		glGenRenderbuffers(1, &rbo);
+	//		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	//		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 100, 100);
+	//		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+	//		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//		model = glm::mat4(1.0f);
+	//		view = glm::lookAt(glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//		projection = glm::perspective(45.0f, 1.0f, 0.1f, 10.0f);
+	//		
+	//		init++;
+	//	}
+
+
+	//	glBindFramebuffer(GL_FRAMEBUFFER, previewFBO);
+	//	glEnable(GL_DEPTH_TEST);
+	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//	//render
+	//	//RenderView();
+	//	renderShader.use();
+	//	renderShader.setMat4("view", view);
+	//	renderShader.setMat4("proj", projection);
+	//	renderShader.setMat4("model", model);
+	//	g_ResourceManager->models[0].DrawModel();
+
+	//	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//	glDisable(GL_DEPTH_TEST);
+	//	previewShader.use();
+	//	glBindTexture(GL_TEXTURE_2D, preview);
+
+	//	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	//	glClear(GL_COLOR_BUFFER_BIT);
+	//}
+
 
 }

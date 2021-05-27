@@ -10,6 +10,7 @@ namespace Popeye
 
 	struct Mesh 
 	{
+		float* id;
 		std::string name;
 		BoundBox boundbox;
 		unsigned int VAO, VBO, EBO;
@@ -23,7 +24,11 @@ namespace Popeye
 
 	struct Model
 	{
+		std::string name;
+		BoundBox boundbox;
 		std::vector<Mesh> meshes;
+		void SetBoundBox();
+		void DrawModel();
 	};
 
 }

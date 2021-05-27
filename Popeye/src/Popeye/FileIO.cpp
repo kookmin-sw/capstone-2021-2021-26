@@ -526,7 +526,7 @@ namespace Popeye
 		for (int i = 0; i < size; i++)
 		{
 			meshrenderer +=
-				std::to_string(meshRenderers[i].meshID) + space
+				std::to_string(meshRenderers[i].modelID) + space
 				+ std::to_string(meshRenderers[i].materialID) + space
 				+ std::to_string(meshRenderers[i].isEmpty) + space;
 		}
@@ -725,7 +725,7 @@ namespace Popeye
 			writedata >> intReader >> strReader
 				>> tReader.position.x >> tReader.position.y >> tReader.position.z
 				>> tReader.rotation.x >> tReader.rotation.y >> tReader.rotation.z
-				>> tReader.scale.x >> tReader.scale.z >> tReader.scale.z;
+				>> tReader.scale.x >> tReader.scale.y >> tReader.scale.z;
 			GameObject gameobject(intReader, strReader, tReader);
 			gameobjects.push_back(gameobject);
 		}
@@ -848,7 +848,7 @@ namespace Popeye
 		int size = intReader;
 		for (int i = 0; i < size; i++)
 		{
-			writedata >> mReader.meshID >> mReader.materialID >> mReader.isEmpty;
+			writedata >> mReader.modelID >> mReader.materialID >> mReader.isEmpty;
 			mshDatas.push_back(mReader);
 		}
 

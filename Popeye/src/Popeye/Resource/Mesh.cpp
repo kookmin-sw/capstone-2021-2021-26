@@ -42,4 +42,42 @@ namespace Popeye
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
 		glBindVertexArray(0);
 	}
+	
+	void Model::DrawModel()
+	{
+		int size = meshes.size();
+		for (int i = 0; i < size; i++)
+		{
+			meshes[i].DrawMesh();
+		}
+	}
+
+	void Model::SetBoundBox()
+	{
+		BoundBox _boundbox;
+		_boundbox.maxPos = glm::vec3(0.0f);
+		_boundbox.minPos = glm::vec3(0.0f);
+
+		int size = meshes.size();
+		for (int i = 0; i < size; i++)
+		{
+			BoundBox box = meshes[i].boundbox;
+			if (_boundbox.maxPos.x < box.maxPos.x)
+				_boundbox.maxPos.x = box.maxPos.x;
+			if (_boundbox.minPos.x > box.minPos.x)
+				_boundbox.minPos.x = box.minPos.x;
+
+			if (_boundbox.maxPos.y < box.maxPos.y)
+				_boundbox.maxPos.y = box.maxPos.y;
+			if (_boundbox.minPos.y > box.minPos.y)
+				_boundbox.minPos.y = box.minPos.y;
+
+			if (_boundbox.maxPos.z < box.maxPos.z)
+				_boundbox.maxPos.z = box.maxPos.z;
+			if (_boundbox.minPos.z > box.minPos.z)
+				_boundbox.minPos.z = box.minPos.z;
+		}
+
+		boundbox = _boundbox;
+	}
 }
