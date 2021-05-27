@@ -183,7 +183,7 @@ namespace Popeye {
 				MeshRenderer meshrenderer = SceneManager::GetInstance()->currentScene->GetData<MeshRenderer>(id);
 				if (!meshrenderer.isEmpty)
 				{
-					unsigned int meshID = meshrenderer.meshID;
+					unsigned int modelID = meshrenderer.modelID;
 					unsigned int materialID = meshrenderer.materialID;
 
 					Material material = g_ResourceManager->materials[materialID];
@@ -212,10 +212,10 @@ namespace Popeye {
 
 					shader.setFloat("material.shininess", material.shininess);
 
-					g_ResourceManager->meshes[meshID].DrawMesh();
+					g_ResourceManager->models[modelID].DrawModel();
 
 					//temp
-					BoundBox boundbox = g_ResourceManager->meshes[meshID].boundbox;
+					BoundBox boundbox = g_ResourceManager->models[modelID].boundbox;
 					glm::vec3 boxscale = boundbox.maxPos - boundbox.minPos;
 
 					boundbox.maxPos *= scale;
@@ -258,7 +258,7 @@ namespace Popeye {
 
 				gizmo.DrawWireCube();
 
-				if (sendRay && selectedGameObject == nullptr)
+				if (sendRay && !g_draggin)
 				{
 					sized_boundbox[i].minPos *= bound_trans.scale;
 					sized_boundbox[i].maxPos *= bound_trans.scale;
@@ -266,7 +266,7 @@ namespace Popeye {
 					{
 						selectedGameObject = selectable_gameobjects[i];
 					}
-					sendRay = false;
+					//sendRay = false;
 				}
 			}
 
@@ -356,8 +356,6 @@ namespace Popeye {
 					glm::vec3 cal = ShortestPoint(mouse_pos + distance * mouse_dir, pos, pos + glm::vec3(model[axis]));
 					selectedGameObject->transform.scale[axis] = cal[axis];
 				}
-					break;
-				default:
 					break;
 				}
 			}

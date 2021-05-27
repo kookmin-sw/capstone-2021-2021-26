@@ -59,7 +59,7 @@ namespace Popeye {
 	/*MeshRenderer*/
 	struct MeshRenderer
 	{
-		unsigned int meshID;
+		unsigned int modelID;
 		unsigned int materialID;
 		bool isEmpty;
 

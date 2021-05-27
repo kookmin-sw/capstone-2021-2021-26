@@ -258,7 +258,7 @@ namespace Popeye {
 	
 	void MeshRenderer::SetValue()
 	{
-		meshID = 0;
+		modelID = 0;
 		materialID = 0;
 		isEmpty = true;
 	}

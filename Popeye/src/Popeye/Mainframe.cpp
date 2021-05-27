@@ -87,7 +87,7 @@ namespace Popeye {
 		renderingSystem->SystemInit();
 
 		ScriptingSystem* scriptingSystem = new ScriptingSystem();
-		scriptingSystem->SystemInit();
+		scriptingSystem->SystemInit(&isPlay);
 
 		PhysicsSystem* physicsSystem = new PhysicsSystem();
 		physicsSystem->SystemInit(&isPlay);

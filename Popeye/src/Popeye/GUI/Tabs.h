@@ -66,7 +66,9 @@ namespace Popeye{
 
 	struct Resource : public Tab
 	{
+		unsigned int previewFBO, preview;
 		virtual void ShowContents();
+		void ShowPreview(int index);
 	};
 }
 

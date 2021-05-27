@@ -67,7 +67,7 @@ namespace Popeye
 						SetTexture(buffer, resource_address[i], len);
 						break;
 					case 3:
-						SetMesh(buffer, resource_address[i], len);
+						SetModel(buffer, resource_address[i], len);
 						break;
 					}
 				}
@@ -108,6 +108,199 @@ namespace Popeye
 		textures.push_back(texture);
 
 		stbi_image_free(data);
+	}
+
+	void ResourceManager::SetModel(unsigned char* buffer, unsigned int offset, unsigned int length)
+	{
+		Assimp::Importer importer;
+		const aiScene* scene = importer.ReadFileFromMemory(buffer + offset, length, aiProcess_Triangulate | aiProcess_FlipUVs);
+		Model model;
+		SetMesh(scene);
+		SetModelRecursively(scene->mRootNode, scene, model);
+		aiMesh* mesh = scene->mMeshes[0];
+		model.name = mesh->mName.C_Str();
+		model.SetBoundBox();
+		models.push_back(model);
+	}
+
+	void ResourceManager::SetModelRecursively(aiNode* node, const aiScene* scene, Model& model)
+	{
+		
+		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			int mesh_size = meshes.size();
+			SetMesh(mesh, model);
+		}
+
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			SetModelRecursively(node->mChildren[i], scene, model);
+		}
+	}
+	
+	/*bool ResourceManager::CheckMesh(float *id, int &index)
+	{
+		int size = meshes.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (id == meshes[i].id)
+			{
+				index = i;
+				return true;
+			}
+		}
+		return false;
+	}*/
+
+	void ResourceManager::SetMesh(aiMesh* _aimesh, Model& model)
+	{
+		aiMesh* aimesh = _aimesh;
+		std::string meshName = aimesh->mName.C_Str();
+
+		unsigned int vertNum = aimesh->mNumVertices;
+		unsigned int faceNum = aimesh->mNumFaces;
+		aiVector3D temp = aimesh->mVertices[0];
+		float *id = &aimesh->mVertices[0].x;
+		//int index = _index;
+
+		std::vector<unsigned int> indices;
+		std::vector<float> vert;
+
+		BoundBox bounbox;
+		bounbox.maxPos = glm::vec3(temp.x, temp.y, temp.z);
+		bounbox.minPos = glm::vec3(temp.x, temp.y, temp.z);
+
+
+		for (unsigned int j = 0; j < vertNum; j++)
+		{
+			aiVector3D vertex = aimesh->mVertices[j];
+			vert.push_back(vertex.x); vert.push_back(vertex.y); vert.push_back(vertex.z);
+
+			if (aimesh->mNormals != NULL)
+			{
+				aiVector3D normal = aimesh->mNormals[j];
+				vert.push_back(normal.x); vert.push_back(normal.y); vert.push_back(normal.z);
+			}
+			else
+			{
+				vert.push_back(0); vert.push_back(0); vert.push_back(0);
+			}
+
+			if (aimesh->mTextureCoords[0] != NULL)
+			{
+				aiVector3D texcoord = aimesh->mTextureCoords[0][j];
+				vert.push_back(texcoord.x); vert.push_back(texcoord.y);
+			}
+			else
+			{
+				vert.push_back(0); vert.push_back(0);
+			}
+
+			if (bounbox.maxPos.x < vertex.x)
+				bounbox.maxPos.x = vertex.x;
+			if (bounbox.minPos.x > vertex.x)
+				bounbox.minPos.x = vertex.x;
+
+			if (bounbox.maxPos.y < vertex.y)
+				bounbox.maxPos.y = vertex.y;
+			if (bounbox.minPos.y > vertex.y)
+				bounbox.minPos.y = vertex.y;
+
+			if (bounbox.maxPos.z < vertex.z)
+				bounbox.maxPos.z = vertex.z;
+			if (bounbox.minPos.z > vertex.z)
+				bounbox.minPos.z = vertex.z;
+
+		}
+
+		for (unsigned int j = 0; j < faceNum; j++)
+		{
+			aiFace aiface = aimesh->mFaces[j];
+			for (int k = 0; k < aiface.mNumIndices; k++)
+			{
+				indices.push_back(aiface.mIndices[k]);
+			}
+		}
+		Mesh mesh(vert, indices, bounbox);
+		mesh.name = meshName;
+		mesh.id = id;
+		model.meshes.push_back(mesh);
+	}
+
+	void ResourceManager::SetMesh(const aiScene* scene)
+	{
+		int mesh_size = scene->mNumMeshes;
+		for (int i = 0; i < mesh_size; i++)
+		{
+			aiMesh* aimesh = scene->mMeshes[i];
+			std::string meshName = aimesh->mName.C_Str();
+
+			unsigned int vertNum = aimesh->mNumVertices;
+			unsigned int faceNum = aimesh->mNumFaces;
+			aiVector3D temp = aimesh->mVertices[0];
+			std::vector<unsigned int> indices;
+			std::vector<float> vert;
+
+			BoundBox bounbox;
+			bounbox.maxPos = glm::vec3(temp.x, temp.y, temp.z);
+			bounbox.minPos = glm::vec3(temp.x, temp.y, temp.z);
+
+
+			for (unsigned int j = 0; j < vertNum; j++)
+			{
+				aiVector3D vertex = aimesh->mVertices[j];
+				vert.push_back(vertex.x); vert.push_back(vertex.y); vert.push_back(vertex.z);
+
+				if (aimesh->mNormals != NULL)
+				{
+					aiVector3D normal = aimesh->mNormals[j];
+					vert.push_back(normal.x); vert.push_back(normal.y); vert.push_back(normal.z);
+				}
+				else
+				{
+					vert.push_back(0); vert.push_back(0); vert.push_back(0);
+				}
+
+				if (aimesh->mTextureCoords[0] != NULL)
+				{
+					aiVector3D texcoord = aimesh->mTextureCoords[0][j];
+					vert.push_back(texcoord.x); vert.push_back(texcoord.y);
+				}
+				else
+				{
+					vert.push_back(0); vert.push_back(0);
+				}
+
+				if (bounbox.maxPos.x < vertex.x)
+					bounbox.maxPos.x = vertex.x;
+				if (bounbox.minPos.x > vertex.x)
+					bounbox.minPos.x = vertex.x;
+
+				if (bounbox.maxPos.y < vertex.y)
+					bounbox.maxPos.y = vertex.y;
+				if (bounbox.minPos.y > vertex.y)
+					bounbox.minPos.y = vertex.y;
+
+				if (bounbox.maxPos.z < vertex.z)
+					bounbox.maxPos.z = vertex.z;
+				if (bounbox.minPos.z > vertex.z)
+					bounbox.minPos.z = vertex.z;
+
+			}
+
+			for (unsigned int j = 0; j < faceNum; j++)
+			{
+				aiFace aiface = aimesh->mFaces[j];
+				for (int k = 0; k < aiface.mNumIndices; k++)
+				{
+					indices.push_back(aiface.mIndices[k]);
+				}
+			}
+			Mesh mesh(vert, indices, bounbox);
+			mesh.name = meshName;
+			meshes.push_back(mesh);
+		}
 	}
 	
 	void ResourceManager::SetMesh(unsigned char* buffer, unsigned int offset, unsigned int length)

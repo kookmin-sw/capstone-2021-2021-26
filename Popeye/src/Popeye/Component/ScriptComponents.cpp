@@ -12,7 +12,9 @@ namespace Popeye
 
 	void customscript::Run()
 	{
-		std::cout << "dddd" << std::endl;
+
+
+		//std::cout << "dddd" << std::endl;
 	}
 
 	void customscript::Exit()
